@@ -1,0 +1,6 @@
+node_modules/
+package-lock.json
+
+# Saída gerada por `npm run pdf`. Reproduzível a partir de modelos/, por isso
+# fica fora do versionamento — são ~27 MB que mudariam a cada regeração.
+pdf/

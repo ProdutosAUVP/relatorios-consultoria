@@ -73,9 +73,16 @@ Extraído dos arquivos em `assets relatórios/` e do `MODELO SLIDES AUVP CAPITAL
 | Assessoria | `#005F45` | idem | AUVP CAPITAL |
 | Private Banking | `#666666` | idem | AUVP PRIVATE BANKING |
 
-- **Acento:** `#EFBF4F` (dourado do deck institucional), usado com parcimônia e sempre
-  como linha fina: a régua curta do olho-de-boi, a borda esquerda dos cards, os
-  marcadores numéricos das linhas do tempo. Nunca em capas.
+- **Acento:** `#EFBF4F` (dourado do deck institucional) na consultoria, na alta renda e
+  na assessoria, usado com parcimônia e sempre como linha fina: a régua curta do
+  olho-de-boi, a borda esquerda dos cards, os marcadores numéricos das linhas do tempo.
+  Nunca em capas.
+- **Private Banking não usa amarelo em lugar nenhum.** O acento é o neutro `#8C939A`, e
+  com ele saem do amarelo também o realce dos campos preenchíveis e o selo de atenção
+  do diagnóstico. São tokens de tema (`--accent`, `--ph`, `--warn-*`), então a regra
+  vale para qualquer elemento novo sem precisar ser lembrada caso a caso. Vermelho e
+  verde continuam disponíveis como sinal semântico — gravidade de risco, retorno
+  positivo ou negativo — onde a cor ajuda a leitura.
 - **Capas e divisórias são monocromáticas.** Logo, título, réguas, grafismo e campos
   preenchíveis, tudo em branco sobre o gradiente. O dourado só entra nas páginas de
   conteúdo, e apenas onde a cor ajuda a leitura.
@@ -117,6 +124,7 @@ As duas capas são construídas sobre medidas tiradas das referências, não est
 | Régua superior | y 86,0 mm, da margem à margem |
 | Régua inferior | y 245,2 mm |
 | Grafismo | entre as réguas, **com exatamente a largura delas** (traço de 15,3 a 194,7 mm), topo em 95,5 mm |
+| Opacidade do grafismo | cheia no leque de quadrados; 50% na ampulheta do diagnóstico, cujo traço é bem mais denso |
 | Título | 43,89 pt, entrelinha de 48 pt, linhas de base em 56,4 e 73,3 mm |
 | Assinatura inferior | 32,13 pt, linha de base em 271,6 mm |
 
@@ -178,9 +186,6 @@ trimestral no private e semestral com contatos da mesa na assessoria.
   distribuição/assessoria (Resolução CVM 178) ou private, e precisa vir do compliance —
   não foi redigido aqui. Os demais avisos legais (rentabilidade passada, FGC, proibição
   de compartilhamento) já estão escritos e são comuns aos quatro segmentos.
-- **Acento dourado no Private Banking.** Mantido `#EFBF4F` por coerência com o resto da
-  marca. Para trocar por prata, basta alterar `--accent` no `:root` dos três arquivos
-  `*-private.html`.
 - **Conteúdo da assessoria.** As variantes de assessoria partem do princípio de que o
   segmento opera por distribuição remunerada por comissão, e não por taxa cobrada do
   cliente: a apresentação geral fala em "sem taxa de assessoria" e em transparência de

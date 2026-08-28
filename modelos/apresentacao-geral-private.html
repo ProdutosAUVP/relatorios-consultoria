@@ -6,7 +6,9 @@
 <title>Apresentação Geral — AUVP Private Banking</title>
 <style>
 :root{
-  --brand:#666666; --accent:#EFBF4F;
+  --brand:#666666; --accent:#8C939A;
+  --ph:rgba(140,147,154,.26); --ph-dk:rgba(255,255,255,.24);
+  --warn-bg:rgba(90,97,104,.14); --warn-fg:#4A5257; --warn-bd:rgba(90,97,104,.34);
   --ink:#16181A; --ink-2:#54595E; --line:#E4E6E8; --soft:#F4F5F6;
   --paper:#FFFFFF; --pos:#1F7A4C; --neg:#B3402F;
 }
@@ -30,8 +32,8 @@ p{margin:0 0 3mm}
 ul{margin:0 0 3mm;padding-left:4.5mm}
 li{margin:0 0 1.2mm}
 strong{font-weight:700}
-.ph{background:rgba(239,191,79,.24);border-radius:.6mm;padding:0 .6mm;font-weight:600;overflow-wrap:break-word;text-transform:none;letter-spacing:0;font-size:.94em}
-.dark .ph{background:rgba(239,191,79,.26);color:#fff}
+.ph{background:var(--ph);border-radius:.6mm;padding:0 .6mm;font-weight:600;overflow-wrap:break-word;text-transform:none;letter-spacing:0;font-size:.94em}
+.dark .ph{background:var(--ph-dk);color:#fff}
 /* capas e divisórias são monocromáticas: nada de dourado sobre a arte da capa */
 .cover .ph,.divider .ph{background:rgba(255,255,255,.18);color:#fff}
 .pos{color:var(--pos);font-weight:700}

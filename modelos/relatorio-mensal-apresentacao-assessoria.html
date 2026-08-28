@@ -7,6 +7,8 @@
 <style>
 :root{
   --brand:#005F45; --accent:#EFBF4F;
+  --ph:rgba(239,191,79,.24); --ph-dk:rgba(239,191,79,.26);
+  --warn-bg:rgba(239,191,79,.18); --warn-fg:#8A6A12; --warn-bd:rgba(239,191,79,.5);
   --ink:#101613; --ink-2:#48524D; --line:#E2E7E5; --soft:#F4F8F6;
   --paper:#FFFFFF; --pos:#1F7A4C; --neg:#B3402F;
 }
@@ -30,8 +32,8 @@ p{margin:0 0 3mm}
 ul{margin:0 0 3mm;padding-left:4.5mm}
 li{margin:0 0 1.2mm}
 strong{font-weight:700}
-.ph{background:rgba(239,191,79,.24);border-radius:.6mm;padding:0 .6mm;font-weight:600;overflow-wrap:break-word;text-transform:none;letter-spacing:0;font-size:.94em}
-.dark .ph{background:rgba(239,191,79,.26);color:#fff}
+.ph{background:var(--ph);border-radius:.6mm;padding:0 .6mm;font-weight:600;overflow-wrap:break-word;text-transform:none;letter-spacing:0;font-size:.94em}
+.dark .ph{background:var(--ph-dk);color:#fff}
 /* capas e divisórias são monocromáticas: nada de dourado sobre a arte da capa */
 .cover .ph,.divider .ph{background:rgba(255,255,255,.18);color:#fff}
 .pos{color:var(--pos);font-weight:700}

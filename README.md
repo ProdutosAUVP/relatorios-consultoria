@@ -140,7 +140,7 @@ alto perde os traços de 10% de opacidade e desalinha o grafismo em cerca de 4 m
 
 | Elemento | Medida |
 | --- | --- |
-| Faixa branca | de 0 a 26,3 mm, com o nome da marca à esquerda e a logo à direita |
+| Faixa branca | de 0 a 26,3 mm, com o rótulo do segmento à esquerda e a logo à direita |
 | Régua curta | x 24,6 a 74,9 mm, y 68,4 mm |
 | Título | 44,6 pt, linha de base em 106,7 mm |
 | Subtítulo | 25,3 pt, linha de base em 120,2 mm |
@@ -193,6 +193,10 @@ texto 11 pt, tabela 9,5 pt.
 
 **Logos.** Os SVGs originais entram embutidos e são recoloridos por CSS; a largura sai
 de uma altura-alvo, porque a marca do Private Banking é bem mais larga que a do Capital.
+Ao lado de uma logo o texto só traz o que ela não diz: a marca do Capital não nomeia o
+segmento, então "Consultoria", "Alta Renda" e "Assessoria" aparecem; a do Private
+Banking já o nomeia, então ali não há rótulo nenhum. É o token `rotulo` do tema, vazio
+no private.
 
 **Componentes.** Rosca, barra e linha têm esqueleto em `.sk-donut`, `.sk-bars` e
 `.sk-line`, dentro da moldura `.chart` que descreve o que o gráfico deve mostrar.

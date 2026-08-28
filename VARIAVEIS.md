@@ -32,7 +32,7 @@ Estes se repetem na maior parte dos modelos. Vale manter um arquivo único com e
 | `nome_responsavel` | Consultor, assessor ou banker responsável | 20 de 24 |
 | `registro_cvm_ou_ancord` | Registro do responsável (CVM 19 / Ancord) | 12 de 24 |
 | `email_contato` | E-mail de contato exibido no documento | 20 de 24 |
-| `whatsapp_contato` | WhatsApp direto do responsável | 8 de 24 |
+| `whatsapp_contato` | WhatsApp direto do responsável | 12 de 24 |
 | `canal_atendimento` | Canal e horário de atendimento | 12 de 24 |
 | `link_agendamento` | URL de agendamento (a mesma do QR code) | 12 de 24 |
 | `mes_referencia` | Mês de referência, ex.: Agosto de 2026 | 12 de 24 |
@@ -380,176 +380,266 @@ fonte_consenso                    data_fechamento                   declaracao_a
 
 Arquivos: `modelos/relatorio-mensal-alta-renda.html`, `modelos/relatorio-mensal-assessoria.html`, `modelos/relatorio-mensal-consultoria.html`, `modelos/relatorio-mensal-private.html`
 
-Segmentos: alta-renda, assessoria, consultoria, private &middot; 336 variáveis
+Segmentos: alta-renda, assessoria, consultoria, private &middot; 675 variáveis
 
-<details><summary>Ver as 323 variáveis específicas deste documento</summary>
+<details><summary>Ver as 661 variáveis específicas deste documento</summary>
 
 ```
 carta_paragrafo_1                 carta_paragrafo_2                 carta_paragrafo_3
 telefone_contato                  rent_mes                          rent_mes_pct_cdi
-rent_ano                          rent_ano_pct_cdi                  aporte_liquido_mes
-resgates_mes                      rent_12m                          rent_24m
-rent_inicio                       cdi_mes                           cdi_ano
-cdi_12m                           cdi_24m                           cdi_inicio
-ipca5_mes                         ipca5_ano                         ipca5_12m
-ipca5_24m                         ipca5_inicio                      ibov_mes
-ibov_ano                          ibov_12m                          ibov_24m
-ibov_inicio                       vs_cdi_mes                        vs_cdi_ano
-vs_cdi_12m                        vs_cdi_24m                        vs_cdi_inicio
-alvo_rf_pos                       atual_rf_pos                      desvio_rf_pos
-valor_rf_pos                      status_rf_pos                     alvo_rf_pre
-atual_rf_pre                      desvio_rf_pre                     valor_rf_pre
-status_rf_pre                     alvo_rf_ipca                      atual_rf_ipca
-desvio_rf_ipca                    valor_rf_ipca                     status_rf_ipca
-alvo_multi                        atual_multi                       desvio_multi
-valor_multi                       status_multi                      alvo_rv_br
-atual_rv_br                       desvio_rv_br                      valor_rv_br
-status_rv_br                      alvo_intl                         atual_intl
-desvio_intl                       valor_intl                        status_intl
-alvo_fii                          atual_fii                         desvio_fii
-valor_fii                         status_fii                        alvo_alt
-atual_alt                         desvio_alt                        valor_alt
-status_alt                        alvo_caixa                        atual_caixa
-desvio_caixa                      valor_caixa                       status_caixa
-texto_desvio_alocacao             texto_alocacao_em_linha           texto_alocacao_ajuste
-d_rf_valor                        d_rf_peso                         d_rf_ret
-d_rf_contrib                      d_rf_ret12m                       d_multi_valor
-d_multi_peso                      d_multi_ret                       d_multi_contrib
-d_multi_ret12m                    d_rvbr_valor                      d_rvbr_peso
-d_rvbr_ret                        d_rvbr_contrib                    d_rvbr_ret12m
-d_intl_valor                      d_intl_peso                       d_intl_ret
-d_intl_contrib                    d_intl_ret12m                     d_fii_valor
-d_fii_peso                        d_fii_ret                         d_fii_contrib
-d_fii_ret12m                      d_alt_valor                       d_alt_peso
-d_alt_ret                         d_alt_contrib                     d_alt_ret12m
-d_caixa_valor                     d_caixa_peso                      d_caixa_ret
-d_caixa_contrib                   d_caixa_ret12m                    top_1_ativo
-top_1_ret                         top_1_contrib                     top_2_ativo
-top_2_ret                         top_2_contrib                     top_3_ativo
-top_3_ret                         top_3_contrib                     top_4_ativo
-top_4_ret                         top_4_contrib                     bot_1_ativo
-bot_1_ret                         bot_1_contrib                     bot_2_ativo
-bot_2_ret                         bot_2_contrib                     bot_3_ativo
-bot_3_ret                         bot_3_contrib                     bot_4_ativo
-bot_4_ret                         bot_4_contrib                     data_inicio_periodo
-data_fim_periodo                  mov_1_data                        mov_1_tipo
-mov_1_ativo                       mov_1_classe                      mov_1_valor
+rent_ano                          rent_ano_pct_cdi                  ganho_mes_reais
+ganho_ano_reais                   aplicacoes_mes                    resgates_mes
+aporte_liquido_mes                total_proventos                   rent_12m
+rent_24m                          rent_inicio                       cdi_mes
+cdi_ano                           cdi_12m                           cdi_24m
+cdi_inicio                        ipca5_mes                         ipca5_ano
+ipca5_12m                         ipca5_24m                         ipca5_inicio
+ibov_mes                          ibov_ano                          ibov_12m
+ibov_24m                          ibov_inicio                       vs_cdi_mes
+vs_cdi_ano                        vs_cdi_12m                        vs_cdi_24m
+vs_cdi_inicio                     pos_1_ativo                       pos_1_classe
+pos_1_instituicao                 pos_1_qtd                         pos_1_preco_medio
+pos_1_valor                       pos_1_perc                        pos_1_ret12m
+pos_2_ativo                       pos_2_classe                      pos_2_instituicao
+pos_2_qtd                         pos_2_preco_medio                 pos_2_valor
+pos_2_perc                        pos_2_ret12m                      pos_3_ativo
+pos_3_classe                      pos_3_instituicao                 pos_3_qtd
+pos_3_preco_medio                 pos_3_valor                       pos_3_perc
+pos_3_ret12m                      pos_4_ativo                       pos_4_classe
+pos_4_instituicao                 pos_4_qtd                         pos_4_preco_medio
+pos_4_valor                       pos_4_perc                        pos_4_ret12m
+pos_5_ativo                       pos_5_classe                      pos_5_instituicao
+pos_5_qtd                         pos_5_preco_medio                 pos_5_valor
+pos_5_perc                        pos_5_ret12m                      pos_6_ativo
+pos_6_classe                      pos_6_instituicao                 pos_6_qtd
+pos_6_preco_medio                 pos_6_valor                       pos_6_perc
+pos_6_ret12m                      pos_7_ativo                       pos_7_classe
+pos_7_instituicao                 pos_7_qtd                         pos_7_preco_medio
+pos_7_valor                       pos_7_perc                        pos_7_ret12m
+pos_8_ativo                       pos_8_classe                      pos_8_instituicao
+pos_8_qtd                         pos_8_preco_medio                 pos_8_valor
+pos_8_perc                        pos_8_ret12m                      pos_9_ativo
+pos_9_classe                      pos_9_instituicao                 pos_9_qtd
+pos_9_preco_medio                 pos_9_valor                       pos_9_perc
+pos_9_ret12m                      pos_10_ativo                      pos_10_classe
+pos_10_instituicao                pos_10_qtd                        pos_10_preco_medio
+pos_10_valor                      pos_10_perc                       pos_10_ret12m
+pos_11_ativo                      pos_11_classe                     pos_11_instituicao
+pos_11_qtd                        pos_11_preco_medio                pos_11_valor
+pos_11_perc                       pos_11_ret12m                     pos_12_ativo
+pos_12_classe                     pos_12_instituicao                pos_12_qtd
+pos_12_preco_medio                pos_12_valor                      pos_12_perc
+pos_12_ret12m                     pos_13_ativo                      pos_13_classe
+pos_13_instituicao                pos_13_qtd                        pos_13_preco_medio
+pos_13_valor                      pos_13_perc                       pos_13_ret12m
+pos_14_ativo                      pos_14_classe                     pos_14_instituicao
+pos_14_qtd                        pos_14_preco_medio                pos_14_valor
+pos_14_perc                       pos_14_ret12m                     alvo_rf_pos
+atual_rf_pos                      desvio_rf_pos                     valor_rf_pos
+status_rf_pos                     alvo_rf_pre                       atual_rf_pre
+desvio_rf_pre                     valor_rf_pre                      status_rf_pre
+alvo_rf_ipca                      atual_rf_ipca                     desvio_rf_ipca
+valor_rf_ipca                     status_rf_ipca                    alvo_multi
+atual_multi                       desvio_multi                      valor_multi
+status_multi                      alvo_rv_br                        atual_rv_br
+desvio_rv_br                      valor_rv_br                       status_rv_br
+alvo_intl                         atual_intl                        desvio_intl
+valor_intl                        status_intl                       alvo_fii
+atual_fii                         desvio_fii                        valor_fii
+status_fii                        alvo_alt                          atual_alt
+desvio_alt                        valor_alt                         status_alt
+alvo_caixa                        atual_caixa                       desvio_caixa
+valor_caixa                       status_caixa                      texto_desvio_alocacao
+texto_alocacao_em_linha           texto_alocacao_ajuste             d_rf_valor
+d_rf_peso                         d_rf_ret                          d_rf_contrib
+d_rf_ret12m                       d_multi_valor                     d_multi_peso
+d_multi_ret                       d_multi_contrib                   d_multi_ret12m
+d_rvbr_valor                      d_rvbr_peso                       d_rvbr_ret
+d_rvbr_contrib                    d_rvbr_ret12m                     d_intl_valor
+d_intl_peso                       d_intl_ret                        d_intl_contrib
+d_intl_ret12m                     d_fii_valor                       d_fii_peso
+d_fii_ret                         d_fii_contrib                     d_fii_ret12m
+d_alt_valor                       d_alt_peso                        d_alt_ret
+d_alt_contrib                     d_alt_ret12m                      d_caixa_valor
+d_caixa_peso                      d_caixa_ret                       d_caixa_contrib
+d_caixa_ret12m                    top_1_ativo                       top_1_ret
+top_1_contrib                     top_2_ativo                       top_2_ret
+top_2_contrib                     top_3_ativo                       top_3_ret
+top_3_contrib                     top_4_ativo                       top_4_ret
+top_4_contrib                     bot_1_ativo                       bot_1_ret
+bot_1_contrib                     bot_2_ativo                       bot_2_ret
+bot_2_contrib                     bot_3_ativo                       bot_3_ret
+bot_3_contrib                     bot_4_ativo                       bot_4_ret
+bot_4_contrib                     data_inicio_periodo               data_fim_periodo
+mov_1_data                        mov_1_tipo                        mov_1_ativo
+mov_1_classe                      mov_1_qtd                         mov_1_valor
 mov_1_motivo                      mov_2_data                        mov_2_tipo
-mov_2_ativo                       mov_2_classe                      mov_2_valor
-mov_2_motivo                      mov_3_data                        mov_3_tipo
-mov_3_ativo                       mov_3_classe                      mov_3_valor
-mov_3_motivo                      mov_4_data                        mov_4_tipo
-mov_4_ativo                       mov_4_classe                      mov_4_valor
+mov_2_ativo                       mov_2_classe                      mov_2_qtd
+mov_2_valor                       mov_2_motivo                      mov_3_data
+mov_3_tipo                        mov_3_ativo                       mov_3_classe
+mov_3_qtd                         mov_3_valor                       mov_3_motivo
+mov_4_data                        mov_4_tipo                        mov_4_ativo
+mov_4_classe                      mov_4_qtd                         mov_4_valor
 mov_4_motivo                      mov_5_data                        mov_5_tipo
-mov_5_ativo                       mov_5_classe                      mov_5_valor
-mov_5_motivo                      mov_6_data                        mov_6_tipo
-mov_6_ativo                       mov_6_classe                      mov_6_valor
-mov_6_motivo                      prov_1_data                       prov_1_origem
-prov_1_tipo                       prov_1_bruto                      prov_1_ir
-prov_1_liquido                    prov_2_data                       prov_2_origem
-prov_2_tipo                       prov_2_bruto                      prov_2_ir
-prov_2_liquido                    prov_3_data                       prov_3_origem
-prov_3_tipo                       prov_3_bruto                      prov_3_ir
-prov_3_liquido                    total_aportes                     total_resgates
-total_proventos                   total_custos                      custo_perc_patrimonio
-oferta_1_nome                     oferta_1_classe                   oferta_1_emissor
-oferta_1_taxa                     oferta_1_prazo                    oferta_1_ticket
-oferta_1_janela                   oferta_2_nome                     oferta_2_classe
-oferta_2_emissor                  oferta_2_taxa                     oferta_2_prazo
-oferta_2_ticket                   oferta_2_janela                   oferta_3_nome
-oferta_3_classe                   oferta_3_emissor                  oferta_3_taxa
-oferta_3_prazo                    oferta_3_ticket                   oferta_3_janela
-oferta_4_nome                     oferta_4_classe                   oferta_4_emissor
-oferta_4_taxa                     oferta_4_prazo                    oferta_4_ticket
-oferta_4_janela                   oportunidade_1_titulo             oportunidade_1_racional
-oportunidade_2_titulo             oportunidade_2_racional           oportunidade_3_titulo
-oportunidade_3_racional           texto_suitability_oferta          cenario_brasil
-cenario_internacional             m_cdi_fech                        m_cdi_mes
-m_cdi_ano                         m_cdi_12m                         m_ipca_fech
-m_ipca_mes                        m_ipca_ano                        m_ipca_12m
-m_selic_fech                      m_selic_mes                       m_selic_ano
-m_selic_12m                       m_ibov_fech                       m_ibov_mes
-m_ibov_ano                        m_ibov_12m                        m_spx_fech
-m_spx_mes                         m_spx_ano                         m_spx_12m
-m_usd_fech                        m_usd_mes                         m_usd_ano
-m_usd_12m                         m_gold_fech                       m_gold_mes
-m_gold_ano                        m_gold_12m                        m_ifix_fech
-m_ifix_mes                        m_ifix_ano                        m_ifix_12m
-m_imab_fech                       m_imab_mes                        m_imab_ano
-m_imab_12m                        pos_rfpos_visao                   pos_rfpos_mov
-pos_rfpos_racional                pos_rfipca_visao                  pos_rfipca_mov
-pos_rfipca_racional               pos_rvbr_visao                    pos_rvbr_mov
-pos_rvbr_racional                 pos_intl_visao                    pos_intl_mov
-pos_intl_racional                 pos_alt_visao                     pos_alt_mov
-pos_alt_racional                  acao_1_prioridade                 acao_1_descricao
-acao_1_classe                     acao_1_valor                      acao_1_prazo
-acao_2_prioridade                 acao_2_descricao                  acao_2_classe
-acao_2_valor                      acao_2_prazo                      acao_3_prioridade
-acao_3_descricao                  acao_3_classe                     acao_3_valor
+mov_5_ativo                       mov_5_classe                      mov_5_qtd
+mov_5_valor                       mov_5_motivo                      mov_6_data
+mov_6_tipo                        mov_6_ativo                       mov_6_classe
+mov_6_qtd                         mov_6_valor                       mov_6_motivo
+prov_1_data                       prov_1_origem                     prov_1_tipo
+prov_1_bruto                      prov_1_ir                         prov_1_liquido
+prov_2_data                       prov_2_origem                     prov_2_tipo
+prov_2_bruto                      prov_2_ir                         prov_2_liquido
+prov_3_data                       prov_3_origem                     prov_3_tipo
+prov_3_bruto                      prov_3_ir                         prov_3_liquido
+prov_4_data                       prov_4_origem                     prov_4_tipo
+prov_4_bruto                      prov_4_ir                         prov_4_liquido
+prov_total_bruto                  prov_total_ir                     rf_pos_valor
+rf_pos_perc                       rf_pos_taxa                       rf_pos_prazo
+rf_pre_valor                      rf_pre_perc                       rf_pre_taxa
+rf_pre_prazo                      rf_ipca_valor                     rf_ipca_perc
+rf_ipca_taxa                      rf_ipca_prazo                     rf_isento_valor
+rf_isento_perc                    rf_isento_taxa                    rf_isento_prazo
+rf_total_valor                    rf_taxa_media                     rf_prazo_medio
+liq_d0_valor                      liq_d0_perc_rf                    liq_d0_perc_pat
+liq_d0_acum                       liq_d0_obs                        liq_d30_valor
+liq_d30_perc_rf                   liq_d30_perc_pat                  liq_d30_acum
+liq_d30_obs                       liq_d180_valor                    liq_d180_perc_rf
+liq_d180_perc_pat                 liq_d180_acum                     liq_d180_obs
+liq_d360_valor                    liq_d360_perc_rf                  liq_d360_perc_pat
+liq_d360_acum                     liq_d360_obs                      liq_d360mais_valor
+liq_d360mais_perc_rf              liq_d360mais_perc_pat             liq_d360mais_acum
+liq_d360mais_obs                  emissor_1_nome                    emissor_1_valor
+emissor_1_perc_rf                 emissor_1_perc_pat                emissor_1_rating
+emissor_1_fgc                     emissor_1_limite                  emissor_2_nome
+emissor_2_valor                   emissor_2_perc_rf                 emissor_2_perc_pat
+emissor_2_rating                  emissor_2_fgc                     emissor_2_limite
+emissor_3_nome                    emissor_3_valor                   emissor_3_perc_rf
+emissor_3_perc_pat                emissor_3_rating                  emissor_3_fgc
+emissor_3_limite                  emissor_4_nome                    emissor_4_valor
+emissor_4_perc_rf                 emissor_4_perc_pat                emissor_4_rating
+emissor_4_fgc                     emissor_4_limite                  emissor_5_nome
+emissor_5_valor                   emissor_5_perc_rf                 emissor_5_perc_pat
+emissor_5_rating                  emissor_5_fgc                     emissor_5_limite
+acao_1_ticker                     acao_1_empresa                    acao_1_setor
+acao_1_qtd                        acao_1_preco_medio                acao_1_cotacao
+acao_1_valor                      acao_1_perc                       acao_1_ret12m
+acao_2_ticker                     acao_2_empresa                    acao_2_setor
+acao_2_qtd                        acao_2_preco_medio                acao_2_cotacao
+acao_2_valor                      acao_2_perc                       acao_2_ret12m
+acao_3_ticker                     acao_3_empresa                    acao_3_setor
+acao_3_qtd                        acao_3_preco_medio                acao_3_cotacao
+acao_3_valor                      acao_3_perc                       acao_3_ret12m
+acao_4_ticker                     acao_4_empresa                    acao_4_setor
+acao_4_qtd                        acao_4_preco_medio                acao_4_cotacao
+acao_4_valor                      acao_4_perc                       acao_4_ret12m
+acao_5_ticker                     acao_5_empresa                    acao_5_setor
+acao_5_qtd                        acao_5_preco_medio                acao_5_cotacao
+acao_5_valor                      acao_5_perc                       acao_5_ret12m
+fii_1_ticker                      fii_1_segmento                    fii_1_qtd
+fii_1_preco_medio                 fii_1_cotacao                     fii_1_valor
+fii_1_perc                        fii_1_dy                          fii_2_ticker
+fii_2_segmento                    fii_2_qtd                         fii_2_preco_medio
+fii_2_cotacao                     fii_2_valor                       fii_2_perc
+fii_2_dy                          fii_3_ticker                      fii_3_segmento
+fii_3_qtd                         fii_3_preco_medio                 fii_3_cotacao
+fii_3_valor                       fii_3_perc                        fii_3_dy
+fii_4_ticker                      fii_4_segmento                    fii_4_qtd
+fii_4_preco_medio                 fii_4_cotacao                     fii_4_valor
+fii_4_perc                        fii_4_dy                          data_ptax
+intl_total_usd                    intl_total_brl                    intl_perc_patrimonio
+intl_ret12m_usd                   intl_ret12m_brl                   ptax_utilizada
+irf_1_ativo                       irf_1_emissor                     irf_1_moeda
+irf_1_vencimento                  irf_1_taxa                        irf_1_valor_usd
+irf_1_perc                        irf_2_ativo                       irf_2_emissor
+irf_2_moeda                       irf_2_vencimento                  irf_2_taxa
+irf_2_valor_usd                   irf_2_perc                        irf_3_ativo
+irf_3_emissor                     irf_3_moeda                       irf_3_vencimento
+irf_3_taxa                        irf_3_valor_usd                   irf_3_perc
+irv_1_ticker                      irv_1_nome                        irv_1_tipo
+irv_1_qtd                         irv_1_preco_medio                 irv_1_cotacao
+irv_1_valor_usd                   irv_1_ret12m                      irv_2_ticker
+irv_2_nome                        irv_2_tipo                        irv_2_qtd
+irv_2_preco_medio                 irv_2_cotacao                     irv_2_valor_usd
+irv_2_ret12m                      irv_3_ticker                      irv_3_nome
+irv_3_tipo                        irv_3_qtd                         irv_3_preco_medio
+irv_3_cotacao                     irv_3_valor_usd                   irv_3_ret12m
+irv_4_ticker                      irv_4_nome                        irv_4_tipo
+irv_4_qtd                         irv_4_preco_medio                 irv_4_cotacao
+irv_4_valor_usd                   irv_4_ret12m                      oferta_1_nome
+oferta_1_classe                   oferta_1_emissor                  oferta_1_taxa
+oferta_1_prazo                    oferta_1_ticket                   oferta_1_janela
+oferta_2_nome                     oferta_2_classe                   oferta_2_emissor
+oferta_2_taxa                     oferta_2_prazo                    oferta_2_ticket
+oferta_2_janela                   oferta_3_nome                     oferta_3_classe
+oferta_3_emissor                  oferta_3_taxa                     oferta_3_prazo
+oferta_3_ticket                   oferta_3_janela                   oferta_4_nome
+oferta_4_classe                   oferta_4_emissor                  oferta_4_taxa
+oferta_4_prazo                    oferta_4_ticket                   oferta_4_janela
+oportunidade_1_titulo             oportunidade_1_racional           oportunidade_2_titulo
+oportunidade_2_racional           oportunidade_3_titulo             oportunidade_3_racional
+texto_suitability_oferta          cenario_brasil                    cenario_internacional
+m_cdi_fech                        m_cdi_mes                         m_cdi_ano
+m_cdi_12m                         m_ipca_fech                       m_ipca_mes
+m_ipca_ano                        m_ipca_12m                        m_selic_fech
+m_selic_mes                       m_selic_ano                       m_selic_12m
+m_ibov_fech                       m_ibov_mes                        m_ibov_ano
+m_ibov_12m                        m_spx_fech                        m_spx_mes
+m_spx_ano                         m_spx_12m                         m_usd_fech
+m_usd_mes                         m_usd_ano                         m_usd_12m
+m_gold_fech                       m_gold_mes                        m_gold_ano
+m_gold_12m                        m_ifix_fech                       m_ifix_mes
+m_ifix_ano                        m_ifix_12m                        m_imab_fech
+m_imab_mes                        m_imab_ano                        m_imab_12m
+pos_rfpos_visao                   pos_rfpos_mov                     pos_rfpos_racional
+pos_rfipca_visao                  pos_rfipca_mov                    pos_rfipca_racional
+pos_rvbr_visao                    pos_rvbr_mov                      pos_rvbr_racional
+pos_intl_visao                    pos_intl_mov                      pos_intl_racional
+pos_alt_visao                     pos_alt_mov                       pos_alt_racional
+mensagem_encerramento             acao_1_prioridade                 acao_1_descricao
+acao_1_classe                     acao_1_prazo                      acao_2_prioridade
+acao_2_descricao                  acao_2_classe                     acao_2_prazo
+acao_3_prioridade                 acao_3_descricao                  acao_3_classe
 acao_3_prazo                      acao_4_prioridade                 acao_4_descricao
-acao_4_classe                     acao_4_valor                      acao_4_prazo
-pendencia_1_titulo                pendencia_1_detalhe               pendencia_2_titulo
-pendencia_2_detalhe               pendencia_3_titulo                pendencia_3_detalhe
-data_proxima_reuniao              formato_reuniao                   pauta_proxima_reuniao
-fonte_dados                       metodo_rentabilidade              metodo_fluxo_caixa
-contas_consideradas               data_ptax
+acao_4_classe                     acao_4_prazo                      pendencia_1_titulo
+pendencia_1_detalhe               pendencia_2_titulo                pendencia_2_detalhe
+pendencia_3_titulo                pendencia_3_detalhe               data_proxima_reuniao
+formato_reuniao                   pauta_proxima_reuniao             fonte_dados
+metodo_rentabilidade              metodo_fluxo_caixa                contas_consideradas
+origem_carteira_meta
 ```
 </details>
 
-Campos exclusivos da variante **assessoria** (45):
+Campos exclusivos da variante **assessoria** (35):
 
 ```
-rf_1_indexador                    rf_1_perc                         rf_1_prazo
-rf_1_taxa                         rf_1_valor                        rf_2_indexador
-rf_2_perc                         rf_2_prazo                        rf_2_taxa
-rf_2_valor                        rf_3_indexador                    rf_3_perc
-rf_3_prazo                        rf_3_taxa                         rf_3_valor
-rf_4_indexador                    rf_4_perc                         rf_4_prazo
-rf_4_taxa                         rf_4_valor                        texto_concentracao_fgc
-venc_1_ativo                      venc_1_data                       venc_1_destino
-venc_1_emissor                    venc_1_indexador                  venc_1_valor
-venc_2_ativo                      venc_2_data                       venc_2_destino
-venc_2_emissor                    venc_2_indexador                  venc_2_valor
-venc_3_ativo                      venc_3_data                       venc_3_destino
-venc_3_emissor                    venc_3_indexador                  venc_3_valor
-venc_4_ativo                      venc_4_data                       venc_4_destino
-venc_4_emissor                    venc_4_indexador                  venc_4_valor
-```
-
-Campos exclusivos da variante **consultoria** (45):
-
-```
-rf_1_indexador                    rf_1_perc                         rf_1_prazo
-rf_1_taxa                         rf_1_valor                        rf_2_indexador
-rf_2_perc                         rf_2_prazo                        rf_2_taxa
-rf_2_valor                        rf_3_indexador                    rf_3_perc
-rf_3_prazo                        rf_3_taxa                         rf_3_valor
-rf_4_indexador                    rf_4_perc                         rf_4_prazo
-rf_4_taxa                         rf_4_valor                        texto_concentracao_fgc
-venc_1_ativo                      venc_1_data                       venc_1_destino
-venc_1_emissor                    venc_1_indexador                  venc_1_valor
-venc_2_ativo                      venc_2_data                       venc_2_destino
-venc_2_emissor                    venc_2_indexador                  venc_2_valor
-venc_3_ativo                      venc_3_data                       venc_3_destino
-venc_3_emissor                    venc_3_indexador                  venc_3_valor
-venc_4_ativo                      venc_4_data                       venc_4_destino
-venc_4_emissor                    venc_4_indexador                  venc_4_valor
+remun_1_classe                    remun_1_forma                     remun_1_perc
+remun_1_posicao                   remun_1_produto                   remun_1_valor
+remun_2_classe                    remun_2_forma                     remun_2_perc
+remun_2_posicao                   remun_2_produto                   remun_2_valor
+remun_3_classe                    remun_3_forma                     remun_3_perc
+remun_3_posicao                   remun_3_produto                   remun_3_valor
+remun_4_classe                    remun_4_forma                     remun_4_perc
+remun_4_posicao                   remun_4_produto                   remun_4_valor
+remun_5_classe                    remun_5_forma                     remun_5_perc
+remun_5_posicao                   remun_5_produto                   remun_5_valor
+remun_equivalente_ano             remun_total                       remun_total_perc
+texto_como_ler_remuneracao        texto_conflito_interesse
 ```
 
 Campos exclusivos da variante **private** (36):
 
 ```
-estrutura_1_finalidade            estrutura_1_nome                  estrutura_1_revisao
-estrutura_1_status                estrutura_1_tipo                  estrutura_2_finalidade
-estrutura_2_nome                  estrutura_2_revisao               estrutura_2_status
-estrutura_2_tipo                  estrutura_3_finalidade            estrutura_3_nome
+compromisso_1_nome                compromisso_1_origem              compromisso_1_quando
+compromisso_1_situacao            compromisso_1_valor               compromisso_2_nome
+compromisso_2_origem              compromisso_2_quando              compromisso_2_situacao
+compromisso_2_valor               compromisso_3_nome                compromisso_3_origem
+compromisso_3_quando              compromisso_3_situacao            compromisso_3_valor
+estrutura_1_finalidade            estrutura_1_jurisdicao            estrutura_1_nome
+estrutura_1_revisao               estrutura_1_status                estrutura_1_tipo
+estrutura_2_finalidade            estrutura_2_jurisdicao            estrutura_2_nome
+estrutura_2_revisao               estrutura_2_status                estrutura_2_tipo
+estrutura_3_finalidade            estrutura_3_jurisdicao            estrutura_3_nome
 estrutura_3_revisao               estrutura_3_status                estrutura_3_tipo
-intl_1_jurisdicao                 intl_1_moeda                      intl_1_perc
-intl_1_ret12m                     intl_1_saldo                      intl_1_veiculo
-intl_2_jurisdicao                 intl_2_moeda                      intl_2_perc
-intl_2_ret12m                     intl_2_saldo                      intl_2_veiculo
-intl_3_jurisdicao                 intl_3_moeda                      intl_3_perc
-intl_3_ret12m                     intl_3_saldo                      intl_3_veiculo
 nota_holding                      nota_seguros                      nota_sucessao
 ```
 

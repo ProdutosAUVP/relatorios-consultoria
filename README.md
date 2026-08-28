@@ -14,7 +14,7 @@ Os seis documentos existem nos quatro segmentos.
 
 | Documento | Formato | Páginas | Consultoria | Alta Renda | Private | Assessoria |
 | --- | --- | --- | :-: | :-: | :-: | :-: |
-| Relatório mensal | A4 retrato | 10 | ✓ | ✓ | ✓ | ✓ |
+| Relatório mensal | A4 retrato | 13–14 | ✓ | ✓ | ✓ | ✓ |
 | Diagnóstico de carteira | A4 retrato | 10 | ✓ | ✓ | ✓ | ✓ |
 | Relatório macroeconômico | A4 retrato | 10 | ✓ | ✓ | ✓ | ✓ |
 | Apresentação geral | 16:9 | 14 | ✓ | ✓ | ✓ | ✓ |
@@ -145,14 +145,70 @@ alto perde os traços de 10% de opacidade e desalinha o grafismo em cerca de 4 m
 | Subtítulo | 25,3 pt, linha de base em 120,2 mm |
 | Grafismo de arcos | sangrando no canto inferior direito, a 50% de opacidade |
 
+## Cobertura do relatório gerado hoje
+
+O relatório mensal cobre, seção a seção, tudo o que a especificação do Consolidador
+lista como conteúdo atual. As seções marcadas lá como "quando há dado" continuam
+condicionais aqui e trazem o selo *Somente quando houver dado*.
+
+| Seção do relatório atual | O que mostra hoje | Onde está no modelo |
+| --- | --- | --- |
+| Capa | cliente, perfil e consultor sobre a arte de fundo | capa |
+| Resumo da carteira | patrimônio, rentabilidade no mês e no ano, ganhos, aplicações e tabela do portfólio | **Resumo da carteira** (8 cards, incluindo ganho em R$ e aplicações) + **Carteira consolidada** |
+| Rentabilidade | gráfico da carteira contra benchmark (IPCA + 5% a.a.) | Resumo da carteira: tabela de referências e gráfico "Carteira x IPCA + 5% a.a." |
+| Movimentações e proventos | ativos comprados no mês e gráfico de proventos | **Movimentações e proventos**, com a tabela de operações e o gráfico de proventos por mês |
+| Alocação por estratégia | carteira atual contra a carteira meta | **Alocação por estratégia** |
+| Renda fixa | indexadores, liquidez projetada e controle por emissor | **Renda fixa**, com as três tabelas |
+| Ações e FIIs | distribuição por setor/segmento e lista de ativos | **Ações e fundos imobiliários**, duas roscas e duas listas |
+| Internacional | renda fixa e renda variável em US$ | **Carteira internacional**, condicional |
+| Encerramento | mensagem, assinatura do consultor e contatos | **Encerramento e próximos passos** |
+
+Os elementos recorrentes citados como necessitando padrão único têm cada um a sua
+classe: capa (`.cover`), papel timbrado (`.pg-head` / `.pg-foot`), cards de indicadores
+(`.kpi`), tabelas (`.tb`, com `thead`, `tbody` e `tfoot`), gráficos (`.chart`) e bloco
+de assinatura (`.sig`).
+
+## Insumos para a implementação
+
+A especificação pede um conjunto fechado de insumos por segmento. Todos estão no
+`:root` de cada arquivo, como tokens CSS.
+
+**Paleta.** `--brand` é a principal e `--accent` a de apoio. A sequência dos gráficos
+são `--c1` a `--c6`, definida por segmento:
+
+| Segmento | `--c1` | `--c2` | `--c3` | `--c4` | `--c5` | `--c6` |
+| --- | --- | --- | --- | --- | --- | --- |
+| Consultoria | `#023620` | `#3E7A52` | `#7FAE86` | `#B9D3B6` | `#EFBF4F` | `#8C7A3E` |
+| Alta Renda | `#011F13` | `#2E5C3F` | `#6A9673` | `#A8C4A6` | `#EFBF4F` | `#8C7A3E` |
+| Assessoria | `#005F45` | `#3E8F6C` | `#7CBB99` | `#B7DCC6` | `#EFBF4F` | `#8C7A3E` |
+| Private Banking | `#3A3E42` | `#5C6167` | `#82888E` | `#A8ADB2` | `#CBCFD3` | `#E2E5E7` |
+
+**Fontes e pesos.** Anek Latin em 300, 400, 600, 700 e 800. No Private Banking, EB
+Garamond em 400 e 600 entra pontualmente no tipo de display — título e assinatura das
+capas, título das divisórias e números de destaque — enquanto o texto corrido e as
+tabelas seguem na Anek, que compõe melhor em corpo pequeno.
+
+**Tamanhos.** A4: título de capa 43,89 pt, assinatura de capa 32,13 pt, título de
+página 19 pt, seção 10 pt, texto 10 pt, tabela 8,2 pt (`.sm` 7,4 pt, `.xs` 6,6 pt),
+rodapé 6,2 pt. 16:9: título de capa 44,6 pt, subtítulo 25,3 pt, título de slide 26 pt,
+texto 11 pt, tabela 9,5 pt.
+
+**Logos.** Os SVGs originais entram embutidos e são recoloridos por CSS; a largura sai
+de uma altura-alvo, porque a marca do Private Banking é bem mais larga que a do Capital.
+
+**Componentes.** Rosca, barra e linha têm esqueleto em `.sk-donut`, `.sk-bars` e
+`.sk-line`, dentro da moldura `.chart` que descreve o que o gráfico deve mostrar.
+Tabelas, cards, capa, papel timbrado e assinatura estão nas classes listadas acima.
+
 ## O que cada documento cobre
 
-**Relatório mensal** — carta do responsável e índice; panorama com KPIs e
-rentabilidade contra CDI, IPCA+5% e Ibovespa; alocação alvo × realizado; atribuição de
-resultado por classe e por ativo; movimentações e proventos; uma página específica do
-segmento (renda fixa e vencimentos na consultoria e na assessoria, ofertas exclusivas
-na alta renda, estruturas e internacional no private); cenário e posicionamento;
-próximos passos; notas metodológicas.
+**Relatório mensal** — carta do responsável e índice; resumo da carteira; carteira
+consolidada; alocação por estratégia; desempenho por classe e por ativo; movimentações
+e proventos; renda fixa; ações e FIIs; internacional; cenário e posicionamento;
+encerramento; notas metodológicas. Três dos quatro segmentos ganham ainda uma página
+própria: ofertas exclusivas na alta renda, estruturas e sucessão no private e
+transparência de remuneração na assessoria — esta última fecha o que a apresentação
+geral do segmento promete ao cliente.
 
 **Diagnóstico de carteira** — escopo e método; perfil, objetivos e restrições;
 fotografia da carteira atual; pontos fortes e pontos de atenção; concentração por

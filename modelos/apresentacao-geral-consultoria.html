@@ -9,6 +9,7 @@
   --brand:#023620; --accent:#EFBF4F;
   --ph:rgba(239,191,79,.24); --ph-dk:rgba(239,191,79,.26);
   --warn-bg:rgba(239,191,79,.18); --warn-fg:#8A6A12; --warn-bd:rgba(239,191,79,.5);
+  --c1:#023620; --c2:#3E7A52; --c3:#7FAE86; --c4:#B9D3B6; --c5:#EFBF4F; --c6:#8C7A3E;
   --ink:#12160F; --ink-2:#4A5248; --line:#E3E6E1; --soft:#F5F7F4;
   --paper:#FFFFFF; --pos:#1F7A4C; --neg:#B3402F;
 }
@@ -130,7 +131,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .sk-bars{display:flex;align-items:flex-end;gap:4mm;height:26mm;width:60%;opacity:.3}
 .sk-bars i{flex:1;background:currentColor;border-radius:.6mm .6mm 0 0}
 .sk-donut{width:32mm;height:32mm;border-radius:50%;opacity:.35;
-  background:conic-gradient(currentColor 0 42%,var(--accent) 42% 63%,rgba(128,128,128,.7) 63% 82%,rgba(128,128,128,.3) 82% 100%);
+  background:conic-gradient(var(--c1) 0 42%,var(--c2) 42% 63%,var(--c3) 63% 82%,var(--c4) 82% 100%);
   -webkit-mask:radial-gradient(circle,transparent 52%,#000 53%);mask:radial-gradient(circle,transparent 52%,#000 53%)}
 .pill{display:inline-block;font-size:7.4pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
   padding:1mm 3mm;border-radius:8mm;background:var(--soft);color:var(--brand);border:1px solid var(--line)}

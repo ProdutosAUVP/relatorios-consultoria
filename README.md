@@ -74,9 +74,10 @@ Extraído dos arquivos em `assets relatórios/` e do `MODELO SLIDES AUVP CAPITAL
 | Private Banking | `#666666` | idem | AUVP PRIVATE BANKING |
 
 - **Acento:** `#EFBF4F` (dourado do deck institucional) na consultoria, na alta renda e
-  na assessoria, usado com parcimônia e sempre como linha fina: a régua curta do
-  olho-de-boi, a borda esquerda dos cards, os marcadores numéricos das linhas do tempo.
-  Nunca em capas.
+  na assessoria, usado com parcimônia e sempre como linha fina: a borda esquerda dos
+  cards, os marcadores numéricos das linhas do tempo e os marcadores das listas de
+  planos. Nunca em capas. Os rótulos que antecedem os títulos (`.eyebrow`) são só
+  texto, sem traço.
 - **Private Banking não usa amarelo em lugar nenhum.** O acento é o neutro `#8C939A`, e
   com ele saem do amarelo também o realce dos campos preenchíveis e o selo de atenção
   do diagnóstico. São tokens de tema (`--accent`, `--ph`, `--warn-*`), então a regra
@@ -199,8 +200,21 @@ Banking já o nomeia, então ali não há rótulo nenhum. É o token `rotulo` do
 no private.
 
 **Componentes.** Rosca, barra e linha têm esqueleto em `.sk-donut`, `.sk-bars` e
-`.sk-line`, dentro da moldura `.chart` que descreve o que o gráfico deve mostrar.
-Tabelas, cards, capa, papel timbrado e assinatura estão nas classes listadas acima.
+`.sk-line`, dentro da moldura `.chart` que descreve o que o gráfico deve mostrar e traz
+a legenda de série já pintada com `--c1` a `--c6` — assim quem implementa o gráfico vê
+a paleta no lugar em que ela vai ser usada. Tabelas, cards, capa, papel timbrado e
+assinatura estão nas classes listadas acima.
+
+Para dados que não são tabela nem gráfico há três blocos:
+
+| Classe | Para quê |
+| --- | --- |
+| `.flow` | sequência de etapas sobre um trilho contínuo, com nó numerado e etiqueta de prazo. Método, primeiros passos, etapas do diagnóstico, plano de transição e preparação para a reunião |
+| `.hero` + `.stats` | um número em destaque com a leitura ao lado e uma fileira de números de apoio separados por fio. Página de números da apresentação |
+| `.year` | os doze meses em dois semestres, cada um com o tipo de encontro. Cronograma, acima da tabela de detalhe |
+
+Todos usam só fio de 1 pt, numeração no tom de acento e a mesma escala tipográfica das
+tabelas — nenhum recurso novo de cor ou de peso.
 
 ## O que cada documento cobre
 

@@ -79,7 +79,6 @@ strong{font-weight:700}
 
 .eyebrow{display:block;font-size:7.5pt;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);margin:0 0 3mm}
 .slide.dark .eyebrow{color:#fff}
-.eyebrow::before{content:'';display:inline-block;width:8mm;height:1.33px;background:var(--accent);vertical-align:middle;margin-right:3mm}
 h1.t{font-size:26pt;font-weight:800;text-transform:uppercase;letter-spacing:-.015em;line-height:1.03;margin:0 0 4mm}
 .lead{font-size:11pt;color:var(--ink-2);margin:0 0 6mm;max-width:210mm}
 h2{font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:6mm 0 3mm;
@@ -89,6 +88,8 @@ h3{font-size:10.5pt;font-weight:700;margin:4mm 0 1.5mm}
 .small{font-size:9pt}
 .legal{font-size:7.4pt;line-height:1.5;color:var(--ink-2)}
 .cols2{display:grid;grid-template-columns:1fr 1fr;gap:10mm}
+/* usa a sobra vertical do slide em vez de deixá-la toda no rodapé */
+.center{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:9mm;min-height:0}
 .cols2>*,.cols3>*,.cols2u>*,.cards>*,.kpis>*{min-width:0}
 .cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm}
 .cols2u{display:grid;grid-template-columns:1.3fr 1fr;gap:10mm}
@@ -205,6 +206,47 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .stat{display:flex;flex-direction:column;gap:1.5mm}
 .stat .lb{font-size:8.6pt;color:var(--ink-2);line-height:1.35}
 .slide.dark .stat .lb{color:rgba(255,255,255,.78)}
+
+/* ---------- processo: nós numerados sobre um trilho contínuo ---------- */
+.flow{list-style:none;margin:0;padding:0;counter-reset:fl;
+  display:grid;grid-template-columns:repeat(var(--n,4),1fr);column-gap:8mm}
+.flow>li{position:relative;min-width:0;padding-top:15mm}
+.flow>li::after{content:"";position:absolute;left:0;right:calc(-1 * 8mm);top:6mm;height:1px;background:var(--line)}
+.flow>li:last-child::after{right:0}
+.flow .node{position:absolute;left:0;top:0;z-index:2;width:12mm;height:12mm;border-radius:50%;
+  border:1px solid var(--brand);background:var(--paper);color:var(--brand);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11pt;letter-spacing:-.01em}
+.flow .node::before{counter-increment:fl;content:counter(fl,decimal-leading-zero)}
+.flow .tag{display:block;font-size:7pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-2);margin-bottom:1mm}
+.flow h4{font-size:10.5pt;font-weight:700;margin:0 0 1mm}
+.flow p{font-size:9pt;color:var(--ink-2);margin:0;line-height:1.45}
+
+/* ---------- legenda de série, com a paleta do segmento ---------- */
+.legend{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5mm 6mm;
+  margin:4mm 0 0;padding:0;font-size:8pt;color:var(--ink-2)}
+.legend li{display:flex;align-items:center;gap:1.6mm}
+.legend i{width:6mm;height:1.33px;flex:0 0 auto}
+
+.slide.dark .flow>li::after{background:rgba(255,255,255,.25)}
+.slide.dark .flow .node{background:transparent;border-color:rgba(255,255,255,.55);color:#fff}
+.slide.dark .flow .tag,.slide.dark .flow p,.slide.dark .legend{color:rgba(255,255,255,.78)}
+
+/* ---------- número de destaque com números de apoio ---------- */
+.hero{display:grid;grid-template-columns:auto 1fr;align-items:end;gap:0 8mm;
+  padding-bottom:6mm;border-bottom:1px solid var(--line)}
+.hero .n{font-size:64pt;font-weight:800;line-height:.9;letter-spacing:-.04em;color:var(--brand)}
+.slide.dark .hero .n{color:#fff}
+.hero .l{font-size:11pt;color:var(--ink-2);line-height:1.4;padding-bottom:2mm}
+.slide.dark .hero .l{color:rgba(255,255,255,.8)}
+.stats{display:grid;grid-template-columns:repeat(var(--n,5),1fr);margin-top:7mm}
+.stats>div{min-width:0;padding:0 5mm;border-left:1px solid var(--line)}
+.stats>div:first-child{padding-left:0;border-left:0}
+.slide.dark .stats>div{border-color:rgba(255,255,255,.22)}
+.stats .n{font-size:22pt;font-weight:800;line-height:1;letter-spacing:-.03em;color:var(--brand)}
+.slide.dark .stats .n{color:#fff}
+.stats .l{font-size:8.4pt;color:var(--ink-2);line-height:1.35;margin-top:2mm}
+.slide.dark .stats .l{color:rgba(255,255,255,.75)}
 
 </style>
 </head>
@@ -660,17 +702,8 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     <div class="pg-body">
 <span class="eyebrow">Em números</span>
 <h1 class="t">A AUVP hoje</h1>
-<div class="cols3" style="margin-bottom:8mm">
-  <div class="stat"><div class="big"><span class="ph">{{numero_1}}</span></div><div class="lb"><span class="ph">{{numero_1_legenda}}</span></div></div>
-  <div class="stat"><div class="big"><span class="ph">{{numero_2}}</span></div><div class="lb"><span class="ph">{{numero_2_legenda}}</span></div></div>
-  <div class="stat"><div class="big"><span class="ph">{{numero_3}}</span></div><div class="lb"><span class="ph">{{numero_3_legenda}}</span></div></div>
-</div>
-<div class="cols3">
-  <div class="stat"><div class="big"><span class="ph">{{numero_4}}</span></div><div class="lb"><span class="ph">{{numero_4_legenda}}</span></div></div>
-  <div class="stat"><div class="big"><span class="ph">{{numero_5}}</span></div><div class="lb"><span class="ph">{{numero_5_legenda}}</span></div></div>
-  <div class="stat"><div class="big"><span class="ph">{{numero_6}}</span></div><div class="lb"><span class="ph">{{numero_6_legenda}}</span></div></div>
-</div>
-<div style="margin-top:auto"><p class="legal"><span class="ph" title="Data-base e fonte dos números acima">{{nota_fonte_numeros}}</span></p></div>
+<div class="center"><div class="hero"><div class="n"><span class="ph">{{numero_1}}</span></div><div class="l"><span class="ph">{{numero_1_legenda}}</span></div></div><div class="stats" style="--n:5"><div><div class="n"><span class="ph">{{numero_2}}</span></div><div class="l"><span class="ph">{{numero_2_legenda}}</span></div></div><div><div class="n"><span class="ph">{{numero_3}}</span></div><div class="l"><span class="ph">{{numero_3_legenda}}</span></div></div><div><div class="n"><span class="ph">{{numero_4}}</span></div><div class="l"><span class="ph">{{numero_4_legenda}}</span></div></div><div><div class="n"><span class="ph">{{numero_5}}</span></div><div class="l"><span class="ph">{{numero_5_legenda}}</span></div></div><div><div class="n"><span class="ph">{{numero_6}}</span></div><div class="l"><span class="ph">{{numero_6_legenda}}</span></div></div></div></div>
+<p class="legal"><span class="ph" title="Data-base e fonte dos números acima">{{nota_fonte_numeros}}</span></p>
     </div>
     <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
   </div>
@@ -874,14 +907,8 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     <div class="pg-body">
 <span class="eyebrow">Método</span>
 <h1 class="t">Do primeiro papo à carteira rodando</h1>
-<ol class="steps" style="--n:5;flex:1 1 auto">
-  <li><h4>Diagnóstico</h4><p><span class="ph">{{metodo_1_detalhe}}</span></p></li>
-  <li><h4>Proposta</h4><p><span class="ph">{{metodo_2_detalhe}}</span></p></li>
-  <li><h4>Transição</h4><p><span class="ph">{{metodo_3_detalhe}}</span></p></li>
-  <li><h4>Acompanhamento</h4><p><span class="ph">{{metodo_4_detalhe}}</span></p></li>
-  <li><h4>Revisão</h4><p><span class="ph">{{metodo_5_detalhe}}</span></p></li>
-</ol>
-<div class="note" style="margin-top:auto"><p><strong>Prazo típico.</strong> <span class="ph">{{prazo_implantacao}}</span></p></div>
+<div class="center"><ol class="flow" style="--n:5"><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_1_prazo}}</span></span><h4>Diagnóstico</h4><p><span class="ph">{{metodo_1_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_2_prazo}}</span></span><h4>Proposta</h4><p><span class="ph">{{metodo_2_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_3_prazo}}</span></span><h4>Transição</h4><p><span class="ph">{{metodo_3_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_4_prazo}}</span></span><h4>Acompanhamento</h4><p><span class="ph">{{metodo_4_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_5_prazo}}</span></span><h4>Revisão</h4><p><span class="ph">{{metodo_5_detalhe}}</span></p></li></ol></div>
+<div class="note"><p><strong>Prazo típico do ciclo completo.</strong> <span class="ph">{{prazo_implantacao}}</span></p></div>
     </div>
     <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
   </div>
@@ -1348,14 +1375,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     <div class="pg-body">
 <span class="eyebrow">Começar</span>
 <h1 class="t">Como damos o primeiro passo</h1>
-<ol class="steps" style="--n:4;margin-bottom:8mm">
-  <li><h4>Conversa inicial</h4><p><span class="ph">{{passo_1_detalhe}}</span></p></li>
-  <li><h4>Diagnóstico</h4><p><span class="ph">{{passo_2_detalhe}}</span></p></li>
-  <li><h4>Proposta</h4><p><span class="ph">{{passo_3_detalhe}}</span></p></li>
-  <li><h4>Abertura e transferência</h4><p><span class="ph">{{passo_4_detalhe}}</span></p></li>
-</ol>
-<h2>O que precisamos de você</h2>
-<div class="cols3"><div class="card"><h4><span class="ph">{{requisito_1_titulo}}</span></h4><p><span class="ph">{{requisito_1_detalhe}}</span></p></div><div class="card"><h4><span class="ph">{{requisito_2_titulo}}</span></h4><p><span class="ph">{{requisito_2_detalhe}}</span></p></div><div class="card"><h4><span class="ph">{{requisito_3_titulo}}</span></h4><p><span class="ph">{{requisito_3_detalhe}}</span></p></div></div>
+<div class="center"><ol class="flow" style="--n:4"><li><span class="node"></span><span class="tag"><span class="ph">{{passo_1_prazo}}</span></span><h4>Conversa inicial</h4><p><span class="ph">{{passo_1_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{passo_2_prazo}}</span></span><h4>Diagnóstico</h4><p><span class="ph">{{passo_2_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{passo_3_prazo}}</span></span><h4>Proposta</h4><p><span class="ph">{{passo_3_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{passo_4_prazo}}</span></span><h4>Abertura e transferência</h4><p><span class="ph">{{passo_4_detalhe}}</span></p></li></ol>
+<div><h2 style="margin-top:0">O que precisamos de você</h2>
+<div class="cols3"><div class="card"><h4><span class="ph">{{requisito_1_titulo}}</span></h4><p><span class="ph">{{requisito_1_detalhe}}</span></p></div><div class="card"><h4><span class="ph">{{requisito_2_titulo}}</span></h4><p><span class="ph">{{requisito_2_detalhe}}</span></p></div><div class="card"><h4><span class="ph">{{requisito_3_titulo}}</span></h4><p><span class="ph">{{requisito_3_detalhe}}</span></p></div></div></div></div>
     </div>
     <footer class="pg-foot"><span class="no">12</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
   </div>

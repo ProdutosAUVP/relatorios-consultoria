@@ -9,6 +9,7 @@
   --brand:#011F13; --accent:#EFBF4F;
   --ph:rgba(239,191,79,.24); --ph-dk:rgba(239,191,79,.26);
   --warn-bg:rgba(239,191,79,.18); --warn-fg:#8A6A12; --warn-bd:rgba(239,191,79,.5);
+  --c1:#011F13; --c2:#2E5C3F; --c3:#6A9673; --c4:#A8C4A6; --c5:#EFBF4F; --c6:#8C7A3E;
   --ink:#0E1411; --ink-2:#465049; --line:#E1E5E3; --soft:#F4F6F5;
   --paper:#FFFFFF; --pos:#1F7A4C; --neg:#B3402F;
 }
@@ -119,6 +120,11 @@ h3{font-size:9pt;font-weight:700;margin:3.5mm 0 1.2mm}
 table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .tb.sm{font-size:7.4pt}
 .tb.sm td{padding:1.6mm 1.8mm}
+.tb.xs{font-size:6.6pt}
+.tb.xs td{padding:1.3mm 1.4mm}
+.tb.xs thead th{padding:1.5mm 1.4mm;font-size:5.8pt;letter-spacing:.04em}
+/* colunas declaradas só valem como limite com layout fixo */
+.tb.fix{table-layout:fixed}
 .tb.sm thead th{padding:1.8mm 1.8mm;font-size:6.2pt;letter-spacing:.06em}
 .tb thead th{background:var(--brand);color:#fff;text-align:left;font-weight:600;
   padding:2.2mm 2.4mm;font-size:6.6pt;letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
@@ -152,7 +158,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .sk-bars{display:flex;align-items:flex-end;gap:2.5mm;height:16mm;width:70%;opacity:.28}
 .sk-bars i{flex:1;background:var(--brand);border-radius:.4mm .4mm 0 0}
 .sk-donut{width:22mm;height:22mm;border-radius:50%;opacity:.5;
-  background:conic-gradient(var(--brand) 0 42%,var(--accent) 42% 63%,var(--ink-2) 63% 82%,var(--line) 82% 100%);
+  background:conic-gradient(var(--c1) 0 42%,var(--c2) 42% 63%,var(--c3) 63% 82%,var(--c4) 82% 100%);
   -webkit-mask:radial-gradient(circle,transparent 52%,#000 53%);mask:radial-gradient(circle,transparent 52%,#000 53%)}
 .sk-line{width:75%;height:16mm;opacity:.42;
   background:linear-gradient(transparent,transparent) no-repeat;

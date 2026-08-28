@@ -69,13 +69,20 @@ Extraído dos arquivos em `assets relatórios/` e do `MODELO SLIDES AUVP CAPITAL
 | Segmento | Cor base | Capa | Logo |
 | --- | --- | --- | --- |
 | Consultoria | `#023620` | gradiente 225° da cor base até `#000` | AUVP CAPITAL |
-| Alta Renda | `#022620` | idem | AUVP CAPITAL |
+| Alta Renda | `#011F13` | idem | AUVP CAPITAL |
 | Assessoria | `#005F45` | idem | AUVP CAPITAL |
 | Private Banking | `#666666` | idem | AUVP PRIVATE BANKING |
 
-- **Acento:** `#EFBF4F` (dourado do deck institucional), usado com parcimônia e sempre
-  como linha fina: a régua curta do olho-de-boi, a borda esquerda dos cards, os
-  marcadores numéricos das linhas do tempo. Nunca em capas.
+- **Acento:** `#EFBF4F` (dourado do deck institucional) na consultoria, na alta renda e
+  na assessoria, usado com parcimônia e sempre como linha fina: a régua curta do
+  olho-de-boi, a borda esquerda dos cards, os marcadores numéricos das linhas do tempo.
+  Nunca em capas.
+- **Private Banking não usa amarelo em lugar nenhum.** O acento é o neutro `#8C939A`, e
+  com ele saem do amarelo também o realce dos campos preenchíveis e o selo de atenção
+  do diagnóstico. São tokens de tema (`--accent`, `--ph`, `--warn-*`), então a regra
+  vale para qualquer elemento novo sem precisar ser lembrada caso a caso. Vermelho e
+  verde continuam disponíveis como sinal semântico — gravidade de risco, retorno
+  positivo ou negativo — onde a cor ajuda a leitura.
 - **Capas e divisórias são monocromáticas.** Logo, título, réguas, grafismo e campos
   preenchíveis, tudo em branco sobre o gradiente. O dourado só entra nas páginas de
   conteúdo, e apenas onde a cor ajuda a leitura.
@@ -93,11 +100,15 @@ Extraído dos arquivos em `assets relatórios/` e do `MODELO SLIDES AUVP CAPITAL
   direito, como na capa do deck de referência; nas divisórias fica na orientação
   nativa, com o centro no canto superior direito. `graf_arcos()` calcula a sangria a
   partir da fração de traço medida no SVG, então a regra vale em qualquer tamanho.
+  Em uso decorativo os arcos entram sempre a **50% de opacidade**.
 - **Tipografia:** Anek Latin em cinco pesos estáticos (300, 400, 600, 700, 800),
   subconjunto Latin-1 mais pontuação, embutidos em base64 em cada arquivo. Instâncias
   estáticas e não a fonte variável: o Chromium exporta fonte variável como Type3, o que
   triplica o PDF e quebra a seleção de texto.
-- **Textura:** grão sutil sobre as capas, reproduzindo o do deck institucional.
+- **Textura:** granulado sobre todos os degradês — capas, divisórias e slides escuros —
+  reproduzindo o do deck institucional. Ruído `feTurbulence` em ladrilho de 180 px a 22%
+  de opacidade: sutil, mas perceptível o bastante para quebrar o bandeamento do
+  degradê na impressão.
 - **Página:** A4 (210 × 297 mm) nos relatórios; 338,667 × 190,5 mm (13,333 × 7,5 pol,
   o 16:9 padrão do PowerPoint) nas apresentações.
 
@@ -113,12 +124,16 @@ As duas capas são construídas sobre medidas tiradas das referências, não est
 | Régua superior | y 86,0 mm, da margem à margem |
 | Régua inferior | y 245,2 mm |
 | Grafismo | entre as réguas, **com exatamente a largura delas** (traço de 15,3 a 194,7 mm), topo em 95,5 mm |
+| Opacidade do grafismo | cheia no leque de quadrados; 50% na ampulheta do diagnóstico, cujo traço é bem mais denso |
 | Título | 43,89 pt, entrelinha de 48 pt, linhas de base em 56,4 e 73,3 mm |
 | Assinatura inferior | 32,13 pt, linha de base em 271,6 mm |
 
-O grafismo é posicionado pela **tinta**, não pela caixa do SVG: cada arquivo tem uma
-margem interna diferente (o leque de quadrados ocupa 82,5% da própria caixa), então
-`graf_span()` corrige isso para o traço bater com a régua.
+O grafismo é posicionado pela **tinta**, não pela caixa do SVG: os arquivos têm uma
+margem interna de cerca de 7,6% de cada lado (o leque de quadrados ocupa 84,5% da
+própria caixa), então `graf_span()` corrige isso para o traço bater com a régua nas
+duas pontas. As frações do leque vêm da geometria dos 22 retângulos do arquivo; as dos
+outros dois, de rasterização a 2400 px com limiar no preto puro — medir com limiar mais
+alto perde os traços de 10% de opacidade e desalinha o grafismo em cerca de 4 mm.
 
 **16:9**, da página 1 de `MODELO SLIDES AUVP CAPITAL.pdf`:
 
@@ -128,7 +143,7 @@ margem interna diferente (o leque de quadrados ocupa 82,5% da própria caixa), e
 | Régua curta | x 24,6 a 74,9 mm, y 68,4 mm |
 | Título | 44,6 pt, linha de base em 106,7 mm |
 | Subtítulo | 25,3 pt, linha de base em 120,2 mm |
-| Grafismo de arcos | sangrando no canto inferior direito |
+| Grafismo de arcos | sangrando no canto inferior direito, a 50% de opacidade |
 
 ## O que cada documento cobre
 
@@ -171,9 +186,6 @@ trimestral no private e semestral com contatos da mesa na assessoria.
   distribuição/assessoria (Resolução CVM 178) ou private, e precisa vir do compliance —
   não foi redigido aqui. Os demais avisos legais (rentabilidade passada, FGC, proibição
   de compartilhamento) já estão escritos e são comuns aos quatro segmentos.
-- **Acento dourado no Private Banking.** Mantido `#EFBF4F` por coerência com o resto da
-  marca. Para trocar por prata, basta alterar `--accent` no `:root` dos três arquivos
-  `*-private.html`.
 - **Conteúdo da assessoria.** As variantes de assessoria partem do princípio de que o
   segmento opera por distribuição remunerada por comissão, e não por taxa cobrada do
   cliente: a apresentação geral fala em "sem taxa de assessoria" e em transparência de

@@ -7,6 +7,8 @@
 <style>
 :root{
   --brand:#005F45; --accent:#EFBF4F;
+  --ph:rgba(239,191,79,.24); --ph-dk:rgba(239,191,79,.26);
+  --warn-bg:rgba(239,191,79,.18); --warn-fg:#8A6A12; --warn-bd:rgba(239,191,79,.5);
   --ink:#101613; --ink-2:#48524D; --line:#E2E7E5; --soft:#F4F8F6;
   --paper:#FFFFFF; --pos:#1F7A4C; --neg:#B3402F;
 }
@@ -30,15 +32,15 @@ p{margin:0 0 3mm}
 ul{margin:0 0 3mm;padding-left:4.5mm}
 li{margin:0 0 1.2mm}
 strong{font-weight:700}
-.ph{background:rgba(239,191,79,.24);border-radius:.6mm;padding:0 .6mm;font-weight:600;overflow-wrap:break-word;text-transform:none;letter-spacing:0;font-size:.94em}
-.dark .ph{background:rgba(239,191,79,.26);color:#fff}
+.ph{background:var(--ph);border-radius:.6mm;padding:0 .6mm;font-weight:600;overflow-wrap:break-word;text-transform:none;letter-spacing:0;font-size:.94em}
+.dark .ph{background:var(--ph-dk);color:#fff}
 /* capas e divisórias são monocromáticas: nada de dourado sobre a arte da capa */
 .cover .ph,.divider .ph{background:rgba(255,255,255,.18);color:#fff}
 .pos{color:var(--pos);font-weight:700}
 .neg{color:var(--neg);font-weight:700}
 .mut{color:var(--ink-2)}
 .rule{height:1px;background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,.95))}
-.grain{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");opacity:.11;pointer-events:none}
+.grain{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");opacity:.22;pointer-events:none}
 .logo svg{display:block;width:100%;height:auto}
 .logo-ink svg [class^=lg-]{fill:var(--brand)}
 .graf{position:absolute;pointer-events:none}
@@ -166,7 +168,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .pill{display:inline-block;font-size:6.4pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
   padding:.7mm 2mm;border-radius:6mm;background:var(--soft);color:var(--brand);border:1px solid var(--line)}
 .pill.ok{background:rgba(31,122,76,.1);color:var(--pos);border-color:rgba(31,122,76,.25)}
-.pill.at{background:rgba(239,191,79,.18);color:#8A6A12;border-color:rgba(239,191,79,.5)}
+.pill.at{background:var(--warn-bg);color:var(--warn-fg);border-color:var(--warn-bd)}
 .pill.rk{background:rgba(179,64,47,.09);color:var(--neg);border-color:rgba(179,64,47,.25)}
 .toc{list-style:none;margin:0;padding:0;font-size:9pt}
 .toc li{display:flex;align-items:baseline;gap:2mm;padding:2.4mm 0;border-bottom:1px solid var(--line)}
@@ -194,7 +196,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <body>
 <section class="page cover">
   <div class="grain"></div>
-  <div class="graf" style="left:-0.78mm;top:84.51mm;width:211.56mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 460.44">
+  <div class="graf" style="left:-0.64mm;top:84.67mm;width:211.36mm;opacity:.5"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 460.44">
   <defs>
     <style>
       .g2-1 {

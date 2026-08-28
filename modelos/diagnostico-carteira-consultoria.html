@@ -52,20 +52,27 @@ strong{font-weight:700}
   box-shadow:0 3px 22px rgba(0,0,0,.28);font-size:10pt;line-height:1.5}
 @media print{body{background:#fff}.page{margin:0;box-shadow:none;break-after:page}.page:last-child{break-after:auto}}
 
-/* ---------- capa ---------- */
+/* ---------- capa ----------
+   Medidas tiradas de "assets relatórios/SVG/ref consultoria.svg":
+   réguas em y 86,0 e 245,2 mm ocupando a largura útil; grafismo entre elas com
+   exatamente a mesma largura das réguas; título 43,89 pt com entrelinha de 48 pt
+   (linhas de base em 56,4 e 73,3 mm); assinatura inferior em 32,13 pt.        */
 .cover{padding:0;color:#fff;background:linear-gradient(225deg,var(--brand) 0%,#000 100%)}
-.cover .in{position:relative;z-index:3;height:100%;padding:16mm 15mm 14mm;display:flex;flex-direction:column}
-.cover .graf{z-index:2;left:8mm;right:8mm;top:88mm;opacity:.95}
-.cover .logo{margin-bottom:14mm}
-.cv-t{text-transform:uppercase;letter-spacing:-.015em;line-height:.96;font-size:36pt}
+.cover>*{position:absolute;z-index:3}
+.cover .grain{z-index:1}
+.cover .graf{z-index:2}
+.cover .rule{left:15.3mm;right:15.3mm}
+.cover .r1{top:86mm}
+.cover .r2{top:245.2mm}
+.cv-logo{left:15.3mm;top:18mm}
+.cv-t{left:15.3mm;top:43.6mm;right:15.3mm;margin:0;font-size:43.89pt;line-height:1.093;
+  text-transform:uppercase;letter-spacing:-.015em}
 .cv-t .lt{font-weight:300;display:block}
 .cv-t .bd{font-weight:800;display:block}
-.cv-meta{margin-left:auto;text-align:right;font-size:8pt;letter-spacing:.12em;text-transform:uppercase;font-weight:600;opacity:.85}
-.cv-top{display:flex;align-items:flex-end;gap:10mm}
-.cv-bottom{margin-top:auto;display:flex;align-items:flex-end;gap:10mm}
-.cv-b-t{text-transform:uppercase;font-size:24pt;line-height:1;letter-spacing:-.01em}
-.cv-id{margin-left:auto;text-align:right;font-size:8.5pt;line-height:1.7;opacity:.9}
-.cover .rule{margin:9mm 0}
+.cv-conf{right:15.3mm;top:66.5mm;text-align:right;font-size:9.5pt;font-weight:600;
+  letter-spacing:.13em;text-transform:uppercase;opacity:.8}
+.cv-b-t{left:15.3mm;bottom:21.5mm;font-size:32.13pt;line-height:1;text-transform:uppercase;letter-spacing:-.01em}
+.cv-id{right:15.3mm;bottom:22.5mm;text-align:right;font-size:9.5pt;line-height:1.75;opacity:.9}
 
 /* ---------- cabeçalho / rodapé ---------- */
 .pg-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:8mm;
@@ -187,150 +194,51 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <body>
 <section class="page cover">
   <div class="grain"></div>
-  <div class="graf" style="left:14mm;right:14mm;top:96mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 581.33">
+  <div class="graf" style="left:-0.78mm;top:84.51mm;width:211.56mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 460.44">
   <defs>
     <style>
-      .g3-1 {
-        opacity: .68;
-      }
-      .g3-1, .g3-2, .g3-3, .g3-4, .g3-5, .g3-6, .g3-7, .g3-8, .g3-9, .g3-10, .g3-11, .g3-12, .g3-13, .g3-14, .g3-15, .g3-16, .g3-17, .g3-18, .g3-19, .g3-20, .g3-21, .g3-22, .g3-23, .g3-24, .g3-25, .g3-26, .g3-27, .g3-28, .g3-29, .g3-30, .g3-31, .g3-32 {
+      .g2-1 {
         fill: none;
         stroke: #fff;
         stroke-miterlimit: 10;
         stroke-width: .5px;
       }
-      .g3-2 {
-        opacity: 0;
-      }
-      .g3-3 {
-        opacity: .45;
-      }
-      .g3-4 {
-        opacity: .9;
-      }
-      .g3-5 {
-        opacity: .71;
-      }
-      .g3-7 {
-        opacity: .52;
-      }
-      .g3-8 {
-        opacity: .13;
-      }
-      .g3-9 {
-        opacity: .03;
-      }
-      .g3-10 {
-        opacity: .94;
-      }
-      .g3-11 {
-        opacity: .35;
-      }
-      .g3-12 {
-        opacity: .1;
-      }
-      .g3-13 {
-        opacity: .87;
-      }
-      .g3-14 {
-        opacity: .39;
-      }
-      .g3-15 {
-        opacity: .97;
-      }
-      .g3-16 {
-        opacity: .74;
-      }
-      .g3-17 {
-        opacity: .61;
-      }
-      .g3-18 {
-        opacity: .58;
-      }
-      .g3-19 {
-        opacity: .29;
-      }
-      .g3-20 {
-        opacity: .55;
-      }
-      .g3-21 {
-        opacity: .23;
-      }
-      .g3-22 {
-        opacity: .81;
-      }
-      .g3-23 {
-        opacity: .16;
-      }
-      .g3-24 {
-        opacity: .48;
-      }
-      .g3-25 {
-        opacity: .19;
-      }
-      .g3-26 {
-        opacity: .06;
-      }
-      .g3-27 {
-        opacity: .32;
-      }
-      .g3-28 {
-        opacity: .84;
-      }
-      .g3-29 {
-        opacity: .42;
-      }
-      .g3-30 {
-        opacity: .77;
-      }
-      .g3-33 {
+      .g2-2 {
         opacity: .5;
-      }
-      .g3-31 {
-        opacity: .26;
-      }
-      .g3-32 {
-        opacity: .65;
       }
     </style>
   </defs>
-  <g class="g3-33">
-    <path class="g3-6" d="M548.54,39.02H45.24c0,133.43,53.06,261.53,147.41,355.88,94.35,94.35,222.45,147.41,355.88,147.41V39.02Z"/>
-    <path class="g3-15" d="M548.53,527.67V39.02H59.89c0,129.55,51.52,253.92,143.12,345.52,91.6,91.6,215.98,143.12,345.52,143.12Z"/>
-    <path class="g3-10" d="M548.53,513.02V39.03H74.54c0,125.66,49.97,246.31,138.83,335.16,88.86,88.86,209.5,138.83,335.16,138.83Z"/>
-    <path class="g3-4" d="M548.53,498.37V39.04H89.19c0,121.78,48.43,238.69,134.54,324.8s203.02,134.54,324.8,134.54Z"/>
-    <path class="g3-13" d="M548.53,483.73V39.04H103.84c0,117.89,46.88,231.08,130.25,314.44s196.55,130.25,314.44,130.25Z"/>
-    <path class="g3-28" d="M548.52,469.08V39.05H118.49c0,114.01,45.34,223.46,125.95,304.08,80.62,80.62,190.07,125.95,304.08,125.95Z"/>
-    <path class="g3-22" d="M548.52,454.43V39.05H133.14c0,110.12,43.79,215.85,121.66,293.72,77.87,77.87,183.59,121.66,293.72,121.66Z"/>
-    <path class="g3-30" d="M548.52,439.79V39.06H147.79c0,106.24,42.25,208.24,117.37,283.36,75.12,75.12,177.12,117.37,283.36,117.37Z"/>
-    <path class="g3-16" d="M548.51,425.14V39.06H162.44c0,102.35,40.7,200.62,113.08,273,72.38,72.38,170.64,113.08,273,113.08Z"/>
-    <path class="g3-5" d="M548.51,410.49V39.07H177.09c0,98.47,39.16,193.01,108.79,262.64,69.63,69.63,164.17,108.79,262.64,108.79Z"/>
-    <path class="g3-1" d="M548.51,395.84V39.08H191.74c0,94.58,37.61,185.39,104.5,252.27,66.88,66.88,157.69,104.5,252.27,104.5Z"/>
-    <path class="g3-32" d="M548.51,381.2V39.08H206.39c0,90.7,36.07,177.78,100.2,241.91s151.21,100.2,241.91,100.2Z"/>
-    <path class="g3-17" d="M548.5,366.55V39.09H221.04c0,86.82,34.52,170.16,95.91,231.55,61.39,61.39,144.74,95.91,231.55,95.91Z"/>
-    <path class="g3-18" d="M548.5,351.9V39.09H235.69c0,82.93,32.98,162.55,91.62,221.19,58.64,58.64,138.26,91.62,221.19,91.62Z"/>
-    <path class="g3-20" d="M548.5,337.26V39.1H250.34c0,79.05,31.43,154.94,87.33,210.83,55.89,55.89,131.78,87.33,210.83,87.33Z"/>
-    <path class="g3-7" d="M548.49,322.61V39.1h-283.51c0,75.16,29.89,147.32,83.04,200.47,53.15,53.15,125.31,83.04,200.47,83.04Z"/>
-    <path class="g3-24" d="M548.49,307.96V39.11h-268.85c0,71.28,28.34,139.71,78.75,190.11,50.4,50.4,118.83,78.75,190.11,78.75Z"/>
-    <path class="g3-3" d="M548.49,293.32V39.11h-254.2c0,67.39,26.8,132.09,74.45,179.75,47.65,47.65,112.35,74.45,179.75,74.45Z"/>
-    <path class="g3-29" d="M548.49,278.67V39.12h-239.55c0,63.51,25.26,124.48,70.16,169.39s105.88,70.16,169.39,70.16Z"/>
-    <path class="g3-14" d="M548.48,264.02V39.13h-224.9c0,59.62,23.71,116.87,65.87,159.03,42.16,42.16,99.4,65.87,159.03,65.87Z"/>
-    <path class="g3-11" d="M548.48,249.37V39.13h-210.24c0,55.74,22.17,109.25,61.58,148.66s92.93,61.58,148.66,61.58Z"/>
-    <path class="g3-27" d="M548.48,234.73V39.14h-195.59c0,51.85,20.62,101.64,57.29,138.3,36.67,36.67,86.45,57.29,138.3,57.29Z"/>
-    <path class="g3-19" d="M548.47,220.08V39.14h-180.94c0,47.97,19.08,94.02,53,127.94,33.92,33.92,79.97,53,127.94,53Z"/>
-    <path class="g3-31" d="M548.47,205.43V39.15h-166.28c0,44.08,17.53,86.41,48.7,117.58,31.17,31.17,73.5,48.7,117.58,48.7Z"/>
-    <path class="g3-21" d="M548.47,190.79V39.15h-151.63c0,40.2,15.99,78.79,44.41,107.22,28.43,28.43,67.02,44.41,107.22,44.41Z"/>
-    <path class="g3-25" d="M548.47,176.14V39.16h-136.98c0,36.32,14.44,71.18,40.12,96.86,25.68,25.68,60.54,40.12,96.86,40.12Z"/>
-    <path class="g3-23" d="M548.46,161.49V39.17h-122.33c0,32.43,12.9,63.57,35.83,86.5,22.93,22.93,54.07,35.83,86.5,35.83Z"/>
-    <path class="g3-8" d="M548.46,146.85V39.17h-107.67c0,28.55,11.35,55.95,31.54,76.14,20.19,20.19,47.59,31.54,76.14,31.54Z"/>
-    <path class="g3-12" d="M548.46,132.2V39.18h-93.02c0,24.66,9.81,48.34,27.25,65.78,17.44,17.44,41.11,27.25,65.78,27.25Z"/>
-    <path class="g3-26" d="M548.45,117.55V39.18h-78.37c0,20.78,8.26,40.72,22.95,55.42,14.69,14.69,34.64,22.95,55.42,22.95Z"/>
-    <path class="g3-9" d="M548.45,102.9v-63.72h-63.72c0,16.89,6.72,33.11,18.66,45.05,11.94,11.94,28.16,18.66,45.05,18.66Z"/>
-    <path class="g3-2" d="M548.45,39.19h-49.06c0,13.01,5.17,25.5,14.37,34.69,9.2,9.2,21.69,14.37,34.69,14.37v-49.06Z"/>
+  <g class="g2-2">
+    <path class="g2-1" d="M548.22,429.41H46.45V31.03c178.87,138.45,289.63,226.88,501.77,398.38Z"/>
+    <path class="g2-1" d="M528.89,429.41c8.01-6.56-469.86-9.79-463.18-15.32V46.35c171.99,133.13,259.19,218.15,463.18,383.06Z"/>
+    <path class="g2-1" d="M509.56,429.41c16.03-13.12-437.94-19.58-424.58-30.64V61.68c165.11,127.8,228.75,209.43,424.58,367.74Z"/>
+    <path class="g2-1" d="M490.22,429.41c24.04-19.69-406.03-29.37-385.98-45.97V77c158.23,122.48,198.31,200.7,385.98,352.41Z"/>
+    <path class="g2-1" d="M470.89,429.41c32.05-26.25-374.11-39.16-347.38-61.29V92.32c151.35,117.15,167.88,191.98,347.38,337.09Z"/>
+    <path class="g2-1" d="M451.56,429.41c40.07-32.81-342.19-48.96-308.78-76.61V107.64c144.47,111.83,137.44,183.25,308.78,321.77Z"/>
+    <path class="g2-1" d="M432.22,429.41c48.08-39.37-310.28-58.75-270.19-91.93V122.97c137.59,106.5,107,174.52,270.19,306.45Z"/>
+    <path class="g2-1" d="M412.89,429.41c56.09-45.93-278.36-68.54-231.59-107.26v-183.87c130.71,101.18,76.56,165.8,231.59,291.13Z"/>
+    <path class="g2-1" d="M393.56,429.41c64.11-52.49-246.45-78.33-192.99-122.58v-153.22c123.83,95.85,46.12,157.07,192.99,275.8Z"/>
+    <path class="g2-1" d="M374.22,429.41c72.12-59.06-214.53-88.12-154.39-137.9v-122.58c116.95,90.53,15.68,148.35,154.39,260.48Z"/>
+    <path class="g2-1" d="M354.89,429.41c80.13-65.62-182.61-97.91-115.79-153.22v-91.93c110.07,85.2-14.76,139.62,115.79,245.16Z"/>
+    <path class="g2-1" d="M335.56,429.41c88.15-72.18-150.7-107.7-77.2-168.55v-61.29c103.19,79.88-45.19,130.89,77.2,229.84Z"/>
+    <path class="g2-1" d="M316.22,429.41c96.16-78.74-118.78-117.49-38.6-183.87v-30.64c96.31,74.55-75.63,122.17,38.6,214.51Z"/>
+    <path class="g2-1" d="M296.89,429.41c104.17-85.3-86.87-127.29,0-199.19h0c89.43,69.23-106.07,113.44,0,199.19Z"/>
+    <path class="g2-1" d="M277.56,429.41c112.19-91.87-54.95-137.08,38.6-214.51v30.64c82.56,63.9-136.51,104.71-38.6,183.87Z"/>
+    <path class="g2-1" d="M258.22,429.41c120.2-98.43-23.04-146.87,77.2-229.84v61.29c75.68,58.58-166.95,95.99-77.2,168.55Z"/>
+    <path class="g2-1" d="M238.89,429.41c128.21-104.99,8.88-156.66,115.79-245.16v91.93c68.8,53.25-197.39,87.26-115.79,153.22Z"/>
+    <path class="g2-1" d="M219.56,429.41c136.23-111.55,40.8-166.45,154.39-260.48v122.58c61.92,47.93-227.83,78.54-154.39,137.9Z"/>
+    <path class="g2-1" d="M200.22,429.41c144.24-118.11,72.71-176.24,192.99-275.8v153.22c55.04,42.6-258.26,69.81-192.99,122.58Z"/>
+    <path class="g2-1" d="M180.89,429.41c152.25-124.67,104.63-186.03,231.59-291.13v183.87c48.16,37.28-288.7,61.08-231.59,107.26Z"/>
+    <path class="g2-1" d="M161.56,429.41c160.27-131.24,136.54-195.82,270.19-306.45v214.51c41.28,31.95-319.14,52.36-270.19,91.93Z"/>
+    <path class="g2-1" d="M142.22,429.41c168.28-137.8,168.46-205.62,308.78-321.77v245.16c34.4,26.63-349.58,43.63-308.78,76.61Z"/>
+    <path class="g2-1" d="M122.89,429.41c176.29-144.36,200.38-215.41,347.38-337.09v275.8c27.52,21.3-380.02,34.9-347.38,61.29Z"/>
+    <path class="g2-1" d="M103.56,429.41c184.31-150.92,232.29-225.2,385.98-352.41v306.45c20.64,15.98-410.46,26.18-385.98,45.97Z"/>
+    <path class="g2-1" d="M84.22,429.41C276.54,271.93,348.43,194.42,508.8,61.68v337.09c13.76,10.65-440.9,17.45-424.58,30.64Z"/>
+    <path class="g2-1" d="M64.89,429.41c200.33-164.05,296.12-244.78,463.18-383.06v367.74c6.88,5.33-471.33,8.73-463.18,15.32Z"/>
+    <path class="g2-1" d="M45.56,429.41h501.77V31.03C373.6,174.84,253.9,258.81,45.56,429.41Z"/>
   </g>
 </svg></div>
-  <div class="in">
-    <div class="logo" style="width:34.2mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+  <div class="logo cv-logo" style="width:34.2mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -367,16 +275,12 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   </g>
   <path class="lg-1" d="M390.68,213.59h313.06v11.2h-301.86c-6.03,0-11.2-4.88-11.2-11.2Z"/>
 </svg></div>
-    <div class="cv-top">
-      <h1 class="cv-t"><span class="lt">Diagnóstico</span><span class="bd">de Carteira</span></h1>
-      <div class="cv-meta">DOCUMENTO CONFIDENCIAL<br>PROIBIDO O COMPARTILHAMENTO</div>
-    </div>
-    <div class="rule"></div>
-    <div class="cv-bottom">
-      <div class="cv-b-t"><span style="font-weight:300">Sua </span><span style="font-weight:800">Situação Atual</span></div>
-      <div class="cv-id"><div><span class="ph">{{nome_cliente}}</span> &middot; Consultoria</div><div>Patrimônio analisado &middot; <span class="ph">{{patrimonio_analisado}}</span></div><div>Consultor(a) &middot; <span class="ph">{{nome_responsavel}}</span></div><div><span class="ph">{{data_diagnostico}}</span></div></div>
-    </div>
-  </div>
+  <h1 class="cv-t"><span class="lt">Diagnóstico</span><span class="bd">de Carteira</span></h1>
+  <div class="cv-conf">DOCUMENTO CONFIDENCIAL<br>PROIBIDO O COMPARTILHAMENTO</div>
+  <div class="rule r1"></div>
+  <div class="rule r2"></div>
+  <div class="cv-b-t"><span style="font-weight:300">Sua </span><span style="font-weight:800">Situação Atual</span></div>
+  <div class="cv-id"><div><span class="ph">{{nome_cliente}}</span> &middot; Consultoria</div><div>Patrimônio analisado &middot; <span class="ph">{{patrimonio_analisado}}</span></div><div>Consultor(a) &middot; <span class="ph">{{nome_responsavel}}</span></div><div><span class="ph">{{data_diagnostico}}</span></div></div>
 </section>
 <section class="page">
   <header class="pg-head">

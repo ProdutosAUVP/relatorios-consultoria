@@ -52,20 +52,27 @@ strong{font-weight:700}
   box-shadow:0 3px 22px rgba(0,0,0,.28);font-size:10pt;line-height:1.5}
 @media print{body{background:#fff}.page{margin:0;box-shadow:none;break-after:page}.page:last-child{break-after:auto}}
 
-/* ---------- capa ---------- */
+/* ---------- capa ----------
+   Medidas tiradas de "assets relatórios/SVG/ref consultoria.svg":
+   réguas em y 86,0 e 245,2 mm ocupando a largura útil; grafismo entre elas com
+   exatamente a mesma largura das réguas; título 43,89 pt com entrelinha de 48 pt
+   (linhas de base em 56,4 e 73,3 mm); assinatura inferior em 32,13 pt.        */
 .cover{padding:0;color:#fff;background:linear-gradient(225deg,var(--brand) 0%,#000 100%)}
-.cover .in{position:relative;z-index:3;height:100%;padding:16mm 15mm 14mm;display:flex;flex-direction:column}
-.cover .graf{z-index:2;left:8mm;right:8mm;top:88mm;opacity:.95}
-.cover .logo{margin-bottom:14mm}
-.cv-t{text-transform:uppercase;letter-spacing:-.015em;line-height:.96;font-size:36pt}
+.cover>*{position:absolute;z-index:3}
+.cover .grain{z-index:1}
+.cover .graf{z-index:2}
+.cover .rule{left:15.3mm;right:15.3mm}
+.cover .r1{top:86mm}
+.cover .r2{top:245.2mm}
+.cv-logo{left:15.3mm;top:18mm}
+.cv-t{left:15.3mm;top:43.6mm;right:15.3mm;margin:0;font-size:43.89pt;line-height:1.093;
+  text-transform:uppercase;letter-spacing:-.015em}
 .cv-t .lt{font-weight:300;display:block}
 .cv-t .bd{font-weight:800;display:block}
-.cv-meta{margin-left:auto;text-align:right;font-size:8pt;letter-spacing:.12em;text-transform:uppercase;font-weight:600;opacity:.85}
-.cv-top{display:flex;align-items:flex-end;gap:10mm}
-.cv-bottom{margin-top:auto;display:flex;align-items:flex-end;gap:10mm}
-.cv-b-t{text-transform:uppercase;font-size:24pt;line-height:1;letter-spacing:-.01em}
-.cv-id{margin-left:auto;text-align:right;font-size:8.5pt;line-height:1.7;opacity:.9}
-.cover .rule{margin:9mm 0}
+.cv-conf{right:15.3mm;top:66.5mm;text-align:right;font-size:9.5pt;font-weight:600;
+  letter-spacing:.13em;text-transform:uppercase;opacity:.8}
+.cv-b-t{left:15.3mm;bottom:21.5mm;font-size:32.13pt;line-height:1;text-transform:uppercase;letter-spacing:-.01em}
+.cv-id{right:15.3mm;bottom:22.5mm;text-align:right;font-size:9.5pt;line-height:1.75;opacity:.9}
 
 /* ---------- cabeçalho / rodapé ---------- */
 .pg-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:8mm;
@@ -187,7 +194,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <body>
 <section class="page cover">
   <div class="grain"></div>
-  <div class="graf" style="left:14mm;right:14mm;top:96mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 460.44">
+  <div class="graf" style="left:-6.01mm;top:81.34mm;width:217.45mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 460.44">
   <defs>
     <style>
       .g1-1 {
@@ -289,8 +296,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
     <rect class="g1-7" x="312.67" y="194" width="235.11" height="235.11"/>
   </g>
 </svg></div>
-  <div class="in">
-    <div class="logo" style="width:34.2mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+  <div class="logo cv-logo" style="width:34.2mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -327,16 +333,12 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   </g>
   <path class="lg-1" d="M390.68,213.59h313.06v11.2h-301.86c-6.03,0-11.2-4.88-11.2-11.2Z"/>
 </svg></div>
-    <div class="cv-top">
-      <h1 class="cv-t"><span class="lt">Relatório</span><span class="bd">Mensal</span></h1>
-      <div class="cv-meta">DOCUMENTO CONFIDENCIAL<br>PROIBIDO O COMPARTILHAMENTO</div>
-    </div>
-    <div class="rule"></div>
-    <div class="cv-bottom">
-      <div class="cv-b-t"><span style="font-weight:300">Sua </span><span style="font-weight:800">Carteira</span></div>
-      <div class="cv-id"><div><span class="ph">{{nome_cliente}}</span> &middot; Consultoria</div><div>Perfil de investidor &middot; <span class="ph">{{perfil_investidor}}</span></div><div>Consultor(a) &middot; <span class="ph">{{nome_responsavel}}</span></div><div><span class="ph">{{mes_referencia}}</span></div></div>
-    </div>
-  </div>
+  <h1 class="cv-t"><span class="lt">Relatório</span><span class="bd">Mensal</span></h1>
+  <div class="cv-conf">DOCUMENTO CONFIDENCIAL<br>PROIBIDO O COMPARTILHAMENTO</div>
+  <div class="rule r1"></div>
+  <div class="rule r2"></div>
+  <div class="cv-b-t"><span style="font-weight:300">Sua </span><span style="font-weight:800">Carteira</span></div>
+  <div class="cv-id"><div><span class="ph">{{nome_cliente}}</span> &middot; Consultoria</div><div>Perfil de investidor &middot; <span class="ph">{{perfil_investidor}}</span></div><div>Consultor(a) &middot; <span class="ph">{{nome_responsavel}}</span></div><div><span class="ph">{{mes_referencia}}</span></div></div>
 </section>
 <section class="page">
   <header class="pg-head">

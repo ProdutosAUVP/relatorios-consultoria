@@ -31,11 +31,17 @@ mesmo arquivo no navegador: os campos ainda não preenchidos ficam destacados.
 
 **2. Gerar o PDF.**
 
+A pasta `pdf/` já traz um PDF de cada um dos 19 modelos, para quem só quer ler o
+resultado sem instalar nada. Para regerar depois de editar um modelo:
+
 ```sh
 npm install
 npm run pdf                          # todos os modelos -> pdf/
 npm run pdf -- relatorio-mensal      # só os que casam com o filtro
 ```
+
+Os PDFs são reproduzíveis a partir de `modelos/`; ao editar um modelo, regere o PDF
+correspondente no mesmo commit para os dois não saírem de sincronia.
 
 O script usa o Chromium do Playwright, respeita o tamanho de página definido em cada
 arquivo e imprime os fundos coloridos. Alternativa sem Node: abrir o HTML no Chrome e
@@ -137,7 +143,7 @@ trimestral no private.
 
 ```
 modelos/                        19 modelos HTML independentes
-pdf/                            PDFs gerados (fora do git, saída do npm run pdf)
+pdf/                            um PDF de cada modelo, versionado (saída do npm run pdf)
 scripts/render.mjs              HTML -> PDF via Playwright
 scripts/check.mjs               verificação de estouro de página
 assets/fonts/                   Anek Latin (woff2)

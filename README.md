@@ -74,9 +74,10 @@ Extraído dos arquivos em `assets relatórios/` e do `MODELO SLIDES AUVP CAPITAL
 | Private Banking | `#666666` | idem | AUVP PRIVATE BANKING |
 
 - **Acento:** `#EFBF4F` (dourado do deck institucional) na consultoria, na alta renda e
-  na assessoria, usado com parcimônia e sempre como linha fina: a régua curta do
-  olho-de-boi, a borda esquerda dos cards, os marcadores numéricos das linhas do tempo.
-  Nunca em capas.
+  na assessoria, usado com parcimônia e sempre como linha fina: a borda esquerda dos
+  cards, os marcadores numéricos das linhas do tempo e os marcadores das listas de
+  planos. Nunca em capas. Os rótulos que antecedem os títulos (`.eyebrow`) são só
+  texto, sem traço.
 - **Private Banking não usa amarelo em lugar nenhum.** O acento é o neutro `#8C939A`, e
   com ele saem do amarelo também o realce dos campos preenchíveis e o selo de atenção
   do diagnóstico. São tokens de tema (`--accent`, `--ph`, `--warn-*`), então a regra

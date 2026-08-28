@@ -94,14 +94,15 @@ Extraído dos arquivos em `assets relatórios/` e do `MODELO SLIDES AUVP CAPITAL
   afinar junto com o desenho.
 - **Grafismos:** o de arcos é o único usado como elemento decorativo fora de capas.
   Os outros dois (leque de quadrados e ampulheta) ficam restritos a capas, como nas
-  referências originais.
+  referências originais. **Todo grafismo entra a 50% de opacidade**, em capa ou como
+  decoração — a regra fica na própria classe `.graf`, para valer sozinha em qualquer
+  uso novo.
 - **O grafismo de arcos nunca aparece inteiro.** Suas duas arestas retas — topo e
   direita — saem sempre da página, de modo que só os arcos entrem em cena. Na capa
   16:9 ele é espelhado na vertical para pôr o centro dos arcos no canto inferior
   direito, como na capa do deck de referência; nas divisórias fica na orientação
   nativa, com o centro no canto superior direito. `graf_arcos()` calcula a sangria a
   partir da fração de traço medida no SVG, então a regra vale em qualquer tamanho.
-  Em uso decorativo os arcos entram sempre a **50% de opacidade**.
 - **Tipografia:** Anek Latin em cinco pesos estáticos (300, 400, 600, 700, 800),
   subconjunto Latin-1 mais pontuação, embutidos em base64 em cada arquivo. Instâncias
   estáticas e não a fonte variável: o Chromium exporta fonte variável como Type3, o que
@@ -126,7 +127,7 @@ As duas capas são construídas sobre medidas tiradas das referências, não est
 | Régua superior | y 86,0 mm, da margem à margem |
 | Régua inferior | y 245,2 mm |
 | Grafismo | entre as réguas, **com exatamente a largura delas** (traço de 15,3 a 194,7 mm), topo em 95,5 mm |
-| Opacidade do grafismo | cheia no leque de quadrados; 50% na ampulheta do diagnóstico, cujo traço é bem mais denso |
+| Opacidade do grafismo | 50%, como em todo grafismo |
 | Título | 43,89 pt, entrelinha de 48 pt, linhas de base em 56,4 e 73,3 mm |
 | Assinatura inferior | 32,13 pt, linha de base em 271,6 mm |
 

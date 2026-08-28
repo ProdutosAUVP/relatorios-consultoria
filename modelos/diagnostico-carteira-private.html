@@ -44,7 +44,9 @@ strong{font-weight:700}
 .grain{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");opacity:.22;pointer-events:none}
 .logo svg{display:block;width:100%;height:auto}
 .logo-ink svg [class^=lg-]{fill:var(--brand)}
-.graf{position:absolute;pointer-events:none}
+/* Todo grafismo entra a 50% de opacidade, em capa ou como decoração. Fica no
+   componente para valer sozinho em qualquer uso novo. */
+.graf{position:absolute;pointer-events:none;opacity:.5}
 .graf svg{display:block;width:100%;height:auto}
 /* 1px = 0,75 pt em qualquer escala; sem isto o traço afina junto com o grafismo */
 .graf svg *{vector-effect:non-scaling-stroke;stroke-width:1px}
@@ -68,12 +70,12 @@ strong{font-weight:700}
 .cover .r1{top:86mm}
 .cover .r2{top:245.2mm}
 .cv-logo{left:15.3mm;top:18mm}
-.cv-t{left:15.3mm;top:43.6mm;right:15.3mm;margin:0;font-size:43.89pt;line-height:1.093;
+.cv-t{left:15.3mm;top:43.6mm;right:68mm;margin:0;font-size:43.89pt;line-height:1.093;
   text-transform:uppercase;letter-spacing:-.015em}
 .cv-t .lt{font-weight:300;display:block}
 .cv-t .bd{font-weight:800;display:block}
-.cv-conf{right:15.3mm;top:66.5mm;text-align:right;font-size:9.5pt;font-weight:600;
-  letter-spacing:.13em;text-transform:uppercase;opacity:.8}
+.cv-conf{right:15.3mm;top:67.5mm;width:52mm;text-align:right;font-size:8pt;font-weight:600;
+  letter-spacing:.07em;text-transform:uppercase;opacity:.8}
 .cv-b-t{left:15.3mm;bottom:21.5mm;font-size:32.13pt;line-height:1;text-transform:uppercase;letter-spacing:-.01em}
 .cv-id{right:15.3mm;bottom:22.5mm;text-align:right;font-size:9.5pt;line-height:1.75;opacity:.9}
 
@@ -235,7 +237,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <body>
 <section class="page cover">
   <div class="grain"></div>
-  <div class="graf" style="left:-0.64mm;top:84.67mm;width:211.36mm;opacity:.5"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 460.44">
+  <div class="graf" style="left:-0.64mm;top:84.67mm;width:211.36mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 460.44">
   <defs>
     <style>
       .g2-1 {

@@ -69,7 +69,7 @@ Extraído dos arquivos em `assets relatórios/` e do `MODELO SLIDES AUVP CAPITAL
 | Segmento | Cor base | Capa | Logo |
 | --- | --- | --- | --- |
 | Consultoria | `#023620` | gradiente 225° da cor base até `#000` | AUVP CAPITAL |
-| Alta Renda | `#011F13` | idem | AUVP CAPITAL |
+| Alta Renda | `#010F08` | idem | AUVP CAPITAL |
 | Assessoria | `#005F45` | idem | AUVP CAPITAL |
 | Private Banking | `#666666` | idem | AUVP PRIVATE BANKING |
 
@@ -104,7 +104,8 @@ Extraído dos arquivos em `assets relatórios/` e do `MODELO SLIDES AUVP CAPITAL
 - **Tipografia:** Anek Latin em cinco pesos estáticos (300, 400, 600, 700, 800),
   subconjunto Latin-1 mais pontuação, embutidos em base64 em cada arquivo. Instâncias
   estáticas e não a fonte variável: o Chromium exporta fonte variável como Type3, o que
-  triplica o PDF e quebra a seleção de texto.
+  triplica o PDF e quebra a seleção de texto. Uma só família nos quatro segmentos — a
+  diferenciação é por cor e por logo, não por tipografia.
 - **Textura:** granulado sobre todos os degradês — capas, divisórias e slides escuros —
   reproduzindo o do deck institucional. Ruído `feTurbulence` em ladrilho de 180 px a 22%
   de opacidade: sutil, mas perceptível o bastante para quebrar o bandeamento do
@@ -139,7 +140,7 @@ alto perde os traços de 10% de opacidade e desalinha o grafismo em cerca de 4 m
 
 | Elemento | Medida |
 | --- | --- |
-| Faixa branca | de 0 a 26,3 mm, com o nome da marca à esquerda e a logo à direita |
+| Faixa branca | de 0 a 26,3 mm, com o rótulo do segmento à esquerda e a logo à direita |
 | Régua curta | x 24,6 a 74,9 mm, y 68,4 mm |
 | Título | 44,6 pt, linha de base em 106,7 mm |
 | Subtítulo | 25,3 pt, linha de base em 120,2 mm |
@@ -179,14 +180,11 @@ são `--c1` a `--c6`, definida por segmento:
 | Segmento | `--c1` | `--c2` | `--c3` | `--c4` | `--c5` | `--c6` |
 | --- | --- | --- | --- | --- | --- | --- |
 | Consultoria | `#023620` | `#3E7A52` | `#7FAE86` | `#B9D3B6` | `#EFBF4F` | `#8C7A3E` |
-| Alta Renda | `#011F13` | `#2E5C3F` | `#6A9673` | `#A8C4A6` | `#EFBF4F` | `#8C7A3E` |
+| Alta Renda | `#010F08` | `#2E5C3F` | `#6A9673` | `#A8C4A6` | `#EFBF4F` | `#8C7A3E` |
 | Assessoria | `#005F45` | `#3E8F6C` | `#7CBB99` | `#B7DCC6` | `#EFBF4F` | `#8C7A3E` |
 | Private Banking | `#3A3E42` | `#5C6167` | `#82888E` | `#A8ADB2` | `#CBCFD3` | `#E2E5E7` |
 
-**Fontes e pesos.** Anek Latin em 300, 400, 600, 700 e 800. No Private Banking, EB
-Garamond em 400 e 600 entra pontualmente no tipo de display — título e assinatura das
-capas, título das divisórias e números de destaque — enquanto o texto corrido e as
-tabelas seguem na Anek, que compõe melhor em corpo pequeno.
+**Fontes e pesos.** Anek Latin em 300, 400, 600, 700 e 800, nos quatro segmentos.
 
 **Tamanhos.** A4: título de capa 43,89 pt, assinatura de capa 32,13 pt, título de
 página 19 pt, seção 10 pt, texto 10 pt, tabela 8,2 pt (`.sm` 7,4 pt, `.xs` 6,6 pt),
@@ -195,6 +193,10 @@ texto 11 pt, tabela 9,5 pt.
 
 **Logos.** Os SVGs originais entram embutidos e são recoloridos por CSS; a largura sai
 de uma altura-alvo, porque a marca do Private Banking é bem mais larga que a do Capital.
+Ao lado de uma logo o texto só traz o que ela não diz: a marca do Capital não nomeia o
+segmento, então "Consultoria", "Alta Renda" e "Assessoria" aparecem; a do Private
+Banking já o nomeia, então ali não há rótulo nenhum. É o token `rotulo` do tema, vazio
+no private.
 
 **Componentes.** Rosca, barra e linha têm esqueleto em `.sk-donut`, `.sk-bars` e
 `.sk-line`, dentro da moldura `.chart` que descreve o que o gráfico deve mostrar.

@@ -196,6 +196,40 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .stat{display:flex;flex-direction:column;gap:1mm}
 .stat .lb{font-size:7.6pt;color:var(--ink-2);line-height:1.35}
 
+/* ---------- processo: nós numerados sobre um trilho contínuo ---------- */
+.flow{list-style:none;margin:0;padding:0;counter-reset:fl;
+  display:grid;grid-template-columns:repeat(var(--n,4),1fr);column-gap:5mm}
+.flow>li{position:relative;min-width:0;padding-top:10mm}
+.flow>li::after{content:"";position:absolute;left:0;right:calc(-1 * 5mm);top:4mm;height:1px;background:var(--line)}
+.flow>li:last-child::after{right:0}
+.flow .node{position:absolute;left:0;top:0;z-index:2;width:8mm;height:8mm;border-radius:50%;
+  border:1px solid var(--brand);background:var(--paper);color:var(--brand);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:8pt;letter-spacing:-.01em}
+.flow .node::before{counter-increment:fl;content:counter(fl,decimal-leading-zero)}
+.flow .tag{display:block;font-size:5.8pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-2);margin-bottom:1mm}
+.flow h4{font-size:9pt;font-weight:700;margin:0 0 1mm}
+.flow p{font-size:8pt;color:var(--ink-2);margin:0;line-height:1.45}
+
+/* ---------- legenda de série, com a paleta do segmento ---------- */
+.legend{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5mm 4mm;
+  margin:3mm 0 0;padding:0;font-size:6.6pt;color:var(--ink-2)}
+.legend li{display:flex;align-items:center;gap:1.6mm}
+.legend i{width:4mm;height:1.33px;flex:0 0 auto}
+
+/* ---------- ano em dois semestres ---------- */
+.year{list-style:none;margin:0;padding:0;counter-reset:yr;display:grid;
+  grid-template-columns:repeat(6,1fr);gap:6mm 4mm}
+.year>li{position:relative;min-width:0;padding-top:8mm}
+.year>li::after{content:"";position:absolute;left:0;right:-4mm;top:3.2mm;height:1px;background:var(--line)}
+.year>li:nth-child(6)::after,.year>li:last-child::after{right:0}
+.year .mo{position:absolute;left:0;top:0;z-index:2;width:6.4mm;height:6.4mm;border-radius:50%;
+  border:1px solid var(--line);background:var(--paper);color:var(--ink-2);
+  display:flex;align-items:center;justify-content:center;font-size:6pt;font-weight:700}
+.year>li.on .mo{border-color:var(--brand);color:var(--brand)}
+.year .nm{display:block;font-size:7.4pt;font-weight:700;margin-bottom:.6mm}
+.year .ev{display:block;font-size:6.8pt;color:var(--ink-2);line-height:1.35}
+
 </style>
 </head>
 <body>
@@ -335,12 +369,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <h1 class="t">Escopo e método</h1>
 <p class="lead">Este diagnóstico compara a sua carteira atual com a carteira que faria sentido para os seus objetivos, o seu horizonte e a sua tolerância a risco &mdash; sem julgamento sobre decisões passadas.</p>
 <h2>O que foi analisado</h2>
-<ol class="steps" style="--n:4">
-  <li><h4>Coleta</h4><p><span class="ph">{{etapa_coleta}}</span></p></li>
-  <li><h4>Consolidação</h4><p><span class="ph">{{etapa_consolidacao}}</span></p></li>
-  <li><h4>Análise</h4><p><span class="ph">{{etapa_analise}}</span></p></li>
-  <li><h4>Proposta</h4><p><span class="ph">{{etapa_proposta}}</span></p></li>
-</ol>
+<ol class="flow" style="--n:4"><li><span class="node"></span><span class="tag"><span class="ph">{{etapa_coleta_prazo}}</span></span><h4>Coleta</h4><p><span class="ph">{{etapa_coleta}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{etapa_consolidacao_prazo}}</span></span><h4>Consolidação</h4><p><span class="ph">{{etapa_consolidacao}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{etapa_analise_prazo}}</span></span><h4>Análise</h4><p><span class="ph">{{etapa_analise}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{etapa_proposta_prazo}}</span></span><h4>Proposta</h4><p><span class="ph">{{etapa_proposta}}</span></p></li></ol>
 <h2>Foco deste diagnóstico &mdash; Eficiência, acesso e diversificação</h2>
 <p class="small mut">Onde a carteira deixa de acessar produtos compatíveis com o volume, onde concentra risco e onde perde eficiência tributária.</p>
 <h2>Base de dados</h2>
@@ -479,7 +508,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <h2>Composição por classe e instituição</h2>
 <table class="tb sm"><thead><tr><th>Classe</th><th>Instituição</th><th class="num">Valor</th><th class="num">% do total</th><th>Liquidez</th><th class="num">Retorno 12m</th><th class="num">Custo a.a.</th></tr></thead><tbody><tr><td><span class="ph">{{at_1_classe}}</span></td><td><span class="ph">{{at_1_instituicao}}</span></td><td class="num"><span class="ph">{{at_1_valor}}</span></td><td class="num"><span class="ph">{{at_1_perc}}</span></td><td><span class="ph">{{at_1_liquidez}}</span></td><td class="num"><span class="ph">{{at_1_ret12m}}</span></td><td class="num"><span class="ph">{{at_1_custo}}</span></td></tr><tr><td><span class="ph">{{at_2_classe}}</span></td><td><span class="ph">{{at_2_instituicao}}</span></td><td class="num"><span class="ph">{{at_2_valor}}</span></td><td class="num"><span class="ph">{{at_2_perc}}</span></td><td><span class="ph">{{at_2_liquidez}}</span></td><td class="num"><span class="ph">{{at_2_ret12m}}</span></td><td class="num"><span class="ph">{{at_2_custo}}</span></td></tr><tr><td><span class="ph">{{at_3_classe}}</span></td><td><span class="ph">{{at_3_instituicao}}</span></td><td class="num"><span class="ph">{{at_3_valor}}</span></td><td class="num"><span class="ph">{{at_3_perc}}</span></td><td><span class="ph">{{at_3_liquidez}}</span></td><td class="num"><span class="ph">{{at_3_ret12m}}</span></td><td class="num"><span class="ph">{{at_3_custo}}</span></td></tr><tr><td><span class="ph">{{at_4_classe}}</span></td><td><span class="ph">{{at_4_instituicao}}</span></td><td class="num"><span class="ph">{{at_4_valor}}</span></td><td class="num"><span class="ph">{{at_4_perc}}</span></td><td><span class="ph">{{at_4_liquidez}}</span></td><td class="num"><span class="ph">{{at_4_ret12m}}</span></td><td class="num"><span class="ph">{{at_4_custo}}</span></td></tr><tr><td><span class="ph">{{at_5_classe}}</span></td><td><span class="ph">{{at_5_instituicao}}</span></td><td class="num"><span class="ph">{{at_5_valor}}</span></td><td class="num"><span class="ph">{{at_5_perc}}</span></td><td><span class="ph">{{at_5_liquidez}}</span></td><td class="num"><span class="ph">{{at_5_ret12m}}</span></td><td class="num"><span class="ph">{{at_5_custo}}</span></td></tr><tr><td><span class="ph">{{at_6_classe}}</span></td><td><span class="ph">{{at_6_instituicao}}</span></td><td class="num"><span class="ph">{{at_6_valor}}</span></td><td class="num"><span class="ph">{{at_6_perc}}</span></td><td><span class="ph">{{at_6_liquidez}}</span></td><td class="num"><span class="ph">{{at_6_ret12m}}</span></td><td class="num"><span class="ph">{{at_6_custo}}</span></td></tr><tr><td><span class="ph">{{at_7_classe}}</span></td><td><span class="ph">{{at_7_instituicao}}</span></td><td class="num"><span class="ph">{{at_7_valor}}</span></td><td class="num"><span class="ph">{{at_7_perc}}</span></td><td><span class="ph">{{at_7_liquidez}}</span></td><td class="num"><span class="ph">{{at_7_ret12m}}</span></td><td class="num"><span class="ph">{{at_7_custo}}</span></td></tr></tbody><tfoot><tr><td><strong>Total</strong></td><td></td><td class="num"><span class="ph">{{patrimonio_analisado}}</span></td><td class="num">100,0%</td><td>&mdash;</td><td class="num"><span class="ph">{{retorno_12m_atual}}</span></td><td class="num"><span class="ph">{{custo_total_perc}}</span></td></tr></tfoot></table>
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch;margin-top:5mm">
-  <div class="chart" style="flex:1 1 auto;min-height:44mm"><div class="sk-donut"></div><div class="cl">Composição atual</div><div class="cd">Peso de cada classe no patrimônio total.</div></div>
+  <div class="chart" style="flex:1 1 auto;min-height:44mm"><div class="sk-donut"></div><div class="cl">Composição atual</div><div class="cd">Peso de cada classe no patrimônio total.</div><ul class="legend"><li><i style="background:var(--c1)"></i>Renda fixa</li><li><i style="background:var(--c2)"></i>Multimercado</li><li><i style="background:var(--c3)"></i>Renda variável BR</li><li><i style="background:var(--c4)"></i>Internacional</li><li><i style="background:var(--c5)"></i>FIIs</li><li><i style="background:var(--c6)"></i>Alternativos</li></ul></div>
   <div class="chart" style="flex:1 1 auto;min-height:44mm"><div class="sk-bars"><i style="height:42%"></i><i style="height:68%"></i><i style="height:55%"></i><i style="height:88%"></i><i style="height:72%"></i><i style="height:96%"></i></div><div class="cl">Liquidez da carteira</div><div class="cd">Quanto do patrimônio está disponível em D+0, até 30 dias, até 1 ano e acima disso.</div></div>
 </div>
   </div>
@@ -698,7 +727,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <table class="tb sm"><thead><tr><th>Classe</th><th class="num">Hoje</th><th class="num">Proposto</th><th class="num">Variação</th><th>Instrumento sugerido</th><th>Por quê</th></tr></thead><tbody><tr><td>Reserva e caixa</td><td class="num"><span class="ph">{{prop_caixa_hoje}}</span></td><td class="num"><span class="ph">{{prop_caixa_novo}}</span></td><td class="num"><span class="ph">{{prop_caixa_var}}</span></td><td><span class="ph">{{prop_caixa_instrumento}}</span></td><td><span class="ph">{{prop_caixa_motivo}}</span></td></tr><tr><td>Renda fixa pós</td><td class="num"><span class="ph">{{prop_rfpos_hoje}}</span></td><td class="num"><span class="ph">{{prop_rfpos_novo}}</span></td><td class="num"><span class="ph">{{prop_rfpos_var}}</span></td><td><span class="ph">{{prop_rfpos_instrumento}}</span></td><td><span class="ph">{{prop_rfpos_motivo}}</span></td></tr><tr><td>Renda fixa inflação</td><td class="num"><span class="ph">{{prop_rfipca_hoje}}</span></td><td class="num"><span class="ph">{{prop_rfipca_novo}}</span></td><td class="num"><span class="ph">{{prop_rfipca_var}}</span></td><td><span class="ph">{{prop_rfipca_instrumento}}</span></td><td><span class="ph">{{prop_rfipca_motivo}}</span></td></tr><tr><td>Renda fixa prefixada</td><td class="num"><span class="ph">{{prop_rfpre_hoje}}</span></td><td class="num"><span class="ph">{{prop_rfpre_novo}}</span></td><td class="num"><span class="ph">{{prop_rfpre_var}}</span></td><td><span class="ph">{{prop_rfpre_instrumento}}</span></td><td><span class="ph">{{prop_rfpre_motivo}}</span></td></tr><tr><td>Multimercado</td><td class="num"><span class="ph">{{prop_multi_hoje}}</span></td><td class="num"><span class="ph">{{prop_multi_novo}}</span></td><td class="num"><span class="ph">{{prop_multi_var}}</span></td><td><span class="ph">{{prop_multi_instrumento}}</span></td><td><span class="ph">{{prop_multi_motivo}}</span></td></tr><tr><td>Renda variável BR</td><td class="num"><span class="ph">{{prop_rvbr_hoje}}</span></td><td class="num"><span class="ph">{{prop_rvbr_novo}}</span></td><td class="num"><span class="ph">{{prop_rvbr_var}}</span></td><td><span class="ph">{{prop_rvbr_instrumento}}</span></td><td><span class="ph">{{prop_rvbr_motivo}}</span></td></tr><tr><td>Internacional</td><td class="num"><span class="ph">{{prop_intl_hoje}}</span></td><td class="num"><span class="ph">{{prop_intl_novo}}</span></td><td class="num"><span class="ph">{{prop_intl_var}}</span></td><td><span class="ph">{{prop_intl_instrumento}}</span></td><td><span class="ph">{{prop_intl_motivo}}</span></td></tr><tr><td>Alternativos</td><td class="num"><span class="ph">{{prop_alt_hoje}}</span></td><td class="num"><span class="ph">{{prop_alt_novo}}</span></td><td class="num"><span class="ph">{{prop_alt_var}}</span></td><td><span class="ph">{{prop_alt_instrumento}}</span></td><td><span class="ph">{{prop_alt_motivo}}</span></td></tr></tbody><tfoot><tr><td><strong>Total</strong></td><td class="num">100,0%</td><td class="num">100,0%</td><td class="num">&mdash;</td><td></td><td></td></tr></tfoot></table>
 <div class="gap"></div>
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch">
-  <div class="chart" style="flex:1 1 auto;min-height:50mm"><div class="sk-donut"></div><div class="cl">Atual x proposta</div><div class="cd">Duas roscas comparando o peso de cada classe antes e depois da proposta.</div></div>
+  <div class="chart" style="flex:1 1 auto;min-height:50mm"><div class="sk-donut"></div><div class="cl">Atual x proposta</div><div class="cd">Duas roscas comparando o peso de cada classe antes e depois da proposta.</div><ul class="legend"><li><i style="background:var(--c1)"></i>Renda fixa</li><li><i style="background:var(--c2)"></i>Multimercado</li><li><i style="background:var(--c3)"></i>Renda variável BR</li><li><i style="background:var(--c4)"></i>Internacional</li><li><i style="background:var(--c5)"></i>FIIs</li><li><i style="background:var(--c6)"></i>Alternativos</li></ul></div>
   <div style="display:flex;flex-direction:column;gap:4mm">
     <div class="note"><p><strong>O que muda na prática.</strong> <span class="ph">{{texto_o_que_muda}}</span></p></div>
     <div><h3>Retorno esperado</h3><p class="small mut"><span class="ph">{{retorno_esperado_proposta}}</span></p></div>
@@ -754,12 +783,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <h1 class="t">Plano de transição</h1>
 <p class="lead">Sair da carteira atual custa tempo e, às vezes, imposto. O plano abaixo respeita carências, vencimentos e o momento de mercado.</p>
 <h2>Etapas</h2>
-<ol class="steps" style="--n:4">
-  <li><h4><span class="ph">{{transicao_1_titulo}}</span></h4><p><span class="ph">{{transicao_1_detalhe}}</span></p></li>
-  <li><h4><span class="ph">{{transicao_2_titulo}}</span></h4><p><span class="ph">{{transicao_2_detalhe}}</span></p></li>
-  <li><h4><span class="ph">{{transicao_3_titulo}}</span></h4><p><span class="ph">{{transicao_3_detalhe}}</span></p></li>
-  <li><h4><span class="ph">{{transicao_4_titulo}}</span></h4><p><span class="ph">{{transicao_4_detalhe}}</span></p></li>
-</ol>
+<ol class="flow" style="--n:4"><li><span class="node"></span><span class="tag"><span class="ph">{{transicao_1_quando}}</span></span><h4><span class="ph">{{transicao_1_titulo}}</span></h4><p><span class="ph">{{transicao_1_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{transicao_2_quando}}</span></span><h4><span class="ph">{{transicao_2_titulo}}</span></h4><p><span class="ph">{{transicao_2_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{transicao_3_quando}}</span></span><h4><span class="ph">{{transicao_3_titulo}}</span></h4><p><span class="ph">{{transicao_3_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{transicao_4_quando}}</span></span><h4><span class="ph">{{transicao_4_titulo}}</span></h4><p><span class="ph">{{transicao_4_detalhe}}</span></p></li></ol>
 <h2>Movimentos previstos</h2>
 <table class="tb sm"><thead><tr><th>Quando</th><th>Movimento</th><th>Ativo / posição</th><th class="num">Valor</th><th class="num">Custo da saída</th><th>Destino</th></tr></thead><tbody><tr><td><span class="ph">{{tr_1_quando}}</span></td><td><span class="ph">{{tr_1_movimento}}</span></td><td><span class="ph">{{tr_1_ativo}}</span></td><td class="num"><span class="ph">{{tr_1_valor}}</span></td><td class="num"><span class="ph">{{tr_1_custo}}</span></td><td><span class="ph">{{tr_1_destino}}</span></td></tr><tr><td><span class="ph">{{tr_2_quando}}</span></td><td><span class="ph">{{tr_2_movimento}}</span></td><td><span class="ph">{{tr_2_ativo}}</span></td><td class="num"><span class="ph">{{tr_2_valor}}</span></td><td class="num"><span class="ph">{{tr_2_custo}}</span></td><td><span class="ph">{{tr_2_destino}}</span></td></tr><tr><td><span class="ph">{{tr_3_quando}}</span></td><td><span class="ph">{{tr_3_movimento}}</span></td><td><span class="ph">{{tr_3_ativo}}</span></td><td class="num"><span class="ph">{{tr_3_valor}}</span></td><td class="num"><span class="ph">{{tr_3_custo}}</span></td><td><span class="ph">{{tr_3_destino}}</span></td></tr><tr><td><span class="ph">{{tr_4_quando}}</span></td><td><span class="ph">{{tr_4_movimento}}</span></td><td><span class="ph">{{tr_4_ativo}}</span></td><td class="num"><span class="ph">{{tr_4_valor}}</span></td><td class="num"><span class="ph">{{tr_4_custo}}</span></td><td><span class="ph">{{tr_4_destino}}</span></td></tr><tr><td><span class="ph">{{tr_5_quando}}</span></td><td><span class="ph">{{tr_5_movimento}}</span></td><td><span class="ph">{{tr_5_ativo}}</span></td><td class="num"><span class="ph">{{tr_5_valor}}</span></td><td class="num"><span class="ph">{{tr_5_custo}}</span></td><td><span class="ph">{{tr_5_destino}}</span></td></tr></tbody></table>
 <h2>Restrições de saída</h2>

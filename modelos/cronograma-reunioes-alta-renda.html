@@ -196,6 +196,40 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .stat{display:flex;flex-direction:column;gap:1mm}
 .stat .lb{font-size:7.6pt;color:var(--ink-2);line-height:1.35}
 
+/* ---------- processo: nós numerados sobre um trilho contínuo ---------- */
+.flow{list-style:none;margin:0;padding:0;counter-reset:fl;
+  display:grid;grid-template-columns:repeat(var(--n,4),1fr);column-gap:5mm}
+.flow>li{position:relative;min-width:0;padding-top:10mm}
+.flow>li::after{content:"";position:absolute;left:0;right:calc(-1 * 5mm);top:4mm;height:1px;background:var(--line)}
+.flow>li:last-child::after{right:0}
+.flow .node{position:absolute;left:0;top:0;z-index:2;width:8mm;height:8mm;border-radius:50%;
+  border:1px solid var(--brand);background:var(--paper);color:var(--brand);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:8pt;letter-spacing:-.01em}
+.flow .node::before{counter-increment:fl;content:counter(fl,decimal-leading-zero)}
+.flow .tag{display:block;font-size:5.8pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-2);margin-bottom:1mm}
+.flow h4{font-size:9pt;font-weight:700;margin:0 0 1mm}
+.flow p{font-size:8pt;color:var(--ink-2);margin:0;line-height:1.45}
+
+/* ---------- legenda de série, com a paleta do segmento ---------- */
+.legend{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5mm 4mm;
+  margin:3mm 0 0;padding:0;font-size:6.6pt;color:var(--ink-2)}
+.legend li{display:flex;align-items:center;gap:1.6mm}
+.legend i{width:4mm;height:1.33px;flex:0 0 auto}
+
+/* ---------- ano em dois semestres ---------- */
+.year{list-style:none;margin:0;padding:0;counter-reset:yr;display:grid;
+  grid-template-columns:repeat(6,1fr);gap:6mm 4mm}
+.year>li{position:relative;min-width:0;padding-top:8mm}
+.year>li::after{content:"";position:absolute;left:0;right:-4mm;top:3.2mm;height:1px;background:var(--line)}
+.year>li:nth-child(6)::after,.year>li:last-child::after{right:0}
+.year .mo{position:absolute;left:0;top:0;z-index:2;width:6.4mm;height:6.4mm;border-radius:50%;
+  border:1px solid var(--line);background:var(--paper);color:var(--ink-2);
+  display:flex;align-items:center;justify-content:center;font-size:6pt;font-weight:700}
+.year>li.on .mo{border-color:var(--brand);color:var(--brand)}
+.year .nm{display:block;font-size:7.4pt;font-weight:700;margin-bottom:.6mm}
+.year .ev{display:block;font-size:6.8pt;color:var(--ink-2);line-height:1.35}
+
 </style>
 </head>
 <body>
@@ -446,6 +480,8 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <span class="eyebrow">Ciclo <span class="ph">{{ano_vigencia}}</span></span>
 <h1 class="t">Calendário do ano</h1>
 <p class="lead">Datas propostas para o ciclo. Confirmamos cada uma com pelo menos <span class="ph">{{antecedencia_confirmacao}}</span> de antecedência.</p>
+<ol class="year"><li class="on"><span class="mo">01</span><span class="nm">Jan</span><span class="ev"><span class="ph">{{cal_01_tipo}}</span></span></li><li class="on"><span class="mo">02</span><span class="nm">Fev</span><span class="ev"><span class="ph">{{cal_02_tipo}}</span></span></li><li class="on"><span class="mo">03</span><span class="nm">Mar</span><span class="ev"><span class="ph">{{cal_03_tipo}}</span></span></li><li class="on"><span class="mo">04</span><span class="nm">Abr</span><span class="ev"><span class="ph">{{cal_04_tipo}}</span></span></li><li class="on"><span class="mo">05</span><span class="nm">Mai</span><span class="ev"><span class="ph">{{cal_05_tipo}}</span></span></li><li class="on"><span class="mo">06</span><span class="nm">Jun</span><span class="ev"><span class="ph">{{cal_06_tipo}}</span></span></li><li class="on"><span class="mo">07</span><span class="nm">Jul</span><span class="ev"><span class="ph">{{cal_07_tipo}}</span></span></li><li class="on"><span class="mo">08</span><span class="nm">Ago</span><span class="ev"><span class="ph">{{cal_08_tipo}}</span></span></li><li class="on"><span class="mo">09</span><span class="nm">Set</span><span class="ev"><span class="ph">{{cal_09_tipo}}</span></span></li><li class="on"><span class="mo">10</span><span class="nm">Out</span><span class="ev"><span class="ph">{{cal_10_tipo}}</span></span></li><li class="on"><span class="mo">11</span><span class="nm">Nov</span><span class="ev"><span class="ph">{{cal_11_tipo}}</span></span></li><li class="on"><span class="mo">12</span><span class="nm">Dez</span><span class="ev"><span class="ph">{{cal_12_tipo}}</span></span></li></ol>
+<div class="gap"></div>
 <table class="tb sm"><thead><tr><th>Mês</th><th>Data prevista</th><th>Encontro / entrega</th><th>Pauta principal</th><th>Entregável</th><th>Status</th></tr></thead><tbody><tr><td>Janeiro</td><td><span class="ph">{{cal_01_data}}</span></td><td><span class="ph">{{cal_01_encontro}}</span></td><td><span class="ph">{{cal_01_pauta}}</span></td><td><span class="ph">{{cal_01_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_01_status}}</span></span></td></tr><tr><td>Fevereiro</td><td><span class="ph">{{cal_02_data}}</span></td><td><span class="ph">{{cal_02_encontro}}</span></td><td><span class="ph">{{cal_02_pauta}}</span></td><td><span class="ph">{{cal_02_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_02_status}}</span></span></td></tr><tr><td>Março</td><td><span class="ph">{{cal_03_data}}</span></td><td><span class="ph">{{cal_03_encontro}}</span></td><td><span class="ph">{{cal_03_pauta}}</span></td><td><span class="ph">{{cal_03_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_03_status}}</span></span></td></tr><tr><td>Abril</td><td><span class="ph">{{cal_04_data}}</span></td><td><span class="ph">{{cal_04_encontro}}</span></td><td><span class="ph">{{cal_04_pauta}}</span></td><td><span class="ph">{{cal_04_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_04_status}}</span></span></td></tr><tr><td>Maio</td><td><span class="ph">{{cal_05_data}}</span></td><td><span class="ph">{{cal_05_encontro}}</span></td><td><span class="ph">{{cal_05_pauta}}</span></td><td><span class="ph">{{cal_05_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_05_status}}</span></span></td></tr><tr><td>Junho</td><td><span class="ph">{{cal_06_data}}</span></td><td><span class="ph">{{cal_06_encontro}}</span></td><td><span class="ph">{{cal_06_pauta}}</span></td><td><span class="ph">{{cal_06_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_06_status}}</span></span></td></tr><tr><td>Julho</td><td><span class="ph">{{cal_07_data}}</span></td><td><span class="ph">{{cal_07_encontro}}</span></td><td><span class="ph">{{cal_07_pauta}}</span></td><td><span class="ph">{{cal_07_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_07_status}}</span></span></td></tr><tr><td>Agosto</td><td><span class="ph">{{cal_08_data}}</span></td><td><span class="ph">{{cal_08_encontro}}</span></td><td><span class="ph">{{cal_08_pauta}}</span></td><td><span class="ph">{{cal_08_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_08_status}}</span></span></td></tr><tr><td>Setembro</td><td><span class="ph">{{cal_09_data}}</span></td><td><span class="ph">{{cal_09_encontro}}</span></td><td><span class="ph">{{cal_09_pauta}}</span></td><td><span class="ph">{{cal_09_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_09_status}}</span></span></td></tr><tr><td>Outubro</td><td><span class="ph">{{cal_10_data}}</span></td><td><span class="ph">{{cal_10_encontro}}</span></td><td><span class="ph">{{cal_10_pauta}}</span></td><td><span class="ph">{{cal_10_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_10_status}}</span></span></td></tr><tr><td>Novembro</td><td><span class="ph">{{cal_11_data}}</span></td><td><span class="ph">{{cal_11_encontro}}</span></td><td><span class="ph">{{cal_11_pauta}}</span></td><td><span class="ph">{{cal_11_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_11_status}}</span></span></td></tr><tr><td>Dezembro</td><td><span class="ph">{{cal_12_data}}</span></td><td><span class="ph">{{cal_12_encontro}}</span></td><td><span class="ph">{{cal_12_pauta}}</span></td><td><span class="ph">{{cal_12_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_12_status}}</span></span></td></tr></tbody></table>
   </div>
   <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
@@ -509,12 +545,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   <div><h3>Você sai com</h3><p class="small mut"><span class="ph">{{entrega_3}}</span></p></div>
 </div>
 <h2>Como se preparar</h2>
-<ol class="steps" style="--n:4">
-  <li><h4>Leia o material</h4><p><span class="ph">{{preparo_material}}</span></p></li>
-  <li><h4>Anote as dúvidas</h4><p><span class="ph">{{preparo_duvidas}}</span></p></li>
-  <li><h4>Traga mudanças de vida</h4><p><span class="ph">{{preparo_mudancas}}</span></p></li>
-  <li><h4>Confirme presença</h4><p><span class="ph">{{preparo_confirmacao}}</span></p></li>
-</ol>
+<ol class="flow" style="--n:4"><li><span class="node"></span><span class="tag"><span class="ph">{{preparo_material_quando}}</span></span><h4>Leia o material</h4><p><span class="ph">{{preparo_material}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{preparo_duvidas_quando}}</span></span><h4>Anote as dúvidas</h4><p><span class="ph">{{preparo_duvidas}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{preparo_mudancas_quando}}</span></span><h4>Traga mudanças de vida</h4><p><span class="ph">{{preparo_mudancas}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{preparo_confirmacao_quando}}</span></span><h4>Confirme presença</h4><p><span class="ph">{{preparo_confirmacao}}</span></p></li></ol>
   </div>
   <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
 </section>

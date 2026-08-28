@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Diagnóstico de Carteira — AUVP Capital · Alta Renda</title>
+<title>Diagnóstico de Carteira — AUVP Capital · Assessoria</title>
 <style>
 :root{
-  --brand:#022620; --accent:#EFBF4F;
-  --ink:#0E1411; --ink-2:#465049; --line:#E1E5E3; --soft:#F4F6F5;
+  --brand:#005F45; --accent:#EFBF4F;
+  --ink:#101613; --ink-2:#48524D; --line:#E2E7E5; --soft:#F4F8F6;
   --paper:#FFFFFF; --pos:#1F7A4C; --neg:#B3402F;
 }
 @font-face{font-family:'Anek Latin';font-style:normal;font-weight:300;font-display:block;
@@ -280,7 +280,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   <div class="rule r1"></div>
   <div class="rule r2"></div>
   <div class="cv-b-t"><span style="font-weight:300">Sua </span><span style="font-weight:800">Situação Atual</span></div>
-  <div class="cv-id"><div><span class="ph">{{nome_cliente}}</span> &middot; Alta Renda</div><div>Patrimônio analisado &middot; <span class="ph">{{patrimonio_analisado}}</span></div><div>Consultor(a) &middot; <span class="ph">{{nome_responsavel}}</span></div><div><span class="ph">{{data_diagnostico}}</span></div></div>
+  <div class="cv-id"><div><span class="ph">{{nome_cliente}}</span> &middot; Assessoria</div><div>Patrimônio analisado &middot; <span class="ph">{{patrimonio_analisado}}</span></div><div>Assessor(a) &middot; <span class="ph">{{nome_responsavel}}</span></div><div><span class="ph">{{data_diagnostico}}</span></div></div>
 </section>
 <section class="page">
   <header class="pg-head">
@@ -334,8 +334,8 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   <li><h4>Análise</h4><p><span class="ph">{{etapa_analise}}</span></p></li>
   <li><h4>Proposta</h4><p><span class="ph">{{etapa_proposta}}</span></p></li>
 </ol>
-<h2>Foco deste diagnóstico &mdash; Eficiência, acesso e diversificação</h2>
-<p class="small mut">Onde a carteira deixa de acessar produtos compatíveis com o volume, onde concentra risco e onde perde eficiência tributária.</p>
+<h2>Foco deste diagnóstico &mdash; Custo embutido, adequação e liquidez</h2>
+<p class="small mut">Quanto a carteira paga em taxas que não aparecem no extrato, o quanto ela corresponde ao perfil declarado e se a liquidez cobre os compromissos dos próximos doze meses.</p>
 <h2>Base de dados</h2>
 <div class="dl">
   <dt>Instituições</dt><dd><span class="ph">{{instituicoes_analisadas}}</span></dd>
@@ -758,7 +758,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <h2>Restrições de saída</h2>
 <div class="cards" style="--n:3"><div class="card"><h4>Carências e vencimentos</h4><p><span class="ph">{{restricao_carencia}}</span></p></div><div class="card"><h4>Imposto na saída</h4><p><span class="ph">{{restricao_imposto}}</span></p></div><div class="card"><h4>Marcação a mercado</h4><p><span class="ph">{{restricao_marcacao}}</span></p></div></div>
 <div class="sig">
-  <div class="ln"><span class="ph">{{nome_responsavel}}</span><br><span class="mut">Consultor(a) &middot; <span class="ph">{{registro_cvm_ou_ancord}}</span></span></div>
+  <div class="ln"><span class="ph">{{nome_responsavel}}</span><br><span class="mut">Assessor(a) &middot; <span class="ph">{{registro_cvm_ou_ancord}}</span></span></div>
   <div class="ln"><span class="ph">{{data_diagnostico}}</span><br><span class="mut">AUVP Capital</span></div>
 </div>
   </div>

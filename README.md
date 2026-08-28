@@ -1,23 +1,25 @@
 # Modelos de relatórios — AUVP Capital e AUVP Private Banking
 
 Modelos de uso dos relatórios e apresentações entregues aos clientes, prontos para
-serem preenchidos e exportados em PDF. São **19 arquivos HTML independentes**: cada
+serem preenchidos e exportados em PDF. São **24 arquivos HTML independentes**: cada
 um traz o próprio CSS, a própria fonte e a própria paleta, abre com duplo clique em
 qualquer navegador e não depende de nenhum outro arquivo do repositório.
 
 Todo campo preenchível aparece como `{{nome_da_variavel}}`, destacado em dourado no
 documento. O dicionário completo está em [`VARIAVEIS.md`](VARIAVEIS.md).
 
-## Os 19 modelos
+## Os 24 modelos
+
+Os seis documentos existem nos quatro segmentos.
 
 | Documento | Formato | Páginas | Consultoria | Alta Renda | Private | Assessoria |
 | --- | --- | --- | :-: | :-: | :-: | :-: |
 | Relatório mensal | A4 retrato | 10 | ✓ | ✓ | ✓ | ✓ |
-| Diagnóstico de carteira | A4 retrato | 10 | ✓ | ✓ | ✓ | — |
-| Relatório macroeconômico | A4 retrato | 10 | ✓ | ✓ | ✓ | — |
-| Apresentação geral | 16:9 | 14 | ✓ | ✓ | ✓ | — |
-| Relatório mensal em apresentação | 16:9 | 12 | ✓ | ✓ | ✓ | — |
-| Cronograma de reuniões | A4 retrato | 6 | ✓ | ✓ | ✓ | — |
+| Diagnóstico de carteira | A4 retrato | 10 | ✓ | ✓ | ✓ | ✓ |
+| Relatório macroeconômico | A4 retrato | 10 | ✓ | ✓ | ✓ | ✓ |
+| Apresentação geral | 16:9 | 14 | ✓ | ✓ | ✓ | ✓ |
+| Relatório mensal em apresentação | 16:9 | 12 | ✓ | ✓ | ✓ | ✓ |
+| Cronograma de reuniões | A4 retrato | 6 | ✓ | ✓ | ✓ | ✓ |
 
 Nomes de arquivo: `modelos/<documento>-<segmento>.html`, com segmento em
 `consultoria`, `alta-renda`, `private`, `assessoria`.
@@ -31,7 +33,7 @@ mesmo arquivo no navegador: os campos ainda não preenchidos ficam destacados.
 
 **2. Gerar o PDF.**
 
-A pasta `pdf/` já traz um PDF de cada um dos 19 modelos, para quem só quer ler o
+A pasta `pdf/` já traz um PDF de cada um dos 24 modelos, para quem só quer ler o
 resultado sem instalar nada. Para regerar depois de editar um modelo:
 
 ```sh
@@ -49,7 +51,8 @@ usar *Imprimir → Salvar como PDF*, com **margens em "Nenhuma"** e **"Gráficos
 segundo plano"** ligado.
 
 **3. Conferir.** `npm run check` abre cada modelo em modo de impressão e acusa
-qualquer conteúdo que estoure a caixa da página. Rode depois de editar.
+qualquer conteúdo que estoure a caixa da página. Se um modelo ganhou ou perdeu campos,
+`npm run vars` regenera o `VARIAVEIS.md`. Rode os dois depois de editar.
 
 **4. Gráficos.** Os modelos trazem áreas tracejadas marcando onde entra cada gráfico,
 com a descrição do que ele deve mostrar. Substitua o bloco `<div class="chart">…</div>`
@@ -81,9 +84,15 @@ Extraído dos arquivos em `assets relatórios/` e do `MODELO SLIDES AUVP CAPITAL
   grafismos e os acentos dourados. Não há barras espessas: os grafismos usam
   `vector-effect: non-scaling-stroke` para manter 0,75 pt em qualquer escala, em vez de
   afinar junto com o desenho.
-- **Grafismos:** o de arcos é o único usado como elemento decorativo em páginas
-  internas e divisórias. Os outros dois (leque de quadrados e ampulheta) ficam
-  restritos a capas, como nas referências originais.
+- **Grafismos:** o de arcos é o único usado como elemento decorativo fora de capas.
+  Os outros dois (leque de quadrados e ampulheta) ficam restritos a capas, como nas
+  referências originais.
+- **O grafismo de arcos nunca aparece inteiro.** Suas duas arestas retas — topo e
+  direita — saem sempre da página, de modo que só os arcos entrem em cena. Na capa
+  16:9 ele é espelhado na vertical para pôr o centro dos arcos no canto inferior
+  direito, como na capa do deck de referência; nas divisórias fica na orientação
+  nativa, com o centro no canto superior direito. `graf_arcos()` calcula a sangria a
+  partir da fração de traço medida no SVG, então a regra vale em qualquer tamanho.
 - **Tipografia:** Anek Latin em cinco pesos estáticos (300, 400, 600, 700, 800),
   subconjunto Latin-1 mais pontuação, embutidos em base64 em cada arquivo. Instâncias
   estáticas e não a fonte variável: o Chromium exporta fonte variável como Type3, o que
@@ -91,6 +100,35 @@ Extraído dos arquivos em `assets relatórios/` e do `MODELO SLIDES AUVP CAPITAL
 - **Textura:** grão sutil sobre as capas, reproduzindo o do deck institucional.
 - **Página:** A4 (210 × 297 mm) nos relatórios; 338,667 × 190,5 mm (13,333 × 7,5 pol,
   o 16:9 padrão do PowerPoint) nas apresentações.
+
+### Capas
+
+As duas capas são construídas sobre medidas tiradas das referências, não estimadas.
+
+**A4**, de `assets relatórios/SVG/ref *.svg`:
+
+| Elemento | Medida |
+| --- | --- |
+| Margens laterais | 15,3 mm |
+| Régua superior | y 86,0 mm, da margem à margem |
+| Régua inferior | y 245,2 mm |
+| Grafismo | entre as réguas, **com exatamente a largura delas** (traço de 15,3 a 194,7 mm), topo em 95,5 mm |
+| Título | 43,89 pt, entrelinha de 48 pt, linhas de base em 56,4 e 73,3 mm |
+| Assinatura inferior | 32,13 pt, linha de base em 271,6 mm |
+
+O grafismo é posicionado pela **tinta**, não pela caixa do SVG: cada arquivo tem uma
+margem interna diferente (o leque de quadrados ocupa 82,5% da própria caixa), então
+`graf_span()` corrige isso para o traço bater com a régua.
+
+**16:9**, da página 1 de `MODELO SLIDES AUVP CAPITAL.pdf`:
+
+| Elemento | Medida |
+| --- | --- |
+| Faixa branca | de 0 a 26,3 mm, com o nome da marca à esquerda e a logo à direita |
+| Régua curta | x 24,6 a 74,9 mm, y 68,4 mm |
+| Título | 44,6 pt, linha de base em 106,7 mm |
+| Subtítulo | 25,3 pt, linha de base em 120,2 mm |
+| Grafismo de arcos | sangrando no canto inferior direito |
 
 ## O que cada documento cobre
 
@@ -124,7 +162,7 @@ encerramento.
 meses, pauta e entregável de cada tipo de encontro, canais e SLA de resposta, regras de
 remarcação e QR de agendamento. A cadência já vem diferente por segmento: trimestral na
 consultoria, trimestral com revisão semestral na alta renda, mensal com comitê
-trimestral no private.
+trimestral no private e semestral com contatos da mesa na assessoria.
 
 ## Decisões que ficaram em aberto
 
@@ -136,16 +174,20 @@ trimestral no private.
 - **Acento dourado no Private Banking.** Mantido `#EFBF4F` por coerência com o resto da
   marca. Para trocar por prata, basta alterar `--accent` no `:root` dos três arquivos
   `*-private.html`.
-- **Assessoria** só tem relatório mensal, conforme o escopo pedido. Os outros cinco
-  documentos usam a paleta `#005F45` se precisarem ser estendidos ao segmento.
+- **Conteúdo da assessoria.** As variantes de assessoria partem do princípio de que o
+  segmento opera por distribuição remunerada por comissão, e não por taxa cobrada do
+  cliente: a apresentação geral fala em "sem taxa de assessoria" e em transparência de
+  remuneração, e o diagnóstico foca em custo embutido. Se o modelo comercial for outro,
+  esses três blocos precisam ser reescritos.
 
 ## Estrutura do repositório
 
 ```
-modelos/                        19 modelos HTML independentes
+modelos/                        24 modelos HTML independentes
 pdf/                            um PDF de cada modelo, versionado (saída do npm run pdf)
 scripts/render.mjs              HTML -> PDF via Playwright
 scripts/check.mjs               verificação de estouro de página
+scripts/variaveis.mjs           gera o VARIAVEIS.md a partir dos modelos
 assets/fonts/                   Anek Latin (woff2)
 assets relatórios/              logos, grafismos e referências originais (fonte de verdade)
 MODELO SLIDES AUVP CAPITAL.pdf  deck institucional de referência

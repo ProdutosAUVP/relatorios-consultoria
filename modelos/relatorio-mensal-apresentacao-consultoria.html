@@ -148,19 +148,31 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .imgbox .cd{font-size:9pt;max-width:90mm;line-height:1.45;color:var(--ink-2)}
 .slide.dark .imgbox .cd{color:rgba(255,255,255,.75)}
 
-/* capa e divisórias */
+/* capa e divisórias ----------
+   Medidas tiradas de "MODELO SLIDES AUVP CAPITAL.pdf", página 1, reescaladas de
+   1440x810 pt para 338,667x190,5 mm: faixa branca de 0 a 26,3 mm, régua curta em
+   x 24,6..74,9 e y 68,4 mm, título 44,6 pt com base em 106,7 mm, subtítulo
+   25,3 pt com base em 120,2 mm. Arcos sangrando no canto inferior direito.   */
 .slide.cover,.slide.divider{padding:0}
-.cover .logo{margin-bottom:auto}
-.cv-t{text-transform:uppercase;letter-spacing:-.02em;line-height:.98;font-size:44pt}
-.cv-t .lt{font-weight:300;display:block}
-.cv-t .bd{font-weight:800;display:block}
-.cv-sub{font-size:13pt;letter-spacing:.02em;margin-top:4mm;opacity:.9;text-transform:uppercase}
-.cover .rule{margin:0 0 7mm;width:60mm}
-.slide.cover .graf{z-index:2;right:-12mm;bottom:-26mm;width:165mm;opacity:.85}
-.slide.divider .graf{z-index:2;right:-10mm;top:-22mm;width:150mm;opacity:.7}
-.divider .in{justify-content:center}
+.cv-band{position:absolute;left:0;right:0;top:0;height:26.3mm;background:#fff;z-index:4;
+  display:flex;align-items:center;justify-content:space-between;padding:0 8.3mm}
+.cv-band .nm{font-size:13.3pt;font-weight:600;color:var(--ink);letter-spacing:.01em}
+.cv-band .logo svg [class^=lg-]{fill:var(--brand)}
+.cv-block{position:absolute;left:24.6mm;right:24.6mm;top:68mm;z-index:4}
+.cv-block .rule{width:50.3mm;margin-bottom:26mm}
+.cv-t{margin:0;font-size:44.6pt;line-height:1;font-weight:800;text-transform:uppercase;letter-spacing:-.02em}
+.cv-t .lt{font-weight:300}
+.cv-sub{margin-top:3mm;font-size:25.3pt;line-height:1.1;text-transform:uppercase;opacity:.92}
+.cv-foot{position:absolute;left:24.6mm;right:24.6mm;bottom:11mm;z-index:4;
+  display:flex;align-items:flex-end;gap:12mm}
+.cv-foot .cf{font-size:7.6pt;letter-spacing:.14em;text-transform:uppercase;opacity:.55}
+.cv-foot .id{margin-left:auto;text-align:right;font-size:9.5pt;line-height:1.7;opacity:.9}
+.slide.cover .graf{z-index:2}
+.slide.divider .graf{z-index:2}
+.divider .in{padding:12mm 16mm;display:flex;flex-direction:column;justify-content:center}
 .dv-n{font-size:60pt;font-weight:800;line-height:1;color:#fff;opacity:.5;letter-spacing:-.03em}
 .dv-t{font-size:32pt;font-weight:800;text-transform:uppercase;line-height:1.05;margin-top:3mm;letter-spacing:-.015em}
+.dv-sub{font-size:12pt;letter-spacing:.02em;margin-top:3mm;opacity:.9;text-transform:uppercase}
 
 /* ---------- tela de planos ---------- */
 .plans{display:grid;grid-template-columns:repeat(var(--n,3),1fr);gap:6mm;flex:1 1 auto;min-height:0}
@@ -195,7 +207,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 <body>
 <section class="slide dark cover">
   <div class="grain"></div>
-  <div class="graf" style="right:-12mm;bottom:-26mm;width:165mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 581.33">
+  <div class="graf" style="right:-21.87mm;bottom:-20.28mm;transform:scaleY(-1);width:190.00mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 581.33">
   <defs>
     <style>
       .g3-1 {
@@ -337,8 +349,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     <path class="g3-2" d="M548.45,39.19h-49.06c0,13.01,5.17,25.5,14.37,34.69,9.2,9.2,21.69,14.37,34.69,14.37v-49.06Z"/>
   </g>
 </svg></div>
-  <div class="in" style="padding:12mm 16mm 11mm;display:flex;flex-direction:column">
-    <div class="logo" style="width:49.4mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+  <div class="cv-band"><div class="nm">AUVP Capital · Consultoria</div><div class="logo logo-ink" style="width:26.6mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -374,15 +385,13 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     <path class="lg-1" d="M919.15,119.67v-26.42h66.06c13.21,0,21.25-7.75,21.25-19.53s-7.75-19.53-21.25-19.53h-63.19v99.66h-27V26.9h90.19c30.16,0,47.68,17.81,47.68,45.95s-17.52,46.82-47.68,46.82h-66.06Z"/>
   </g>
   <path class="lg-1" d="M390.68,213.59h313.06v11.2h-301.86c-6.03,0-11.2-4.88-11.2-11.2Z"/>
-</svg></div>
+</svg></div></div>
+  <div class="cv-block">
     <div class="rule"></div>
-    <h1 class="cv-t"><span class="lt">Relatório</span><span class="bd">Mensal</span></h1>
+    <h1 class="cv-t"><span class="lt">Relatório </span>Mensal</h1>
     <div class="cv-sub"><span class="ph">{{mes_referencia}}</span> &middot; Consultoria</div>
-    <div style="margin-top:auto;display:flex;align-items:flex-end;gap:12mm">
-      <div style="font-size:7.6pt;letter-spacing:.14em;text-transform:uppercase;opacity:.55">DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</div>
-      <div style="margin-left:auto;text-align:right;font-size:9.5pt;line-height:1.7;opacity:.9"><div><span class="ph">{{nome_cliente}}</span></div><div>Consultor(a) &middot; <span class="ph">{{nome_responsavel}}</span></div><div>Posição em <span class="ph">{{data_posicao}}</span></div></div>
-    </div>
   </div>
+  <div class="cv-foot"><div class="cf">DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</div><div class="id"><div><span class="ph">{{nome_cliente}}</span></div><div>Consultor(a) &middot; <span class="ph">{{nome_responsavel}}</span></div><div>Posição em <span class="ph">{{data_posicao}}</span></div></div></div>
 </section>
 <section class="slide">
   

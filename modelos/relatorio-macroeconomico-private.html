@@ -52,20 +52,27 @@ strong{font-weight:700}
   box-shadow:0 3px 22px rgba(0,0,0,.28);font-size:10pt;line-height:1.5}
 @media print{body{background:#fff}.page{margin:0;box-shadow:none;break-after:page}.page:last-child{break-after:auto}}
 
-/* ---------- capa ---------- */
+/* ---------- capa ----------
+   Medidas tiradas de "assets relatórios/SVG/ref consultoria.svg":
+   réguas em y 86,0 e 245,2 mm ocupando a largura útil; grafismo entre elas com
+   exatamente a mesma largura das réguas; título 43,89 pt com entrelinha de 48 pt
+   (linhas de base em 56,4 e 73,3 mm); assinatura inferior em 32,13 pt.        */
 .cover{padding:0;color:#fff;background:linear-gradient(225deg,var(--brand) 0%,#000 100%)}
-.cover .in{position:relative;z-index:3;height:100%;padding:16mm 15mm 14mm;display:flex;flex-direction:column}
-.cover .graf{z-index:2;left:8mm;right:8mm;top:88mm;opacity:.95}
-.cover .logo{margin-bottom:14mm}
-.cv-t{text-transform:uppercase;letter-spacing:-.015em;line-height:.96;font-size:36pt}
+.cover>*{position:absolute;z-index:3}
+.cover .grain{z-index:1}
+.cover .graf{z-index:2}
+.cover .rule{left:15.3mm;right:15.3mm}
+.cover .r1{top:86mm}
+.cover .r2{top:245.2mm}
+.cv-logo{left:15.3mm;top:18mm}
+.cv-t{left:15.3mm;top:43.6mm;right:15.3mm;margin:0;font-size:43.89pt;line-height:1.093;
+  text-transform:uppercase;letter-spacing:-.015em}
 .cv-t .lt{font-weight:300;display:block}
 .cv-t .bd{font-weight:800;display:block}
-.cv-meta{margin-left:auto;text-align:right;font-size:8pt;letter-spacing:.12em;text-transform:uppercase;font-weight:600;opacity:.85}
-.cv-top{display:flex;align-items:flex-end;gap:10mm}
-.cv-bottom{margin-top:auto;display:flex;align-items:flex-end;gap:10mm}
-.cv-b-t{text-transform:uppercase;font-size:24pt;line-height:1;letter-spacing:-.01em}
-.cv-id{margin-left:auto;text-align:right;font-size:8.5pt;line-height:1.7;opacity:.9}
-.cover .rule{margin:9mm 0}
+.cv-conf{right:15.3mm;top:66.5mm;text-align:right;font-size:9.5pt;font-weight:600;
+  letter-spacing:.13em;text-transform:uppercase;opacity:.8}
+.cv-b-t{left:15.3mm;bottom:21.5mm;font-size:32.13pt;line-height:1;text-transform:uppercase;letter-spacing:-.01em}
+.cv-id{right:15.3mm;bottom:22.5mm;text-align:right;font-size:9.5pt;line-height:1.75;opacity:.9}
 
 /* ---------- cabeçalho / rodapé ---------- */
 .pg-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:8mm;
@@ -187,7 +194,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <body>
 <section class="page cover">
   <div class="grain"></div>
-  <div class="graf" style="left:14mm;right:14mm;top:96mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 460.44">
+  <div class="graf" style="left:-0.78mm;top:84.51mm;width:211.56mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 460.44">
   <defs>
     <style>
       .g2-1 {
@@ -231,8 +238,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
     <path class="g2-1" d="M45.56,429.41h501.77V31.03C373.6,174.84,253.9,258.81,45.56,429.41Z"/>
   </g>
 </svg></div>
-  <div class="in">
-    <div class="logo" style="width:58.6mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
+  <div class="logo cv-logo" style="width:58.6mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
       .lg-1 {
@@ -263,16 +269,12 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   <path class="lg-1" d="M1056.15,139.94c-2.39,0-3.92-.39-4.62-1.19-.69-.8-1.04-2.47-1.04-5.01v-17.62c0-3.63-.91-6.36-2.71-8.2-1.8-1.84-4.37-2.76-7.67-2.76-2.73,0-5.39.84-7.98,2.49-1.92,1.23-3.86,2.99-5.82,5.26h0c0-2.41-.32-4.25-.95-5.53-.64-1.28-1.19-1.91-1.66-1.91-.17,0-.32.04-.49.11l-10.49,4.96c-.21.11-.25.32-.11.63.14.31.33.43.57.36,1.05-.42,1.98-.74,2.79-.98.81-.23,1.52-.35,2.1-.35,1.16,0,1.98.45,2.45,1.37.47.92.7,2.37.7,4.38v17.76c0,2.54-.36,4.21-1.06,5.01-.7.8-2.23,1.19-4.57,1.19-.18,0-.27.18-.27.54s.1.54.27.54h.01c1.06,0,2.3-.04,3.75-.1,1.44-.06,2.91-.1,4.46-.1s3.03.04,4.44.1c1.42.06,2.65.1,3.71.1.18,0,.27-.18.27-.54s-.09-.54-.27-.54c-2.4,0-3.92-.39-4.62-1.19-.69-.8-1.04-2.47-1.04-5.01v-19.33c1.24-1.4,2.61-2.59,4.14-3.53,2.27-1.37,4.5-2.06,6.68-2.06,2.85,0,4.95.82,6.29,2.48,1.34,1.66,2,4.27,2,7.84v14.6c0,2.54-.36,4.21-1.06,5.01-.72.8-2.23,1.19-4.57,1.19-.19,0-.27.18-.27.54s.1.54.27.54h0c1.06,0,2.3-.04,3.75-.1,1.44-.06,2.91-.1,4.46-.1s3.03.04,4.44.1c1.42.06,2.65.1,3.71.1.18,0,.27-.18.27-.54s-.09-.54-.27-.54Z"/>
   <path class="lg-1" d="M1090.08,109.29c1.37,0,2.58.16,3.62.48,1.05.32,1.85.6,2.4.84.24.13.44-.18.61-.93.17-.75.25-1.46.25-2.1,0-.49-.04-.94-.13-1.37s-.21-.64-.37-.64c-2.12,0-4.07.36-5.82,1.06-1.25.5-2.52,1.12-3.82,1.85-.47-.38-.98-.74-1.54-1.06-1.97-1.16-4.56-1.73-7.74-1.73-2.83,0-5.33.51-7.49,1.54-2.16,1.03-3.85,2.41-5.06,4.16-1.21,1.74-1.81,3.73-1.81,5.96,0,2.06.55,4,1.63,5.79,1.1,1.78,2.65,3.22,4.68,4.29.08.04.17.07.26.11-1.91,1.51-3.45,2.93-4.56,4.24-1.29,1.52-1.94,3.35-1.94,5.36s.67,3.46,1.99,4.38c1.27.88,2.96,1.44,5.05,1.68-2.3,1.62-4.21,3.25-5.71,4.9-2.39,2.61-3.57,5.4-3.57,8.23s1.16,5.18,3.48,7.06c2.33,1.88,5.57,2.83,9.76,2.83h.01c2.86-.01,5.64-.49,8.33-1.44,2.68-.95,5.07-2.27,7.17-3.95,2.1-1.68,3.76-3.61,4.99-5.8,1.22-2.18,1.84-4.62,1.84-7s-.55-4.21-1.62-5.49c-1.09-1.26-2.46-2.16-4.12-2.66-1.67-.5-3.4-.79-5.18-.87-1.77-.08-3.4-.12-4.86-.12-3.23-.01-5.8-.16-7.72-.45-1.92-.29-3.29-.8-4.13-1.52-.84-.72-1.25-1.73-1.25-3.02,0-1.11.3-2.15.89-3.11.51-.82,1.34-1.72,2.46-2.67,1.68.62,3.62.93,5.79.93h0c2.9,0,5.4-.55,7.53-1.66,2.11-1.11,3.75-2.56,4.9-4.37,1.16-1.79,1.74-3.73,1.74-5.82,0-1.83-.47-3.61-1.38-5.39-.44-.86-1.01-1.64-1.7-2.35,0,0,.01,0,.02,0,.67-.11,1.38-.17,2.15-.17ZM1085.21,144c2.14.27,3.81.95,5.02,2.04,1.22,1.09,1.82,2.89,1.82,5.39,0,3.72-1.32,6.67-3.97,8.83-2.65,2.16-6.02,3.23-10.12,3.23-2.54,0-4.69-.42-6.45-1.24-1.77-.82-3.1-2-4.02-3.53-.92-1.53-1.38-3.28-1.38-5.4s.44-3.89,1.31-5.31c.87-1.42,2.03-2.64,3.48-3.66.46-.33.97-.63,1.46-.95,1.68.12,3.47.2,5.37.2,2.85,0,5.33.13,7.47.41ZM1085.15,112.44h0s0,0,0,0h0ZM1083.41,125.75c-1.29,1.32-2.9,1.98-4.82,1.98h0c-1.55.01-3.08-.44-4.58-1.34-1.5-.91-2.76-2.28-3.77-4.14-1.01-1.86-1.52-4.08-1.52-7.01s.62-5.02,1.85-6.3c1.22-1.28,2.82-1.91,4.78-1.91,1.81,0,3.48.48,4.99,1.44,1.5.97,2.71,2.35,3.63,4.14.92,1.79,1.38,3.97,1.38,6.54,0,3.08-.64,5.27-1.94,6.6Z"/>
 </svg></div>
-    <div class="cv-top">
-      <h1 class="cv-t"><span class="lt">Relatório</span><span class="bd">Macroeconômico</span></h1>
-      <div class="cv-meta">DOCUMENTO CONFIDENCIAL<br>PROIBIDO O COMPARTILHAMENTO</div>
-    </div>
-    <div class="rule"></div>
-    <div class="cv-bottom">
-      <div class="cv-b-t"><span style="font-weight:300">Cenário </span><span style="font-weight:800">e Mercados</span></div>
-      <div class="cv-id"><div>Private Banking</div><div>Elaborado por <span class="ph">{{nome_analista}}</span></div><div><span class="ph">{{registro_analista}}</span></div><div><span class="ph">{{mes_referencia}}</span></div></div>
-    </div>
-  </div>
+  <h1 class="cv-t"><span class="lt">Relatório</span><span class="bd">Macroeconômico</span></h1>
+  <div class="cv-conf">DOCUMENTO CONFIDENCIAL<br>PROIBIDO O COMPARTILHAMENTO</div>
+  <div class="rule r1"></div>
+  <div class="rule r2"></div>
+  <div class="cv-b-t"><span style="font-weight:300">Cenário </span><span style="font-weight:800">e Mercados</span></div>
+  <div class="cv-id"><div>Private Banking</div><div>Elaborado por <span class="ph">{{nome_analista}}</span></div><div><span class="ph">{{registro_analista}}</span></div><div><span class="ph">{{mes_referencia}}</span></div></div>
 </section>
 <section class="page">
   <header class="pg-head">

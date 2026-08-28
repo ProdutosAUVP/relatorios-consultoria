@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "pdf": "node scripts/render.mjs",
-    "check": "node scripts/check.mjs"
+    "check": "node scripts/check.mjs",
+    "vars": "node scripts/variaveis.mjs"
   },
   "devDependencies": {
     "playwright": "^1.49.1"

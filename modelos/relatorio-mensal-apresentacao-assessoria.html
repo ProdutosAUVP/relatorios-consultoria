@@ -44,7 +44,9 @@ strong{font-weight:700}
 .grain{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");opacity:.22;pointer-events:none}
 .logo svg{display:block;width:100%;height:auto}
 .logo-ink svg [class^=lg-]{fill:var(--brand)}
-.graf{position:absolute;pointer-events:none}
+/* Todo grafismo entra a 50% de opacidade, em capa ou como decoração. Fica no
+   componente para valer sozinho em qualquer uso novo. */
+.graf{position:absolute;pointer-events:none;opacity:.5}
 .graf svg{display:block;width:100%;height:auto}
 /* 1px = 0,75 pt em qualquer escala; sem isto o traço afina junto com o grafismo */
 .graf svg *{vector-effect:non-scaling-stroke;stroke-width:1px}
@@ -253,7 +255,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 <body>
 <section class="slide dark cover">
   <div class="grain"></div>
-  <div class="graf" style="right:-22.33mm;bottom:-20.35mm;transform:scaleY(-1);width:190.00mm;opacity:.5"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 581.33">
+  <div class="graf" style="right:-22.33mm;bottom:-20.35mm;transform:scaleY(-1);width:190.00mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 581.33">
   <defs>
     <style>
       .g3-1 {

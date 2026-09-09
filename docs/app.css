@@ -20,7 +20,7 @@
   --success: hsl(142 72% 29%);
   --warning: hsl(35 95% 42%);
   --destructive: hsl(0 84% 48%);
-  --sidebar: hsl(110 78% 9%);
+  --topo: hsl(0 0% 0%);
 
   --radius: .75rem;
   --radius-sm: .5rem;
@@ -49,16 +49,18 @@ a { color: var(--primary); }
   position: sticky; top: 0; z-index: 20;
   display: flex; align-items: center; gap: 16px;
   padding: 14px 24px;
-  background: var(--sidebar); color: hsl(0 0% 96%);
-  border-bottom: 1px solid hsl(120 20% 15%);
+  background: var(--topo); color: hsl(0 0% 100%);
+  border-bottom: 1px solid hsl(0 0% 18%);
 }
 .topo .marca { display: flex; align-items: center; gap: 10px; font-family: var(--font-display);
   font-weight: 800; letter-spacing: .02em; text-transform: uppercase; font-size: 15px; }
 .topo .marca svg { height: 20px; width: auto; display: block; }
-.topo .marca svg [class^='lg-'] { fill: #fff; }
-.topo .sep { width: 1px; height: 20px; background: hsl(120 20% 25%); }
+/* O SVG do logo perde o <style> ao ser embutido, então os traços sem classe
+   ficariam pretos — invisíveis sobre o fundo do topo. */
+.topo .marca svg path, .topo .marca svg [class^='lg-'] { fill: #fff; }
+.topo .sep { width: 1px; height: 20px; background: hsl(0 0% 28%); }
 .topo .titulo { font-family: var(--font-ui); font-size: 12px; letter-spacing: .14em;
-  text-transform: uppercase; color: hsl(0 0% 72%); }
+  text-transform: uppercase; color: hsl(0 0% 100%); }
 .topo .dir { margin-left: auto; display: flex; align-items: center; gap: 10px; }
 
 /* ---------- passos ---------- */
@@ -123,8 +125,8 @@ main { padding: 28px 24px 64px; }
 .btn.neutro:hover { border-color: var(--primary); color: var(--primary); background: var(--background); }
 .btn.pequeno { height: 32px; padding: 0 12px; font-size: 11px; }
 .btn:disabled { opacity: .5; cursor: not-allowed; }
-.btn.claro { border-color: hsl(120 20% 30%); background: transparent; color: hsl(0 0% 92%); }
-.btn.claro:hover { background: hsl(0 0% 96%); color: var(--primary); border-color: hsl(0 0% 96%); }
+.btn.claro { border-color: hsl(0 0% 38%); background: transparent; color: hsl(0 0% 100%); }
+.btn.claro:hover { background: hsl(0 0% 100%); color: hsl(0 0% 0%); border-color: hsl(0 0% 100%); }
 
 /* ---------- preenchimento ---------- */
 

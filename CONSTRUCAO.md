@@ -10,7 +10,7 @@ campo, o [VARIAVEIS.md](VARIAVEIS.md).
 ## O pipeline
 
 ```
-gerador/*.py  ──build──▶  modelos/*.html  ──pdf──▶  pdf/*.pdf
+gerador/*.py  ──build──▶  modelos/*.html  ──pdf──▶  pdf/<produto>/*.pdf
    fonte                    31 modelos              31 PDFs
                             independentes
                                  │
@@ -24,7 +24,7 @@ Quatro comandos, nesta ordem:
 npm run build   # gerador/ -> modelos/    (Python 3, só biblioteca padrão)
 npm run vars    # modelos/ -> VARIAVEIS.md
 npm run check   # valida modelos/         (falha se algo estoura a página)
-npm run pdf     # modelos/ -> pdf/        (Chromium via Playwright)
+npm run pdf     # modelos/ -> pdf/<produto>/  (Chromium via Playwright)
 
 npm run all     # os quatro em sequência
 ```
@@ -55,7 +55,8 @@ autossuficientes na entrega, fonte única na manutenção.
 | `assets/consultores/` | retratos prontos, saída do `scripts/fotos.py` |
 | `consultores resolve ai/` | fotos originais, como vieram |
 | `gerador/build.py` | entrada: percorre documentos × segmentos e escreve `modelos/` |
-| `scripts/render.mjs` | HTML → PDF |
+| `scripts/render.mjs` | HTML → PDF, numa subpasta por produto |
+| `scripts/documentos.mjs` | a tabela de produtos e documentos, partilhada pelo render e pelo catálogo |
 | `scripts/check.mjs` | valida estouro de página em modo de impressão |
 | `scripts/variaveis.mjs` | gera o `VARIAVEIS.md` a partir dos modelos |
 | `scripts/catalogo.mjs` | monta `docs/`: copia os modelos e escreve o índice da ferramenta |
@@ -76,7 +77,15 @@ git status --short modelos/ docs/ VARIAVEIS.md   # deve vir vazio
 `modelos/`, `docs/` e `VARIAVEIS.md` são **reprodutíveis byte a byte**: se vierem limpos, a saída
 no repositório corresponde exatamente à fonte. É essa a verificação que vale.
 
-`pdf/` **não** é byte a byte. O Chromium carimba data de criação no PDF, então os 24
+`pdf/` tem uma subpasta por produto — `consultoria/`, `alta-renda/`, `private/`,
+`assessoria/`, `me-diz-o-que-fazer/`. São 31 arquivos: numa lista só, achar o diagnóstico
+do Private é ler nome por nome. O nome do arquivo continua completo mesmo dentro da
+pasta, para um PDF baixado sozinho não virar `relatorio-mensal.pdf` sem dizer de quem é.
+Quem decide a pasta é `classifica()`, em `scripts/documentos.mjs`, a mesma função que o
+catálogo da ferramenta usa — as duas saídas não podem discordar sobre a que produto um
+arquivo pertence.
+
+`pdf/` **não** é byte a byte. O Chromium carimba data de criação no PDF, então os 31
 arquivos aparecem como modificados a cada geração mesmo sem nenhuma mudança de
 conteúdo. É esperado; o conteúdo é determinístico, o metadado não. Para comparar dois
 PDFs de fato, compare o texto extraído ou a renderização, não os bytes.

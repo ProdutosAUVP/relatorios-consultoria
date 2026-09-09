@@ -73,12 +73,12 @@ mesmo arquivo no navegador: os campos ainda não preenchidos ficam destacados.
 
 **2. Gerar o PDF.**
 
-A pasta `pdf/` já traz um PDF de cada um dos 31 modelos, para quem só quer ler o
+A pasta `pdf/` já traz um PDF de cada um dos 31 modelos, numa subpasta por produto, para quem só quer ler o
 resultado sem instalar nada. Para regerar depois de editar um modelo:
 
 ```sh
 npm install
-npm run pdf                          # todos os modelos -> pdf/
+npm run pdf                          # todos os modelos -> pdf/<produto>/
 npm run pdf -- relatorio-mensal      # só os que casam com o filtro
 ```
 
@@ -318,7 +318,7 @@ trimestral no private e semestral com contatos da mesa na assessoria.
 
 ```
 modelos/                        31 modelos HTML independentes
-pdf/                            um PDF de cada modelo, versionado (saída do npm run pdf)
+pdf/<produto>/                  um PDF de cada modelo, versionado (saída do npm run pdf)
 scripts/render.mjs              HTML -> PDF via Playwright
 scripts/check.mjs               verificação de estouro de página
 scripts/variaveis.mjs           gera o VARIAVEIS.md a partir dos modelos

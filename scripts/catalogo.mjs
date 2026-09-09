@@ -14,44 +14,13 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync, rmSync, existsSync
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 
+import { PRODUTOS, classifica, rotuloVariante } from './documentos.mjs';
+
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const srcDir = join(root, 'modelos');
 const outDir = join(root, 'docs');
 const outModelos = join(outDir, 'modelos');
 const outCampos = join(outDir, 'campos');
-
-// Rótulo e ordem dos produtos na ferramenta. O sufixo do arquivo é a chave.
-const PRODUTOS = [
-  { chave: 'consultoria', nome: 'Consultoria', descricao: 'Consultoria de investimentos AUVP Capital.' },
-  { chave: 'alta-renda', nome: 'Alta Renda', descricao: 'Clientes de alta renda, identidade em verde quase preto.' },
-  { chave: 'private', nome: 'Private Banking', descricao: 'Marca própria, paleta em cinzas, sem amarelo.' },
-  { chave: 'assessoria', nome: 'Assessoria', descricao: 'Assessoria de investimentos, verde mais claro.' },
-  { chave: 'me-diz-o-que-fazer', nome: 'Me Diz o Que Fazer', descricao: 'Apresentação individual dos consultores do plano.' },
-];
-
-const DOCUMENTOS = [
-  { chave: 'relatorio-mensal', nome: 'Relatório mensal', formato: 'a4',
-    descricao: 'Fechamento do mês: patrimônio, rentabilidade, alocação e movimentações.' },
-  { chave: 'diagnostico-carteira', nome: 'Diagnóstico de carteira', formato: 'a4',
-    descricao: 'Leitura da carteira atual, riscos encontrados e plano de ajuste.' },
-  { chave: 'relatorio-macroeconomico', nome: 'Relatório macroeconômico', formato: 'a4',
-    descricao: 'Cenário do mês no Brasil e no exterior e o que ele muda na estratégia.' },
-  { chave: 'apresentacao-geral', nome: 'Apresentação geral', formato: 'slide',
-    descricao: 'Deck de apresentação do serviço, para reunião de proposta.' },
-  { chave: 'relatorio-mensal-apresentacao', nome: 'Relatório mensal em apresentação', formato: 'slide',
-    descricao: 'O fechamento do mês em formato de reunião.' },
-  { chave: 'cronograma-reunioes', nome: 'Cronograma de reuniões', formato: 'a4',
-    descricao: 'Calendário do ciclo de acompanhamento e pauta de cada encontro.' },
-  { chave: 'apresentacao-consultor', nome: 'Apresentação do consultor', formato: 'a4',
-    descricao: 'Perfil do consultor, o plano e a AUVP Capital.' },
-];
-
-// Consultores: a variante da apresentação não é o segmento, é a pessoa.
-function rotuloVariante(chave, sufixo) {
-  const p = PRODUTOS.find((x) => x.chave === sufixo);
-  if (p) return p.nome;
-  return sufixo.split('-').map((s) => s[0].toUpperCase() + s.slice(1)).join(' ');
-}
 
 /** Rótulo legível para um campo: `saldo_inicial` -> `Saldo inicial`. */
 function rotuloCampo(nome) {
@@ -127,19 +96,16 @@ function main() {
     mkdirSync(dir, { recursive: true });
   }
 
-  // A chave mais longa primeiro: `relatorio-mensal-apresentacao` também começa
-  // com `relatorio-mensal`.
-  const porChave = [...DOCUMENTOS].sort((a, b) => b.chave.length - a.chave.length);
   const porDoc = new Map();
   let nc = 0, ni = 0;
 
   for (const arq of arquivos) {
-    const doc = porChave.find((d) => arq.startsWith(d.chave + '-'));
-    if (!doc) {
+    const achado = classifica(arq);
+    if (!achado) {
       console.error(`Modelo sem documento correspondente: ${arq}`);
       return 1;
     }
-    const sufixo = arq.slice(doc.chave.length + 1, -'.html'.length);
+    const { doc, sufixo } = achado;
     const html = readFileSync(join(srcDir, arq), 'utf8');
     writeFileSync(join(outModelos, arq), html);
 
@@ -155,7 +121,7 @@ function main() {
 
     if (!porDoc.has(doc.chave)) porDoc.set(doc.chave, { ...doc, variantes: [] });
     porDoc.get(doc.chave).variantes.push({
-      sufixo, rotulo: rotuloVariante(doc.chave, sufixo), arquivo: arq,
+      sufixo, rotulo: rotuloVariante(sufixo), arquivo: arq,
       paginas: paginas(html).length,
       campos: Object.keys(est.campos).length,
       imagens: est.imagens.length,

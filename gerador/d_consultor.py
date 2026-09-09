@@ -188,13 +188,12 @@ PAGINA_CASA = """<h1 class="t">Como pensamos investimento</h1>
   <p class="legal">%(notas)s</p>
 </div>"""
 
-# Os canais da casa. O endereço sai do próprio identificador, e o do podcast é
-# uma busca — não temos a URL do programa, e chutar uma daria link quebrado no
-# documento do cliente.
+# Os canais da casa. O endereço do Instagram e do YouTube sai do próprio
+# identificador; o do Spotify é o do programa.
 CANAIS = dict(
     instagram=_link("https://instagram.com/auvpcapital", "@auvpcapital"),
     youtube=_link("https://youtube.com/@AUVPCapital", "@AUVPCapital"),
-    spotify=_link("https://open.spotify.com/search/AUVP%20Capital/shows",
+    spotify=_link("https://open.spotify.com/show/4FUAeRg9G0ntPVDuC8Zpjp",
                   "Podcast da AUVP Capital"),
 )
 

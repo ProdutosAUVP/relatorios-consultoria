@@ -254,6 +254,9 @@ limpa (`https://wa.me/556230958142`), derivada do mesmo campo. O e-mail vira `ma
 consultor que não tem número guarda `whatsapp=None` e o campo volta a ser preenchível: é
 melhor sair `{{whatsapp_consultor}}` no documento do que o telefone de outra pessoa.
 
+Os canais da casa ficam em `CANAIS`, em `d_consultor.py`. Instagram e YouTube derivam do
+próprio identificador; o Spotify aponta para o programa.
+
 ### Retratos
 
 Os originais chegam muito diferentes entre si — estúdio escuro com o letreiro da AUVP,

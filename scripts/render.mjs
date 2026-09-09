@@ -15,6 +15,8 @@ import { readdirSync, mkdirSync, existsSync, statSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 
+import { PRODUTOS, classifica } from './documentos.mjs';
+
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const srcDir = join(root, 'modelos');
 const outDir = join(root, 'pdf');
@@ -57,18 +59,42 @@ if (files.length === 0) {
   process.exit(1);
 }
 
-mkdirSync(outDir, { recursive: true });
+// Uma pasta por produto. São 31 arquivos: numa lista só, achar o diagnóstico
+// do Private é ler nome por nome; separados, é abrir uma pasta. O nome do
+// arquivo continua completo, para um PDF baixado sozinho não virar
+// `relatorio-mensal.pdf` sem dizer de quem é.
+const ordem = new Map(PRODUTOS.map((p, i) => [p.chave, i]));
+const emOrdem = [...files].sort((a, b) => {
+  const pa = classifica(a)?.produto, pb = classifica(b)?.produto;
+  const d = (ordem.get(pa) ?? 99) - (ordem.get(pb) ?? 99);
+  return d || a.localeCompare(b);
+});
+
 const browser = await launch();
 const page = await browser.newPage();
+let produtoAtual = null;
 
-for (const file of files) {
+for (const file of emOrdem) {
+  const achado = classifica(file);
+  if (!achado) {
+    console.error(`Modelo sem documento correspondente: ${file}`);
+    process.exit(1);
+  }
+  const pasta = join(outDir, achado.produto);
+  if (achado.produto !== produtoAtual) {
+    produtoAtual = achado.produto;
+    mkdirSync(pasta, { recursive: true });
+    console.log(`\n  ${achado.produto}/`);
+  }
+
   await page.goto(pathToFileURL(join(srcDir, file)).href, { waitUntil: 'load' });
   await page.evaluate(() => document.fonts.ready);
-  const out = join(outDir, file.replace(/\.html$/, '.pdf'));
+  const nome = file.replace(/\.html$/, '.pdf');
+  const out = join(pasta, nome);
   await page.pdf({ path: out, printBackground: true, preferCSSPageSize: true });
   const kb = (statSync(out).size / 1024).toFixed(0);
-  console.log(`  ${file.padEnd(46)} -> pdf/${file.replace(/\.html$/, '.pdf')} (${kb} kB)`);
+  console.log(`    ${nome.padEnd(50)} ${kb} kB`);
 }
 
 await browser.close();
-console.log(`${files.length} PDF(s) gerado(s) em pdf/`);
+console.log(`\n${emOrdem.length} PDF(s) em pdf/, em ${new Set(emOrdem.map((f) => classifica(f).produto)).size} pastas.`);

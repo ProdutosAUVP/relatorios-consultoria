@@ -46,27 +46,73 @@ function baixar(conteudo, nome, tipo) {
 
 /* ------------------------------------------------------------- persistência */
 
+/* O que foi digitado não pode se perder num F5, e o navegador oferece dois
+ * lugares com garantias diferentes. O texto vai para o localStorage, que é
+ * síncrono e sobrevive a qualquer coisa; as imagens vão para o IndexedDB,
+ * porque um data URL de foto passa de 1 MB e estouraria a cota de 5 MB do
+ * localStorage no primeiro documento com três gráficos. Guardar tudo junto
+ * faria o texto se perder junto com as imagens quando a cota acabasse. */
+
 const chaveArmazem = () => `${ARMAZEM}:${estado.documento.chave}:${estado.variante.sufixo}`;
 
+let bd = null;
+
+function abrirBanco() {
+  if (bd) return bd;
+  bd = new Promise((ok, falha) => {
+    const req = indexedDB.open(ARMAZEM, 1);
+    req.onupgradeneeded = () => req.result.createObjectStore('imagens');
+    req.onsuccess = () => ok(req.result);
+    req.onerror = () => falha(req.error);
+  }).catch(() => null);   // navegador sem IndexedDB: segue sem guardar imagem
+  return bd;
+}
+
+async function comLoja(modo, fn) {
+  const db = await abrirBanco();
+  if (!db) return null;
+  return new Promise((ok) => {
+    const tx = db.transaction('imagens', modo);
+    const req = fn(tx.objectStore('imagens'));
+    tx.oncomplete = () => ok(req ? req.result : null);
+    tx.onerror = () => ok(null);
+  });
+}
+
+let aviso = null;
+
+function anunciarSalvo(texto = 'Salvo neste navegador') {
+  const el = $('#salvo');
+  if (!el) return;
+  el.textContent = texto;
+  el.hidden = false;
+  clearTimeout(aviso);
+  aviso = setTimeout(() => { el.hidden = true; }, 2500);
+}
+
 function salvar() {
-  const tenta = (dados) => localStorage.setItem(chaveArmazem(), JSON.stringify(dados));
   try {
-    tenta({ valores: estado.valores, imagens: estado.imagens });
+    localStorage.setItem(chaveArmazem(), JSON.stringify({ valores: estado.valores }));
+    anunciarSalvo();
   } catch (e) {
-    // Um data URL de foto passa de 1 MB e estoura a cota num documento com
-    // vários espaços. O texto é o que não pode se perder; as imagens o usuário
-    // reenvia, e o botão de rascunho leva as duas coisas.
-    try { tenta({ valores: estado.valores, imagens: {} }); } catch (e2) { /* sem armazenamento */ }
+    anunciarSalvo('Este navegador não está guardando o rascunho');
   }
 }
 
-function carregar() {
+function salvarImagens() {
+  comLoja('readwrite', (loja) => loja.put(estado.imagens, chaveArmazem()))
+    .then(() => anunciarSalvo());
+}
+
+async function carregar() {
   try {
     const d = JSON.parse(localStorage.getItem(chaveArmazem()) || 'null');
-    if (!d) return;
-    estado.valores = d.valores || {};
-    estado.imagens = d.imagens || {};
+    estado.valores = (d && d.valores) || {};
+    // Rascunho salvo antes de as imagens irem para o IndexedDB.
+    if (d && d.imagens) estado.imagens = d.imagens;
   } catch (e) { /* rascunho corrompido: começa vazio */ }
+  const imgs = await comLoja('readonly', (loja) => loja.get(chaveArmazem()));
+  if (imgs) estado.imagens = imgs;
 }
 
 /* ------------------------------------------------------------------ navegação */
@@ -99,18 +145,17 @@ const AMOSTRAS = {
   'alta-renda': ['#010F08', '#EFBF4F'],
   private: ['#666666', '#8C939A'],
   assessoria: ['#005F45', '#EFBF4F'],
-  'me-diz-o-que-fazer': ['#023620', '#EFBF4F'],
 };
 
-/** As variantes de um documento que pertencem a este produto. Nos seis
- *  documentos de segmento a variante é o próprio produto; na apresentação do
- *  consultor a variante é a pessoa, e o produto é o plano. */
-function variantesDoProduto(doc, produto) {
-  if (doc.chave === 'apresentacao-consultor') {
-    return produto === 'me-diz-o-que-fazer' ? doc.variantes : [];
-  }
-  return produto === 'me-diz-o-que-fazer' ? [] : doc.variantes.filter((v) => v.sufixo === produto);
+/** As variantes de um documento que pertencem a este produto.
+ *  Quando a variante é um segmento, o produto é ela mesma; quando não é, é um
+ *  plano ou um consultor, e os dois são da consultoria. */
+function produtoDaVariante(sufixo) {
+  return estado.catalogo.produtos.some((p) => p.chave === sufixo) ? sufixo : 'consultoria';
 }
+
+const variantesDoProduto = (doc, produto) =>
+  doc.variantes.filter((v) => produtoDaVariante(v.sufixo) === produto);
 
 const documentosDoProduto = (p) =>
   estado.catalogo.documentos.filter((d) => variantesDoProduto(d, p).length);
@@ -172,7 +217,7 @@ async function escolherVariante(v) {
     estado.valores = {};
     estado.imagens = {};
     estado.pagina = 1;
-    carregar();
+    await carregar();
     telaPreencher();
     mostrar('preencher');
   } catch (e) {
@@ -223,9 +268,12 @@ function campoTexto(nome, meta) {
   const v = escapa(estado.valores[nome] || '');
   const cheio = (estado.valores[nome] || '').trim() ? ' data-preenchido="1"' : '';
   const dica = meta.dica ? `<p class="dica">${escapa(meta.dica)}</p>` : '';
+  // O exemplo é `placeholder`: mostra o formato esperado, some ao digitar e
+  // nunca entra no documento.
+  const ex = meta.exemplo ? ` placeholder="${escapa(meta.exemplo)}"` : '';
   const entrada = multilinha(nome)
-    ? `<textarea id="c-${nome}" rows="3" data-campo="${nome}"${cheio}>${v}</textarea>`
-    : `<input id="c-${nome}" type="text" data-campo="${nome}" value="${v}"${cheio}>`;
+    ? `<textarea id="c-${nome}" rows="3" data-campo="${nome}"${ex}${cheio}>${v}</textarea>`
+    : `<input id="c-${nome}" type="text" data-campo="${nome}" value="${v}"${ex}${cheio}>`;
   return `<div class="campo" data-nome="${nome}">
     <label for="c-${nome}">${escapa(meta.rotulo)}</label>${entrada}${dica}</div>`;
 }
@@ -296,10 +344,13 @@ function montar(modo) {
     }
     const bloco = doc.querySelector(`[data-img="${CSS.escape(String(id))}"]`);
     if (!bloco) continue;
-    // A imagem herda o encaixe do bloco que substitui, então o retângulo que
-    // era moldura de gráfico continua ocupando exatamente o mesmo espaço.
+    // A imagem herda o encaixe do bloco que substitui — o estilo e os
+    // modificadores de classe —, então o retângulo que era moldura de gráfico
+    // ou de retrato continua ocupando exatamente o mesmo espaço, com a mesma
+    // proporção e o mesmo canto arredondado.
     const cheia = doc.createElement('div');
-    cheia.className = 'imgcheia';
+    cheia.className = ['imgcheia', ...bloco.classList]
+      .filter((c) => c !== 'chart' && c !== 'imgbox').join(' ');
     cheia.setAttribute('style', bloco.getAttribute('style') || '');
     const img = doc.createElement('img');
     img.src = dado;
@@ -411,6 +462,7 @@ function carregarDados(arquivo) {
     estado.valores = d.valores || {};
     estado.imagens = d.imagens || {};
     salvar();
+    salvarImagens();
     telaPreencher();
     mostrar('preencher');
   };
@@ -463,7 +515,7 @@ function ligar() {
     const id = e.target.dataset.arquivo;
     if (!id || !e.target.files[0]) return;
     const leitor = new FileReader();
-    leitor.onload = () => { estado.imagens[id] = leitor.result; salvar(); telaPreencher(); };
+    leitor.onload = () => { estado.imagens[id] = leitor.result; salvarImagens(); telaPreencher(); };
     leitor.readAsDataURL(e.target.files[0]);
   });
 
@@ -471,7 +523,7 @@ function ligar() {
     const id = e.target.dataset.tirar;
     if (!id) return;
     delete estado.imagens[id];
-    salvar();
+    salvarImagens();
     telaPreencher();
   });
 

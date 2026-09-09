@@ -23,28 +23,28 @@ Estes se repetem na maior parte dos modelos. Vale manter um arquivo único com e
 
 | Variável | O que é | Em quantos modelos |
 | --- | --- | --- |
-| `razao_social` | Razão social da empresa emissora | 24 de 31 |
-| `cnpj` | CNPJ da empresa emissora | 24 de 31 |
-| `registro_cvm_empresa` | Registro da empresa na CVM | 4 de 31 |
-| `canal_ouvidoria` | Telefone ou e-mail da ouvidoria | 20 de 31 |
-| `disclaimer_regulatorio` | Texto legal aprovado pelo compliance, específico do segmento | 20 de 31 |
-| `nome_cliente` | Nome do cliente destinatário | 20 de 31 |
-| `nome_responsavel` | Consultor, assessor ou banker responsável | 20 de 31 |
-| `registro_cvm_ou_ancord` | Registro do responsável (CVM 19 / Ancord) | 12 de 31 |
-| `email_contato` | E-mail de contato exibido no documento | 20 de 31 |
-| `whatsapp_contato` | WhatsApp direto do responsável | 12 de 31 |
-| `canal_atendimento` | Canal e horário de atendimento | 12 de 31 |
-| `link_agendamento` | URL de agendamento (a mesma do QR code) | 12 de 31 |
-| `mes_referencia` | Mês de referência, ex.: Agosto de 2026 | 12 de 31 |
-| `data_posicao` | Data da posição consolidada | 8 de 31 |
-| `perfil_investidor` | Perfil de suitability do cliente | 8 de 31 |
-| `patrimonio_total` | Patrimônio total sob acompanhamento | 8 de 31 |
+| `razao_social` | Razão social da empresa emissora | 24 de 37 |
+| `cnpj` | CNPJ da empresa emissora | 24 de 37 |
+| `registro_cvm_empresa` | Registro da empresa na CVM | 4 de 37 |
+| `canal_ouvidoria` | Telefone ou e-mail da ouvidoria | 20 de 37 |
+| `disclaimer_regulatorio` | Texto legal aprovado pelo compliance, específico do segmento | 20 de 37 |
+| `nome_cliente` | Nome do cliente destinatário | 20 de 37 |
+| `nome_responsavel` | Consultor, assessor ou banker responsável | 20 de 37 |
+| `registro_cvm_ou_ancord` | Registro do responsável (CVM 19 / Ancord) | 12 de 37 |
+| `email_contato` | E-mail de contato exibido no documento | 20 de 37 |
+| `whatsapp_contato` | WhatsApp direto do responsável | 12 de 37 |
+| `canal_atendimento` | Canal e horário de atendimento | 12 de 37 |
+| `link_agendamento` | URL de agendamento (a mesma do QR code) | 12 de 37 |
+| `mes_referencia` | Mês de referência, ex.: Agosto de 2026 | 12 de 37 |
+| `data_posicao` | Data da posição consolidada | 8 de 37 |
+| `perfil_investidor` | Perfil de suitability do cliente | 8 de 37 |
+| `patrimonio_total` | Patrimônio total sob acompanhamento | 8 de 37 |
 
 ## Apresentação do consultor — Me Diz o Que Fazer
 
-Arquivos: `modelos/apresentacao-consultor-alan-santanna.html`, `modelos/apresentacao-consultor-andre-arruda.html`, `modelos/apresentacao-consultor-bolivar-oliveira.html`, `modelos/apresentacao-consultor-danilo-barbosa.html`, `modelos/apresentacao-consultor-erika-barreto.html`, `modelos/apresentacao-consultor-nasser-tanure.html`, `modelos/apresentacao-consultor-yuri-machado.html`
+Arquivos: `modelos/apresentacao-consultor-alan-santanna.html`, `modelos/apresentacao-consultor-alta-renda.html`, `modelos/apresentacao-consultor-andre-arruda.html`, `modelos/apresentacao-consultor-assessoria.html`, `modelos/apresentacao-consultor-bolivar-oliveira.html`, `modelos/apresentacao-consultor-danilo-barbosa.html`, `modelos/apresentacao-consultor-erika-barreto.html`, `modelos/apresentacao-consultor-me-diz-o-que-fazer.html`, `modelos/apresentacao-consultor-nasser-tanure.html`, `modelos/apresentacao-consultor-private.html`, `modelos/apresentacao-consultor-resolve-ai.html`, `modelos/apresentacao-consultor-se-vira-ai.html`, `modelos/apresentacao-consultor-yuri-machado.html`
 
-Variantes: alan-santanna, andre-arruda, bolivar-oliveira, danilo-barbosa, erika-barreto, nasser-tanure, yuri-machado &middot; 3 variáveis
+Variantes: alan-santanna, alta-renda, andre-arruda, assessoria, bolivar-oliveira, danilo-barbosa, erika-barreto, me-diz-o-que-fazer, nasser-tanure, private, resolve-ai, se-vira-ai, yuri-machado &middot; 3 variáveis
 
 <details><summary>Ver as 3 variáveis específicas deste documento</summary>
 
@@ -52,6 +52,102 @@ Variantes: alan-santanna, andre-arruda, bolivar-oliveira, danilo-barbosa, erika-
 data_apresentacao                 whatsapp_consultor                email_consultor
 ```
 </details>
+
+Campos exclusivos da variante **alta-renda** (42):
+
+```
+certificacao_1                    certificacao_2                    certificacao_3
+especializacao_1                  especializacao_2                  fora_do_escritorio
+formacao_1                        formacao_2                        frase_consultor
+funciona_1                        funciona_2                        funciona_3
+incluido_1                        incluido_2                        incluido_3
+incluido_4                        incluido_5                        incluido_6
+incluido_7                        interesse_1                       interesse_2
+interesse_3                       interesse_4                       marco_1_quando
+marco_1_texto                     marco_2_quando                    marco_2_texto
+marco_3_quando                    marco_3_texto                     nao_incluido_1
+nao_incluido_2                    nao_incluido_3                    nao_incluido_4
+nome_consultor                    nome_plano                        notas_de_rodape
+papel_consultor                   plano_resumo                      proposito_1
+proposito_2                       taxa_anual                        taxa_mensal
+```
+
+Campos exclusivos da variante **assessoria** (42):
+
+```
+certificacao_1                    certificacao_2                    certificacao_3
+especializacao_1                  especializacao_2                  fora_do_escritorio
+formacao_1                        formacao_2                        frase_consultor
+funciona_1                        funciona_2                        funciona_3
+incluido_1                        incluido_2                        incluido_3
+incluido_4                        incluido_5                        incluido_6
+incluido_7                        interesse_1                       interesse_2
+interesse_3                       interesse_4                       marco_1_quando
+marco_1_texto                     marco_2_quando                    marco_2_texto
+marco_3_quando                    marco_3_texto                     nao_incluido_1
+nao_incluido_2                    nao_incluido_3                    nao_incluido_4
+nome_consultor                    nome_plano                        notas_de_rodape
+papel_consultor                   plano_resumo                      proposito_1
+proposito_2                       taxa_anual                        taxa_mensal
+```
+
+Campos exclusivos da variante **me-diz-o-que-fazer** (23):
+
+```
+certificacao_1                    certificacao_2                    certificacao_3
+especializacao_1                  especializacao_2                  fora_do_escritorio
+formacao_1                        formacao_2                        frase_consultor
+interesse_1                       interesse_2                       interesse_3
+interesse_4                       marco_1_quando                    marco_1_texto
+marco_2_quando                    marco_2_texto                     marco_3_quando
+marco_3_texto                     nome_consultor                    papel_consultor
+proposito_1                       proposito_2
+```
+
+Campos exclusivos da variante **private** (42):
+
+```
+certificacao_1                    certificacao_2                    certificacao_3
+especializacao_1                  especializacao_2                  fora_do_escritorio
+formacao_1                        formacao_2                        frase_consultor
+funciona_1                        funciona_2                        funciona_3
+incluido_1                        incluido_2                        incluido_3
+incluido_4                        incluido_5                        incluido_6
+incluido_7                        interesse_1                       interesse_2
+interesse_3                       interesse_4                       marco_1_quando
+marco_1_texto                     marco_2_quando                    marco_2_texto
+marco_3_quando                    marco_3_texto                     nao_incluido_1
+nao_incluido_2                    nao_incluido_3                    nao_incluido_4
+nome_consultor                    nome_plano                        notas_de_rodape
+papel_consultor                   plano_resumo                      proposito_1
+proposito_2                       taxa_anual                        taxa_mensal
+```
+
+Campos exclusivos da variante **resolve-ai** (23):
+
+```
+certificacao_1                    certificacao_2                    certificacao_3
+especializacao_1                  especializacao_2                  fora_do_escritorio
+formacao_1                        formacao_2                        frase_consultor
+interesse_1                       interesse_2                       interesse_3
+interesse_4                       marco_1_quando                    marco_1_texto
+marco_2_quando                    marco_2_texto                     marco_3_quando
+marco_3_texto                     nome_consultor                    papel_consultor
+proposito_1                       proposito_2
+```
+
+Campos exclusivos da variante **se-vira-ai** (23):
+
+```
+certificacao_1                    certificacao_2                    certificacao_3
+especializacao_1                  especializacao_2                  fora_do_escritorio
+formacao_1                        formacao_2                        frase_consultor
+interesse_1                       interesse_2                       interesse_3
+interesse_4                       marco_1_quando                    marco_1_texto
+marco_2_quando                    marco_2_texto                     marco_3_quando
+marco_3_texto                     nome_consultor                    papel_consultor
+proposito_1                       proposito_2
+```
 
 ## Apresentação geral
 

@@ -43,17 +43,24 @@ DOCUMENTOS = [
          titulo="Relatório Mensal (apresentação) — %s", builder=d_mensal_apresentacao.build),
     dict(chave="cronograma-reunioes", formato="a4",
          titulo="Cronograma de Reuniões — %s", builder=d_cronograma.build),
+    # A apresentação do consultor tem três eixos de variante: os planos da
+    # consultoria, os consultores do Me Diz o Que Fazer e os outros segmentos,
+    # em branco. Por isso as variantes trazem o tema junto, em vez de sair do
+    # sufixo.
     dict(chave="apresentacao-consultor", formato="a4",
-         titulo="%s — AUVP Capital · Me Diz o Que Fazer", builder=d_consultor.build,
-         tema="consultoria",
-         variantes=[(c["slug"], c["nome"]) for c in consultores.CONSULTORES]),
+         titulo="Apresentação do consultor — %s", builder=d_consultor.build,
+         variantes=[(chave, dados["rotulo"], "consultoria")
+                    for chave, dados in d_consultor.PLANOS.items()]
+                   + [(c["slug"], c["nome"], "consultoria") for c in consultores.CONSULTORES]
+                   + [(seg, THEMES[seg]["nome_full"], seg)
+                      for seg in SEGMENTOS if seg != "consultoria"]),
 ]
 
 
 def variantes(doc):
     """(sufixo do arquivo, rótulo do título, chave do tema)."""
     if "variantes" in doc:
-        return [(suf, rotulo, doc["tema"]) for suf, rotulo in doc["variantes"]]
+        return doc["variantes"]
     return [(seg, THEMES[seg]["nome_full"], seg) for seg in SEGMENTOS]
 
 
@@ -71,7 +78,7 @@ def sem_viuvas(html):
 def monta(doc, sufixo, rotulo, tema):
     t = THEMES[tema]
     reset_img()
-    paginas = doc["builder"](t, sufixo if "variantes" in doc else tema)
+    paginas = doc["builder"](t, sufixo)
     css = CSS_A4 if doc["formato"] == "a4" else CSS_SLIDE
     html = head(doc["titulo"] % rotulo, tokens(t) + "\n" + css) + \
         sem_viuvas("\n".join(paginas)) + "\n" + FOOT
@@ -83,18 +90,28 @@ def monta(doc, sufixo, rotulo, tema):
 
 def main(filtros):
     os.makedirs(OUT, exist_ok=True)
-    n = 0
+    escritos = set()
     for doc in DOCUMENTOS:
         if filtros and not any(q in doc["chave"] for q in filtros):
             continue
         for sufixo, rotulo, tema in variantes(doc):
             caminho, paginas = monta(doc, sufixo, rotulo, tema)
             print("  %-52s %2d páginas" % (os.path.relpath(caminho, ROOT), paginas))
-            n += 1
-    if not n:
+            escritos.add(os.path.basename(caminho))
+    if not escritos:
         print("Nenhum documento casa com: %s" % ", ".join(filtros), file=sys.stderr)
         return 1
-    print("%d arquivo(s) em modelos/" % n)
+
+    # Sem filtro, o build é a lista completa: um modelo que sobrou de uma
+    # variante renomeada continuaria em `modelos/` e apareceria na ferramenta
+    # como um documento que o gerador já não sabe produzir.
+    if not filtros:
+        for f in sorted(set(os.listdir(OUT)) - escritos):
+            if f.endswith(".html"):
+                os.remove(os.path.join(OUT, f))
+                print("  removido %s (não é mais gerado)" % f)
+
+    print("%d arquivo(s) em modelos/" % len(escritos))
     return 0
 
 

@@ -12,10 +12,11 @@ Os modelos são **gerados** a partir de `gerador/`, e não editados à mão. Par
 acrescentar uma página, um documento ou um segmento, veja
 [`CONSTRUCAO.md`](CONSTRUCAO.md).
 
-## Os 31 modelos
+## Os 37 modelos
 
-Seis documentos existem nos quatro segmentos; a apresentação do consultor tem uma
-variante por consultor.
+Seis documentos existem nos quatro segmentos. A apresentação do consultor tem uma variante
+por plano da consultoria, uma por consultor do Me Diz o Que Fazer e uma em branco por
+segmento — treze ao todo.
 
 | Documento | Formato | Páginas | Consultoria | Alta Renda | Private | Assessoria |
 | --- | --- | --- | :-: | :-: | :-: | :-: |
@@ -25,19 +26,29 @@ variante por consultor.
 | Apresentação geral | 16:9 | 14 | ✓ | ✓ | ✓ | ✓ |
 | Relatório mensal em apresentação | 16:9 | 12 | ✓ | ✓ | ✓ | ✓ |
 | Cronograma de reuniões | A4 retrato | 6 | ✓ | ✓ | ✓ | ✓ |
-| Apresentação do consultor | A4 retrato | 3 | 7 consultores | — | — | — |
+| Apresentação do consultor | A4 retrato | 3 | 3 planos + 7 consultores | ✓ | ✓ | ✓ |
 
 Nomes de arquivo: `modelos/<documento>-<variante>.html`. Na maioria a variante é o
 segmento — `consultoria`, `alta-renda`, `private`, `assessoria`. Na apresentação do
-consultor é o nome dele, e o tema é sempre o da consultoria.
+consultor pode ser também um plano (`se-vira-ai`, `me-diz-o-que-fazer`, `resolve-ai`) ou
+um consultor, e nesses casos o tema é o da consultoria.
 
-A **apresentação do consultor** é o único documento que já vem escrito, e não em branco:
-o texto dos consultores e do plano Me Diz o Que Fazer veio pronto, e os retratos estão
-embutidos. Só os contatos ficaram como campo preenchível.
+### A apresentação do consultor
 
-As duas páginas se distinguem pela inversão, não por ornamento: a primeira é aberta e
-clara, com o retrato e as credenciais na coluna de apoio; a segunda roda no negativo.
-Mesma grelha, mesma tipografia, mesmos fios — só o fundo troca.
+É o único documento que existe escrito, e não só em branco:
+
+- **Por plano da consultoria** — Se Vira Aí, Me Diz o Que Fazer e Resolve Aí. O texto
+  comercial de cada um já vem pronto: descrição, como funciona, o que está e o que não
+  está incluído, e a taxa. O consultor fica em branco, para o retrato e a bio de quem vai
+  entregar o documento.
+- **Por consultor** — os sete do Me Diz o Que Fazer, com bio, trajetória e retrato
+  embutidos. Só a data e os contatos ficam como campo.
+- **Em branco, por segmento** — para Alta Renda, Private e Assessoria, com consultor e
+  plano preenchíveis.
+
+As três páginas se distinguem pela inversão, não por ornamento: as duas primeiras são
+abertas e claras, e a última roda no negativo. Mesma grelha, mesma tipografia, mesmos
+fios — só o fundo troca.
 
 ## Ferramenta de preenchimento
 
@@ -48,9 +59,11 @@ campos com a prévia atualizando ao lado, enviar as fotos e os gráficos, e expo
 ou HTML.
 
 O que ela entrega é o mesmo modelo deste repositório com os valores no lugar — não existe
-um segundo desenho para manter em dia. O que você digita fica salvo no próprio navegador,
-e o botão de rascunho baixa um JSON para retomar em outro computador ou reaproveitar no
-mês seguinte.
+um segundo desenho para manter em dia. Cada campo mostra um exemplo do formato esperado, e
+o que você digita e as imagens que envia ficam guardados no próprio navegador: o texto no
+`localStorage`, as imagens no IndexedDB, porque uma foto sozinha estouraria a cota do
+primeiro. O botão de rascunho baixa um JSON para retomar em outro computador ou
+reaproveitar no mês seguinte.
 
 Para rodar localmente:
 
@@ -73,12 +86,12 @@ mesmo arquivo no navegador: os campos ainda não preenchidos ficam destacados.
 
 **2. Gerar o PDF.**
 
-A pasta `pdf/` já traz um PDF de cada um dos 31 modelos, para quem só quer ler o
+A pasta `pdf/` já traz um PDF de cada um dos 37 modelos, numa subpasta por produto, para quem só quer ler o
 resultado sem instalar nada. Para regerar depois de editar um modelo:
 
 ```sh
 npm install
-npm run pdf                          # todos os modelos -> pdf/
+npm run pdf                          # todos os modelos -> pdf/<produto>/
 npm run pdf -- relatorio-mensal      # só os que casam com o filtro
 ```
 
@@ -317,8 +330,8 @@ trimestral no private e semestral com contatos da mesa na assessoria.
 ## Estrutura do repositório
 
 ```
-modelos/                        31 modelos HTML independentes
-pdf/                            um PDF de cada modelo, versionado (saída do npm run pdf)
+modelos/                        37 modelos HTML independentes
+pdf/<produto>/                  um PDF de cada modelo, versionado (saída do npm run pdf)
 scripts/render.mjs              HTML -> PDF via Playwright
 scripts/check.mjs               verificação de estouro de página
 scripts/variaveis.mjs           gera o VARIAVEIS.md a partir dos modelos

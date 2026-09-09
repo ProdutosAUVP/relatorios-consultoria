@@ -35,8 +35,8 @@ CONSULTORES = [
             "demonstrações contábeis e visão macroeconômica.",
         ],
         marcos=[
-            ("Até 2022", "Quase dez anos empreendendo. Ter vivido isso na prática me deu uma "
-                      "verdadeira visão de dono: sei quais são as dores de tocar um negócio no Brasil."),
+            ("Até 2022", "Quase dez anos empreendendo — o que me deu uma verdadeira visão de "
+                      "dono: sei quais são as dores de tocar um negócio no Brasil."),
             ("Em paralelo", "Alguns anos como fotógrafo profissional, experiência que me ensinou a "
                       "olhar com mais cuidado para os detalhes."),
             ("2022", "Entrada no mercado financeiro, gerenciando e estruturando carteiras para "

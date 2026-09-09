@@ -148,6 +148,38 @@ Nenhuma cor deve ser escrita direto no CSS de componente. Se for preciso uma cor
 ela vira token — foi assim que a regra "Private Banking não usa amarelo" passou a valer
 sozinha para qualquer elemento novo.
 
+## Espaçamento e fios
+
+Duas escalas fechadas, e é o que mantém os documentos consistentes entre si.
+
+**Espaçamento**, em mm: `1 · 1,5 · 2 · 3 · 4 · 5 · 6 · 8 · 10 · 12 · 16`. Toda margem,
+padding e gap sai daí. Fora da escala ficam apenas a geometria medida das capas e as
+margens de página, que têm origem própria.
+
+**Fios**: `1px` (0,75 pt) para todo fio — régua, hairline de tabela, borda de cabeçalho,
+moldura tracejada, traço de grafismo — e `1.33px` (1 pt) para acento: borda esquerda de
+card, topo de card de indicador, linha de total de tabela. Não há um terceiro peso.
+
+A escala é generosa por decisão: este é um material de produto financeiro, e o espaço em
+branco faz parte do acabamento. Quando um conteúdo não cabe na página, a resposta certa é
+**dar-lhe outra página**, e não reduzir a escala. As duas exceções são documentos de
+número de páginas fixo, que usam as classes `.densa` e `.perfil`.
+
+Para auditar depois de mexer:
+
+```sh
+python3 - <<'EOF'
+import re, sys, collections
+sys.path.insert(0, "gerador"); import common
+css = common.CSS_A4 + common.CSS_SLIDE
+print(collections.Counter(re.findall(r"border[a-z-]*:\s*([\d.]+(?:px|pt))", css)))
+v = collections.Counter()
+for d in re.findall(r"(?:margin|padding|gap)[a-z-]*:\s*([^;}]+)", css):
+    v.update(float(x) for x in re.findall(r"([\d.]+)mm", d))
+print(sorted(v))
+EOF
+```
+
 ## Componentes
 
 Cada um é uma função em `gerador/layout.py` que devolve HTML.

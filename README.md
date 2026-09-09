@@ -19,9 +19,9 @@ variante por consultor.
 
 | Documento | Formato | Páginas | Consultoria | Alta Renda | Private | Assessoria |
 | --- | --- | --- | :-: | :-: | :-: | :-: |
-| Relatório mensal | A4 retrato | 13–14 | ✓ | ✓ | ✓ | ✓ |
+| Relatório mensal | A4 retrato | 15–16 | ✓ | ✓ | ✓ | ✓ |
 | Diagnóstico de carteira | A4 retrato | 10 | ✓ | ✓ | ✓ | ✓ |
-| Relatório macroeconômico | A4 retrato | 10 | ✓ | ✓ | ✓ | ✓ |
+| Relatório macroeconômico | A4 retrato | 11 | ✓ | ✓ | ✓ | ✓ |
 | Apresentação geral | 16:9 | 14 | ✓ | ✓ | ✓ | ✓ |
 | Relatório mensal em apresentação | 16:9 | 12 | ✓ | ✓ | ✓ | ✓ |
 | Cronograma de reuniões | A4 retrato | 6 | ✓ | ✓ | ✓ | ✓ |
@@ -105,9 +105,10 @@ Extraído dos arquivos em `assets relatórios/` e do `MODELO SLIDES AUVP CAPITAL
 - **Capas e divisórias são monocromáticas.** Logo, título, réguas, grafismo e campos
   preenchíveis, tudo em branco sobre o gradiente. O dourado só entra nas páginas de
   conteúdo, e apenas onde a cor ajuda a leitura.
-- **Peso das linhas:** toda linha decorativa fica entre **0,75 pt e 1 pt** — réguas de
-  capa, hairlines de tabela e cabeçalho, molduras tracejadas dos gráficos, traço dos
-  grafismos e os acentos dourados. Não há barras espessas: os grafismos usam
+- **Peso das linhas:** só existem dois. **1 px (0,75 pt)** para todo fio — réguas de
+  capa, hairlines de tabela e de cabeçalho, molduras tracejadas, traço dos grafismos — e
+  **1,33 px (1 pt)** para os acentos: borda dos cards, topo dos cards de indicador,
+  linha superior da tabela de total. Não há barras espessas: os grafismos usam
   `vector-effect: non-scaling-stroke` para manter 0,75 pt em qualquer escala, em vez de
   afinar junto com o desenho.
 - **Grafismos:** o de arcos é o único usado como elemento decorativo fora de capas.
@@ -130,8 +131,13 @@ Extraído dos arquivos em `assets relatórios/` e do `MODELO SLIDES AUVP CAPITAL
   reproduzindo o do deck institucional. Ruído `feTurbulence` em ladrilho de 180 px a 22%
   de opacidade: sutil, mas perceptível o bastante para quebrar o bandeamento do
   degradê na impressão.
-- **Página:** A4 (210 × 297 mm) nos relatórios; 338,667 × 190,5 mm (13,333 × 7,5 pol,
-  o 16:9 padrão do PowerPoint) nas apresentações.
+- **Espaçamento:** escala de **1, 1,5, 2, 3, 4, 5, 6, 8, 10, 12 e 16 mm**. Nada fora
+  dela, exceto a geometria medida das capas e as margens de página. Os espaços são
+  generosos de propósito: quando um conteúdo não cabe, a resposta é dar-lhe outra
+  página, não apertar a escala.
+- **Página:** A4 (210 × 297 mm) nos relatórios, com margens de 15 mm no topo, 15,3 mm
+  nas laterais — as mesmas da capa — e 13 mm no pé; 338,667 × 190,5 mm (13,333 × 7,5
+  pol, o 16:9 padrão do PowerPoint) nas apresentações.
 
 ### Capas
 

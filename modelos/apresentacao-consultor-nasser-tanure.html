@@ -334,9 +334,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .perfil .side h3{margin-top:5mm}
 
 /* ---------- página invertida ----------
-   A segunda página da apresentação do consultor roda no negativo. É o que
-   separa as duas sem acrescentar ornamento: mesma grelha, mesma tipografia,
-   mesmos fios — só o fundo troca. */
+   A última página da apresentação do consultor roda no negativo. É o que a
+   fecha sem acrescentar ornamento: mesma grelha, mesma tipografia, mesmos
+   fios — só o fundo troca. */
 .page.dark{color:#fff;background:linear-gradient(225deg,var(--brand) 0%,#000 100%)}
 .page.dark .pg-head,.page.dark .pg-foot{border-color:rgba(255,255,255,.2)}
 .page.dark .pg-head .sec,.page.dark .pg-head .dt{color:rgba(255,255,255,.78)}
@@ -356,21 +356,21 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .page.dark .pill{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.24)}
 .page.dark .note{background:rgba(255,255,255,.06);border-left-color:rgba(255,255,255,.4)}
 
-/* respiro das páginas do plano: o mesmo ritmo do h2 vale para as grelhas que
-   seguem um bloco de texto, e a escala sobe um pouco porque estas páginas
-   têm menos matéria que as de relatório */
-.page.dark .pg-body>.cols2,.page.dark .pg-body>.principios{margin-top:10mm}
-.page.dark .pg-body>h2+.cols2,.page.dark .pg-body>h2+.principios{margin-top:0}
-.page.dark h2{margin:11mm 0 5mm}
-.page.dark .lead{font-size:11pt;line-height:1.55;margin-bottom:2mm}
-.page.dark .lista{font-size:9.2pt;line-height:1.62}
-.page.dark .lista li{padding-left:6mm;margin-bottom:4mm}
-.page.dark .lista li::before{top:2.4mm;width:3.2mm}
-.page.dark .principios{gap:6mm 10mm}
-.page.dark .principios p{font-size:8.8pt;line-height:1.6}
-.page.dark .small{font-size:9pt;line-height:1.62}
-.page.dark .cols2{gap:12mm}
-.page.dark .dl{font-size:9pt;gap:3mm 6mm}
+/* ---------- páginas do plano ----------
+   O ritmo é o mesmo com fundo claro ou escuro: `.plano` cuida do respiro e da
+   escala, `.dark` só da cor. As grelhas que seguem um bloco de texto herdam o
+   mesmo vão do h2, e a escala sobe um pouco porque estas páginas têm menos
+   matéria que as de relatório. */
+.page.plano h2{margin:0 0 5mm}
+.page.plano .lead{font-size:11pt;line-height:1.55;margin-bottom:2mm}
+.page.plano .lista{font-size:9.2pt;line-height:1.62}
+.page.plano .lista li{padding-left:6mm;margin-bottom:4mm}
+.page.plano .lista li::before{top:2.4mm;width:3.2mm}
+.page.plano .principios{gap:6mm 10mm}
+.page.plano .principios p{font-size:8.8pt;line-height:1.6}
+.page.plano .small{font-size:9pt;line-height:1.62}
+.page.plano .cols2{gap:12mm}
+.page.plano .dl{font-size:9pt;gap:3mm 6mm}
 
 </style>
 </head>
@@ -458,11 +458,11 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   </div>
   <footer class="pg-foot"><span class="no">01</span><span>AUVP Capital · Consultoria de investimentos</span></footer>
 </section>
-<section class="page dark">
-  <div class="grain"></div>
+<section class="page plano">
+  
   <header class="pg-head">
     <div class="sec">O plano</div>
-    <div class="rt"><div class="dt"><span class="ph">{{data_apresentacao}}</span></div><div class="logo" style="width:17.5mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+    <div class="rt"><div class="dt"><span class="ph">{{data_apresentacao}}</span></div><div class="logo logo-ink" style="width:17.5mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -504,8 +504,10 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <span class="eyebrow">AUVP Capital &middot; Consultoria de investimentos</span>
 <h1 class="t">Me Diz o Que Fazer</h1>
 <p class="lead" style="max-width:none">Você tem um consultor de investimentos à disposição para dizer o que fazer com o seu dinheiro. A conta continua sendo sua e quem executa é você. O nosso trabalho é trazer a análise e a recomendação de cada decisão.</p>
+<div class="esp"></div>
 <h2>Como funciona no dia a dia</h2>
 <ul class="lista"><li>O atendimento é pelo WhatsApp e funciona sob demanda: você chama quando precisa, sem depender da nossa agenda.</li><li>Não tem limite de conversa nem dia certo para falar com a gente, e também não existe reunião marcada de tempos em tempos.</li><li>Quem compra e quem vende é você, na sua conta. O consultor diz o que faz sentido, quanto e por quê, e fica com você tirando dúvida até a hora de executar.</li></ul>
+<div class="esp"></div>
 <div class="cols2">
   <div>
     <h2>O que você pode pedir ao seu consultor</h2>
@@ -519,7 +521,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   </div>
   <footer class="pg-foot"><span class="no">02</span><span>AUVP Capital · Consultoria de investimentos</span></footer>
 </section>
-<section class="page dark">
+<section class="page plano dark">
   <div class="grain"></div>
   <header class="pg-head">
     <div class="sec">A AUVP Capital</div>
@@ -565,7 +567,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <span class="eyebrow">A casa por trás da recomendação</span>
 <h1 class="t">Como pensamos investimento</h1>
 <p class="lead" style="max-width:none">A AUVP Capital nasceu da metodologia da AUVP Escola. É ela que orienta cada recomendação que você recebe aqui.</p>
+<div class="esp"></div>
 <div class="principios"><p><strong>Longo prazo e Buy and Hold.</strong> A gente investe para carregar. Day trade e operação de curto prazo não entram nas recomendações, e girar a carteira atrás de oportunidade rápida também não.</p><p><strong>Empresas perenes.</strong> Na renda variável, olhamos para empresas sólidas, com histórico e resultado consistente, que você consegue imaginar funcionando daqui a vinte anos.</p><p><strong>Renda fixa bem escolhida.</strong> Duas aplicações com a mesma taxa podem ser bem diferentes. Antes de recomendar, olhamos o emissor, o prazo, o indexador e a garantia.</p><p><strong>Diversificação.</strong> Cada classe cumpre um papel: proteger, gerar renda, fazer crescer. Diversificar é distribuir entre esses papéis na proporção do seu momento de vida.</p><p><strong>Explicar antes de recomendar.</strong> Toda recomendação vem com o motivo junto. A AUVP começou como escola, e o cliente decide melhor quando entende o que está fazendo.</p></div>
+<div class="esp"></div>
 <h2>Como somos remunerados</h2>
 <div class="cols2">
   <div>
@@ -575,6 +579,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
     <p class="small">No modelo comissionado, quem indica o investimento é pago pelo produto que vende. No <em>fee based</em> esse conflito não aparece: a remuneração é a mesma seja qual for a recomendação, e a comissão que ela geraria volta para a sua conta em forma de cashback.</p>
   </div>
 </div>
+<div class="esp"></div>
 <h2>O que não faz parte deste plano</h2>
 <ul class="lista mut"><li>O consultor não acompanha a sua carteira todo dia para agir sozinho quando o mercado se mexe. Ele responde quando você chama.</li><li>Nenhuma ordem é executada por nós. A compra e a venda são sempre suas.</li><li>O atendimento é por escrito. Ligações e reuniões periódicas não fazem parte do plano.</li><li>Não há uma estratégia de alocação montada só para o seu caso, com ajustes conforme o cenário muda. Esse acompanhamento é o do <strong>Resolve Aí</strong>, o plano de consultoria completa para quem tem R$ 300 mil ou mais, com consultor dedicado e reuniões bimestrais.</li></ul>
 <div style="margin-top:auto">

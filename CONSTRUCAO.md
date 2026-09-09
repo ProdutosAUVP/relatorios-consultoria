@@ -211,10 +211,12 @@ Modificadores de página, aplicados como `class` num `div` que envolve o conteú
 `.principios` põe título e texto no mesmo parágrafo, em duas colunas.
 
 `page_a4(..., dark=True)` roda a página no negativo: fundo em degradê com granulado,
-texto e fios em branco, logo em branco. É o que separa a página do consultor das duas
-seguintes sem acrescentar ornamento — mesma grelha, mesma tipografia, mesmos fios, só o
-fundo troca. No negativo o acento amarelo sai de cena: sobre o verde ele fica estridente,
-então marcador de lista, fio de card e destaque em negrito passam a branco.
+texto e fios em branco, logo em branco. É o que fecha a apresentação do consultor sem
+acrescentar ornamento — mesma grelha, mesma tipografia, mesmos fios, só o fundo troca.
+Cor e ritmo são coisas separadas: `.dark` cuida da cor, `page_a4(..., cls="plano")`
+cuida do respiro e da escala, e por isso as páginas 2 e 3 são iguais em diagramação com
+fundos diferentes. No negativo o acento amarelo sai de cena: sobre o verde ele fica
+estridente, então marcador de lista, fio de card e destaque em negrito passam a branco.
 No fundo branco vale o contrário — a logo da AUVP é sempre preta. `.perfil` é a escala da primeira página, um pouco menor que a padrão
 mas com entrelinha mais generosa, para acomodar o consultor de texto mais longo sem
 apertar o de texto mais curto.

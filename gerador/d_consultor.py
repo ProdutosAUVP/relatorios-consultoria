@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 """Apresentação do consultor — plano Me Diz o Que Fazer.
 
-Duas páginas: a primeira apresenta o consultor, a segunda o plano e a AUVP
-Capital. Ao contrário dos outros documentos, este vem escrito: o texto dos
-consultores e do segmento já existe. Só ficam como campo preenchível a foto e
-os contatos, que não vieram nos originais.
+Três páginas: o consultor, o plano e a AUVP Capital. As duas últimas partilham
+a escala `.plano`, e só a última roda no negativo — é o fecho do documento. Ao
+contrário dos outros documentos, este vem escrito: o texto dos consultores e do
+segmento já existe. Só ficam como campo preenchível a foto e os contatos, que
+não vieram nos originais.
 
 Uma variante por consultor; os dados estão em `consultores.py`.
 """
@@ -96,8 +97,10 @@ def _pagina_consultor(c):
 PAGINA_PLANO = """<span class="eyebrow">AUVP Capital &middot; Consultoria de investimentos</span>
 <h1 class="t">Me Diz o Que Fazer</h1>
 <p class="lead" style="max-width:none">Você tem um consultor de investimentos à disposição para dizer o que fazer com o seu dinheiro. A conta continua sendo sua e quem executa é você. O nosso trabalho é trazer a análise e a recomendação de cada decisão.</p>
+<div class="esp"></div>
 <h2>Como funciona no dia a dia</h2>
 %(funciona)s
+<div class="esp"></div>
 <div class="cols2">
   <div>
     <h2>O que você pode pedir ao seu consultor</h2>
@@ -137,7 +140,9 @@ PAGINA_PLANO = """<span class="eyebrow">AUVP Capital &middot; Consultoria de inv
 PAGINA_CASA = """<span class="eyebrow">A casa por trás da recomendação</span>
 <h1 class="t">Como pensamos investimento</h1>
 <p class="lead" style="max-width:none">A AUVP Capital nasceu da metodologia da AUVP Escola. É ela que orienta cada recomendação que você recebe aqui.</p>
+<div class="esp"></div>
 %(metodo)s
+<div class="esp"></div>
 <h2>Como somos remunerados</h2>
 <div class="cols2">
   <div>
@@ -147,6 +152,7 @@ PAGINA_CASA = """<span class="eyebrow">A casa por trás da recomendação</span>
     <p class="small">No modelo comissionado, quem indica o investimento é pago pelo produto que vende. No <em>fee based</em> esse conflito não aparece: a remuneração é a mesma seja qual for a recomendação, e a comissão que ela geraria volta para a sua conta em forma de cashback.</p>
   </div>
 </div>
+<div class="esp"></div>
 <h2>O que não faz parte deste plano</h2>
 %(fora)s
 <div style="margin-top:auto">
@@ -180,6 +186,6 @@ def build(t, variante):
     return [
         page_a4(t, "O seu consultor", 1,
                 '<div class="perfil">%s</div>' % _pagina_consultor(c), rodape=RODAPE),
-        page_a4(t, "O plano", 2, PAGINA_PLANO, rodape=RODAPE, dark=True),
-        page_a4(t, "A AUVP Capital", 3, PAGINA_CASA, rodape=RODAPE, dark=True),
+        page_a4(t, "O plano", 2, PAGINA_PLANO, rodape=RODAPE, cls="plano"),
+        page_a4(t, "A AUVP Capital", 3, PAGINA_CASA, rodape=RODAPE, cls="plano", dark=True),
     ]

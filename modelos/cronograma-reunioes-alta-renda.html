@@ -334,9 +334,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .perfil .side h3{margin-top:5mm}
 
 /* ---------- página invertida ----------
-   A segunda página da apresentação do consultor roda no negativo. É o que
-   separa as duas sem acrescentar ornamento: mesma grelha, mesma tipografia,
-   mesmos fios — só o fundo troca. */
+   A última página da apresentação do consultor roda no negativo. É o que a
+   fecha sem acrescentar ornamento: mesma grelha, mesma tipografia, mesmos
+   fios — só o fundo troca. */
 .page.dark{color:#fff;background:linear-gradient(225deg,var(--brand) 0%,#000 100%)}
 .page.dark .pg-head,.page.dark .pg-foot{border-color:rgba(255,255,255,.2)}
 .page.dark .pg-head .sec,.page.dark .pg-head .dt{color:rgba(255,255,255,.78)}
@@ -356,21 +356,21 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .page.dark .pill{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.24)}
 .page.dark .note{background:rgba(255,255,255,.06);border-left-color:rgba(255,255,255,.4)}
 
-/* respiro das páginas do plano: o mesmo ritmo do h2 vale para as grelhas que
-   seguem um bloco de texto, e a escala sobe um pouco porque estas páginas
-   têm menos matéria que as de relatório */
-.page.dark .pg-body>.cols2,.page.dark .pg-body>.principios{margin-top:10mm}
-.page.dark .pg-body>h2+.cols2,.page.dark .pg-body>h2+.principios{margin-top:0}
-.page.dark h2{margin:11mm 0 5mm}
-.page.dark .lead{font-size:11pt;line-height:1.55;margin-bottom:2mm}
-.page.dark .lista{font-size:9.2pt;line-height:1.62}
-.page.dark .lista li{padding-left:6mm;margin-bottom:4mm}
-.page.dark .lista li::before{top:2.4mm;width:3.2mm}
-.page.dark .principios{gap:6mm 10mm}
-.page.dark .principios p{font-size:8.8pt;line-height:1.6}
-.page.dark .small{font-size:9pt;line-height:1.62}
-.page.dark .cols2{gap:12mm}
-.page.dark .dl{font-size:9pt;gap:3mm 6mm}
+/* ---------- páginas do plano ----------
+   O ritmo é o mesmo com fundo claro ou escuro: `.plano` cuida do respiro e da
+   escala, `.dark` só da cor. As grelhas que seguem um bloco de texto herdam o
+   mesmo vão do h2, e a escala sobe um pouco porque estas páginas têm menos
+   matéria que as de relatório. */
+.page.plano h2{margin:0 0 5mm}
+.page.plano .lead{font-size:11pt;line-height:1.55;margin-bottom:2mm}
+.page.plano .lista{font-size:9.2pt;line-height:1.62}
+.page.plano .lista li{padding-left:6mm;margin-bottom:4mm}
+.page.plano .lista li::before{top:2.4mm;width:3.2mm}
+.page.plano .principios{gap:6mm 10mm}
+.page.plano .principios p{font-size:8.8pt;line-height:1.6}
+.page.plano .small{font-size:9pt;line-height:1.62}
+.page.plano .cols2{gap:12mm}
+.page.plano .dl{font-size:9pt;gap:3mm 6mm}
 
 </style>
 </head>

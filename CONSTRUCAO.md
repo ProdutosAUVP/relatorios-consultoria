@@ -11,7 +11,7 @@ campo, o [VARIAVEIS.md](VARIAVEIS.md).
 
 ```
 gerador/*.py  ──build──▶  modelos/*.html  ──pdf──▶  pdf/*.pdf
-   fonte                    24 modelos              24 PDFs
+   fonte                    31 modelos              31 PDFs
                             independentes
                                  │
                                  ├──vars──▶  VARIAVEIS.md
@@ -50,6 +50,10 @@ autossuficientes na entrega, fonte única na manutenção.
 | `gerador/common.py` | temas, tokens, folhas de estilo A4 e 16:9, fontes em base64, leitura dos SVGs |
 | `gerador/layout.py` | montagem de página e de slide, e os componentes (`table`, `kpis`, `flow`, `chart`, …) |
 | `gerador/d_*.py` | um módulo por tipo de documento; contém o conteúdo e a ordem das seções |
+| `gerador/consultores.py` | texto de apresentação dos consultores, um dicionário por pessoa |
+| `scripts/fotos.py` | prepara os retratos: recorta pelo rosto e normaliza a exposição |
+| `assets/consultores/` | retratos prontos, saída do `scripts/fotos.py` |
+| `consultores resolve ai/` | fotos originais, como vieram |
 | `gerador/build.py` | entrada: percorre documentos × segmentos e escreve `modelos/` |
 | `scripts/render.mjs` | HTML → PDF |
 | `scripts/check.mjs` | valida estouro de página em modo de impressão |
@@ -118,6 +122,10 @@ Trocar de segmento troca só o bloco `:root`. Trocar de formato troca a folha in
 segunda página: fica recortado. É por isso que o `npm run check` existe — ele acusa o
 recorte antes de virar PDF.
 
+O rodapé traz, por padrão, o aviso de confidencialidade. Documento feito para ser
+entregue ao cliente passa outro texto em `page_a4(..., rodape=...)` — é o caso da
+apresentação do consultor, que não deve dizer "proibido o compartilhamento".
+
 O slide 16:9 tem a mesma estrutura, com `.slide` no lugar de `.page` e as mesmas classes
 de cabeçalho e rodapé. `.slide.dark` inverte para o fundo em degradê.
 
@@ -140,6 +148,47 @@ Nenhuma cor deve ser escrita direto no CSS de componente. Se for preciso uma cor
 ela vira token — foi assim que a regra "Private Banking não usa amarelo" passou a valer
 sozinha para qualquer elemento novo.
 
+## Espaçamento e fios
+
+Duas escalas fechadas, e é o que mantém os documentos consistentes entre si.
+
+**Espaçamento**, em mm: `1 · 1,5 · 2 · 3 · 4 · 5 · 6 · 8 · 10 · 12 · 16`. Toda margem,
+padding e gap sai daí. Fora da escala ficam apenas a geometria medida das capas e as
+margens de página, que têm origem própria.
+
+**Fios**: `1px` (0,75 pt) para todo fio — régua, hairline de tabela, borda de cabeçalho,
+moldura tracejada, traço de grafismo — e `1.33px` (1 pt) para acento: borda esquerda de
+card, topo de card de indicador, linha de total de tabela. Não há um terceiro peso.
+
+A escala é generosa por decisão: este é um material de produto financeiro, e o espaço em
+branco faz parte do acabamento. Quando um conteúdo não cabe na página, a resposta certa é
+**dar-lhe outra página**, e não reduzir a escala. A exceção é a apresentação do consultor,
+de número de páginas fixo, que usa a escala `.perfil`.
+
+**Respiro elástico.** Numa página de altura fechada sobra espaço, e ele varia de um
+documento para outro — a trajetória de um consultor tem três marcos, a de outro tem
+quatro. Empurrar o rodapé para a borda com `margin-top:auto` resolve o encaixe mas abre
+um vão enorme numa junta só. A classe `.esp` faz o contrário: é um respiro `flex:1 1 0`
+entre duas faixas de conteúdo, com piso e teto (`4mm` a `11mm`, ou `17mm` na variante
+`.esp.lg`). O excedente é dividido igualmente entre os respiros da página, cada um cresce
+até o seu teto, e o que sobrar fica na margem inferior. No documento mais denso todos
+encostam no piso; no mais curto, no teto. Em ambos a página mantém o mesmo ritmo.
+
+Para auditar depois de mexer:
+
+```sh
+python3 - <<'EOF'
+import re, sys, collections
+sys.path.insert(0, "gerador"); import common
+css = common.CSS_A4 + common.CSS_SLIDE
+print(collections.Counter(re.findall(r"border[a-z-]*:\s*([\d.]+(?:px|pt))", css)))
+v = collections.Counter()
+for d in re.findall(r"(?:margin|padding|gap)[a-z-]*:\s*([^;}]+)", css):
+    v.update(float(x) for x in re.findall(r"([\d.]+)mm", d))
+print(sorted(v))
+EOF
+```
+
 ## Componentes
 
 Cada um é uma função em `gerador/layout.py` que devolve HTML.
@@ -155,7 +204,40 @@ Cada um é uma função em `gerador/layout.py` que devolve HTML.
 | `timeline(items)` | `.tl` | lista numerada em duas colunas |
 | `chart(label, desc, skeleton, style, series)` | `.chart` | moldura do gráfico: descreve o que ele mostra e pinta a legenda com `--c1`…`--c6` |
 | `imgbox(desc)` | `.imgbox` | espaço reservado para foto, com a especificação |
+| `foto_consultor(slug)` | `.rt-img` | retrato pronto, embutido em base64 |
 | `ph(nome, dica)` | `.ph` | campo preenchível `{{nome}}` |
+
+Modificadores de página, aplicados como `class` num `div` que envolve o conteúdo:
+`.principios` põe título e texto no mesmo parágrafo, em duas colunas.
+
+`page_a4(..., dark=True)` roda a página no negativo: fundo em degradê com granulado,
+texto e fios em branco, logo em branco. É o que fecha a apresentação do consultor sem
+acrescentar ornamento — mesma grelha, mesma tipografia, mesmos fios, só o fundo troca.
+Cor e ritmo são coisas separadas: `.dark` cuida da cor, `page_a4(..., cls="plano")`
+cuida do respiro e da escala, e por isso as páginas 2 e 3 são iguais em diagramação com
+fundos diferentes. No negativo o acento amarelo sai de cena: sobre o verde ele fica
+estridente, então marcador de lista, fio de card e destaque em negrito passam a branco.
+No fundo branco vale o contrário — a logo da AUVP é sempre preta. `.perfil` é a escala da primeira página, um pouco menor que a padrão
+mas com entrelinha mais generosa, para acomodar o consultor de texto mais longo sem
+apertar o de texto mais curto.
+
+### Retratos
+
+Os originais chegam muito diferentes entre si — estúdio escuro com o letreiro da AUVP,
+externa em luz de dia, estúdio claro — em enquadramentos e proporções que não combinam.
+`scripts/fotos.py` resolve as duas coisas que quebram a consistência:
+
+- **enquadramento**: detecta o rosto com o classificador Haar do OpenCV e recorta em 3:4
+  com o rosto sempre no mesmo ponto e no mesmo tamanho relativo — nos sete, entre 42% e
+  45% da largura do recorte. Quando o recorte ideal não cabe, encolhe mantendo a
+  proporção em vez de distorcer;
+- **exposição**: normaliza média e desvio da luminância em LAB e reduz um pouco a
+  saturação, para a foto clara e a escura não parecerem de produtos diferentes.
+
+É um passo de uma vez só, rodado à mão: `python3 scripts/fotos.py`. A saída fica
+versionada em `assets/consultores/` e o `npm run build` só a embute em base64, o que
+mantém o build sem dependências. Precisa de Pillow e de **opencv-python-headless 4.x** —
+na 5 o `CascadeClassifier` saiu do módulo raiz.
 
 Auxiliares de grelha, usados como `class`: `.cols2`, `.cols3`, `.cols2u` (1,35 : 1),
 `.center` (usa a sobra vertical do slide), `.gap`.
@@ -204,6 +286,27 @@ Nos dois casos, `npm run build && npm run check` fecha o ciclo.
 3. `npm run all`. Saem quatro arquivos novos, um por segmento.
 
 O formato é `"a4"` ou `"slide"`; é o que escolhe entre `CSS_A4` e `CSS_SLIDE`.
+
+### Um documento cujas variantes não são segmentos
+
+Na maioria dos documentos a variante é o segmento e o tema sai dela. Quando não for o
+caso — a apresentação do consultor tem uma variante por pessoa —, declare `tema` fixo e
+a lista de `variantes`, com `(sufixo do arquivo, rótulo do título)`:
+
+```python
+dict(chave="apresentacao-consultor", formato="a4",
+     titulo="%s — AUVP Capital · Me Diz o Que Fazer", builder=d_consultor.build,
+     tema="consultoria",
+     variantes=[(c["slug"], c["nome"]) for c in consultores.CONSULTORES]),
+```
+
+O `builder` recebe `(tema, sufixo)` em vez de `(tema, segmento)`. Acrescentar um
+consultor é somar uma entrada em `gerador/consultores.py`.
+
+O `scripts/variaveis.mjs` reconhece o documento pelo prefixo do nome do arquivo, então
+uma chave nova precisa entrar no `TITULOS` dele — os prefixos são ordenados do mais
+longo para o mais curto, para `relatorio-mensal-apresentacao` casar antes de
+`relatorio-mensal`.
 
 ### Acrescentar um segmento
 
@@ -274,8 +377,12 @@ como o arquivo variável do Google Fonts.
 **`@font-face` com URL relativa não carrega em `file://`.** O modelo precisa abrir com
 duplo clique, e nesse contexto o navegador recusa a fonte. Daí o base64 embutido.
 
-**`BASE` passa por formatação `%`.** Qualquer `%` literal no CSS dessa string precisa
-ser escrito `%%`. Um `50%` esquecido derruba o build com `TypeError`.
+**Cuidado com `%` no CSS, nos dois sentidos.** `BASE` e as folhas montadas com o
+operador `%` exigem `%%` para um `%` literal — um `50%` esquecido derruba o build com
+`TypeError`. Já os blocos acrescentados com `CSS_A4 += """…"""` **não** passam por
+formatação: ali `%%` vai para o arquivo como `%%` literal e invalida a regra em silêncio,
+sem erro nenhum. Foi assim que um `width:100%%` deixou um retrato aparecer em tamanho
+natural dentro da banda.
 
 **`<style>` dentro de SVG inline vaza para o documento.** Os SVGs da AUVP usam classes
 `.cls-1`, `.cls-2`… e colidiriam entre si. `load_svg()` renomeia com um prefixo por

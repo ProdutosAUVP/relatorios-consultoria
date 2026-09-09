@@ -21,7 +21,7 @@ def build(t, seg):
 <h1 class="t">Resumo executivo</h1>
 <p class="lead">%(tese)s</p>
 <h2>Os cinco fatos do mês</h2>
-<ol class="tl" style="grid-template-columns:1fr">
+<ol class="tl">
   <li><h4>%(f1t)s</h4><p>%(f1d)s</p></li>
   <li><h4>%(f2t)s</h4><p>%(f2d)s</p></li>
   <li><h4>%(f3t)s</h4><p>%(f3d)s</p></li>
@@ -38,10 +38,11 @@ def build(t, seg):
         mudanca=ph("mudanca_de_visao"),
         toc="".join('<li><span class="n">%02d</span><span>%s</span><span class="d"></span><span class="p">%02d</span></li>'
                     % (i, n, pg) for i, (n, pg) in enumerate([
-                        ("Cenário internacional", 3), ("Brasil: atividade e inflação", 4),
-                        ("Brasil: juros, fiscal e câmbio", 5), ("Mercados no período", 6),
-                        ("Projeções", 7), ("Implicações para a carteira", 8),
-                        ("Agenda do próximo mês", 9), ("Notas e avisos", 10)], start=1)))))
+                        ("Cenário internacional", 3), ("Indicadores globais", 4),
+                        ("Brasil: atividade e inflação", 5), ("Brasil: juros, fiscal e câmbio", 6),
+                        ("Mercados no período", 7), ("Projeções", 8),
+                        ("Implicações para a carteira", 9), ("Agenda do próximo mês", 10),
+                        ("Notas e avisos", 11)], start=1)))))
 
     P.append(page_a4(t, "Internacional", 3, """<span class="eyebrow">Global</span>
 <h1 class="t">Cenário internacional</h1>
@@ -51,12 +52,16 @@ def build(t, seg):
 <h2>Europa</h2>
 <p class="small">%(eur)s</p>
 <h2>China e Ásia</h2>
-<p class="small">%(chi)s</p>
-<h2>Indicadores acompanhados</h2>
+<p class="small">%(chi)s</p>""" % dict(
+        res=ph("resumo_internacional"), eua=ph("analise_eua"),
+        eur=ph("analise_europa"), chi=ph("analise_china"))))
+
+    P.append(page_a4(t, "Internacional", 4, """<span class="eyebrow">Global</span>
+<h1 class="t">Indicadores acompanhados</h1>
+<p class="lead">O que seguimos de perto lá fora, e como cada leitura se compara ao dado anterior e ao consenso.</p>
 %(tab)s
 <div class="gap"></div>
 %(ch)s""" % dict(
-        res=ph("resumo_internacional"), eua=ph("analise_eua"), eur=ph("analise_europa"), chi=ph("analise_china"),
         tab=table(["Indicador", "Último dado", "Anterior", "Consenso", "Leitura"],
                   [[n, ph("gi_%s_atual" % k), ph("gi_%s_ant" % k), ph("gi_%s_cons" % k), ph("gi_%s_leitura" % k)]
                    for n, k in [("Fed funds", "fed"), ("CPI EUA (a/a)", "cpi"), ("Payroll", "payroll"),
@@ -64,9 +69,10 @@ def build(t, seg):
                                 ("PIB China (a/a)", "pibchina"), ("Petróleo Brent", "brent"),
                                 ("Índice DXY", "dxy")]],
                   nums=[1, 2, 3]),
-        ch=chart("Juros longos e dólar", "Treasury de 10 anos e índice DXY nos últimos 12 meses.", "line", "min-height:40mm"))))
+        ch=chart("Juros longos e dólar", "Treasury de 10 anos e índice DXY nos últimos 12 meses.", "line",
+                 "min-height:40mm"))))
 
-    P.append(page_a4(t, "Brasil", 4, """<span class="eyebrow">Brasil</span>
+    P.append(page_a4(t, "Brasil", 5, """<span class="eyebrow">Brasil</span>
 <h1 class="t">Atividade e inflação</h1>
 <p class="lead">%(res)s</p>
 <h2>Atividade</h2>
@@ -87,7 +93,7 @@ def build(t, seg):
                   nums=[1, 2, 3]),
         ch=chart("IPCA cheio e núcleos", "IPCA acumulado em 12 meses contra a banda da meta e a média dos núcleos.", "line", "min-height:38mm"))))
 
-    P.append(page_a4(t, "Brasil", 5, """<span class="eyebrow">Brasil</span>
+    P.append(page_a4(t, "Brasil", 6, """<span class="eyebrow">Brasil</span>
 <h1 class="t">Juros, fiscal e câmbio</h1>
 <h2>Política monetária</h2>
 <p class="small">%(cop)s</p>
@@ -120,7 +126,7 @@ def build(t, seg):
                                 ("Conta corrente (% PIB)", "cc")]], nums=[1, 2, 3]),
         ch=chart("Curva de juros DI", "Curva atual contra a de um mês atrás e a de um ano atrás.", "line", "min-height:36mm"))))
 
-    P.append(page_a4(t, "Mercados", 6, """<span class="eyebrow">Desempenho</span>
+    P.append(page_a4(t, "Mercados", 7, """<span class="eyebrow">Desempenho</span>
 <h1 class="t">Mercados no período</h1>
 <p class="lead">Retorno das principais classes e índices em %(mes)s, no ano e em 12 meses.</p>
 %(tab)s
@@ -128,8 +134,7 @@ def build(t, seg):
 <div class="cols2">
   <div><h2>Destaques positivos</h2><p class="small mut">%(pos)s</p></div>
   <div><h2>Destaques negativos</h2><p class="small mut">%(neg)s</p></div>
-</div>
-%(ch)s""" % dict(
+</div>""" % dict(
         mes=ph("mes_referencia"), pos=ph("destaques_positivos"), neg=ph("destaques_negativos"),
         tab=table(["Classe / índice", "No mês", "No ano", "12 meses", "24 meses", "Volatilidade 12m"],
                   [[n, ph("mk_%s_mes" % k), ph("mk_%s_ano" % k), ph("mk_%s_12m" % k),
@@ -140,10 +145,9 @@ def build(t, seg):
                                 ("MSCI Emergentes", "msciem"), ("Dólar (PTAX)", "usd"),
                                 ("Ouro (US$)", "gold"), ("Bitcoin (US$)", "btc")]],
                   nums=[1, 2, 3, 4, 5],
-                  caption="Retornos nominais em moeda local, salvo indicação em contrário. Fonte: " + ph("fonte_dados_mercado")),
-        ch=chart("Retorno das classes no mês", "Barras comparando o retorno de cada classe no período.", "bars", "min-height:34mm"))))
+                  caption="Retornos nominais em moeda local, salvo indicação em contrário. Fonte: " + ph("fonte_dados_mercado")))))
 
-    P.append(page_a4(t, "Projeções", 7, """<span class="eyebrow">Expectativas</span>
+    P.append(page_a4(t, "Projeções", 8, """<span class="eyebrow">Expectativas</span>
 <h1 class="t">Projeções</h1>
 <p class="lead">Nossas projeções e a mediana do mercado. Onde divergimos, explicamos por quê.</p>
 <h2>Brasil</h2>
@@ -164,7 +168,7 @@ def build(t, seg):
                                  ("PIB EUA (%)", "pibeua"), ("PIB China (%)", "pibchina")]], nums=[1, 2]),
         cards=cards([(ph("divergencia_%d_titulo" % i), ph("divergencia_%d_racional" % i)) for i in (1, 2, 3)]))))
 
-    P.append(page_a4(t, "Implicações", 8, """<span class="eyebrow">%(nome)s</span>
+    P.append(page_a4(t, "Implicações", 9, """<span class="eyebrow">%(nome)s</span>
 <h1 class="t">Implicações para a carteira</h1>
 <p class="lead">%(leitura)s</p>
 <h2>Posicionamento por classe</h2>
@@ -187,7 +191,7 @@ def build(t, seg):
                      ph("risco_%d_gatilho" % i), ph("risco_%d_acao" % i)] for i in (1, 2, 3)]),
         frase=ph("sintese_posicionamento"))))
 
-    P.append(page_a4(t, "Agenda", 9, """<span class="eyebrow">O que vem por aí</span>
+    P.append(page_a4(t, "Agenda", 10, """<span class="eyebrow">O que vem por aí</span>
 <h1 class="t">Agenda de %(prox)s</h1>
 <p class="lead">Datas e eventos que podem mover os mercados no próximo período.</p>
 <h2>Calendário</h2>
@@ -201,7 +205,7 @@ def build(t, seg):
                    for i in range(1, 9)]),
         cards=cards([(ph("observar_%d_titulo" % i), ph("observar_%d_detalhe" % i)) for i in (1, 2, 3)]))))
 
-    P.append(page_a4(t, "Notas e avisos", 10, """<span class="eyebrow">Transparência</span>
+    P.append(page_a4(t, "Notas e avisos", 11, """<span class="eyebrow">Transparência</span>
 <h1 class="t">Notas metodológicas e avisos</h1>
 <h2>Fontes</h2>
 <div class="dl">

@@ -23,28 +23,41 @@ Estes se repetem na maior parte dos modelos. Vale manter um arquivo único com e
 
 | Variável | O que é | Em quantos modelos |
 | --- | --- | --- |
-| `razao_social` | Razão social da empresa emissora | 24 de 24 |
-| `cnpj` | CNPJ da empresa emissora | 24 de 24 |
-| `registro_cvm_empresa` | Registro da empresa na CVM | 4 de 24 |
-| `canal_ouvidoria` | Telefone ou e-mail da ouvidoria | 20 de 24 |
-| `disclaimer_regulatorio` | Texto legal aprovado pelo compliance, específico do segmento | 20 de 24 |
-| `nome_cliente` | Nome do cliente destinatário | 20 de 24 |
-| `nome_responsavel` | Consultor, assessor ou banker responsável | 20 de 24 |
-| `registro_cvm_ou_ancord` | Registro do responsável (CVM 19 / Ancord) | 12 de 24 |
-| `email_contato` | E-mail de contato exibido no documento | 20 de 24 |
-| `whatsapp_contato` | WhatsApp direto do responsável | 12 de 24 |
-| `canal_atendimento` | Canal e horário de atendimento | 12 de 24 |
-| `link_agendamento` | URL de agendamento (a mesma do QR code) | 12 de 24 |
-| `mes_referencia` | Mês de referência, ex.: Agosto de 2026 | 12 de 24 |
-| `data_posicao` | Data da posição consolidada | 8 de 24 |
-| `perfil_investidor` | Perfil de suitability do cliente | 8 de 24 |
-| `patrimonio_total` | Patrimônio total sob acompanhamento | 8 de 24 |
+| `razao_social` | Razão social da empresa emissora | 24 de 31 |
+| `cnpj` | CNPJ da empresa emissora | 24 de 31 |
+| `registro_cvm_empresa` | Registro da empresa na CVM | 4 de 31 |
+| `canal_ouvidoria` | Telefone ou e-mail da ouvidoria | 20 de 31 |
+| `disclaimer_regulatorio` | Texto legal aprovado pelo compliance, específico do segmento | 20 de 31 |
+| `nome_cliente` | Nome do cliente destinatário | 20 de 31 |
+| `nome_responsavel` | Consultor, assessor ou banker responsável | 20 de 31 |
+| `registro_cvm_ou_ancord` | Registro do responsável (CVM 19 / Ancord) | 12 de 31 |
+| `email_contato` | E-mail de contato exibido no documento | 20 de 31 |
+| `whatsapp_contato` | WhatsApp direto do responsável | 12 de 31 |
+| `canal_atendimento` | Canal e horário de atendimento | 12 de 31 |
+| `link_agendamento` | URL de agendamento (a mesma do QR code) | 12 de 31 |
+| `mes_referencia` | Mês de referência, ex.: Agosto de 2026 | 12 de 31 |
+| `data_posicao` | Data da posição consolidada | 8 de 31 |
+| `perfil_investidor` | Perfil de suitability do cliente | 8 de 31 |
+| `patrimonio_total` | Patrimônio total sob acompanhamento | 8 de 31 |
+
+## Apresentação do consultor — Me Diz o Que Fazer
+
+Arquivos: `modelos/apresentacao-consultor-alan-santanna.html`, `modelos/apresentacao-consultor-andre-arruda.html`, `modelos/apresentacao-consultor-bolivar-oliveira.html`, `modelos/apresentacao-consultor-danilo-barbosa.html`, `modelos/apresentacao-consultor-erika-barreto.html`, `modelos/apresentacao-consultor-nasser-tanure.html`, `modelos/apresentacao-consultor-yuri-machado.html`
+
+Variantes: alan-santanna, andre-arruda, bolivar-oliveira, danilo-barbosa, erika-barreto, nasser-tanure, yuri-machado &middot; 3 variáveis
+
+<details><summary>Ver as 3 variáveis específicas deste documento</summary>
+
+```
+data_apresentacao                 whatsapp_consultor                email_consultor
+```
+</details>
 
 ## Apresentação geral
 
 Arquivos: `modelos/apresentacao-geral-alta-renda.html`, `modelos/apresentacao-geral-assessoria.html`, `modelos/apresentacao-geral-consultoria.html`, `modelos/apresentacao-geral-private.html`
 
-Segmentos: alta-renda, assessoria, consultoria, private &middot; 141 variáveis
+Variantes: alta-renda, assessoria, consultoria, private &middot; 141 variáveis
 
 <details><summary>Ver as 131 variáveis específicas deste documento</summary>
 
@@ -100,7 +113,7 @@ site                              endereco_escritorio
 
 Arquivos: `modelos/cronograma-reunioes-alta-renda.html`, `modelos/cronograma-reunioes-assessoria.html`, `modelos/cronograma-reunioes-consultoria.html`, `modelos/cronograma-reunioes-private.html`
 
-Segmentos: alta-renda, assessoria, consultoria, private &middot; 153 variáveis
+Variantes: alta-renda, assessoria, consultoria, private &middot; 153 variáveis
 
 <details><summary>Ver as 147 variáveis específicas deste documento</summary>
 
@@ -161,7 +174,7 @@ regra_remarcacao_3                texto_registro_decisoes           texto_revisa
 
 Arquivos: `modelos/diagnostico-carteira-alta-renda.html`, `modelos/diagnostico-carteira-assessoria.html`, `modelos/diagnostico-carteira-consultoria.html`, `modelos/diagnostico-carteira-private.html`
 
-Segmentos: alta-renda, assessoria, consultoria, private &middot; 327 variáveis
+Variantes: alta-renda, assessoria, consultoria, private &middot; 327 variáveis
 
 <details><summary>Ver as 317 variáveis específicas deste documento</summary>
 
@@ -279,7 +292,7 @@ premissa_custos                   limitacoes_diagnostico
 
 Arquivos: `modelos/relatorio-macroeconomico-alta-renda.html`, `modelos/relatorio-macroeconomico-assessoria.html`, `modelos/relatorio-macroeconomico-consultoria.html`, `modelos/relatorio-macroeconomico-private.html`
 
-Segmentos: alta-renda, assessoria, consultoria, private &middot; 306 variáveis
+Variantes: alta-renda, assessoria, consultoria, private &middot; 306 variáveis
 
 <details><summary>Ver as 300 variáveis específicas deste documento</summary>
 
@@ -391,9 +404,9 @@ fonte_consenso                    data_fechamento                   declaracao_a
 
 Arquivos: `modelos/relatorio-mensal-alta-renda.html`, `modelos/relatorio-mensal-assessoria.html`, `modelos/relatorio-mensal-consultoria.html`, `modelos/relatorio-mensal-private.html`
 
-Segmentos: alta-renda, assessoria, consultoria, private &middot; 675 variáveis
+Variantes: alta-renda, assessoria, consultoria, private &middot; 690 variáveis
 
-<details><summary>Ver as 661 variáveis específicas deste documento</summary>
+<details><summary>Ver as 676 variáveis específicas deste documento</summary>
 
 ```
 carta_paragrafo_1                 carta_paragrafo_2                 carta_paragrafo_3
@@ -531,81 +544,86 @@ emissor_4_perc_rf                 emissor_4_perc_pat                emissor_4_ra
 emissor_4_fgc                     emissor_4_limite                  emissor_5_nome
 emissor_5_valor                   emissor_5_perc_rf                 emissor_5_perc_pat
 emissor_5_rating                  emissor_5_fgc                     emissor_5_limite
-acao_1_ticker                     acao_1_empresa                    acao_1_setor
-acao_1_qtd                        acao_1_preco_medio                acao_1_cotacao
-acao_1_valor                      acao_1_perc                       acao_1_ret12m
-acao_2_ticker                     acao_2_empresa                    acao_2_setor
-acao_2_qtd                        acao_2_preco_medio                acao_2_cotacao
-acao_2_valor                      acao_2_perc                       acao_2_ret12m
-acao_3_ticker                     acao_3_empresa                    acao_3_setor
-acao_3_qtd                        acao_3_preco_medio                acao_3_cotacao
-acao_3_valor                      acao_3_perc                       acao_3_ret12m
-acao_4_ticker                     acao_4_empresa                    acao_4_setor
-acao_4_qtd                        acao_4_preco_medio                acao_4_cotacao
-acao_4_valor                      acao_4_perc                       acao_4_ret12m
-acao_5_ticker                     acao_5_empresa                    acao_5_setor
-acao_5_qtd                        acao_5_preco_medio                acao_5_cotacao
-acao_5_valor                      acao_5_perc                       acao_5_ret12m
-fii_1_ticker                      fii_1_segmento                    fii_1_qtd
-fii_1_preco_medio                 fii_1_cotacao                     fii_1_valor
-fii_1_perc                        fii_1_dy                          fii_2_ticker
-fii_2_segmento                    fii_2_qtd                         fii_2_preco_medio
-fii_2_cotacao                     fii_2_valor                       fii_2_perc
-fii_2_dy                          fii_3_ticker                      fii_3_segmento
-fii_3_qtd                         fii_3_preco_medio                 fii_3_cotacao
-fii_3_valor                       fii_3_perc                        fii_3_dy
-fii_4_ticker                      fii_4_segmento                    fii_4_qtd
-fii_4_preco_medio                 fii_4_cotacao                     fii_4_valor
-fii_4_perc                        fii_4_dy                          data_ptax
-intl_total_usd                    intl_total_brl                    intl_perc_patrimonio
-intl_ret12m_usd                   intl_ret12m_brl                   ptax_utilizada
-irf_1_ativo                       irf_1_emissor                     irf_1_moeda
-irf_1_vencimento                  irf_1_taxa                        irf_1_valor_usd
-irf_1_perc                        irf_2_ativo                       irf_2_emissor
-irf_2_moeda                       irf_2_vencimento                  irf_2_taxa
-irf_2_valor_usd                   irf_2_perc                        irf_3_ativo
-irf_3_emissor                     irf_3_moeda                       irf_3_vencimento
-irf_3_taxa                        irf_3_valor_usd                   irf_3_perc
-irv_1_ticker                      irv_1_nome                        irv_1_tipo
-irv_1_qtd                         irv_1_preco_medio                 irv_1_cotacao
-irv_1_valor_usd                   irv_1_ret12m                      irv_2_ticker
-irv_2_nome                        irv_2_tipo                        irv_2_qtd
-irv_2_preco_medio                 irv_2_cotacao                     irv_2_valor_usd
-irv_2_ret12m                      irv_3_ticker                      irv_3_nome
-irv_3_tipo                        irv_3_qtd                         irv_3_preco_medio
-irv_3_cotacao                     irv_3_valor_usd                   irv_3_ret12m
-irv_4_ticker                      irv_4_nome                        irv_4_tipo
-irv_4_qtd                         irv_4_preco_medio                 irv_4_cotacao
-irv_4_valor_usd                   irv_4_ret12m                      oferta_1_nome
-oferta_1_classe                   oferta_1_emissor                  oferta_1_taxa
-oferta_1_prazo                    oferta_1_ticket                   oferta_1_janela
-oferta_2_nome                     oferta_2_classe                   oferta_2_emissor
-oferta_2_taxa                     oferta_2_prazo                    oferta_2_ticket
-oferta_2_janela                   oferta_3_nome                     oferta_3_classe
-oferta_3_emissor                  oferta_3_taxa                     oferta_3_prazo
-oferta_3_ticket                   oferta_3_janela                   oferta_4_nome
-oferta_4_classe                   oferta_4_emissor                  oferta_4_taxa
-oferta_4_prazo                    oferta_4_ticket                   oferta_4_janela
-oportunidade_1_titulo             oportunidade_1_racional           oportunidade_2_titulo
-oportunidade_2_racional           oportunidade_3_titulo             oportunidade_3_racional
-texto_suitability_oferta          cenario_brasil                    cenario_internacional
-m_cdi_fech                        m_cdi_mes                         m_cdi_ano
-m_cdi_12m                         m_ipca_fech                       m_ipca_mes
-m_ipca_ano                        m_ipca_12m                        m_selic_fech
-m_selic_mes                       m_selic_ano                       m_selic_12m
-m_ibov_fech                       m_ibov_mes                        m_ibov_ano
-m_ibov_12m                        m_spx_fech                        m_spx_mes
-m_spx_ano                         m_spx_12m                         m_usd_fech
-m_usd_mes                         m_usd_ano                         m_usd_12m
-m_gold_fech                       m_gold_mes                        m_gold_ano
-m_gold_12m                        m_ifix_fech                       m_ifix_mes
-m_ifix_ano                        m_ifix_12m                        m_imab_fech
-m_imab_mes                        m_imab_ano                        m_imab_12m
-pos_rfpos_visao                   pos_rfpos_mov                     pos_rfpos_racional
-pos_rfipca_visao                  pos_rfipca_mov                    pos_rfipca_racional
-pos_rvbr_visao                    pos_rvbr_mov                      pos_rvbr_racional
-pos_intl_visao                    pos_intl_mov                      pos_intl_racional
-pos_alt_visao                     pos_alt_mov                       pos_alt_racional
+emissor_6_nome                    emissor_6_valor                   emissor_6_perc_rf
+emissor_6_perc_pat                emissor_6_rating                  emissor_6_fgc
+emissor_6_limite                  texto_limite_emissor              acao_1_ticker
+acao_1_empresa                    acao_1_setor                      acao_1_qtd
+acao_1_preco_medio                acao_1_cotacao                    acao_1_valor
+acao_1_perc                       acao_1_ret12m                     acao_2_ticker
+acao_2_empresa                    acao_2_setor                      acao_2_qtd
+acao_2_preco_medio                acao_2_cotacao                    acao_2_valor
+acao_2_perc                       acao_2_ret12m                     acao_3_ticker
+acao_3_empresa                    acao_3_setor                      acao_3_qtd
+acao_3_preco_medio                acao_3_cotacao                    acao_3_valor
+acao_3_perc                       acao_3_ret12m                     acao_4_ticker
+acao_4_empresa                    acao_4_setor                      acao_4_qtd
+acao_4_preco_medio                acao_4_cotacao                    acao_4_valor
+acao_4_perc                       acao_4_ret12m                     acao_5_ticker
+acao_5_empresa                    acao_5_setor                      acao_5_qtd
+acao_5_preco_medio                acao_5_cotacao                    acao_5_valor
+acao_5_perc                       acao_5_ret12m                     fii_1_ticker
+fii_1_segmento                    fii_1_qtd                         fii_1_preco_medio
+fii_1_cotacao                     fii_1_valor                       fii_1_perc
+fii_1_dy                          fii_2_ticker                      fii_2_segmento
+fii_2_qtd                         fii_2_preco_medio                 fii_2_cotacao
+fii_2_valor                       fii_2_perc                        fii_2_dy
+fii_3_ticker                      fii_3_segmento                    fii_3_qtd
+fii_3_preco_medio                 fii_3_cotacao                     fii_3_valor
+fii_3_perc                        fii_3_dy                          fii_4_ticker
+fii_4_segmento                    fii_4_qtd                         fii_4_preco_medio
+fii_4_cotacao                     fii_4_valor                       fii_4_perc
+fii_4_dy                          data_ptax                         intl_total_usd
+intl_total_brl                    intl_perc_patrimonio              intl_ret12m_usd
+intl_ret12m_brl                   ptax_utilizada                    irf_1_ativo
+irf_1_emissor                     irf_1_moeda                       irf_1_vencimento
+irf_1_taxa                        irf_1_valor_usd                   irf_1_perc
+irf_2_ativo                       irf_2_emissor                     irf_2_moeda
+irf_2_vencimento                  irf_2_taxa                        irf_2_valor_usd
+irf_2_perc                        irf_3_ativo                       irf_3_emissor
+irf_3_moeda                       irf_3_vencimento                  irf_3_taxa
+irf_3_valor_usd                   irf_3_perc                        irv_1_ticker
+irv_1_nome                        irv_1_tipo                        irv_1_qtd
+irv_1_preco_medio                 irv_1_cotacao                     irv_1_valor_usd
+irv_1_ret12m                      irv_2_ticker                      irv_2_nome
+irv_2_tipo                        irv_2_qtd                         irv_2_preco_medio
+irv_2_cotacao                     irv_2_valor_usd                   irv_2_ret12m
+irv_3_ticker                      irv_3_nome                        irv_3_tipo
+irv_3_qtd                         irv_3_preco_medio                 irv_3_cotacao
+irv_3_valor_usd                   irv_3_ret12m                      irv_4_ticker
+irv_4_nome                        irv_4_tipo                        irv_4_qtd
+irv_4_preco_medio                 irv_4_cotacao                     irv_4_valor_usd
+irv_4_ret12m                      oferta_1_nome                     oferta_1_classe
+oferta_1_emissor                  oferta_1_taxa                     oferta_1_prazo
+oferta_1_ticket                   oferta_1_janela                   oferta_2_nome
+oferta_2_classe                   oferta_2_emissor                  oferta_2_taxa
+oferta_2_prazo                    oferta_2_ticket                   oferta_2_janela
+oferta_3_nome                     oferta_3_classe                   oferta_3_emissor
+oferta_3_taxa                     oferta_3_prazo                    oferta_3_ticket
+oferta_3_janela                   oferta_4_nome                     oferta_4_classe
+oferta_4_emissor                  oferta_4_taxa                     oferta_4_prazo
+oferta_4_ticket                   oferta_4_janela                   oportunidade_1_titulo
+oportunidade_1_racional           oportunidade_2_titulo             oportunidade_2_racional
+oportunidade_3_titulo             oportunidade_3_racional           texto_suitability_oferta
+cenario_brasil                    cenario_internacional             m_cdi_fech
+m_cdi_mes                         m_cdi_ano                         m_cdi_12m
+m_ipca_fech                       m_ipca_mes                        m_ipca_ano
+m_ipca_12m                        m_selic_fech                      m_selic_mes
+m_selic_ano                       m_selic_12m                       m_ibov_fech
+m_ibov_mes                        m_ibov_ano                        m_ibov_12m
+m_spx_fech                        m_spx_mes                         m_spx_ano
+m_spx_12m                         m_usd_fech                        m_usd_mes
+m_usd_ano                         m_usd_12m                         m_gold_fech
+m_gold_mes                        m_gold_ano                        m_gold_12m
+m_ifix_fech                       m_ifix_mes                        m_ifix_ano
+m_ifix_12m                        m_imab_fech                       m_imab_mes
+m_imab_ano                        m_imab_12m                        pos_rfpos_visao
+pos_rfpos_mov                     pos_rfpos_racional                pos_rfipca_visao
+pos_rfipca_mov                    pos_rfipca_racional               pos_rfpre_visao
+pos_rfpre_mov                     pos_rfpre_racional                pos_rvbr_visao
+pos_rvbr_mov                      pos_rvbr_racional                 pos_intl_visao
+pos_intl_mov                      pos_intl_racional                 pos_fii_visao
+pos_fii_mov                       pos_fii_racional                  pos_alt_visao
+pos_alt_mov                       pos_alt_racional                  sintese_posicionamento
 mensagem_encerramento             acao_1_prioridade                 acao_1_descricao
 acao_1_classe                     acao_1_prazo                      acao_2_prioridade
 acao_2_descricao                  acao_2_classe                     acao_2_prazo
@@ -658,7 +676,7 @@ nota_holding                      nota_seguros                      nota_sucessa
 
 Arquivos: `modelos/relatorio-mensal-apresentacao-alta-renda.html`, `modelos/relatorio-mensal-apresentacao-assessoria.html`, `modelos/relatorio-mensal-apresentacao-consultoria.html`, `modelos/relatorio-mensal-apresentacao-private.html`
 
-Segmentos: alta-renda, assessoria, consultoria, private &middot; 193 variáveis
+Variantes: alta-renda, assessoria, consultoria, private &middot; 193 variáveis
 
 <details><summary>Ver as 180 variáveis específicas deste documento</summary>
 

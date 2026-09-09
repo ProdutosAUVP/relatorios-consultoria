@@ -12,7 +12,7 @@ FOCO = {
     "private": ("Estrutura, liquidez e sucessão",
                 "Como o patrimônio está estruturado entre pessoa física, veículos e jurisdições, e o que isso implica em liquidez, tributação e sucessão."),
     "assessoria": ("Custo embutido, adequação e liquidez",
-                   "Quanto a carteira paga em taxas que não aparecem no extrato, o quanto ela corresponde ao perfil declarado e se a liquidez cobre os compromissos dos próximos doze meses."),
+                   "Quanto a carteira paga em taxas que não aparecem no extrato, o quanto ela corresponde ao perfil declarado e se a liquidez cobre os próximos doze meses."),
 }
 
 
@@ -35,15 +35,21 @@ def build(t, seg):
 %(fluxo)s
 <h2>Foco deste diagnóstico &mdash; %(ft)s</h2>
 <p class="small mut">%(fd)s</p>
-<h2>Base de dados</h2>
-<div class="dl">
-  <dt>Instituições</dt><dd>%(inst)s</dd>
-  <dt>Data de corte</dt><dd>%(corte)s</dd>
-  <dt>Documentos usados</dt><dd>%(docs)s</dd>
-  <dt>Não incluído</dt><dd>%(fora)s</dd>
-</div>
-<h2>Neste documento</h2>
-<ol class="toc">%(toc)s</ol>""" % dict(
+<div class="cols2">
+  <div>
+    <h2>Base de dados</h2>
+    <div class="dl">
+      <dt>Instituições</dt><dd>%(inst)s</dd>
+      <dt>Data de corte</dt><dd>%(corte)s</dd>
+      <dt>Documentos</dt><dd>%(docs)s</dd>
+      <dt>Não incluído</dt><dd>%(fora)s</dd>
+    </div>
+  </div>
+  <div>
+    <h2>Neste documento</h2>
+    <ol class="toc">%(toc)s</ol>
+  </div>
+</div>""" % dict(
         fluxo=flow([(ph("etapa_%s_prazo" % k), n, ph("etapa_%s" % k)) for n, k in
                     [("Coleta", "coleta"), ("Consolidação", "consolidacao"),
                      ("Análise", "analise"), ("Proposta", "proposta")]]),

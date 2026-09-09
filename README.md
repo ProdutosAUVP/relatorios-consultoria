@@ -1,7 +1,7 @@
 # Modelos de relatórios — AUVP Capital e AUVP Private Banking
 
 Modelos de uso dos relatórios e apresentações entregues aos clientes, prontos para
-serem preenchidos e exportados em PDF. São **24 arquivos HTML independentes**: cada
+serem preenchidos e exportados em PDF. São **31 arquivos HTML independentes**: cada
 um traz o próprio CSS, a própria fonte e a própria paleta, abre com duplo clique em
 qualquer navegador e não depende de nenhum outro arquivo do repositório.
 
@@ -12,21 +12,32 @@ Os modelos são **gerados** a partir de `gerador/`, e não editados à mão. Par
 acrescentar uma página, um documento ou um segmento, veja
 [`CONSTRUCAO.md`](CONSTRUCAO.md).
 
-## Os 24 modelos
+## Os 31 modelos
 
-Os seis documentos existem nos quatro segmentos.
+Seis documentos existem nos quatro segmentos; a apresentação do consultor tem uma
+variante por consultor.
 
 | Documento | Formato | Páginas | Consultoria | Alta Renda | Private | Assessoria |
 | --- | --- | --- | :-: | :-: | :-: | :-: |
-| Relatório mensal | A4 retrato | 13–14 | ✓ | ✓ | ✓ | ✓ |
+| Relatório mensal | A4 retrato | 15–16 | ✓ | ✓ | ✓ | ✓ |
 | Diagnóstico de carteira | A4 retrato | 10 | ✓ | ✓ | ✓ | ✓ |
-| Relatório macroeconômico | A4 retrato | 10 | ✓ | ✓ | ✓ | ✓ |
+| Relatório macroeconômico | A4 retrato | 11 | ✓ | ✓ | ✓ | ✓ |
 | Apresentação geral | 16:9 | 14 | ✓ | ✓ | ✓ | ✓ |
 | Relatório mensal em apresentação | 16:9 | 12 | ✓ | ✓ | ✓ | ✓ |
 | Cronograma de reuniões | A4 retrato | 6 | ✓ | ✓ | ✓ | ✓ |
+| Apresentação do consultor | A4 retrato | 3 | 7 consultores | — | — | — |
 
-Nomes de arquivo: `modelos/<documento>-<segmento>.html`, com segmento em
-`consultoria`, `alta-renda`, `private`, `assessoria`.
+Nomes de arquivo: `modelos/<documento>-<variante>.html`. Na maioria a variante é o
+segmento — `consultoria`, `alta-renda`, `private`, `assessoria`. Na apresentação do
+consultor é o nome dele, e o tema é sempre o da consultoria.
+
+A **apresentação do consultor** é o único documento que já vem escrito, e não em branco:
+o texto dos consultores e do plano Me Diz o Que Fazer veio pronto, e os retratos estão
+embutidos. Só os contatos ficaram como campo preenchível.
+
+As duas páginas se distinguem pela inversão, não por ornamento: a primeira é aberta e
+clara, com o retrato e as credenciais na coluna de apoio; a segunda roda no negativo.
+Mesma grelha, mesma tipografia, mesmos fios — só o fundo troca.
 
 ## Como usar
 
@@ -37,7 +48,7 @@ mesmo arquivo no navegador: os campos ainda não preenchidos ficam destacados.
 
 **2. Gerar o PDF.**
 
-A pasta `pdf/` já traz um PDF de cada um dos 24 modelos, para quem só quer ler o
+A pasta `pdf/` já traz um PDF de cada um dos 31 modelos, para quem só quer ler o
 resultado sem instalar nada. Para regerar depois de editar um modelo:
 
 ```sh
@@ -94,9 +105,10 @@ Extraído dos arquivos em `assets relatórios/` e do `MODELO SLIDES AUVP CAPITAL
 - **Capas e divisórias são monocromáticas.** Logo, título, réguas, grafismo e campos
   preenchíveis, tudo em branco sobre o gradiente. O dourado só entra nas páginas de
   conteúdo, e apenas onde a cor ajuda a leitura.
-- **Peso das linhas:** toda linha decorativa fica entre **0,75 pt e 1 pt** — réguas de
-  capa, hairlines de tabela e cabeçalho, molduras tracejadas dos gráficos, traço dos
-  grafismos e os acentos dourados. Não há barras espessas: os grafismos usam
+- **Peso das linhas:** só existem dois. **1 px (0,75 pt)** para todo fio — réguas de
+  capa, hairlines de tabela e de cabeçalho, molduras tracejadas, traço dos grafismos — e
+  **1,33 px (1 pt)** para os acentos: borda dos cards, topo dos cards de indicador,
+  linha superior da tabela de total. Não há barras espessas: os grafismos usam
   `vector-effect: non-scaling-stroke` para manter 0,75 pt em qualquer escala, em vez de
   afinar junto com o desenho.
 - **Grafismos:** o de arcos é o único usado como elemento decorativo fora de capas.
@@ -119,8 +131,13 @@ Extraído dos arquivos em `assets relatórios/` e do `MODELO SLIDES AUVP CAPITAL
   reproduzindo o do deck institucional. Ruído `feTurbulence` em ladrilho de 180 px a 22%
   de opacidade: sutil, mas perceptível o bastante para quebrar o bandeamento do
   degradê na impressão.
-- **Página:** A4 (210 × 297 mm) nos relatórios; 338,667 × 190,5 mm (13,333 × 7,5 pol,
-  o 16:9 padrão do PowerPoint) nas apresentações.
+- **Espaçamento:** escala de **1, 1,5, 2, 3, 4, 5, 6, 8, 10, 12 e 16 mm**. Nada fora
+  dela, exceto a geometria medida das capas e as margens de página. Os espaços são
+  generosos de propósito: quando um conteúdo não cabe, a resposta é dar-lhe outra
+  página, não apertar a escala.
+- **Página:** A4 (210 × 297 mm) nos relatórios, com margens de 15 mm no topo, 15,3 mm
+  nas laterais — as mesmas da capa — e 13 mm no pé; 338,667 × 190,5 mm (13,333 × 7,5
+  pol, o 16:9 padrão do PowerPoint) nas apresentações.
 
 ### Capas
 
@@ -275,12 +292,16 @@ trimestral no private e semestral com contatos da mesa na assessoria.
 ## Estrutura do repositório
 
 ```
-modelos/                        24 modelos HTML independentes
+modelos/                        31 modelos HTML independentes
 pdf/                            um PDF de cada modelo, versionado (saída do npm run pdf)
 scripts/render.mjs              HTML -> PDF via Playwright
 scripts/check.mjs               verificação de estouro de página
 scripts/variaveis.mjs           gera o VARIAVEIS.md a partir dos modelos
 gerador/                        fonte dos modelos (Python, só biblioteca padrão)
+gerador/consultores.py          texto de apresentação dos sete consultores
+scripts/fotos.py                prepara os retratos (passo de uma vez só)
+assets/consultores/             retratos prontos
+consultores resolve ai/         fotos originais
 assets/fonts/                   Anek Latin (woff2)
 assets relatórios/              logos, grafismos e referências originais (fonte de verdade)
 MODELO SLIDES AUVP CAPITAL.pdf  deck institucional de referência

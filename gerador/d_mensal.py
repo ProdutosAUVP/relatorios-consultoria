@@ -60,14 +60,16 @@ def pagina_extra(t, seg):
             tab=table(["Estrutura", "Tipo", "Finalidade", "Jurisdição", "Status", "Próxima revisão"],
                       [[ph("estrutura_%d_nome" % i), ph("estrutura_%d_tipo" % i), ph("estrutura_%d_finalidade" % i),
                         ph("estrutura_%d_jurisdicao" % i), ph("estrutura_%d_status" % i),
-                        ph("estrutura_%d_revisao" % i)] for i in (1, 2, 3)], sm=True),
+                        ph("estrutura_%d_revisao" % i)] for i in (1, 2, 3)], xs=True,
+                      widths=[20, 14, 24, 14, 14, 14]),
             cards=cards([("Holding e governança", ph("nota_holding")),
                          ("Seguros e liquidez sucessória", ph("nota_seguros")),
                          ("Doações e testamento", ph("nota_sucessao"))]),
             tab2=table(["Compromisso", "Quando", "Valor", "Origem dos recursos", "Situação"],
                        [[ph("compromisso_%d_nome" % i), ph("compromisso_%d_quando" % i),
                          ph("compromisso_%d_valor" % i), ph("compromisso_%d_origem" % i),
-                         ph("compromisso_%d_situacao" % i)] for i in (1, 2, 3)], nums=[2]))
+                         ph("compromisso_%d_situacao" % i)] for i in (1, 2, 3)], nums=[2],
+                       sm=True, widths=[26, 14, 16, 26, 18]))
 
     # assessoria
     return """<span class="eyebrow">Assessoria</span>
@@ -240,18 +242,16 @@ def build(t, seg):
         ch=chart("Proventos por mês", "Barras com os proventos recebidos nos últimos 12 meses, empilhadas por origem (dividendos, JCP, aluguel, cupom).", "bars", "min-height:48mm")))
 
     # -------------------------------------------------------------- renda fixa
-    add("Renda fixa", "Renda fixa", """<span class="eyebrow">Renda fixa</span>
-<h1 class="t">Indexadores, liquidez e emissores</h1>
-<p class="lead">Como a renda fixa está distribuída entre indexadores, quando ela vira caixa e a quem você está emprestando.</p>
+    add("Renda fixa", "Renda fixa: indexadores e liquidez", """<span class="eyebrow">Renda fixa</span>
+<h1 class="t">Indexadores e liquidez projetada</h1>
+<p class="lead">Como a renda fixa está distribuída entre indexadores e quando ela vira caixa.</p>
 <h2>Posições por indexador</h2>
 <div class="cols2u">
   <div>%(tab)s</div>
   %(ch)s
 </div>
 <h2>Liquidez projetada</h2>
-%(tab2)s
-<h2>Controle por emissor</h2>
-%(tab3)s""" % dict(
+%(tab2)s""" % dict(
         tab=table(["Indexador", "Valor", "% da RF", "Taxa média", "Prazo médio"],
                   [[n, ph("rf_%s_valor" % k), ph("rf_%s_perc" % k), ph("rf_%s_taxa" % k), ph("rf_%s_prazo" % k)]
                    for n, k in [("Pós-fixado (CDI)", "pos"), ("Prefixado", "pre"),
@@ -259,7 +259,7 @@ def build(t, seg):
                   foot=["<strong>Total</strong>", ph("rf_total_valor"), "100,0%", ph("rf_taxa_media"), ph("rf_prazo_medio")],
                   nums=[1, 2, 3, 4], sm=True),
         ch=chart("Renda fixa por indexador", "Rosca com a divisão entre pós-fixado, prefixado, inflação e isentos.",
-                  "donut", "min-height:44mm", series=["Pós-fixado", "Prefixado", "Inflação", "Isentos"]),
+                 "donut", "min-height:44mm", series=["Pós-fixado", "Prefixado", "Inflação", "Isentos"]),
         tab2=table(["Faixa", "Valor", "% da RF", "% do patrimônio", "Acumulado", "Observação"],
                    [[n, ph("liq_%s_valor" % k), ph("liq_%s_perc_rf" % k), ph("liq_%s_perc_pat" % k),
                      ph("liq_%s_acum" % k), ph("liq_%s_obs" % k)]
@@ -267,13 +267,21 @@ def build(t, seg):
                                  ("31 a 180 dias", "d180"), ("181 a 360 dias", "d360"),
                                  ("Acima de 360 dias", "d360mais")]],
                    nums=[1, 2, 3, 4], sm=True,
-                   caption="Liquidez projetada considera carência, vencimento e liquidez de mercado do papel."),
-        tab3=table(["Emissor", "Exposição", "% da RF", "% do patrimônio", "Rating", "Coberto pelo FGC", "Limite interno"],
-                   [[ph("emissor_%d_nome" % i), ph("emissor_%d_valor" % i), ph("emissor_%d_perc_rf" % i),
-                     ph("emissor_%d_perc_pat" % i), ph("emissor_%d_rating" % i), ph("emissor_%d_fgc" % i),
-                     ph("emissor_%d_limite" % i)] for i in (1, 2, 3, 4, 5)],
-                   nums=[1, 2, 3, 6], xs=True,
-                   widths=[24, 14, 11, 14, 10, 13, 14])))
+                   caption="Liquidez projetada considera carência, vencimento e liquidez de mercado do papel.")))
+
+    add("Renda fixa", "Renda fixa: emissores", """<span class="eyebrow">Renda fixa</span>
+<h1 class="t">Controle por emissor</h1>
+<p class="lead">A quem você está emprestando, quanto, com qual risco de crédito e até onde vai a cobertura do FGC.</p>
+%(tab)s
+<div class="gap"></div>
+<div class="note"><p><strong>Limite interno por emissor.</strong> %(nota)s</p></div>""" % dict(
+        tab=table(["Emissor", "Exposição", "% da RF", "% do patrimônio", "Rating", "Coberto pelo FGC", "Limite interno"],
+                  [[ph("emissor_%d_nome" % i), ph("emissor_%d_valor" % i), ph("emissor_%d_perc_rf" % i),
+                    ph("emissor_%d_perc_pat" % i), ph("emissor_%d_rating" % i), ph("emissor_%d_fgc" % i),
+                    ph("emissor_%d_limite" % i)] for i in (1, 2, 3, 4, 5, 6)],
+                  nums=[1, 2, 3, 6], sm=True,
+                  widths=[24, 14, 11, 14, 10, 13, 14]),
+        nota=ph("texto_limite_emissor")))
 
     # ----------------------------------------------------------- ações e FIIs
     add("Ações e FIIs", "Ações e fundos imobiliários", """<span class="eyebrow">Renda variável</span>
@@ -334,30 +342,37 @@ def build(t, seg):
         add(EXTRA_TITULO[seg], EXTRA_TITULO[seg], pagina_extra(t, seg))
 
     # ----------------------------------------------------------------- cenário
-    add("Cenário", "Cenário e posicionamento", """<span class="eyebrow">Contexto</span>
-<h1 class="t">Cenário e posicionamento</h1>
-<p class="lead">Resumo do que moveu os mercados no período e como isso se traduz na sua carteira. A análise completa está no Relatório Macroeconômico do mês.</p>
+    add("Cenário", "Cenário do período", """<span class="eyebrow">Contexto</span>
+<h1 class="t">Cenário do período</h1>
+<p class="lead">Resumo do que moveu os mercados no período. A análise completa está no Relatório Macroeconômico do mês.</p>
 <div class="cols2">
   <div><h2>Brasil</h2><p class="small">%(br)s</p></div>
   <div><h2>Internacional</h2><p class="small">%(int)s</p></div>
 </div>
 <h2>Mercados no período</h2>
-%(tab)s
-<h2>Posicionamento por classe</h2>
-%(tab2)s""" % dict(
+%(tab)s""" % dict(
         br=ph("cenario_brasil"), int=ph("cenario_internacional"),
         tab=table(["Indicador", "Fechamento", "No mês", "No ano", "12 meses"],
                   [[n, ph("m_%s_fech" % k), ph("m_%s_mes" % k), ph("m_%s_ano" % k), ph("m_%s_12m" % k)]
                    for n, k in [("CDI", "cdi"), ("IPCA", "ipca"), ("Selic", "selic"), ("Ibovespa", "ibov"),
                                 ("S&amp;P 500", "spx"), ("Dólar (PTAX)", "usd"), ("Ouro", "gold"),
                                 ("IFIX", "ifix"), ("IMA-B", "imab")]],
-                  nums=[1, 2, 3, 4]),
-        tab2=table(["Classe", "Visão", "Movimento no mês", "Racional"],
-                   [[c, '<span class="pill">' + ph("pos_%s_visao" % k) + "</span>",
-                     ph("pos_%s_mov" % k), ph("pos_%s_racional" % k)]
-                    for c, k in [("Renda fixa pós", "rfpos"), ("Renda fixa inflação", "rfipca"),
-                                 ("Renda variável BR", "rvbr"), ("Internacional", "intl"),
-                                 ("Alternativos", "alt")]])))
+                  nums=[1, 2, 3, 4])))
+
+    add("Posicionamento", "Posicionamento por classe", """<span class="eyebrow">Como isso chega à sua carteira</span>
+<h1 class="t">Posicionamento por classe</h1>
+<p class="lead">A leitura de cenário traduzida em decisão: o que mudou na sua carteira neste mês e por quê.</p>
+%(tab)s
+<div class="gap"></div>
+<div class="note"><p><strong>Em uma frase.</strong> %(frase)s</p></div>""" % dict(
+        tab=table(["Classe", "Visão", "Movimento no mês", "Racional"],
+                  [[c, '<span class="pill">' + ph("pos_%s_visao" % k) + "</span>",
+                    ph("pos_%s_mov" % k), ph("pos_%s_racional" % k)]
+                   for c, k in [("Renda fixa pós", "rfpos"), ("Renda fixa inflação", "rfipca"),
+                                ("Renda fixa prefixada", "rfpre"), ("Renda variável BR", "rvbr"),
+                                ("Internacional", "intl"), ("Fundos imobiliários", "fii"),
+                                ("Alternativos", "alt")]]),
+        frase=ph("sintese_posicionamento")))
 
     # ---------------------------------------------------------- encerramento
     add("Encerramento", "Encerramento e próximos passos", """<span class="eyebrow">Plano de ação</span>

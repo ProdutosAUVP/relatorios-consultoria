@@ -70,6 +70,7 @@ def sem_viuvas(html):
 
 def monta(doc, sufixo, rotulo, tema):
     t = THEMES[tema]
+    reset_img()
     paginas = doc["builder"](t, sufixo if "variantes" in doc else tema)
     css = CSS_A4 if doc["formato"] == "a4" else CSS_SLIDE
     html = head(doc["titulo"] % rotulo, tokens(t) + "\n" + css) + \

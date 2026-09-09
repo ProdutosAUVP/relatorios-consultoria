@@ -12,6 +12,15 @@ def set_date_ph(name):
     global DATE_PH
     DATE_PH = name
 
+
+# Cada espaço de imagem ganha um número dentro do documento. É o que deixa a
+# ferramenta de preenchimento saber onde encaixar cada foto enviada.
+_IMG = [0]
+
+
+def reset_img():
+    _IMG[0] = 0
+
 def logo_svg(t, h_mm, ink=False, cls=""):
     """A marca do Private Banking é muito mais larga que a do Capital; para as
     duas terem o mesmo peso visual a largura é derivada de uma altura-alvo."""
@@ -172,13 +181,17 @@ def chart(label, desc, skeleton="bars", style="", series=None):
           "none": ""}[skeleton]
     # `flex` só tem efeito dentro de .pg-body (flex column); em grelha é ignorado.
     lg = legend(series) if series else ""
-    return ('<div class="chart" style="flex:1 1 auto;%s">%s<div class="cl">%s</div>'
-            '<div class="cd">%s</div>%s</div>') % (style, sk, label, desc, lg)
+    _IMG[0] += 1
+    return ('<div class="chart" data-img="%d" style="flex:1 1 auto;%s">%s'
+            '<div class="cl">%s</div>'
+            '<div class="cd">%s</div>%s</div>') % (_IMG[0], style, sk, label, desc, lg)
 
 
 def imgbox(desc, style=""):
-    return ('<div class="imgbox" style="flex:1 1 auto;%s"><div class="cl">Imagem</div>'
-            '<div class="cd">%s</div></div>') % (style, desc)
+    _IMG[0] += 1
+    return ('<div class="imgbox" data-img="%d" style="flex:1 1 auto;%s">'
+            '<div class="cl">Imagem</div>'
+            '<div class="cd">%s</div></div>') % (_IMG[0], style, desc)
 
 
 def table(headers, rows, foot=None, caption=None, nums=None, widths=None, sm=False, xs=False):

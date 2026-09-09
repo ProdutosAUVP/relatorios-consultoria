@@ -591,7 +591,7 @@ CSS_A4 += """
 CSS_A4 += """
 /* ---------- retrato na coluna de apoio ---------- */
 .rt-img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 26%;
-  border-radius:6mm 0 0 0;
+  border-radius:3mm 0 0 0;
   margin-bottom:5.5mm}
 
 /* ---------- respiro elástico entre faixas ----------

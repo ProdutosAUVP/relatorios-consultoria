@@ -51,16 +51,18 @@ autossuficientes na entrega, fonte única na manutenção.
 | `gerador/layout.py` | montagem de página e de slide, e os componentes (`table`, `kpis`, `flow`, `chart`, …) |
 | `gerador/d_*.py` | um módulo por tipo de documento; contém o conteúdo e a ordem das seções |
 | `gerador/consultores.py` | texto de apresentação dos consultores, um dicionário por pessoa |
-| `scripts/fotos.py` | prepara os retratos: recorta pelo rosto e normaliza a exposição |
+| `scripts/fotos.py` | prepara os retratos: recorta pelo rosto, sem tocar em cor ou brilho |
 | `assets/consultores/` | retratos prontos, saída do `scripts/fotos.py` |
 | `consultores resolve ai/` | fotos originais, como vieram |
 | `gerador/build.py` | entrada: percorre documentos × segmentos e escreve `modelos/` |
 | `scripts/render.mjs` | HTML → PDF |
 | `scripts/check.mjs` | valida estouro de página em modo de impressão |
 | `scripts/variaveis.mjs` | gera o `VARIAVEIS.md` a partir dos modelos |
+| `scripts/catalogo.mjs` | monta `docs/`: copia os modelos e escreve o índice da ferramenta |
+| `docs/` | a ferramenta de preenchimento, publicada no GitHub Pages |
 | `assets/fonts/` | Anek Latin, instâncias estáticas em woff2 |
 | `assets relatórios/` | logos, grafismos e as referências originais de capa |
-| `modelos/`, `pdf/`, `VARIAVEIS.md` | saída |
+| `modelos/`, `pdf/`, `docs/`, `VARIAVEIS.md` | saída |
 
 ## Reproduzir do zero
 
@@ -68,10 +70,10 @@ autossuficientes na entrega, fonte única na manutenção.
 git clone <repo> && cd relatorios-consultoria
 npm install          # só Playwright; o gerador não tem dependências
 npm run all
-git status --short modelos/ VARIAVEIS.md    # deve vir vazio
+git status --short modelos/ docs/ VARIAVEIS.md   # deve vir vazio
 ```
 
-`modelos/` e `VARIAVEIS.md` são **reprodutíveis byte a byte**: se vierem limpos, a saída
+`modelos/`, `docs/` e `VARIAVEIS.md` são **reprodutíveis byte a byte**: se vierem limpos, a saída
 no repositório corresponde exatamente à fonte. É essa a verificação que vale.
 
 `pdf/` **não** é byte a byte. O Chromium carimba data de criação no PDF, então os 24
@@ -235,19 +237,15 @@ apertar o de texto mais curto.
 
 Os originais chegam muito diferentes entre si — estúdio escuro com o letreiro da AUVP,
 externa em luz de dia, estúdio claro — em enquadramentos e proporções que não combinam.
-`scripts/fotos.py` resolve as duas coisas que quebram a consistência:
+`scripts/fotos.py` resolve o que quebra a consistência sem tocar na imagem:
 
 - **enquadramento**: detecta o rosto com o classificador Haar do OpenCV e recorta em 3:4
   com o rosto sempre no mesmo ponto e no mesmo tamanho relativo — nos sete, entre 42% e
   45% da largura do recorte. Quando o recorte ideal não cabe, encolhe mantendo a
-  proporção em vez de distorcer;
-- **exposição**: normaliza média e desvio da luminância em LAB e reduz um pouco a
-  saturação, para a foto clara e a escura não parecerem de produtos diferentes;
-- **altas luzes**: esticar o desvio até o alvo empurra contra o 255 tudo o que já era
-  claro, e o corte vira mancha — o letreiro de neon atrás de um consultor, a janela
-  atrás de outro, o realce na testa de quem foi fotografado com luz dura. Acima do
-  joelho (`L_JOELHO`) a curva passa a se aproximar do teto em vez de cortar, então o
-  que era branco continua claro mas volta a ter desenho.
+  proporção em vez de distorcer.
+
+Cor, brilho e contraste ficam como vieram do original. Normalizar exposição uniformiza o
+conjunto, mas altera a foto que a pessoa entregou — e o retrato é dela, não nosso.
 
 É um passo de uma vez só, rodado à mão: `python3 scripts/fotos.py`. A saída fica
 versionada em `assets/consultores/` e o `npm run build` só a embute em base64, o que
@@ -266,6 +264,47 @@ precisa de outra redação, não de outra regra.
 
 Auxiliares de grelha, usados como `class`: `.cols2`, `.cols3`, `.cols2u` (1,5 : 1),
 `.center` (usa a sobra vertical do slide), `.gap`.
+
+## A ferramenta de preenchimento
+
+`docs/` é um site estático, sem build e sem dependência, publicado no GitHub Pages. Ele
+não redesenha nada: baixa o próprio modelo deste repositório, troca `{{campo}}` pelo que
+foi digitado e devolve o arquivo. É por isso que o que sai da ferramenta é idêntico ao que
+sai do gerador — só existe um desenho, e ele mora em `gerador/`.
+
+| Arquivo | Papel |
+| --- | --- |
+| `scripts/catalogo.mjs` | lê `modelos/*.html` e escreve `docs/catalogo.json`, `docs/campos/*.json` e `docs/modelos/*.html` |
+| `docs/catalogo.json` | índice leve: produtos, documentos e variantes. É o primeiro fetch |
+| `docs/campos/<modelo>.json` | campos, seções e espaços de imagem daquele modelo |
+| `docs/index.html`, `app.css`, `app.js` | a interface, nos tokens do design system da AUVP |
+
+Três decisões que valem explicação:
+
+**A estrutura fica num arquivo por variante, não no índice.** As variantes não são iguais
+— o relatório mensal de Alta Renda tem ofertas de renda fixa, o de Private tem
+compromissos de liquidez. Juntar tudo num índice só faria a primeira tela baixar 1,5 MB
+para mostrar cinco cartões.
+
+**O preenchimento é feito no DOM, não por regex.** O modelo é parseado uma vez com
+`DOMParser`; cada tecla clona o documento, escreve nos `span.ph` e serializa. É mais
+robusto que substituir texto — um campo que aparece dentro de um atributo, ou um bloco de
+imagem com marcação aninhada, não quebra a montagem.
+
+**Os espaços de imagem são numerados no gerador.** `imgbox()` e `chart()` marcam cada
+espaço com `data-img`, e é por esse número que a foto enviada encontra o lugar dela. Sem
+isso a ferramenta dependeria da ordem dos elementos na página, que muda a cada edição de
+um documento.
+
+O PDF sai pela impressão do navegador, não por uma biblioteca: o `@page` dos modelos já
+tem o tamanho certo e `print-color-adjust:exact` garante os fundos, então o resultado é o
+mesmo do `npm run pdf`, que também é o Chromium imprimindo. A janela aberta pela
+ferramenta chama a impressão sozinha.
+
+Documento novo em `gerador/build.py` aparece na ferramenta sem mexer em `docs/` — só
+precisa de uma entrada em `DOCUMENTOS`, no `scripts/catalogo.mjs`, com o nome e a
+descrição que o cartão mostra.
+
 
 ## Como fazer
 

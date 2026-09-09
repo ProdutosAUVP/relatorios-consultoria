@@ -598,11 +598,61 @@ CSS_A4 += """
 .rt-img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 26%;
   margin-bottom:5.5mm}
 
+/* ---------- perfil do consultor ----------
+   A página trata três tipos de informação de formas diferentes: a declaração
+   de propósito em destaque ao lado do retrato, a trajetória como linha do
+   tempo, e os interesses como fatos curtos. */
+.pf-topo{display:grid;grid-template-columns:50mm 1fr;gap:9mm;align-items:end;margin-bottom:6mm}
+.pf-topo .rt-img{margin:0}
+.pf-topo .ey{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--brand);margin-bottom:2.5mm}
+.pf-topo h1{margin:0;font-size:22pt;font-weight:800;text-transform:uppercase;
+  line-height:1.04;letter-spacing:-.015em}
+.pf-topo .papel{margin:2mm 0 0;font-size:9pt;color:var(--ink-2)}
+.pf-topo .frase{margin:5mm 0 0;padding-top:4.5mm;border-top:1px solid var(--line);
+  font-size:11.5pt;line-height:1.44;font-weight:300;color:var(--ink)}
+
+/* faixa de credenciais */
+.cred{display:grid;grid-template-columns:repeat(var(--n,3),1fr);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:6.5mm}
+.cred>div{min-width:0;padding:3.8mm 6mm;border-left:1px solid var(--line)}
+.cred>div:first-child{padding-left:0;border-left:0}
+.cred>div:last-child{padding-right:0}
+.cred h3{margin:0 0 2mm;font-size:6.2pt;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-2)}
+.cred .lista{font-size:7.6pt;margin:0}
+.cred .lista li{margin-bottom:.8mm}
+
+/* trajetória como linha do tempo */
+/* o rótulo fica acima do texto, e não numa coluna à esquerda: os marcos vão de
+   "2016" a "Pandemia" e a "Há 3 anos", e coluna fixa não comporta os dois */
+.marcos{list-style:none;margin:0;padding:0}
+.marcos li{position:relative;padding:0 0 3.8mm 8.5mm}
+.marcos li:last-child{padding-bottom:0}
+.marcos li::before{content:"";position:absolute;left:1.15mm;top:4.2mm;bottom:-.4mm;
+  width:1px;background:var(--line)}
+.marcos li:last-child::before{display:none}
+.marcos li::after{content:"";position:absolute;left:0;top:1.2mm;width:2.4mm;height:2.4mm;
+  border-radius:50%;border:1px solid var(--brand);background:var(--paper)}
+.marcos .q{display:block;font-size:6.6pt;font-weight:700;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--brand);margin-bottom:1.2mm}
+.marcos p{margin:0;font-size:8.2pt;line-height:1.45;color:var(--ink-2)}
+
+/* interesses e contato, na faixa final */
+.pf-rodape{margin-top:auto;padding-top:4.5mm;border-top:1px solid var(--line);
+  display:grid;grid-template-columns:1.6fr 1fr;gap:9mm;align-items:start}
+.pf-rodape h3{margin:0 0 2.5mm;font-size:6.2pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.pf-rodape .dl{font-size:8pt;gap:1.2mm 5mm}
+.tags{display:flex;flex-wrap:wrap;gap:1.6mm;margin-bottom:2.5mm}
+.tags span{font-size:7.2pt;padding:.9mm 2.6mm;border:1px solid var(--line);
+  border-radius:8mm;color:var(--ink-2)}
+
 /* ---------- perfil ----------
    A primeira página da apresentação tem texto corrido de extensão bem variável
    entre um consultor e outro. Esta escala, um pouco menor que a padrão mas com
    entrelinha mais generosa, acomoda o mais longo sem apertar o mais curto. */
-.perfil{font-size:8.8pt;line-height:1.58}
+.perfil{font-size:8.8pt;line-height:1.58;flex:1 1 auto;min-height:0;
+  display:flex;flex-direction:column}
 .perfil .lead{font-size:9.6pt;margin-bottom:6mm}
 .perfil h2{font-size:8.8pt;margin:5.5mm 0 2.2mm}
 .perfil p{margin-bottom:3mm}

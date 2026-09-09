@@ -28,30 +28,53 @@ def _lista(itens, cls="lista"):
     return '<ul class="%s">%s</ul>' % (cls, "".join("<li>%s</li>" % i for i in itens))
 
 
+def _marcos(itens):
+    return '<ol class="marcos">%s</ol>' % "".join(
+        '<li><span class="q">%s</span><p>%s</p></li>' % (q, t) for q, t in itens)
+
+
+def _tags(itens):
+    return '<div class="tags">%s</div>' % "".join("<span>%s</span>" % i for i in itens)
+
+
 def _pagina_consultor(c):
-    """Página aberta: narrativa à esquerda, retrato e credenciais à direita."""
-    formacao = ""
+    """Retrato e declaração no topo, credenciais em faixa, trajetória como
+    linha do tempo e os interesses como fatos curtos no rodapé."""
+    cred = []
     if c["graduacao"]:
-        formacao += "<h3>Formação</h3>" + _lista(c["graduacao"])
+        cred.append(("Formação", _lista(c["graduacao"])))
     if c["pos"]:
-        formacao += "<h3>Especialização</h3>" + _lista(c["pos"])
-    return """<span class="eyebrow">%(plano)s</span>
-<h1 class="t">%(nome)s</h1>
-<p class="lead">%(papel)s na AUVP Capital</p>
-<div class="cols2u" style="flex:1 1 auto;align-items:start">
+        cred.append(("Especialização", _lista(c["pos"])))
+    cred.append(("Certificações",
+                 '<div class="chips">%s</div>' % "".join(
+                     '<span class="pill">%s</span>' % x for x in c["certificacoes"])))
+    return """<div class="pf-topo">
+  %(foto)s
   <div>
-    <h2>Sobre mim e meu propósito</h2>
-    %(proposito)s
-    <h2>Trajetória no mercado financeiro</h2>
-    %(trajetoria)s
-    <h2>Fora do escritório</h2>
-    %(fora)s
+    <span class="ey">%(plano)s</span>
+    <h1>%(nome)s</h1>
+    <p class="papel">%(papel)s na AUVP Capital</p>
+    <p class="frase">%(frase)s</p>
   </div>
-  <div class="side">
-    %(foto)s
-    %(formacao)s
-    <h3>Certificações</h3>
-    <div class="chips">%(chips)s</div>
+</div>
+<div class="cred" style="--n:%(nc)d">%(cred)s</div>
+<div class="cols2u" style="flex:0 1 auto">
+  <div>
+    <h2>Trajetória no mercado financeiro</h2>
+    %(marcos)s
+  </div>
+  <div>
+    <h2>O meu propósito</h2>
+    %(proposito)s
+  </div>
+</div>
+<div class="pf-rodape">
+  <div>
+    <h3>Fora do escritório</h3>
+    %(tags)s
+    <p class="small mut" style="margin:0">%(fora)s</p>
+  </div>
+  <div>
     <h3>Falar com %(primeiro)s</h3>
     <div class="dl">
       <dt>WhatsApp</dt><dd>%(whats)s</dd>
@@ -59,11 +82,11 @@ def _pagina_consultor(c):
     </div>
   </div>
 </div>""" % dict(
-        plano=PLANO, nome=c["nome"], papel=c["papel"],
-        proposito=_paras(c["proposito"]), trajetoria=_paras(c["trajetoria"]),
-        fora=_paras(c["fora"]), foto=foto_consultor(c["slug"]), formacao=formacao,
-        chips="".join('<span class="pill">%s</span>' % x for x in c["certificacoes"]),
-        primeiro=c["nome"].split()[0],
+        foto=foto_consultor(c["slug"]), plano=PLANO, nome=c["nome"], papel=c["papel"],
+        frase=c["frase"], nc=len(cred),
+        cred="".join("<div><h3>%s</h3>%s</div>" % (t, b) for t, b in cred),
+        marcos=_marcos(c["marcos"]), proposito=_paras(c["proposito"]),
+        tags=_tags(c["interesses"]), fora=c["fora"], primeiro=c["nome"].split()[0],
         whats=ph("whatsapp_consultor"), email=ph("email_consultor"))
 
 

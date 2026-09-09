@@ -125,7 +125,6 @@ def _pagina_consultor(c, t, plano, foto, primeiro):
 
 PAGINA_PLANO = """<h1 class="t">%(plano)s</h1>
 <p class="lead" style="max-width:none">%(resumo)s</p>
-%(destaque)s
 <div class="esp"></div>
 <h2>Como funciona no dia a dia</h2>
 %(funciona)s
@@ -198,7 +197,6 @@ PLANOS = {
         plano="Se Vira Aí",
         rotulo="Se Vira Aí (autoatendimento)",
         resumo="Você investe com autonomia total, usando a plataforma e usufruindo dos benefícios de ser membro da AUVP Capital.",
-        destaque="",
         funciona=[
             "A decisão é sua, do começo ao fim: você escolhe o que comprar, quanto e quando, direto na plataforma.",
             "O material de apoio chega toda semana — curadoria de notícias e leitura do cenário — para você decidir com informação.",
@@ -224,7 +222,6 @@ PLANOS = {
         plano="Me Diz o Que Fazer",
         rotulo="Me Diz o Que Fazer (básico)",
         resumo="Orientação em investimentos para quem quer clareza e direção na hora de montar ou ajustar a carteira. A conta continua sendo sua e quem executa é você.",
-        destaque="",
         funciona=[
             "O atendimento é pelo WhatsApp e funciona sob demanda: você chama quando precisa, sem depender da nossa agenda.",
             "Não tem limite de conversa nem dia certo para falar com a gente, e também não existe reunião marcada de tempos em tempos.",
@@ -250,7 +247,6 @@ PLANOS = {
         plano="Resolve Aí",
         rotulo="Resolve Aí (consultoria completa)",
         resumo="Serviço de consultoria completa, com acompanhamento ativo, personalização e responsabilidade técnica sobre o patrimônio orientado.",
-        destaque="<p class=\"note\"><strong>Exclusivo para quem tem R$ 300 mil ou mais.</strong> Você não tá no mercado pra brincar.</p>",
         funciona=[
             "Você tem um consultor dedicado, pelo WhatsApp, acompanhando a carteira junto com você.",
             "A estratégia de alocação é montada para o seu caso e vai sendo ajustada conforme o cenário e o seu momento mudam.",
@@ -277,7 +273,6 @@ def _em_branco():
     return dict(
         plano=ph("nome_plano", "O nome comercial do plano."),
         resumo=ph("plano_resumo", "Duas ou três frases sobre o que o cliente contrata."),
-        destaque="",
         funciona=_numerados("funciona", 3),
         incluido=_numerados("incluido", 7),
         fora=_numerados("nao_incluido", 4),
@@ -313,7 +308,7 @@ def build(t, variante):
                 '<div class="perfil">%s</div>'
                 % _pagina_consultor(c, t, texto["plano"], foto, primeiro), rodape=rodape),
         page_a4(t, "O plano", 2, PAGINA_PLANO % dict(
-            plano=texto["plano"], resumo=texto["resumo"], destaque=texto["destaque"],
+            plano=texto["plano"], resumo=texto["resumo"],
             funciona=_lista(texto["funciona"]), incluido=_lista(texto["incluido"]),
             fora=_lista(texto["fora"], cls="lista mut")), rodape=rodape, cls="plano"),
         page_a4(t, t["marca"], 3, PAGINA_CASA % dict(

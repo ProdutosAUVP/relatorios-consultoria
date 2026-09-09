@@ -23,28 +23,41 @@ Estes se repetem na maior parte dos modelos. Vale manter um arquivo único com e
 
 | Variável | O que é | Em quantos modelos |
 | --- | --- | --- |
-| `razao_social` | Razão social da empresa emissora | 24 de 24 |
-| `cnpj` | CNPJ da empresa emissora | 24 de 24 |
-| `registro_cvm_empresa` | Registro da empresa na CVM | 4 de 24 |
-| `canal_ouvidoria` | Telefone ou e-mail da ouvidoria | 20 de 24 |
-| `disclaimer_regulatorio` | Texto legal aprovado pelo compliance, específico do segmento | 20 de 24 |
-| `nome_cliente` | Nome do cliente destinatário | 20 de 24 |
-| `nome_responsavel` | Consultor, assessor ou banker responsável | 20 de 24 |
-| `registro_cvm_ou_ancord` | Registro do responsável (CVM 19 / Ancord) | 12 de 24 |
-| `email_contato` | E-mail de contato exibido no documento | 20 de 24 |
-| `whatsapp_contato` | WhatsApp direto do responsável | 12 de 24 |
-| `canal_atendimento` | Canal e horário de atendimento | 12 de 24 |
-| `link_agendamento` | URL de agendamento (a mesma do QR code) | 12 de 24 |
-| `mes_referencia` | Mês de referência, ex.: Agosto de 2026 | 12 de 24 |
-| `data_posicao` | Data da posição consolidada | 8 de 24 |
-| `perfil_investidor` | Perfil de suitability do cliente | 8 de 24 |
-| `patrimonio_total` | Patrimônio total sob acompanhamento | 8 de 24 |
+| `razao_social` | Razão social da empresa emissora | 24 de 31 |
+| `cnpj` | CNPJ da empresa emissora | 24 de 31 |
+| `registro_cvm_empresa` | Registro da empresa na CVM | 4 de 31 |
+| `canal_ouvidoria` | Telefone ou e-mail da ouvidoria | 20 de 31 |
+| `disclaimer_regulatorio` | Texto legal aprovado pelo compliance, específico do segmento | 20 de 31 |
+| `nome_cliente` | Nome do cliente destinatário | 20 de 31 |
+| `nome_responsavel` | Consultor, assessor ou banker responsável | 20 de 31 |
+| `registro_cvm_ou_ancord` | Registro do responsável (CVM 19 / Ancord) | 12 de 31 |
+| `email_contato` | E-mail de contato exibido no documento | 20 de 31 |
+| `whatsapp_contato` | WhatsApp direto do responsável | 12 de 31 |
+| `canal_atendimento` | Canal e horário de atendimento | 12 de 31 |
+| `link_agendamento` | URL de agendamento (a mesma do QR code) | 12 de 31 |
+| `mes_referencia` | Mês de referência, ex.: Agosto de 2026 | 12 de 31 |
+| `data_posicao` | Data da posição consolidada | 8 de 31 |
+| `perfil_investidor` | Perfil de suitability do cliente | 8 de 31 |
+| `patrimonio_total` | Patrimônio total sob acompanhamento | 8 de 31 |
+
+## Apresentação do consultor — Me Diz o Que Fazer
+
+Arquivos: `modelos/apresentacao-consultor-alan-santanna.html`, `modelos/apresentacao-consultor-andre-arruda.html`, `modelos/apresentacao-consultor-bolivar-oliveira.html`, `modelos/apresentacao-consultor-danilo-barbosa.html`, `modelos/apresentacao-consultor-erika-barreto.html`, `modelos/apresentacao-consultor-nasser-tanure.html`, `modelos/apresentacao-consultor-yuri-machado.html`
+
+Variantes: alan-santanna, andre-arruda, bolivar-oliveira, danilo-barbosa, erika-barreto, nasser-tanure, yuri-machado &middot; 3 variáveis
+
+<details><summary>Ver as 3 variáveis específicas deste documento</summary>
+
+```
+data_apresentacao                 whatsapp_consultor                email_consultor
+```
+</details>
 
 ## Apresentação geral
 
 Arquivos: `modelos/apresentacao-geral-alta-renda.html`, `modelos/apresentacao-geral-assessoria.html`, `modelos/apresentacao-geral-consultoria.html`, `modelos/apresentacao-geral-private.html`
 
-Segmentos: alta-renda, assessoria, consultoria, private &middot; 141 variáveis
+Variantes: alta-renda, assessoria, consultoria, private &middot; 141 variáveis
 
 <details><summary>Ver as 131 variáveis específicas deste documento</summary>
 
@@ -100,7 +113,7 @@ site                              endereco_escritorio
 
 Arquivos: `modelos/cronograma-reunioes-alta-renda.html`, `modelos/cronograma-reunioes-assessoria.html`, `modelos/cronograma-reunioes-consultoria.html`, `modelos/cronograma-reunioes-private.html`
 
-Segmentos: alta-renda, assessoria, consultoria, private &middot; 153 variáveis
+Variantes: alta-renda, assessoria, consultoria, private &middot; 153 variáveis
 
 <details><summary>Ver as 147 variáveis específicas deste documento</summary>
 
@@ -161,7 +174,7 @@ regra_remarcacao_3                texto_registro_decisoes           texto_revisa
 
 Arquivos: `modelos/diagnostico-carteira-alta-renda.html`, `modelos/diagnostico-carteira-assessoria.html`, `modelos/diagnostico-carteira-consultoria.html`, `modelos/diagnostico-carteira-private.html`
 
-Segmentos: alta-renda, assessoria, consultoria, private &middot; 327 variáveis
+Variantes: alta-renda, assessoria, consultoria, private &middot; 327 variáveis
 
 <details><summary>Ver as 317 variáveis específicas deste documento</summary>
 
@@ -279,7 +292,7 @@ premissa_custos                   limitacoes_diagnostico
 
 Arquivos: `modelos/relatorio-macroeconomico-alta-renda.html`, `modelos/relatorio-macroeconomico-assessoria.html`, `modelos/relatorio-macroeconomico-consultoria.html`, `modelos/relatorio-macroeconomico-private.html`
 
-Segmentos: alta-renda, assessoria, consultoria, private &middot; 306 variáveis
+Variantes: alta-renda, assessoria, consultoria, private &middot; 306 variáveis
 
 <details><summary>Ver as 300 variáveis específicas deste documento</summary>
 
@@ -391,7 +404,7 @@ fonte_consenso                    data_fechamento                   declaracao_a
 
 Arquivos: `modelos/relatorio-mensal-alta-renda.html`, `modelos/relatorio-mensal-assessoria.html`, `modelos/relatorio-mensal-consultoria.html`, `modelos/relatorio-mensal-private.html`
 
-Segmentos: alta-renda, assessoria, consultoria, private &middot; 675 variáveis
+Variantes: alta-renda, assessoria, consultoria, private &middot; 675 variáveis
 
 <details><summary>Ver as 661 variáveis específicas deste documento</summary>
 
@@ -658,7 +671,7 @@ nota_holding                      nota_seguros                      nota_sucessa
 
 Arquivos: `modelos/relatorio-mensal-apresentacao-alta-renda.html`, `modelos/relatorio-mensal-apresentacao-assessoria.html`, `modelos/relatorio-mensal-apresentacao-consultoria.html`, `modelos/relatorio-mensal-apresentacao-private.html`
 
-Segmentos: alta-renda, assessoria, consultoria, private &middot; 193 variáveis
+Variantes: alta-renda, assessoria, consultoria, private &middot; 193 variáveis
 
 <details><summary>Ver as 180 variáveis específicas deste documento</summary>
 

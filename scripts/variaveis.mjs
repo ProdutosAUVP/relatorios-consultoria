@@ -13,15 +13,18 @@ import { dirname, join, resolve } from 'node:path';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const srcDir = join(root, 'modelos');
 
-const SEGS = ['consultoria', 'alta-renda', 'private', 'assessoria'];
 const TITULOS = {
+  'relatorio-mensal-apresentacao': 'Relatório mensal em formato de apresentação',
+  'apresentacao-consultor': 'Apresentação do consultor — Me Diz o Que Fazer',
   'relatorio-mensal': 'Relatório mensal',
   'diagnostico-carteira': 'Diagnóstico de carteira',
   'relatorio-macroeconomico': 'Relatório macroeconômico',
   'apresentacao-geral': 'Apresentação geral',
-  'relatorio-mensal-apresentacao': 'Relatório mensal em formato de apresentação',
   'cronograma-reunioes': 'Cronograma de reuniões',
 };
+// Prefixos mais longos primeiro: 'relatorio-mensal-apresentacao' tem de casar
+// antes de 'relatorio-mensal'.
+const CHAVES = Object.keys(TITULOS).sort((a, b) => b.length - a.length);
 // Campos institucionais, na ordem em que fazem sentido preencher.
 const DESCR = [
   ['razao_social', 'Razão social da empresa emissora'],
@@ -47,7 +50,9 @@ const toks = (f) => [...readFileSync(join(srcDir, f), 'utf8').matchAll(/\{\{([a-
 
 function docKey(f) {
   const base = f.slice(0, -5);
-  for (const s of SEGS) if (base.endsWith('-' + s)) return [base.slice(0, -s.length - 1), s];
+  for (const k of CHAVES) if (base === k || base.startsWith(k + '-')) {
+    return [k, base.slice(k.length + 1) || null];
+  }
   return [base, null];
 }
 
@@ -98,7 +103,7 @@ for (const [k, itens] of porDoc) {
   for (const x of t0) if (!vistos.has(x) && !institucionais.has(x)) { vistos.add(x); ordem.push(x); }
   L.push(`## ${TITULOS[k]}\n`);
   L.push(`Arquivos: ${itens.map(([, f]) => `\`modelos/${f}\``).join(', ')}\n`);
-  L.push(`Segmentos: ${itens.map(([s]) => s).join(', ')} &middot; ${base.size} variáveis\n`);
+  L.push(`Variantes: ${itens.map(([s]) => s ?? '—').join(', ')} &middot; ${base.size} variáveis\n`);
   L.push(`<details><summary>Ver as ${ordem.length} variáveis específicas deste documento</summary>\n`);
   L.push('```');
   L.push(cols(ordem));

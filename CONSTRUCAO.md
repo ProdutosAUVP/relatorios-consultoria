@@ -11,7 +11,7 @@ campo, o [VARIAVEIS.md](VARIAVEIS.md).
 
 ```
 gerador/*.py  ──build──▶  modelos/*.html  ──pdf──▶  pdf/*.pdf
-   fonte                    24 modelos              24 PDFs
+   fonte                    31 modelos              31 PDFs
                             independentes
                                  │
                                  ├──vars──▶  VARIAVEIS.md
@@ -50,6 +50,7 @@ autossuficientes na entrega, fonte única na manutenção.
 | `gerador/common.py` | temas, tokens, folhas de estilo A4 e 16:9, fontes em base64, leitura dos SVGs |
 | `gerador/layout.py` | montagem de página e de slide, e os componentes (`table`, `kpis`, `flow`, `chart`, …) |
 | `gerador/d_*.py` | um módulo por tipo de documento; contém o conteúdo e a ordem das seções |
+| `gerador/consultores.py` | texto de apresentação dos consultores, um dicionário por pessoa |
 | `gerador/build.py` | entrada: percorre documentos × segmentos e escreve `modelos/` |
 | `scripts/render.mjs` | HTML → PDF |
 | `scripts/check.mjs` | valida estouro de página em modo de impressão |
@@ -118,6 +119,10 @@ Trocar de segmento troca só o bloco `:root`. Trocar de formato troca a folha in
 segunda página: fica recortado. É por isso que o `npm run check` existe — ele acusa o
 recorte antes de virar PDF.
 
+O rodapé traz, por padrão, o aviso de confidencialidade. Documento feito para ser
+entregue ao cliente passa outro texto em `page_a4(..., rodape=...)` — é o caso da
+apresentação do consultor, que não deve dizer "proibido o compartilhamento".
+
 O slide 16:9 tem a mesma estrutura, com `.slide` no lugar de `.page` e as mesmas classes
 de cabeçalho e rodapé. `.slide.dark` inverte para o fundo em degradê.
 
@@ -156,6 +161,10 @@ Cada um é uma função em `gerador/layout.py` que devolve HTML.
 | `chart(label, desc, skeleton, style, series)` | `.chart` | moldura do gráfico: descreve o que ele mostra e pinta a legenda com `--c1`…`--c6` |
 | `imgbox(desc)` | `.imgbox` | espaço reservado para foto, com a especificação |
 | `ph(nome, dica)` | `.ph` | campo preenchível `{{nome}}` |
+
+Modificadores de página, aplicados como `class` num `div` que envolve o conteúdo:
+`.densa` aperta a escala inteira, para documento de página fechada que não pode
+transbordar; `.principios` põe título e texto no mesmo parágrafo, em duas colunas.
 
 Auxiliares de grelha, usados como `class`: `.cols2`, `.cols3`, `.cols2u` (1,35 : 1),
 `.center` (usa a sobra vertical do slide), `.gap`.
@@ -204,6 +213,27 @@ Nos dois casos, `npm run build && npm run check` fecha o ciclo.
 3. `npm run all`. Saem quatro arquivos novos, um por segmento.
 
 O formato é `"a4"` ou `"slide"`; é o que escolhe entre `CSS_A4` e `CSS_SLIDE`.
+
+### Um documento cujas variantes não são segmentos
+
+Na maioria dos documentos a variante é o segmento e o tema sai dela. Quando não for o
+caso — a apresentação do consultor tem uma variante por pessoa —, declare `tema` fixo e
+a lista de `variantes`, com `(sufixo do arquivo, rótulo do título)`:
+
+```python
+dict(chave="apresentacao-consultor", formato="a4",
+     titulo="%s — AUVP Capital · Me Diz o Que Fazer", builder=d_consultor.build,
+     tema="consultoria",
+     variantes=[(c["slug"], c["nome"]) for c in consultores.CONSULTORES]),
+```
+
+O `builder` recebe `(tema, sufixo)` em vez de `(tema, segmento)`. Acrescentar um
+consultor é somar uma entrada em `gerador/consultores.py`.
+
+O `scripts/variaveis.mjs` reconhece o documento pelo prefixo do nome do arquivo, então
+uma chave nova precisa entrar no `TITULOS` dele — os prefixos são ordenados do mais
+longo para o mais curto, para `relatorio-mensal-apresentacao` casar antes de
+`relatorio-mensal`.
 
 ### Acrescentar um segmento
 

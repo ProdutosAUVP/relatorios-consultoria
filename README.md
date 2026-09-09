@@ -1,7 +1,7 @@
 # Modelos de relatórios — AUVP Capital e AUVP Private Banking
 
 Modelos de uso dos relatórios e apresentações entregues aos clientes, prontos para
-serem preenchidos e exportados em PDF. São **24 arquivos HTML independentes**: cada
+serem preenchidos e exportados em PDF. São **31 arquivos HTML independentes**: cada
 um traz o próprio CSS, a própria fonte e a própria paleta, abre com duplo clique em
 qualquer navegador e não depende de nenhum outro arquivo do repositório.
 
@@ -12,9 +12,10 @@ Os modelos são **gerados** a partir de `gerador/`, e não editados à mão. Par
 acrescentar uma página, um documento ou um segmento, veja
 [`CONSTRUCAO.md`](CONSTRUCAO.md).
 
-## Os 24 modelos
+## Os 31 modelos
 
-Os seis documentos existem nos quatro segmentos.
+Seis documentos existem nos quatro segmentos; a apresentação do consultor tem uma
+variante por consultor.
 
 | Documento | Formato | Páginas | Consultoria | Alta Renda | Private | Assessoria |
 | --- | --- | --- | :-: | :-: | :-: | :-: |
@@ -24,9 +25,16 @@ Os seis documentos existem nos quatro segmentos.
 | Apresentação geral | 16:9 | 14 | ✓ | ✓ | ✓ | ✓ |
 | Relatório mensal em apresentação | 16:9 | 12 | ✓ | ✓ | ✓ | ✓ |
 | Cronograma de reuniões | A4 retrato | 6 | ✓ | ✓ | ✓ | ✓ |
+| Apresentação do consultor | A4 retrato | 2 | 7 consultores | — | — | — |
 
-Nomes de arquivo: `modelos/<documento>-<segmento>.html`, com segmento em
-`consultoria`, `alta-renda`, `private`, `assessoria`.
+Nomes de arquivo: `modelos/<documento>-<variante>.html`. Na maioria a variante é o
+segmento — `consultoria`, `alta-renda`, `private`, `assessoria`. Na apresentação do
+consultor é o nome dele, e o tema é sempre o da consultoria.
+
+A **apresentação do consultor** é o único documento que já vem escrito, e não em branco:
+o texto dos consultores e do plano Me Diz o Que Fazer veio pronto. Só a foto e os
+contatos ficaram como campo preenchível. Página 1 apresenta o consultor; página 2, o
+plano e a AUVP Capital.
 
 ## Como usar
 
@@ -37,7 +45,7 @@ mesmo arquivo no navegador: os campos ainda não preenchidos ficam destacados.
 
 **2. Gerar o PDF.**
 
-A pasta `pdf/` já traz um PDF de cada um dos 24 modelos, para quem só quer ler o
+A pasta `pdf/` já traz um PDF de cada um dos 31 modelos, para quem só quer ler o
 resultado sem instalar nada. Para regerar depois de editar um modelo:
 
 ```sh
@@ -275,12 +283,13 @@ trimestral no private e semestral com contatos da mesa na assessoria.
 ## Estrutura do repositório
 
 ```
-modelos/                        24 modelos HTML independentes
+modelos/                        31 modelos HTML independentes
 pdf/                            um PDF de cada modelo, versionado (saída do npm run pdf)
 scripts/render.mjs              HTML -> PDF via Playwright
 scripts/check.mjs               verificação de estouro de página
 scripts/variaveis.mjs           gera o VARIAVEIS.md a partir dos modelos
 gerador/                        fonte dos modelos (Python, só biblioteca padrão)
+gerador/consultores.py          texto de apresentação dos sete consultores
 assets/fonts/                   Anek Latin (woff2)
 assets relatórios/              logos, grafismos e referências originais (fonte de verdade)
 MODELO SLIDES AUVP CAPITAL.pdf  deck institucional de referência

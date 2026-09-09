@@ -84,7 +84,7 @@ def cover_a4(t, kicker_light, kicker_bold, bottom_light, bottom_bold, ident_line
         confid=CONFID.replace(" · ", "<br>"), bl=bottom_light, bb=bottom_bold, ident=ident)
 
 
-def page_a4(t, sec, no, body, date_ph=None):
+def page_a4(t, sec, no, body, date_ph=None, rodape=None):
     return """<section class="page">
   <header class="pg-head">
     <div class="sec">%(sec)s</div>
@@ -95,7 +95,7 @@ def page_a4(t, sec, no, body, date_ph=None):
   </div>
   <footer class="pg-foot"><span class="no">%(no)s</span><span>%(confid)s</span></footer>
 </section>""" % dict(sec=sec, dt=ph(date_ph or DATE_PH), logo=logo_svg(t, 4.6, ink=True), body=body,
-                     no="%02d" % no, confid=CONFID)
+                     no="%02d" % no, confid=rodape or CONFID)
 
 
 # ---------------------------------------------------------------- 16:9

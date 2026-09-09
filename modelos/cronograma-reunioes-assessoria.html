@@ -232,6 +232,44 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .year .nm{display:block;font-size:7.4pt;font-weight:700;margin-bottom:.6mm}
 .year .ev{display:block;font-size:6.8pt;color:var(--ink-2);line-height:1.35}
 
+/* ---------- lista com marcador em fio, e retrato ---------- */
+.lista{list-style:none;margin:0 0 3mm;padding:0;font-size:8.4pt;line-height:1.45}
+.lista li{position:relative;padding-left:4.6mm;margin-bottom:1.6mm}
+.lista li::before{content:"";position:absolute;left:0;top:2mm;width:2.6mm;height:1.33px;background:var(--accent)}
+.lista.mut li{color:var(--ink-2)}
+.foto{border:1px dashed var(--brand);display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:1.5mm;text-align:center;padding:4mm;
+  background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(0,0,0,.022) 5px 10px)}
+.foto .cl{font-size:6.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.foto .cd{font-size:7.2pt;color:var(--ink-2);line-height:1.4}
+.chips{display:flex;flex-wrap:wrap;gap:1.6mm;margin-bottom:1mm}
+.side h3{font-size:6.8pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-2);margin:5mm 0 1.8mm;padding-bottom:1.2mm;border-bottom:1px solid var(--line)}
+.side h3:first-child{margin-top:0}
+.side .lista{font-size:8pt;margin-bottom:0}
+.side .dl{font-size:8pt}
+
+/* ---------- densidade para páginas de texto corrido longo ----------
+   A apresentação do consultor tem duas páginas fechadas, sem chance de
+   transbordar para uma terceira: o conteúdo tem de caber. Esta classe aperta a
+   escala sem mexer nos outros documentos. */
+.densa h2{margin:3.8mm 0 1.8mm;font-size:9pt}
+.densa h2:first-child{margin-top:0}
+.densa .lead{font-size:9.2pt;margin-bottom:3.8mm}
+.densa p{margin-bottom:2.2mm}
+.densa .lista{font-size:7.7pt;line-height:1.36;margin-bottom:0}
+.densa .lista li{margin-bottom:1.2mm;padding-left:4mm}
+.densa .lista li::before{top:1.7mm;width:2.2mm}
+.densa p.small{font-size:7.8pt;line-height:1.45}
+.densa .cols2{gap:7mm}
+.densa .dl{font-size:8pt;gap:1.2mm 5mm}
+.densa .legal{font-size:6.4pt}
+/* princípios em duas colunas: título embutido no parágrafo ocupa bem menos
+   altura que cinco cards estreitos */
+.principios{display:grid;grid-template-columns:1fr 1fr;gap:1.3mm 7mm}
+.principios p{font-size:7.7pt;line-height:1.4;margin:0}
+.principios strong{color:var(--brand)}
+
 </style>
 </head>
 <body>

@@ -44,109 +44,121 @@ Estes se repetem na maior parte dos modelos. Vale manter um arquivo único com e
 
 Arquivos: `modelos/apresentacao-consultor-alan-santanna.html`, `modelos/apresentacao-consultor-alta-renda.html`, `modelos/apresentacao-consultor-andre-arruda.html`, `modelos/apresentacao-consultor-assessoria.html`, `modelos/apresentacao-consultor-bolivar-oliveira.html`, `modelos/apresentacao-consultor-danilo-barbosa.html`, `modelos/apresentacao-consultor-erika-barreto.html`, `modelos/apresentacao-consultor-me-diz-o-que-fazer.html`, `modelos/apresentacao-consultor-nasser-tanure.html`, `modelos/apresentacao-consultor-private.html`, `modelos/apresentacao-consultor-resolve-ai.html`, `modelos/apresentacao-consultor-se-vira-ai.html`, `modelos/apresentacao-consultor-yuri-machado.html`
 
-Variantes: alan-santanna, alta-renda, andre-arruda, assessoria, bolivar-oliveira, danilo-barbosa, erika-barreto, me-diz-o-que-fazer, nasser-tanure, private, resolve-ai, se-vira-ai, yuri-machado &middot; 3 variáveis
+Variantes: alan-santanna, alta-renda, andre-arruda, assessoria, bolivar-oliveira, danilo-barbosa, erika-barreto, me-diz-o-que-fazer, nasser-tanure, private, resolve-ai, se-vira-ai, yuri-machado &middot; 1 variáveis
 
-<details><summary>Ver as 3 variáveis específicas deste documento</summary>
+<details><summary>Ver as 1 variáveis específicas deste documento</summary>
 
 ```
-data_apresentacao                 whatsapp_consultor                email_consultor
+data_apresentacao
 ```
 </details>
 
-Campos exclusivos da variante **alta-renda** (42):
+Campos exclusivos da variante **alta-renda** (44):
 
 ```
 certificacao_1                    certificacao_2                    certificacao_3
-especializacao_1                  especializacao_2                  fora_do_escritorio
-formacao_1                        formacao_2                        frase_consultor
-funciona_1                        funciona_2                        funciona_3
-incluido_1                        incluido_2                        incluido_3
-incluido_4                        incluido_5                        incluido_6
-incluido_7                        interesse_1                       interesse_2
+email_consultor                   especializacao_1                  especializacao_2
+fora_do_escritorio                formacao_1                        formacao_2
+frase_consultor                   funciona_1                        funciona_2
+funciona_3                        incluido_1                        incluido_2
+incluido_3                        incluido_4                        incluido_5
+incluido_6                        incluido_7                        interesse_1
+interesse_2                       interesse_3                       interesse_4
+marco_1_quando                    marco_1_texto                     marco_2_quando
+marco_2_texto                     marco_3_quando                    marco_3_texto
+nao_incluido_1                    nao_incluido_2                    nao_incluido_3
+nao_incluido_4                    nome_consultor                    nome_plano
+notas_de_rodape                   papel_consultor                   plano_resumo
+proposito_1                       proposito_2                       taxa_anual
+taxa_mensal                       whatsapp_consultor
+```
+
+Campos exclusivos da variante **assessoria** (44):
+
+```
+certificacao_1                    certificacao_2                    certificacao_3
+email_consultor                   especializacao_1                  especializacao_2
+fora_do_escritorio                formacao_1                        formacao_2
+frase_consultor                   funciona_1                        funciona_2
+funciona_3                        incluido_1                        incluido_2
+incluido_3                        incluido_4                        incluido_5
+incluido_6                        incluido_7                        interesse_1
+interesse_2                       interesse_3                       interesse_4
+marco_1_quando                    marco_1_texto                     marco_2_quando
+marco_2_texto                     marco_3_quando                    marco_3_texto
+nao_incluido_1                    nao_incluido_2                    nao_incluido_3
+nao_incluido_4                    nome_consultor                    nome_plano
+notas_de_rodape                   papel_consultor                   plano_resumo
+proposito_1                       proposito_2                       taxa_anual
+taxa_mensal                       whatsapp_consultor
+```
+
+Campos exclusivos da variante **bolivar-oliveira** (1):
+
+```
+whatsapp_consultor
+```
+
+Campos exclusivos da variante **me-diz-o-que-fazer** (25):
+
+```
+certificacao_1                    certificacao_2                    certificacao_3
+email_consultor                   especializacao_1                  especializacao_2
+fora_do_escritorio                formacao_1                        formacao_2
+frase_consultor                   interesse_1                       interesse_2
 interesse_3                       interesse_4                       marco_1_quando
 marco_1_texto                     marco_2_quando                    marco_2_texto
-marco_3_quando                    marco_3_texto                     nao_incluido_1
-nao_incluido_2                    nao_incluido_3                    nao_incluido_4
-nome_consultor                    nome_plano                        notas_de_rodape
-papel_consultor                   plano_resumo                      proposito_1
-proposito_2                       taxa_anual                        taxa_mensal
+marco_3_quando                    marco_3_texto                     nome_consultor
+papel_consultor                   proposito_1                       proposito_2
+whatsapp_consultor
 ```
 
-Campos exclusivos da variante **assessoria** (42):
+Campos exclusivos da variante **private** (44):
 
 ```
 certificacao_1                    certificacao_2                    certificacao_3
-especializacao_1                  especializacao_2                  fora_do_escritorio
-formacao_1                        formacao_2                        frase_consultor
-funciona_1                        funciona_2                        funciona_3
-incluido_1                        incluido_2                        incluido_3
-incluido_4                        incluido_5                        incluido_6
-incluido_7                        interesse_1                       interesse_2
+email_consultor                   especializacao_1                  especializacao_2
+fora_do_escritorio                formacao_1                        formacao_2
+frase_consultor                   funciona_1                        funciona_2
+funciona_3                        incluido_1                        incluido_2
+incluido_3                        incluido_4                        incluido_5
+incluido_6                        incluido_7                        interesse_1
+interesse_2                       interesse_3                       interesse_4
+marco_1_quando                    marco_1_texto                     marco_2_quando
+marco_2_texto                     marco_3_quando                    marco_3_texto
+nao_incluido_1                    nao_incluido_2                    nao_incluido_3
+nao_incluido_4                    nome_consultor                    nome_plano
+notas_de_rodape                   papel_consultor                   plano_resumo
+proposito_1                       proposito_2                       taxa_anual
+taxa_mensal                       whatsapp_consultor
+```
+
+Campos exclusivos da variante **resolve-ai** (25):
+
+```
+certificacao_1                    certificacao_2                    certificacao_3
+email_consultor                   especializacao_1                  especializacao_2
+fora_do_escritorio                formacao_1                        formacao_2
+frase_consultor                   interesse_1                       interesse_2
 interesse_3                       interesse_4                       marco_1_quando
 marco_1_texto                     marco_2_quando                    marco_2_texto
-marco_3_quando                    marco_3_texto                     nao_incluido_1
-nao_incluido_2                    nao_incluido_3                    nao_incluido_4
-nome_consultor                    nome_plano                        notas_de_rodape
-papel_consultor                   plano_resumo                      proposito_1
-proposito_2                       taxa_anual                        taxa_mensal
+marco_3_quando                    marco_3_texto                     nome_consultor
+papel_consultor                   proposito_1                       proposito_2
+whatsapp_consultor
 ```
 
-Campos exclusivos da variante **me-diz-o-que-fazer** (23):
+Campos exclusivos da variante **se-vira-ai** (25):
 
 ```
 certificacao_1                    certificacao_2                    certificacao_3
-especializacao_1                  especializacao_2                  fora_do_escritorio
-formacao_1                        formacao_2                        frase_consultor
-interesse_1                       interesse_2                       interesse_3
-interesse_4                       marco_1_quando                    marco_1_texto
-marco_2_quando                    marco_2_texto                     marco_3_quando
-marco_3_texto                     nome_consultor                    papel_consultor
-proposito_1                       proposito_2
-```
-
-Campos exclusivos da variante **private** (42):
-
-```
-certificacao_1                    certificacao_2                    certificacao_3
-especializacao_1                  especializacao_2                  fora_do_escritorio
-formacao_1                        formacao_2                        frase_consultor
-funciona_1                        funciona_2                        funciona_3
-incluido_1                        incluido_2                        incluido_3
-incluido_4                        incluido_5                        incluido_6
-incluido_7                        interesse_1                       interesse_2
+email_consultor                   especializacao_1                  especializacao_2
+fora_do_escritorio                formacao_1                        formacao_2
+frase_consultor                   interesse_1                       interesse_2
 interesse_3                       interesse_4                       marco_1_quando
 marco_1_texto                     marco_2_quando                    marco_2_texto
-marco_3_quando                    marco_3_texto                     nao_incluido_1
-nao_incluido_2                    nao_incluido_3                    nao_incluido_4
-nome_consultor                    nome_plano                        notas_de_rodape
-papel_consultor                   plano_resumo                      proposito_1
-proposito_2                       taxa_anual                        taxa_mensal
-```
-
-Campos exclusivos da variante **resolve-ai** (23):
-
-```
-certificacao_1                    certificacao_2                    certificacao_3
-especializacao_1                  especializacao_2                  fora_do_escritorio
-formacao_1                        formacao_2                        frase_consultor
-interesse_1                       interesse_2                       interesse_3
-interesse_4                       marco_1_quando                    marco_1_texto
-marco_2_quando                    marco_2_texto                     marco_3_quando
-marco_3_texto                     nome_consultor                    papel_consultor
-proposito_1                       proposito_2
-```
-
-Campos exclusivos da variante **se-vira-ai** (23):
-
-```
-certificacao_1                    certificacao_2                    certificacao_3
-especializacao_1                  especializacao_2                  fora_do_escritorio
-formacao_1                        formacao_2                        frase_consultor
-interesse_1                       interesse_2                       interesse_3
-interesse_4                       marco_1_quando                    marco_1_texto
-marco_2_quando                    marco_2_texto                     marco_3_quando
-marco_3_texto                     nome_consultor                    papel_consultor
-proposito_1                       proposito_2
+marco_3_quando                    marco_3_texto                     nome_consultor
+papel_consultor                   proposito_1                       proposito_2
+whatsapp_consultor
 ```
 
 ## Apresentação geral

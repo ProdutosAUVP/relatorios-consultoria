@@ -29,6 +29,9 @@ html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 body{margin:0;background:#8E938F;color:var(--ink);
   font-family:'Anek Latin','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
   font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+/* Link no papel é link: o Chromium leva a âncora para o PDF. O que não pode
+   mudar é a aparência — azul e sublinhado quebrariam a página. */
+a{color:inherit;text-decoration:none}
 p{margin:0 0 3mm}
 ul{margin:0 0 3mm;padding-left:4mm}
 li{margin:0 0 1mm}
@@ -330,9 +333,13 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 
 /* interesses e contato, na faixa final */
 .pf-rodape{padding:4mm 0 6mm;border-top:1px solid var(--line);
-  display:grid;grid-template-columns:1.6fr 1fr;gap:4mm 8mm;align-items:start}
+  display:grid;grid-template-columns:1.2fr 1fr;gap:4mm 8mm;align-items:start}
 .pf-rodape h3{margin:0 0 2mm;font-size:6.2pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
-.pf-rodape .dl{font-size:8pt;gap:1mm 5mm}
+/* O e-mail é o item mais largo da página e não tem onde quebrar; a coluna foi
+   dimensionada para o maior deles caber numa linha, e o `anywhere` é a rede
+   para um endereço ainda mais longo não vazar a margem. */
+.pf-rodape .dl{font-size:8pt;gap:1mm 4mm}
+.pf-rodape .dl dd{min-width:0;overflow-wrap:anywhere}
 /* a descrição fecha a faixa atravessando as duas colunas, e o padding de baixo
    é o que a mantém longe do fio do rodapé */
 .pf-rodape .desc{grid-column:1/-1;margin:0;max-width:none}
@@ -467,8 +474,8 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   <div>
     <h3>Falar com&nbsp;Yuri</h3>
     <div class="dl">
-      <dt>WhatsApp</dt><dd><span class="ph">{{whatsapp_consultor}}</span></dd>
-      <dt>E-mail</dt><dd><span class="ph">{{email_consultor}}</span></dd>
+      <dt>WhatsApp</dt><dd><a href="https://wa.me/556240140683">+55 (62) 4014-0683</a></dd>
+      <dt>E-mail</dt><dd><a href="mailto:yuri.medeiros@auvpconsultoria.com.br">yuri.medeiros@auvpconsultoria.com.br</a></dd>
     </div>
   </div>
   <p class="small mut desc">A musculação me ensinou muito sobre disciplina, paciência e consistência — valores que também considero fundamentais na construção de&nbsp;patrimônio.</p>
@@ -599,9 +606,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <h2>Onde acompanhar a AUVP&nbsp;Capital</h2>
 <div class="cols2">
   <div class="dl">
-    <dt>Instagram</dt><dd>@auvpcapital</dd>
-    <dt>YouTube</dt><dd>@AUVPCapital</dd>
-    <dt>Spotify</dt><dd>Podcast da AUVP&nbsp;Capital</dd>
+    <dt>Instagram</dt><dd><a href="https://instagram.com/auvpcapital">@auvpcapital</a></dd>
+    <dt>YouTube</dt><dd><a href="https://youtube.com/@AUVPCapital">@AUVPCapital</a></dd>
+    <dt>Spotify</dt><dd><a href="https://open.spotify.com/show/4FUAeRg9G0ntPVDuC8Zpjp">Podcast da AUVP Capital</a></dd>
   </div>
   <div>
     <p class="small mut" style="margin:0">Sempre que precisar, é só mandar mensagem para o seu&nbsp;consultor.</p>

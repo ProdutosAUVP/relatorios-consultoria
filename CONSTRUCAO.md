@@ -50,7 +50,7 @@ autossuficientes na entrega, fonte única na manutenção.
 | `gerador/common.py` | temas, tokens, folhas de estilo A4 e 16:9, fontes em base64, leitura dos SVGs |
 | `gerador/layout.py` | montagem de página e de slide, e os componentes (`table`, `kpis`, `flow`, `chart`, …) |
 | `gerador/d_*.py` | um módulo por tipo de documento; contém o conteúdo e a ordem das seções |
-| `gerador/consultores.py` | texto de apresentação dos consultores, um dicionário por pessoa |
+| `gerador/consultores.py` | texto e contatos dos consultores, um dicionário por pessoa |
 | `scripts/fotos.py` | prepara os retratos: recorta pelo rosto, sem tocar em cor ou brilho |
 | `assets/consultores/` | retratos prontos, saída do `scripts/fotos.py` |
 | `consultores resolve ai/` | fotos originais, como vieram |
@@ -242,6 +242,20 @@ estridente, então marcador de lista, fio de card e destaque em negrito passam a
 No fundo branco vale o contrário — a logo da AUVP é sempre preta. `.perfil` é a escala da primeira página, um pouco menor que a padrão
 mas com entrelinha mais generosa, para acomodar o consultor de texto mais longo sem
 apertar o de texto mais curto.
+
+### Links
+
+Âncora comum: o Chromium leva `<a href>` para dentro do PDF, então WhatsApp, e-mail e os
+canais da casa ficam clicáveis no arquivo entregue. O que não pode mudar é a aparência —
+`a{color:inherit;text-decoration:none}` mantém azul e sublinhado fora da página.
+
+O número mostrado é formatado para leitura (`+55 (62) 3095-8142`) e o link usa a versão
+limpa (`https://wa.me/556230958142`), derivada do mesmo campo. O e-mail vira `mailto:`. O
+consultor que não tem número guarda `whatsapp=None` e o campo volta a ser preenchível: é
+melhor sair `{{whatsapp_consultor}}` no documento do que o telefone de outra pessoa.
+
+Os canais da casa ficam em `CANAIS`, em `d_consultor.py`. Instagram e YouTube derivam do
+próprio identificador; o Spotify aponta para o programa.
 
 ### Retratos
 

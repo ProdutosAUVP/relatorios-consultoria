@@ -594,45 +594,36 @@ CSS_A4 += """
 """
 
 CSS_A4 += """
-/* ---------- página de retrato ----------
-   Diagramação própria da primeira página da apresentação do consultor: banda
-   escura em sangria com o retrato, faixa de credenciais e o texto em duas
-   colunas. A segunda página segue a diagramação comum, de informação em
-   grelha; as duas se reconhecem pela tipografia, pelos fios e pelo acento. */
-.retrato{padding:0}
-.retrato .banda{position:relative;height:104mm;overflow:hidden;color:#fff;
-  background:linear-gradient(225deg,var(--brand) 0%,#000 100%)}
-.retrato .banda .logo{position:absolute;left:15.3mm;top:13mm;z-index:5}
-.retrato .banda .graf{z-index:2}
-.rt-foto{position:absolute;right:0;top:0;bottom:0;width:78mm;z-index:3}
-.rt-foto img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 28%}
-/* o degradê funde a borda esquerda da foto com o fundo da banda */
-.rt-foto::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(90deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.18) 34%,rgba(0,0,0,0) 62%)}
-.rt-id{position:absolute;left:15.3mm;bottom:13mm;right:80mm;z-index:5}
-.rt-id .rule{width:32mm;margin-bottom:6mm}
-.rt-id .ey{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.18em;
-  text-transform:uppercase;color:#fff;opacity:.8;margin-bottom:3mm}
-.rt-id h1{margin:0;font-size:29pt;font-weight:800;text-transform:uppercase;
-  line-height:1.02;letter-spacing:-.018em}
-.rt-id .fn{margin:3mm 0 0;font-size:9.5pt;opacity:.85}
-.retrato .corpo{padding:8mm 15.3mm 0;flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
-.retrato .pg-foot{margin:0 15.3mm 11mm}
-/* faixa de credenciais, entre a banda e o texto */
-.faixa{display:grid;grid-template-columns:1fr 1fr 1fr;
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:6.5mm}
-.faixa>div{min-width:0;padding:4mm 6mm;border-left:1px solid var(--line)}
-.faixa>div:first-child{padding-left:0;border-left:0}
-.faixa>div:last-child{padding-right:0}
-.faixa h3{margin:0 0 2mm;font-size:6.4pt;font-weight:700;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--ink-2)}
-.faixa .lista{font-size:7.6pt;margin:0}
-.faixa .lista li{margin-bottom:.9mm}
-.faixa .dl{font-size:7.6pt;gap:1mm 4mm}
-/* texto em duas colunas, que absorve bem a diferença de extensão entre um
-   consultor e outro */
-.fluxo{column-count:2;column-gap:9mm;font-size:8.6pt;line-height:1.5}
-.fluxo h2{margin:0 0 2mm;font-size:8.6pt;break-after:avoid;-webkit-column-break-after:avoid}
-.fluxo h2.n{margin-top:5mm}
-.fluxo p{margin:0 0 2.6mm}
+/* ---------- retrato na coluna de apoio ---------- */
+.rt-img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 26%;
+  margin-bottom:5.5mm}
+
+/* ---------- perfil ----------
+   A primeira página da apresentação tem texto corrido de extensão bem variável
+   entre um consultor e outro. Esta escala, um pouco menor que a padrão mas com
+   entrelinha mais generosa, acomoda o mais longo sem apertar o mais curto. */
+.perfil{font-size:8.8pt;line-height:1.58}
+.perfil .lead{font-size:9.6pt;margin-bottom:6mm}
+.perfil h2{font-size:8.8pt;margin:5.5mm 0 2.2mm}
+.perfil p{margin-bottom:3mm}
+.perfil .side h3{margin-top:5.5mm}
+
+/* ---------- página invertida ----------
+   A segunda página da apresentação do consultor roda no negativo. É o que
+   separa as duas sem acrescentar ornamento: mesma grelha, mesma tipografia,
+   mesmos fios — só o fundo troca. */
+.page.dark{color:#fff;background:linear-gradient(225deg,var(--brand) 0%,#000 100%)}
+.page.dark .pg-head,.page.dark .pg-foot{border-color:rgba(255,255,255,.2)}
+.page.dark .pg-head .sec,.page.dark .pg-head .dt{color:rgba(255,255,255,.78)}
+.page.dark .pg-foot{color:rgba(255,255,255,.45)}
+.page.dark .pg-foot .no{color:#fff}
+.page.dark h2{border-color:rgba(255,255,255,.2)}
+.page.dark .eyebrow{color:#fff}
+.page.dark .lead,.page.dark .mut{color:rgba(255,255,255,.78)}
+.page.dark .lista.mut li{color:rgba(255,255,255,.78)}
+.page.dark .legal{color:rgba(255,255,255,.5)}
+.page.dark .dl dt{color:rgba(255,255,255,.62)}
+.page.dark .principios strong{color:var(--accent)}
+.page.dark .pill{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.24)}
+.page.dark .note{background:rgba(255,255,255,.06);border-left-color:var(--accent)}
 """

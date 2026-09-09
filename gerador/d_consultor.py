@@ -28,32 +28,30 @@ def _lista(itens, cls="lista"):
     return '<ul class="%s">%s</ul>' % (cls, "".join("<li>%s</li>" % i for i in itens))
 
 
-def _banda(c):
-    return """    %(foto)s
-    <div class="rt-id">
-      <div class="rule"></div>
-      <span class="ey">%(plano)s</span>
-      <h1>%(nome)s</h1>
-      <p class="fn">%(papel)s na AUVP Capital</p>
-    </div>""" % dict(foto=foto_consultor(c["slug"]), plano=PLANO,
-                     nome=c["nome"], papel=c["papel"])
-
-
-def _faixa(c):
-    """Credenciais e contato numa faixa entre a banda e o texto."""
-    formacao = list(c["graduacao"])
-    especializacao = list(c["pos"])
-    return """<div class="faixa">
+def _pagina_consultor(c):
+    """Página aberta: narrativa à esquerda, retrato e credenciais à direita."""
+    formacao = ""
+    if c["graduacao"]:
+        formacao += "<h3>Formação</h3>" + _lista(c["graduacao"])
+    if c["pos"]:
+        formacao += "<h3>Especialização</h3>" + _lista(c["pos"])
+    return """<span class="eyebrow">%(plano)s</span>
+<h1 class="t">%(nome)s</h1>
+<p class="lead">%(papel)s na AUVP Capital</p>
+<div class="cols2u" style="flex:1 1 auto;align-items:start">
   <div>
-    <h3>Formação</h3>
-    %(form)s
+    <h2>Sobre mim e meu propósito</h2>
+    %(proposito)s
+    <h2>Trajetória no mercado financeiro</h2>
+    %(trajetoria)s
+    <h2>Fora do escritório</h2>
+    %(fora)s
   </div>
-  <div>
-    <h3>%(rot2)s</h3>
-    %(esp)s
-    <div class="chips" style="margin-top:2.5mm">%(chips)s</div>
-  </div>
-  <div>
+  <div class="side">
+    %(foto)s
+    %(formacao)s
+    <h3>Certificações</h3>
+    <div class="chips">%(chips)s</div>
     <h3>Falar com %(primeiro)s</h3>
     <div class="dl">
       <dt>WhatsApp</dt><dd>%(whats)s</dd>
@@ -61,25 +59,12 @@ def _faixa(c):
     </div>
   </div>
 </div>""" % dict(
-        form=_lista(formacao),
-        rot2="Especialização e certificações" if especializacao else "Certificações",
-        esp=_lista(especializacao) if especializacao else "",
+        plano=PLANO, nome=c["nome"], papel=c["papel"],
+        proposito=_paras(c["proposito"]), trajetoria=_paras(c["trajetoria"]),
+        fora=_paras(c["fora"]), foto=foto_consultor(c["slug"]), formacao=formacao,
         chips="".join('<span class="pill">%s</span>' % x for x in c["certificacoes"]),
         primeiro=c["nome"].split()[0],
         whats=ph("whatsapp_consultor"), email=ph("email_consultor"))
-
-
-def _fluxo(c):
-    return """<div class="fluxo">
-  <h2>Sobre mim e meu propósito</h2>
-  %(proposito)s
-  <h2 class="n">Trajetória no mercado financeiro</h2>
-  %(trajetoria)s
-  <h2 class="n">Fora do escritório</h2>
-  %(fora)s
-</div>""" % dict(proposito=_paras(c["proposito"]),
-                 trajetoria=_paras(c["trajetoria"]),
-                 fora=_paras(c["fora"]))
 
 
 PAGINA_SEGMENTO = """<span class="eyebrow">AUVP Capital &middot; Consultoria de investimentos</span>
@@ -175,7 +160,8 @@ def build(t, variante):
     set_date_ph("data_apresentacao")
     c = POR_SLUG[variante]
     return [
-        page_retrato(t, 1, _banda(c), _faixa(c) + _fluxo(c), rodape=RODAPE),
+        page_a4(t, "O seu consultor", 1,
+                '<div class="perfil">%s</div>' % _pagina_consultor(c), rodape=RODAPE),
         page_a4(t, "O plano e a AUVP Capital", 2,
-                '<div class="densa">%s</div>' % PAGINA_SEGMENTO, rodape=RODAPE),
+                '<div class="densa">%s</div>' % PAGINA_SEGMENTO, rodape=RODAPE, dark=True),
     ]

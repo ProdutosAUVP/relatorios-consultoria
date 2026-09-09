@@ -87,8 +87,9 @@ def cover_a4(t, kicker_light, kicker_bold, bottom_light, bottom_bold, ident_line
         confid=CONFID.replace(" · ", "<br>"), bl=bottom_light, bb=bottom_bold, ident=ident)
 
 
-def page_a4(t, sec, no, body, date_ph=None, rodape=None):
-    return """<section class="page">
+def page_a4(t, sec, no, body, date_ph=None, rodape=None, dark=False):
+    return """<section class="page%(dk)s">
+  %(grain)s
   <header class="pg-head">
     <div class="sec">%(sec)s</div>
     <div class="rt"><div class="dt">%(dt)s</div>%(logo)s</div>
@@ -97,8 +98,9 @@ def page_a4(t, sec, no, body, date_ph=None, rodape=None):
 %(body)s
   </div>
   <footer class="pg-foot"><span class="no">%(no)s</span><span>%(confid)s</span></footer>
-</section>""" % dict(sec=sec, dt=ph(date_ph or DATE_PH), logo=logo_svg(t, 4.6, ink=True), body=body,
-                     no="%02d" % no, confid=rodape or CONFID)
+</section>""" % dict(dk=" dark" if dark else "", grain='<div class="grain"></div>' if dark else "",
+                     sec=sec, dt=ph(date_ph or DATE_PH), logo=logo_svg(t, 4.6, ink=not dark),
+                     body=body, no="%02d" % no, confid=rodape or CONFID)
 
 
 # ---------------------------------------------------------------- 16:9
@@ -252,29 +254,8 @@ def year(eventos):
         for i, ev in enumerate(eventos, start=1))
 
 
-def page_retrato(t, no, banda_html, corpo_html, rodape=None):
-    """Página com banda escura em sangria no topo, usada na abertura da
-    apresentação do consultor. Não tem papel timbrado: a banda faz o papel
-    dele, com a logo em branco."""
-    return """<section class="page retrato">
-  <div class="banda">
-    <div class="grain"></div>
-    %(graf)s
-    %(logo)s
-%(banda)s
-  </div>
-  <div class="corpo">
-%(corpo)s
-  </div>
-  <footer class="pg-foot"><span class="no">%(no)s</span><span>%(rodape)s</span></footer>
-</section>""" % dict(
-        graf=graf_arcos(168.0, "top-right", sangria=6.0),
-        logo=logo_svg(t, 8.0), banda=banda_html, corpo=corpo_html,
-        no="%02d" % no, rodape=rodape or CONFID)
-
-
 def foto_consultor(slug):
     """Retrato preparado por `scripts/fotos.py`, embutido em base64 para o
     modelo continuar abrindo sozinho."""
-    return '<div class="rt-foto"><img alt="" src="data:image/jpeg;base64,%s"></div>' % _b64(
+    return '<img class="rt-img" alt="" src="data:image/jpeg;base64,%s">' % _b64(
         os.path.join("assets", "consultores", slug + ".jpg"))

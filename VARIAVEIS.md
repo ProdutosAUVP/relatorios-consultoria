@@ -49,7 +49,7 @@ Variantes: alan-santanna, andre-arruda, bolivar-oliveira, danilo-barbosa, erika-
 <details><summary>Ver as 3 variáveis específicas deste documento</summary>
 
 ```
-whatsapp_consultor                email_consultor                   data_apresentacao
+data_apresentacao                 whatsapp_consultor                email_consultor
 ```
 </details>
 

@@ -163,16 +163,19 @@ Cada um é uma função em `gerador/layout.py` que devolve HTML.
 | `timeline(items)` | `.tl` | lista numerada em duas colunas |
 | `chart(label, desc, skeleton, style, series)` | `.chart` | moldura do gráfico: descreve o que ele mostra e pinta a legenda com `--c1`…`--c6` |
 | `imgbox(desc)` | `.imgbox` | espaço reservado para foto, com a especificação |
+| `foto_consultor(slug)` | `.rt-img` | retrato pronto, embutido em base64 |
 | `ph(nome, dica)` | `.ph` | campo preenchível `{{nome}}` |
 
 Modificadores de página, aplicados como `class` num `div` que envolve o conteúdo:
 `.densa` aperta a escala inteira, para documento de página fechada que não pode
 transbordar; `.principios` põe título e texto no mesmo parágrafo, em duas colunas.
 
-`page_retrato()` monta uma página com banda escura em sangria no topo, sem papel
-timbrado — a banda faz o papel dele, com a logo em branco. É a abertura da apresentação
-do consultor, e existe para dar a ela uma diagramação diferente da segunda página sem
-sair da identidade: mesma tipografia, mesmos fios, mesmo acento, mesmo grafismo.
+`page_a4(..., dark=True)` roda a página no negativo: fundo em degradê com granulado,
+texto e fios em branco, logo em branco. É o que separa as duas páginas da apresentação
+do consultor sem acrescentar ornamento — mesma grelha, mesma tipografia, mesmos fios,
+só o fundo troca. `.perfil` é a escala da primeira página, um pouco menor que a padrão
+mas com entrelinha mais generosa, para acomodar o consultor de texto mais longo sem
+apertar o de texto mais curto.
 
 ### Retratos
 

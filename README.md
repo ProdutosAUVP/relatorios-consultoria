@@ -35,10 +35,9 @@ A **apresentação do consultor** é o único documento que já vem escrito, e n
 o texto dos consultores e do plano Me Diz o Que Fazer veio pronto, e os retratos estão
 embutidos. Só os contatos ficaram como campo preenchível.
 
-As duas páginas têm diagramação diferente de propósito: a primeira é uma abertura, com
-banda escura em sangria, retrato e faixa de credenciais; a segunda é informativa, em
-grelha. O que as mantém no mesmo documento é a tipografia, os fios, o acento e o
-grafismo — não o arranjo.
+As duas páginas se distinguem pela inversão, não por ornamento: a primeira é aberta e
+clara, com o retrato e as credenciais na coluna de apoio; a segunda roda no negativo.
+Mesma grelha, mesma tipografia, mesmos fios — só o fundo troca.
 
 ## Como usar
 

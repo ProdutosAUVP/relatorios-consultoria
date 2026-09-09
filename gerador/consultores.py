@@ -10,6 +10,8 @@ os apresenta de formas diferentes:
     marcos      a trajetória como linha do tempo, (quando, o que aconteceu)
     interesses  fatos curtos de "fora do escritório", como etiquetas
     fora        uma frase que amarra os interesses
+    whatsapp    o número de atendimento, já formatado; `None` quando não há
+    email       o e-mail de contato
 
 Os marcos foram extraídos da trajetória que cada um escreveu, mantendo as
 datas e a ordem do original. O texto de propósito segue na voz de cada um.
@@ -22,6 +24,8 @@ CONSULTORES = [
         slug="alan-santanna",
         nome="Alan Sant'Anna",
         nome_completo="Alan Feitosa Sant'Anna",
+        whatsapp="+55 (62) 4014-0663",
+        email="alan.sa@auvpconsultoria.com.br",
         papel="Consultor de investimentos",
         frase="Minha missão é absorver toda a complexidade matemática e analítica do mercado "
               "e traduzi-la em estratégias simples, seguras e personalizadas para os seus objetivos.",
@@ -60,6 +64,8 @@ CONSULTORES = [
         slug="andre-arruda",
         nome="André Arruda",
         nome_completo="André Arruda",
+        whatsapp="+55 (62) 4014-0690",
+        email="andre.arruda@auvpconsultoria.com.br",
         papel="Consultor de investimentos",
         frase="O trabalho de um consultor deve ir além de recomendar investimentos: deve alinhar "
               "expectativas, informar e até educar sobre cada passo — e fazer tudo isso de "
@@ -90,7 +96,9 @@ CONSULTORES = [
     dict(
         slug="bolivar-oliveira",
         nome="Bolívar Oliveira",
-        nome_completo="Bolívar Oliveira",
+        nome_completo="Bolívar Luiz Pereira d'Oliveira",
+        whatsapp=None,
+        email="bolivar.oliveira@investidorsardinha.com.br",
         papel="Consultor de investimentos",
         frase="Educação financeira não se resume a ensinar alguém a investir, mas a oferecer "
               "conhecimento para que cada pessoa tome decisões melhores e construa um futuro mais "
@@ -120,7 +128,9 @@ CONSULTORES = [
     dict(
         slug="danilo-barbosa",
         nome="Danilo Barbosa",
-        nome_completo="Danilo Barbosa",
+        nome_completo="Danilo Miranda Barbosa",
+        whatsapp="+55 (62) 3095-8115",
+        email="danilo.barbosa@auvpconsultoria.com.br",
         papel="Consultor de investimentos",
         frase="Vamos construir juntos o seu futuro financeiro, tijolo a tijolo, focando sempre no "
               "que o seu <em>eu do futuro</em> espera das decisões tomadas hoje.",
@@ -151,7 +161,9 @@ CONSULTORES = [
     dict(
         slug="erika-barreto",
         nome="Erika Barreto",
-        nome_completo="Erika Barreto",
+        nome_completo="Erika Kettelyn Leite Barreto",
+        whatsapp="+55 (62) 3030-4145",
+        email="erika.barreto@auvpconsultoria.com.br",
         papel="Consultora de investimentos",
         frase="As decisões financeiras sobre o próprio patrimônio devem ser tomadas com clareza. "
               "Por isso gosto muito de responder às perguntas que as pessoas têm depois de estudar.",
@@ -179,6 +191,8 @@ CONSULTORES = [
         slug="nasser-tanure",
         nome="Nasser Tanure",
         nome_completo="Nasser Tanure Amantes",
+        whatsapp="+55 (62) 3095-8142",
+        email="nasser.tanure@auvpconsultoria.com.br",
         papel="Consultor de investimentos",
         frase="Investir vai muito além de planilhas e rentabilidade: trata-se de educação e de "
               "planejamento de vida.",
@@ -208,7 +222,9 @@ CONSULTORES = [
     dict(
         slug="yuri-machado",
         nome="Yuri Machado",
-        nome_completo="Yuri Machado",
+        nome_completo="Yuri Medeiros Candol Machado",
+        whatsapp="+55 (62) 4014-0683",
+        email="yuri.medeiros@auvpconsultoria.com.br",
         papel="Consultor de investimentos",
         frase="Investir representa planejamento, segurança, liberdade e a possibilidade de "
               "transformar a vida dos meus clientes.",

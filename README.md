@@ -41,8 +41,10 @@ um consultor, e nesses casos o tema é o da consultoria.
   comercial de cada um já vem pronto: descrição, como funciona, o que está e o que não
   está incluído, e a taxa. O consultor fica em branco, para o retrato e a bio de quem vai
   entregar o documento.
-- **Por consultor** — os sete do Me Diz o Que Fazer, com bio, trajetória e retrato
-  embutidos. Só a data e os contatos ficam como campo.
+- **Por consultor** — os sete do Me Diz o Que Fazer, com bio, trajetória, retrato e
+  contatos embutidos. Só a data fica como campo. WhatsApp, e-mail e os canais da casa são
+  links de verdade: o Chromium os leva para o PDF, e no papel continuam com a aparência do
+  resto do texto.
 - **Em branco, por segmento** — para Alta Renda, Private e Assessoria, com consultor e
   plano preenchíveis.
 

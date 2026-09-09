@@ -17,6 +17,8 @@ O documento existe em duas formas, e a diferença é só o quanto vem escrito:
 O que vale para os dois lados fica escrito nas duas: o método de investimento
 e a lógica do fee based são da casa, não do plano.
 """
+import re
+
 from consultores import CONSULTORES
 from layout import *
 
@@ -38,6 +40,17 @@ def _marcos(itens):
 
 def _tags(itens):
     return '<div class="tags">%s</div>' % "".join("<span>%s</span>" % i for i in itens)
+
+
+def _link(href, texto):
+    """Âncora sem enfeite: o Chromium leva o link para o PDF, e no papel o texto
+    continua igual ao resto — cor e peso não mudam por ser clicável."""
+    return '<a href="%s">%s</a>' % (href, texto)
+
+
+def _whatsapp(numero):
+    """O número mostrado é formatado para leitura; o link precisa dele limpo."""
+    return _link("https://wa.me/%s" % re.sub(r"\D", "", numero), numero)
 
 
 def _numerados(base, n, dica=""):
@@ -64,6 +77,7 @@ def _consultor_vazio():
         proposito=_numerados("proposito", 2),
         interesses=_numerados("interesse", 4),
         fora=ph("fora_do_escritorio", "Uma ou duas frases sobre a vida fora do trabalho."),
+        whatsapp=None, email=None,
     )
 
 
@@ -120,7 +134,11 @@ def _pagina_consultor(c, t, plano, foto, primeiro):
         cred="".join("<div><h3>%s</h3>%s</div>" % (t_, b) for t_, b in cred),
         marcos=_marcos(c["marcos"]), proposito=_paras(c["proposito"]),
         tags=_tags(c["interesses"]), fora=c["fora"], primeiro=primeiro,
-        whats=ph("whatsapp_consultor"), email=ph("email_consultor"))
+        # O contato que já veio da lista entra escrito; o que faltou continua
+        # como campo, para não sair um documento com o telefone de ninguém.
+        whats=_whatsapp(c["whatsapp"]) if c.get("whatsapp") else ph("whatsapp_consultor"),
+        email=_link("mailto:" + c["email"], c["email"]) if c.get("email")
+        else ph("email_consultor"))
 
 
 PAGINA_PLANO = """<h1 class="t">%(plano)s</h1>
@@ -158,9 +176,9 @@ PAGINA_CASA = """<h1 class="t">Como pensamos investimento</h1>
 <h2>Onde acompanhar a %(marca)s</h2>
 <div class="cols2">
   <div class="dl">
-    <dt>Instagram</dt><dd>@auvpcapital</dd>
-    <dt>YouTube</dt><dd>@AUVPCapital</dd>
-    <dt>Spotify</dt><dd>Podcast da AUVP Capital</dd>
+    <dt>Instagram</dt><dd>%(instagram)s</dd>
+    <dt>YouTube</dt><dd>%(youtube)s</dd>
+    <dt>Spotify</dt><dd>%(spotify)s</dd>
   </div>
   <div>
     <p class="small mut" style="margin:0">Sempre que precisar, é só mandar mensagem para o seu consultor.</p>
@@ -169,6 +187,16 @@ PAGINA_CASA = """<h1 class="t">Como pensamos investimento</h1>
 <div style="margin-top:auto">
   <p class="legal">%(notas)s</p>
 </div>"""
+
+# Os canais da casa. O endereço sai do próprio identificador, e o do podcast é
+# uma busca — não temos a URL do programa, e chutar uma daria link quebrado no
+# documento do cliente.
+CANAIS = dict(
+    instagram=_link("https://instagram.com/auvpcapital", "@auvpcapital"),
+    youtube=_link("https://youtube.com/@AUVPCapital", "@AUVPCapital"),
+    spotify=_link("https://open.spotify.com/search/AUVP%20Capital/shows",
+                  "Podcast da AUVP Capital"),
+)
 
 # O método é da casa e vale em qualquer segmento, então fica escrito nas duas
 # formas do documento.
@@ -313,5 +341,5 @@ def build(t, variante):
             fora=_lista(texto["fora"], cls="lista mut")), rodape=rodape, cls="plano"),
         page_a4(t, t["marca"], 3, PAGINA_CASA % dict(
             marca=t["marca"], metodo=METODO, mes=texto["mes"], ano=texto["ano"],
-            notas=texto["notas"]), rodape=rodape, cls="plano", dark=True),
+            notas=texto["notas"], **CANAIS), rodape=rodape, cls="plano", dark=True),
     ]

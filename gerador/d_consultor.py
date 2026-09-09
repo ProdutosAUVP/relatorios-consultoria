@@ -76,7 +76,6 @@ def _pagina_consultor(c):
   <div>
     <h3>Fora do escritório</h3>
     %(tags)s
-    <p class="small mut" style="margin:0">%(fora)s</p>
   </div>
   <div>
     <h3>Falar com %(primeiro)s</h3>
@@ -85,6 +84,7 @@ def _pagina_consultor(c):
       <dt>E-mail</dt><dd>%(email)s</dd>
     </div>
   </div>
+  <p class="small mut desc">%(fora)s</p>
 </div>""" % dict(
         foto=foto_consultor(c["slug"]), plano=PLANO, nome=c["nome"], papel=c["papel"],
         frase=c["frase"], nc=len(cred),
@@ -94,8 +94,7 @@ def _pagina_consultor(c):
         whats=ph("whatsapp_consultor"), email=ph("email_consultor"))
 
 
-PAGINA_PLANO = """<span class="eyebrow">AUVP Capital &middot; Consultoria de investimentos</span>
-<h1 class="t">Me Diz o Que Fazer</h1>
+PAGINA_PLANO = """<h1 class="t">Me Diz o Que Fazer</h1>
 <p class="lead" style="max-width:none">Você tem um consultor de investimentos à disposição para dizer o que fazer com o seu dinheiro. A conta continua sendo sua e quem executa é você. O nosso trabalho é trazer a análise e a recomendação de cada decisão.</p>
 <div class="esp"></div>
 <h2>Como funciona no dia a dia</h2>
@@ -137,8 +136,7 @@ PAGINA_PLANO = """<span class="eyebrow">AUVP Capital &middot; Consultoria de inv
 )
 
 
-PAGINA_CASA = """<span class="eyebrow">A casa por trás da recomendação</span>
-<h1 class="t">Como pensamos investimento</h1>
+PAGINA_CASA = """<h1 class="t">Como pensamos investimento</h1>
 <p class="lead" style="max-width:none">A AUVP Capital nasceu da metodologia da AUVP Escola. É ela que orienta cada recomendação que você recebe aqui.</p>
 <div class="esp"></div>
 %(metodo)s

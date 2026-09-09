@@ -9,7 +9,9 @@
     "pdf": "node scripts/render.mjs",
     "check": "node scripts/check.mjs",
     "vars": "node scripts/variaveis.mjs",
-    "all": "npm run build && npm run vars && npm run check && npm run pdf"
+    "site": "node scripts/catalogo.mjs",
+    "servir": "python3 -m http.server 8099 --directory docs",
+    "all": "npm run build && npm run vars && npm run check && npm run site && npm run pdf"
   },
   "devDependencies": {
     "playwright": "^1.49.1"

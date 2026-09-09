@@ -450,8 +450,8 @@ CSS_SLIDE += """
 .plan .pr b{display:block;font-size:14pt;font-weight:800;color:var(--brand);letter-spacing:-.02em}
 .plan .pr span{font-size:8.4pt;color:var(--ink-2)}
 .plan ul{list-style:none;padding:0;margin:0;font-size:8.6pt;line-height:1.4}
-.plan li{position:relative;padding-left:4mm;margin-bottom:2mm}
-.plan li::before{content:"";position:absolute;left:0;top:2mm;width:2.4mm;height:1.33px;background:var(--accent)}
+.plan li{position:relative;padding-left:4mm;margin-bottom:8px}
+.plan li::before{content:"";position:absolute;left:0;top:7px;width:2.4mm;height:1.33px;background:var(--accent)}
 .plan .ft{margin-top:auto;padding-top:4mm;font-size:8.2pt;color:var(--ink-2)}
 .steps{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:8mm;counter-reset:st;list-style:none;padding:0;margin:0}
 .steps>li{min-width:0;position:relative;padding-top:10mm}
@@ -562,10 +562,10 @@ CSS_SLIDE += """
 
 CSS_A4 += """
 /* ---------- lista com marcador em fio, e retrato ---------- */
-.lista{list-style:none;margin:0;padding:0;font-size:8.4pt;line-height:1.5}
-.lista li{position:relative;padding-left:5mm;margin-bottom:2.5mm}
+.lista{list-style:none;margin:0;padding:0;font-size:8.4pt;line-height:17px}
+.lista li{position:relative;padding-left:5mm;margin-bottom:9px}
 .lista li:last-child{margin-bottom:0}
-.lista li::before{content:"";position:absolute;left:0;top:2.1mm;width:2.6mm;height:1.33px;background:var(--accent)}
+.lista li::before{content:"";position:absolute;left:0;top:8px;width:2.6mm;height:1.33px;background:var(--accent)}
 .lista.mut li{color:var(--ink-2)}
 .foto{border:1px dashed var(--brand);display:flex;flex-direction:column;align-items:center;
   justify-content:center;gap:1.5mm;text-align:center;padding:4mm;
@@ -591,7 +591,7 @@ CSS_A4 += """
 CSS_A4 += """
 /* ---------- retrato na coluna de apoio ---------- */
 .rt-img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 26%;
-  border-radius:20mm 0 0 0;
+  border-radius:3mm 0 0 0;
   margin-bottom:5.5mm}
 
 /* ---------- respiro elástico entre faixas ----------
@@ -606,7 +606,7 @@ CSS_A4 += """
    A página trata três tipos de informação de formas diferentes: a declaração
    de propósito em destaque ao lado do retrato, a trajetória como linha do
    tempo, e os interesses como fatos curtos. */
-.pf-topo{display:grid;grid-template-columns:38mm 1fr;gap:0 8mm;align-items:end}
+.pf-topo{display:grid;grid-template-columns:36mm 1fr;gap:0 8mm;align-items:end}
 .pf-topo .rt-img{margin:0}
 .pf-topo .ey{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.18em;
   text-transform:uppercase;color:var(--brand);margin-bottom:2mm}
@@ -615,7 +615,7 @@ CSS_A4 += """
 .pf-topo .papel{margin:2mm 0 0;font-size:9pt;color:var(--ink-2)}
 /* a declaração atravessa as duas colunas, sob um fio de largura inteira, e
    respira antes da faixa de credenciais */
-.pf-topo .frase{grid-column:1/-1;margin:7mm 0 0;padding-top:5mm;
+.pf-topo .frase{grid-column:1/-1;margin:6mm 0 0;padding-top:4mm;
   border-top:1px solid var(--line);
   font-size:11.5pt;line-height:1.5;font-weight:300;color:var(--ink)}
 
@@ -628,13 +628,13 @@ CSS_A4 += """
 .cred h3{margin:0 0 2mm;font-size:6.2pt;font-weight:700;letter-spacing:.16em;
   text-transform:uppercase;color:var(--ink-2)}
 .cred .lista{font-size:7.6pt;margin:0}
-.cred .lista li{margin-bottom:1mm}
+.cred .lista li{margin-bottom:4px}
 
 /* trajetória como linha do tempo */
 /* o rótulo fica acima do texto, e não numa coluna à esquerda: os marcos vão de
    "2016" a "Pandemia" e a "Há 3 anos", e coluna fixa não comporta os dois */
 .marcos{list-style:none;margin:0;padding:0}
-.marcos li{position:relative;padding:0 0 3mm 8mm}
+.marcos li{position:relative;padding:0 0 10px 8mm}
 .marcos li:last-child{padding-bottom:0}
 .marcos li::before{content:"";position:absolute;left:1.15mm;top:4.2mm;bottom:-.4mm;
   width:1px;background:var(--line)}
@@ -646,12 +646,15 @@ CSS_A4 += """
 .marcos p{margin:0;font-size:8.2pt;line-height:1.45;color:var(--ink-2)}
 
 /* interesses e contato, na faixa final */
-.pf-rodape{padding-top:4mm;border-top:1px solid var(--line);
-  display:grid;grid-template-columns:1.6fr 1fr;gap:8mm;align-items:start}
+.pf-rodape{padding:4mm 0 6mm;border-top:1px solid var(--line);
+  display:grid;grid-template-columns:1.6fr 1fr;gap:4mm 8mm;align-items:start}
 .pf-rodape h3{margin:0 0 2mm;font-size:6.2pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
 .pf-rodape .dl{font-size:8pt;gap:1mm 5mm}
-.tags{display:flex;flex-wrap:wrap;gap:1.4mm;margin-bottom:1.5mm}
-.tags span{font-size:7.2pt;padding:1mm 3mm;border:1px solid var(--line);
+/* a descrição fecha a faixa atravessando as duas colunas, e o padding de baixo
+   é o que a mantém longe do fio do rodapé */
+.pf-rodape .desc{grid-column:1/-1;margin:0;max-width:none}
+.tags{display:flex;flex-wrap:wrap;gap:1.4mm;margin:0}
+.tags span{font-size:7.2pt;padding:.8mm 2.8mm;border:1px solid var(--line);
   border-radius:8mm;color:var(--ink-2)}
 
 /* ---------- perfil ----------
@@ -695,9 +698,9 @@ CSS_A4 += """
    matéria que as de relatório. */
 .page.plano h2{margin:0 0 5mm}
 .page.plano .lead{font-size:11pt;line-height:1.55;margin-bottom:2mm}
-.page.plano .lista{font-size:9.2pt;line-height:1.62}
-.page.plano .lista li{padding-left:6mm;margin-bottom:4mm}
-.page.plano .lista li::before{top:2.4mm;width:3.2mm}
+.page.plano .lista{font-size:9.2pt;line-height:20px}
+.page.plano .lista li{padding-left:6mm;margin-bottom:15px}
+.page.plano .lista li::before{top:9px;width:3.2mm}
 .page.plano .principios{gap:6mm 10mm}
 .page.plano .principios p{font-size:8.8pt;line-height:1.6}
 .page.plano .small{font-size:9pt;line-height:1.62}

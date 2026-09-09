@@ -39,6 +39,31 @@ As duas páginas se distinguem pela inversão, não por ornamento: a primeira é
 clara, com o retrato e as credenciais na coluna de apoio; a segunda roda no negativo.
 Mesma grelha, mesma tipografia, mesmos fios — só o fundo troca.
 
+## Ferramenta de preenchimento
+
+Quem vai emitir um documento não precisa mexer no repositório. A ferramenta em
+**[produtosauvp.github.io/relatorios-consultoria](https://produtosauvp.github.io/relatorios-consultoria/)**
+faz o caminho inteiro no navegador: escolher o produto, escolher o documento, preencher os
+campos com a prévia atualizando ao lado, enviar as fotos e os gráficos, e exportar em PDF
+ou HTML.
+
+O que ela entrega é o mesmo modelo deste repositório com os valores no lugar — não existe
+um segundo desenho para manter em dia. O que você digita fica salvo no próprio navegador,
+e o botão de rascunho baixa um JSON para retomar em outro computador ou reaproveitar no
+mês seguinte.
+
+Para rodar localmente:
+
+```sh
+npm run build && npm run site   # gera os modelos e o índice da ferramenta
+npm run servir                  # http://localhost:8099
+```
+
+A publicação é automática: o workflow `.github/workflows/pages.yml` regera os modelos e o
+índice a cada push em `main` e publica `docs/`. Em **Settings › Pages**, a origem precisa
+estar em **GitHub Actions**.
+
+
 ## Como usar
 
 **1. Preencher.** Abra o `.html` num editor de texto e substitua cada `{{token}}` —

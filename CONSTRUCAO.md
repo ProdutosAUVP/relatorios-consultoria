@@ -162,8 +162,17 @@ card, topo de card de indicador, linha de total de tabela. Não há um terceiro 
 
 A escala é generosa por decisão: este é um material de produto financeiro, e o espaço em
 branco faz parte do acabamento. Quando um conteúdo não cabe na página, a resposta certa é
-**dar-lhe outra página**, e não reduzir a escala. As duas exceções são documentos de
-número de páginas fixo, que usam as classes `.densa` e `.perfil`.
+**dar-lhe outra página**, e não reduzir a escala. A exceção é a apresentação do consultor,
+de número de páginas fixo, que usa a escala `.perfil`.
+
+**Respiro elástico.** Numa página de altura fechada sobra espaço, e ele varia de um
+documento para outro — a trajetória de um consultor tem três marcos, a de outro tem
+quatro. Empurrar o rodapé para a borda com `margin-top:auto` resolve o encaixe mas abre
+um vão enorme numa junta só. A classe `.esp` faz o contrário: é um respiro `flex:1 1 0`
+entre duas faixas de conteúdo, com piso e teto (`4mm` a `11mm`, ou `17mm` na variante
+`.esp.lg`). O excedente é dividido igualmente entre os respiros da página, cada um cresce
+até o seu teto, e o que sobrar fica na margem inferior. No documento mais denso todos
+encostam no piso; no mais curto, no teto. Em ambos a página mantém o mesmo ritmo.
 
 Para auditar depois de mexer:
 
@@ -199,13 +208,14 @@ Cada um é uma função em `gerador/layout.py` que devolve HTML.
 | `ph(nome, dica)` | `.ph` | campo preenchível `{{nome}}` |
 
 Modificadores de página, aplicados como `class` num `div` que envolve o conteúdo:
-`.densa` aperta a escala inteira, para documento de página fechada que não pode
-transbordar; `.principios` põe título e texto no mesmo parágrafo, em duas colunas.
+`.principios` põe título e texto no mesmo parágrafo, em duas colunas.
 
 `page_a4(..., dark=True)` roda a página no negativo: fundo em degradê com granulado,
-texto e fios em branco, logo em branco. É o que separa as duas páginas da apresentação
-do consultor sem acrescentar ornamento — mesma grelha, mesma tipografia, mesmos fios,
-só o fundo troca. `.perfil` é a escala da primeira página, um pouco menor que a padrão
+texto e fios em branco, logo em branco. É o que separa a página do consultor das duas
+seguintes sem acrescentar ornamento — mesma grelha, mesma tipografia, mesmos fios, só o
+fundo troca. No negativo o acento amarelo sai de cena: sobre o verde ele fica estridente,
+então marcador de lista, fio de card e destaque em negrito passam a branco.
+No fundo branco vale o contrário — a logo da AUVP é sempre preta. `.perfil` é a escala da primeira página, um pouco menor que a padrão
 mas com entrelinha mais generosa, para acomodar o consultor de texto mais longo sem
 apertar o de texto mais curto.
 

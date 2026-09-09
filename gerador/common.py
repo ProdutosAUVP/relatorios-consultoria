@@ -148,7 +148,8 @@ strong{font-weight:700}
 .rule{height:1px;background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,.95))}
 .grain{position:absolute;inset:0;background-image:%(grain)s;opacity:.22;pointer-events:none}
 .logo svg{display:block;width:100%%;height:auto}
-.logo-ink svg [class^=lg-]{fill:var(--brand)}
+/* sobre fundo branco a marca é sempre preta */
+.logo-ink svg [class^=lg-]{fill:#000}
 /* Todo grafismo entra a 50%% de opacidade, em capa ou como decoração. Fica no
    componente para valer sozinho em qualquer uso novo. */
 .graf{position:absolute;pointer-events:none;opacity:.5}
@@ -204,8 +205,8 @@ CSS_A4 = BASE + """
 .eyebrow{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);margin:0 0 2mm}
 h1.t{font-size:19pt;font-weight:800;text-transform:uppercase;letter-spacing:-.012em;line-height:1.04;margin:0 0 3mm}
 .lead{font-size:10pt;color:var(--ink-2);margin:0 0 8mm;max-width:155mm}
-h2{font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:8mm 0 3mm;
-  padding-bottom:1.5mm;border-bottom:1px solid var(--line)}
+h2{font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:8mm 0 4mm;
+  padding-bottom:2mm;border-bottom:1px solid var(--line)}
 h2:first-child{margin-top:0}
 h3{font-size:9pt;font-weight:700;margin:5mm 0 2mm}
 .small{font-size:8pt}
@@ -215,7 +216,7 @@ h3{font-size:9pt;font-weight:700;margin:5mm 0 2mm}
 .cols2{display:grid;grid-template-columns:1fr 1fr;gap:10mm}
 .cols2>*,.cols3>*,.cols2u>*,.cards>*,.kpis>*{min-width:0}
 .cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm}
-.cols2u{display:grid;grid-template-columns:1.35fr 1fr;gap:10mm}
+.cols2u{display:grid;grid-template-columns:1.5fr 1fr;gap:10mm}
 .gap{height:5mm}
 
 /* ---------- KPIs ---------- */
@@ -330,8 +331,8 @@ CSS_SLIDE = BASE + """
 .slide.dark .eyebrow{color:#fff}
 h1.t{font-size:26pt;font-weight:800;text-transform:uppercase;letter-spacing:-.015em;line-height:1.03;margin:0 0 4mm}
 .lead{font-size:11pt;color:var(--ink-2);margin:0 0 6mm;max-width:210mm}
-h2{font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:6mm 0 3mm;
-  padding-bottom:1.5mm;border-bottom:1px solid var(--line)}
+h2{font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:8mm 0 4mm;
+  padding-bottom:2mm;border-bottom:1px solid var(--line)}
 h2:first-child{margin-top:0}
 h3{font-size:10.5pt;font-weight:700;margin:4mm 0 1.5mm}
 .small{font-size:9pt}
@@ -561,9 +562,10 @@ CSS_SLIDE += """
 
 CSS_A4 += """
 /* ---------- lista com marcador em fio, e retrato ---------- */
-.lista{list-style:none;margin:0 0 3mm;padding:0;font-size:8.4pt;line-height:1.45}
-.lista li{position:relative;padding-left:5mm;margin-bottom:1.5mm}
-.lista li::before{content:"";position:absolute;left:0;top:2mm;width:2.6mm;height:1.33px;background:var(--accent)}
+.lista{list-style:none;margin:0;padding:0;font-size:8.4pt;line-height:1.5}
+.lista li{position:relative;padding-left:5mm;margin-bottom:2.5mm}
+.lista li:last-child{margin-bottom:0}
+.lista li::before{content:"";position:absolute;left:0;top:2.1mm;width:2.6mm;height:1.33px;background:var(--accent)}
 .lista.mut li{color:var(--ink-2)}
 .foto{border:1px dashed var(--brand);display:flex;flex-direction:column;align-items:center;
   justify-content:center;gap:1.5mm;text-align:center;padding:4mm;
@@ -579,21 +581,6 @@ CSS_A4 += """
 """
 
 CSS_A4 += """
-/* ---------- densidade para páginas de texto corrido longo ----------
-   A apresentação do consultor tem duas páginas fechadas, sem chance de
-   transbordar para uma terceira: o conteúdo tem de caber. Esta classe aperta a
-   escala sem mexer nos outros documentos. */
-.densa h2{margin:4mm 0 1.5mm;font-size:9pt}
-.densa h2:first-child{margin-top:0}
-.densa .lead{font-size:9.2pt;margin-bottom:4mm}
-.densa p{margin-bottom:2mm}
-.densa .lista{font-size:7.7pt;line-height:1.36;margin-bottom:0}
-.densa .lista li{margin-bottom:1mm;padding-left:4mm}
-.densa .lista li::before{top:1.7mm;width:2.2mm}
-.densa p.small{font-size:7.8pt;line-height:1.45}
-.densa .cols2{gap:6mm}
-.densa .dl{font-size:8pt;gap:1mm 5mm}
-.densa .legal{font-size:6.4pt}
 /* princípios em duas colunas: título embutido no parágrafo ocupa bem menos
    altura que cinco cards estreitos */
 .principios{display:grid;grid-template-columns:1fr 1fr;gap:1.5mm 6mm}
@@ -607,24 +594,35 @@ CSS_A4 += """
   border-radius:20mm 0 0 0;
   margin-bottom:5.5mm}
 
+/* ---------- respiro elástico entre faixas ----------
+   Em página de altura fechada sobra espaço que varia de um documento para
+   outro. Em vez de empurrar tudo para as bordas com um único vão enorme, o
+   excedente é dividido entre as faixas: cada respiro cresce na mesma medida,
+   entre um piso e um teto, e o que não couber fica na margem inferior. */
+.esp{flex:1 1 0;min-height:4mm;max-height:11mm}
+.esp.lg{min-height:4mm;max-height:17mm}
+
 /* ---------- perfil do consultor ----------
    A página trata três tipos de informação de formas diferentes: a declaração
    de propósito em destaque ao lado do retrato, a trajetória como linha do
    tempo, e os interesses como fatos curtos. */
-.pf-topo{display:grid;grid-template-columns:50mm 1fr;gap:8mm;align-items:end;margin-bottom:6mm}
+.pf-topo{display:grid;grid-template-columns:38mm 1fr;gap:0 8mm;align-items:end}
 .pf-topo .rt-img{margin:0}
 .pf-topo .ey{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.18em;
   text-transform:uppercase;color:var(--brand);margin-bottom:2mm}
 .pf-topo h1{margin:0;font-size:22pt;font-weight:800;text-transform:uppercase;
   line-height:1.04;letter-spacing:-.015em}
 .pf-topo .papel{margin:2mm 0 0;font-size:9pt;color:var(--ink-2)}
-.pf-topo .frase{margin:5mm 0 0;padding-top:4mm;border-top:1px solid var(--line);
-  font-size:11.5pt;line-height:1.44;font-weight:300;color:var(--ink)}
+/* a declaração atravessa as duas colunas, sob um fio de largura inteira, e
+   respira antes da faixa de credenciais */
+.pf-topo .frase{grid-column:1/-1;margin:7mm 0 0;padding-top:5mm;
+  border-top:1px solid var(--line);
+  font-size:11.5pt;line-height:1.5;font-weight:300;color:var(--ink)}
 
 /* faixa de credenciais */
 .cred{display:grid;grid-template-columns:repeat(var(--n,3),1fr);
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:6mm}
-.cred>div{min-width:0;padding:4mm 6mm;border-left:1px solid var(--line)}
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.cred>div{min-width:0;padding:3mm 6mm;border-left:1px solid var(--line)}
 .cred>div:first-child{padding-left:0;border-left:0}
 .cred>div:last-child{padding-right:0}
 .cred h3{margin:0 0 2mm;font-size:6.2pt;font-weight:700;letter-spacing:.16em;
@@ -636,7 +634,7 @@ CSS_A4 += """
 /* o rótulo fica acima do texto, e não numa coluna à esquerda: os marcos vão de
    "2016" a "Pandemia" e a "Há 3 anos", e coluna fixa não comporta os dois */
 .marcos{list-style:none;margin:0;padding:0}
-.marcos li{position:relative;padding:0 0 4mm 8mm}
+.marcos li{position:relative;padding:0 0 3mm 8mm}
 .marcos li:last-child{padding-bottom:0}
 .marcos li::before{content:"";position:absolute;left:1.15mm;top:4.2mm;bottom:-.4mm;
   width:1px;background:var(--line)}
@@ -648,11 +646,11 @@ CSS_A4 += """
 .marcos p{margin:0;font-size:8.2pt;line-height:1.45;color:var(--ink-2)}
 
 /* interesses e contato, na faixa final */
-.pf-rodape{margin-top:auto;padding-top:4mm;border-top:1px solid var(--line);
+.pf-rodape{padding-top:4mm;border-top:1px solid var(--line);
   display:grid;grid-template-columns:1.6fr 1fr;gap:8mm;align-items:start}
 .pf-rodape h3{margin:0 0 2mm;font-size:6.2pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
 .pf-rodape .dl{font-size:8pt;gap:1mm 5mm}
-.tags{display:flex;flex-wrap:wrap;gap:1.5mm;margin-bottom:2mm}
+.tags{display:flex;flex-wrap:wrap;gap:1.4mm;margin-bottom:1.5mm}
 .tags span{font-size:7.2pt;padding:1mm 3mm;border:1px solid var(--line);
   border-radius:8mm;color:var(--ink-2)}
 
@@ -660,7 +658,7 @@ CSS_A4 += """
    A primeira página da apresentação tem texto corrido de extensão bem variável
    entre um consultor e outro. Esta escala, um pouco menor que a padrão mas com
    entrelinha mais generosa, acomoda o mais longo sem apertar o mais curto. */
-.perfil{font-size:8.8pt;line-height:1.58;flex:1 1 auto;min-height:0;
+.perfil{font-size:8.8pt;line-height:1.5;flex:1 1 auto;min-height:0;
   display:flex;flex-direction:column}
 .perfil .lead{font-size:9.6pt;margin-bottom:6mm}
 .perfil h2{font-size:8.8pt;margin:5mm 0 2mm}
@@ -682,7 +680,27 @@ CSS_A4 += """
 .page.dark .lista.mut li{color:rgba(255,255,255,.78)}
 .page.dark .legal{color:rgba(255,255,255,.5)}
 .page.dark .dl dt{color:rgba(255,255,255,.62)}
-.page.dark .principios strong{color:var(--accent)}
+.page.dark .principios strong{color:#fff}
+.page.dark .lista li::before,.page.dark .plan li::before{background:rgba(255,255,255,.55)}
+.page.dark .card,.page.dark .plan.hl{border-color:rgba(255,255,255,.28)}
+.page.dark .card .n,.page.dark .toc .n,.page.dark .plan .n{color:#fff}
+.page.dark .ph{background:rgba(255,255,255,.16);color:#fff}
 .page.dark .pill{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.24)}
-.page.dark .note{background:rgba(255,255,255,.06);border-left-color:var(--accent)}
+.page.dark .note{background:rgba(255,255,255,.06);border-left-color:rgba(255,255,255,.4)}
+
+/* respiro das páginas do plano: o mesmo ritmo do h2 vale para as grelhas que
+   seguem um bloco de texto, e a escala sobe um pouco porque estas páginas
+   têm menos matéria que as de relatório */
+.page.dark .pg-body>.cols2,.page.dark .pg-body>.principios{margin-top:10mm}
+.page.dark .pg-body>h2+.cols2,.page.dark .pg-body>h2+.principios{margin-top:0}
+.page.dark h2{margin:11mm 0 5mm}
+.page.dark .lead{font-size:11pt;line-height:1.55;margin-bottom:2mm}
+.page.dark .lista{font-size:9.2pt;line-height:1.62}
+.page.dark .lista li{padding-left:6mm;margin-bottom:4mm}
+.page.dark .lista li::before{top:2.4mm;width:3.2mm}
+.page.dark .principios{gap:6mm 10mm}
+.page.dark .principios p{font-size:8.8pt;line-height:1.6}
+.page.dark .small{font-size:9pt;line-height:1.62}
+.page.dark .cols2{gap:12mm}
+.page.dark .dl{font-size:9pt;gap:3mm 6mm}
 """

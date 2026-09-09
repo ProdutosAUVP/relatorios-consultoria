@@ -54,11 +54,13 @@ def _pagina_consultor(c):
     <span class="ey">%(plano)s</span>
     <h1>%(nome)s</h1>
     <p class="papel">%(papel)s na AUVP Capital</p>
-    <p class="frase">%(frase)s</p>
   </div>
+  <p class="frase">%(frase)s</p>
 </div>
+<div class="esp"></div>
 <div class="cred" style="--n:%(nc)d">%(cred)s</div>
-<div class="cols2u" style="flex:0 1 auto">
+<div class="esp"></div>
+<div class="cols2u">
   <div>
     <h2>Trajetória no mercado financeiro</h2>
     %(marcos)s
@@ -68,6 +70,7 @@ def _pagina_consultor(c):
     %(proposito)s
   </div>
 </div>
+<div class="esp lg"></div>
 <div class="pf-rodape">
   <div>
     <h3>Fora do escritório</h3>
@@ -90,48 +93,19 @@ def _pagina_consultor(c):
         whats=ph("whatsapp_consultor"), email=ph("email_consultor"))
 
 
-PAGINA_SEGMENTO = """<span class="eyebrow">AUVP Capital &middot; Consultoria de investimentos</span>
+PAGINA_PLANO = """<span class="eyebrow">AUVP Capital &middot; Consultoria de investimentos</span>
 <h1 class="t">Me Diz o Que Fazer</h1>
-<p class="lead">Você tem um consultor de investimentos à disposição para dizer o que fazer com o seu dinheiro. A conta continua sendo sua e quem executa é você. O nosso trabalho é trazer a análise e a recomendação de cada decisão.</p>
+<p class="lead" style="max-width:none">Você tem um consultor de investimentos à disposição para dizer o que fazer com o seu dinheiro. A conta continua sendo sua e quem executa é você. O nosso trabalho é trazer a análise e a recomendação de cada decisão.</p>
+<h2>Como funciona no dia a dia</h2>
+%(funciona)s
 <div class="cols2">
-  <div>
-    <h2>Como funciona no dia a dia</h2>
-    %(funciona)s
-  </div>
   <div>
     <h2>O que você pode pedir ao seu consultor</h2>
     %(pedir)s
   </div>
-</div>
-<div class="cols2">
   <div>
     <h2>O que já vem incluído</h2>
     %(incluido)s
-  </div>
-  <div>
-    <h2>O que não faz parte deste plano</h2>
-    %(fora)s
-  </div>
-</div>
-<h2>Como pensamos investimento</h2>
-<p class="small mut" style="margin-bottom:2.5mm">A AUVP Capital nasceu da metodologia da AUVP Escola. É ela que orienta cada recomendação que você recebe aqui.</p>
-%(metodo)s
-<div class="cols2" style="margin-top:4.5mm">
-  <div>
-    <h2>Como somos remunerados</h2>
-    <p class="small">A AUVP Capital trabalha no modelo <em>fee based</em>: neste plano, a consultoria cobra <strong>0,075%% ao mês</strong> sobre o patrimônio orientado, o que dá <strong>0,9%% ao ano</strong>.</p>
-    <p class="small">No modelo comissionado, o mais comum no mercado, quem indica o investimento é pago pelo produto que vende — quanto maior a comissão, maior o incentivo para oferecer justamente aquele produto e para sugerir troca na carteira mais vezes do que seria necessário.</p>
-    <p class="small">No <em>fee based</em> esse conflito não aparece: a remuneração é a mesma seja qual for o investimento recomendado, e a comissão que a indicação geraria volta para a sua conta em forma de cashback. Como a taxa é um percentual do que você tem investido, a consultoria só ganha mais quando o seu patrimônio cresce.</p>
-  </div>
-  <div>
-    <h2>Onde acompanhar a AUVP Capital</h2>
-    <div class="dl">
-      <dt>Instagram</dt><dd>@auvpcapital</dd>
-      <dt>YouTube</dt><dd>@AUVPCapital</dd>
-      <dt>Spotify</dt><dd>Podcast da AUVP Capital</dd>
-    </div>
-    <p class="small mut" style="margin-top:3mm">Sempre que precisar, é só mandar mensagem para o seu consultor.</p>
-    <p class="legal" style="margin-top:3mm">¹ Referente às operações de renda variável na conta nacional. ² Sujeitos a análise de crédito. ³ Conforme disponibilidade; as condições devem ser consultadas.</p>
   </div>
 </div>""" % dict(
     funciona=_lista([
@@ -157,12 +131,27 @@ PAGINA_SEGMENTO = """<span class="eyebrow">AUVP Capital &middot; Consultoria de 
         "Cartões de crédito AUVP Capital. ²",
         "Kinvo Premium por até 12 meses. ³",
     ]),
-    fora=_lista([
-        "O consultor não acompanha a sua carteira todo dia para agir sozinho quando o mercado se mexe. Ele responde quando você chama.",
-        "Nenhuma ordem é executada por nós. A compra e a venda são sempre suas.",
-        "O atendimento é por escrito. Ligações e reuniões periódicas não fazem parte do plano.",
-        "Não há uma estratégia de alocação montada só para o seu caso, com ajustes conforme o cenário muda. Esse acompanhamento é o do <strong>Resolve Aí</strong>, o plano de consultoria completa para quem tem R$ 300 mil ou mais, com consultor dedicado e reuniões bimestrais.",
-    ], cls="lista mut"),
+)
+
+
+PAGINA_CASA = """<span class="eyebrow">A casa por trás da recomendação</span>
+<h1 class="t">Como pensamos investimento</h1>
+<p class="lead" style="max-width:none">A AUVP Capital nasceu da metodologia da AUVP Escola. É ela que orienta cada recomendação que você recebe aqui.</p>
+%(metodo)s
+<h2>Como somos remunerados</h2>
+<div class="cols2">
+  <div>
+    <p class="small">A AUVP Capital trabalha no modelo <em>fee based</em>: neste plano, a consultoria cobra <strong>0,075%% ao mês</strong> sobre o patrimônio orientado, o que dá <strong>0,9%% ao ano</strong>. Como a taxa é um percentual do que você tem investido, a consultoria só ganha mais quando o seu patrimônio cresce.</p>
+  </div>
+  <div>
+    <p class="small">No modelo comissionado, quem indica o investimento é pago pelo produto que vende. No <em>fee based</em> esse conflito não aparece: a remuneração é a mesma seja qual for a recomendação, e a comissão que ela geraria volta para a sua conta em forma de cashback.</p>
+  </div>
+</div>
+<h2>O que não faz parte deste plano</h2>
+%(fora)s
+<div style="margin-top:auto">
+  <p class="legal">¹ Referente às operações de renda variável na conta nacional. &nbsp; ² Sujeitos a análise de crédito. &nbsp; ³ Conforme disponibilidade; as condições devem ser consultadas.</p>
+</div>""" % dict(
     metodo='<div class="principios">%s</div>' % "".join(
         "<p><strong>%s.</strong> %s</p>" % (tit, txt) for tit, txt in (
         ("Longo prazo e Buy and Hold",
@@ -176,6 +165,12 @@ PAGINA_SEGMENTO = """<span class="eyebrow">AUVP Capital &middot; Consultoria de 
         ("Explicar antes de recomendar",
          "Toda recomendação vem com o motivo junto. A AUVP começou como escola, e o cliente decide melhor quando entende o que está fazendo."),
     )),
+    fora=_lista([
+        "O consultor não acompanha a sua carteira todo dia para agir sozinho quando o mercado se mexe. Ele responde quando você chama.",
+        "Nenhuma ordem é executada por nós. A compra e a venda são sempre suas.",
+        "O atendimento é por escrito. Ligações e reuniões periódicas não fazem parte do plano.",
+        "Não há uma estratégia de alocação montada só para o seu caso, com ajustes conforme o cenário muda. Esse acompanhamento é o do <strong>Resolve Aí</strong>, o plano de consultoria completa para quem tem R$ 300 mil ou mais, com consultor dedicado e reuniões bimestrais.",
+    ], cls="lista mut"),
 )
 
 
@@ -185,6 +180,6 @@ def build(t, variante):
     return [
         page_a4(t, "O seu consultor", 1,
                 '<div class="perfil">%s</div>' % _pagina_consultor(c), rodape=RODAPE),
-        page_a4(t, "O plano e a AUVP Capital", 2,
-                '<div class="densa">%s</div>' % PAGINA_SEGMENTO, rodape=RODAPE, dark=True),
+        page_a4(t, "O plano", 2, PAGINA_PLANO, rodape=RODAPE, dark=True),
+        page_a4(t, "A AUVP Capital", 3, PAGINA_CASA, rodape=RODAPE, dark=True),
     ]

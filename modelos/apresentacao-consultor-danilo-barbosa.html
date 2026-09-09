@@ -43,7 +43,8 @@ strong{font-weight:700}
 .rule{height:1px;background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,.95))}
 .grain{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");opacity:.22;pointer-events:none}
 .logo svg{display:block;width:100%;height:auto}
-.logo-ink svg [class^=lg-]{fill:var(--brand)}
+/* sobre fundo branco a marca é sempre preta */
+.logo-ink svg [class^=lg-]{fill:#000}
 /* Todo grafismo entra a 50% de opacidade, em capa ou como decoração. Fica no
    componente para valer sozinho em qualquer uso novo. */
 .graf{position:absolute;pointer-events:none;opacity:.5}
@@ -96,8 +97,8 @@ strong{font-weight:700}
 .eyebrow{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);margin:0 0 2mm}
 h1.t{font-size:19pt;font-weight:800;text-transform:uppercase;letter-spacing:-.012em;line-height:1.04;margin:0 0 3mm}
 .lead{font-size:10pt;color:var(--ink-2);margin:0 0 8mm;max-width:155mm}
-h2{font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:8mm 0 3mm;
-  padding-bottom:1.5mm;border-bottom:1px solid var(--line)}
+h2{font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:8mm 0 4mm;
+  padding-bottom:2mm;border-bottom:1px solid var(--line)}
 h2:first-child{margin-top:0}
 h3{font-size:9pt;font-weight:700;margin:5mm 0 2mm}
 .small{font-size:8pt}
@@ -107,7 +108,7 @@ h3{font-size:9pt;font-weight:700;margin:5mm 0 2mm}
 .cols2{display:grid;grid-template-columns:1fr 1fr;gap:10mm}
 .cols2>*,.cols3>*,.cols2u>*,.cards>*,.kpis>*{min-width:0}
 .cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm}
-.cols2u{display:grid;grid-template-columns:1.35fr 1fr;gap:10mm}
+.cols2u{display:grid;grid-template-columns:1.5fr 1fr;gap:10mm}
 .gap{height:5mm}
 
 /* ---------- KPIs ---------- */
@@ -233,9 +234,10 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .year .ev{display:block;font-size:6.8pt;color:var(--ink-2);line-height:1.35}
 
 /* ---------- lista com marcador em fio, e retrato ---------- */
-.lista{list-style:none;margin:0 0 3mm;padding:0;font-size:8.4pt;line-height:1.45}
-.lista li{position:relative;padding-left:5mm;margin-bottom:1.5mm}
-.lista li::before{content:"";position:absolute;left:0;top:2mm;width:2.6mm;height:1.33px;background:var(--accent)}
+.lista{list-style:none;margin:0;padding:0;font-size:8.4pt;line-height:1.5}
+.lista li{position:relative;padding-left:5mm;margin-bottom:2.5mm}
+.lista li:last-child{margin-bottom:0}
+.lista li::before{content:"";position:absolute;left:0;top:2.1mm;width:2.6mm;height:1.33px;background:var(--accent)}
 .lista.mut li{color:var(--ink-2)}
 .foto{border:1px dashed var(--brand);display:flex;flex-direction:column;align-items:center;
   justify-content:center;gap:1.5mm;text-align:center;padding:4mm;
@@ -249,21 +251,6 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .side .lista{font-size:8pt;margin-bottom:0}
 .side .dl{font-size:8pt}
 
-/* ---------- densidade para páginas de texto corrido longo ----------
-   A apresentação do consultor tem duas páginas fechadas, sem chance de
-   transbordar para uma terceira: o conteúdo tem de caber. Esta classe aperta a
-   escala sem mexer nos outros documentos. */
-.densa h2{margin:4mm 0 1.5mm;font-size:9pt}
-.densa h2:first-child{margin-top:0}
-.densa .lead{font-size:9.2pt;margin-bottom:4mm}
-.densa p{margin-bottom:2mm}
-.densa .lista{font-size:7.7pt;line-height:1.36;margin-bottom:0}
-.densa .lista li{margin-bottom:1mm;padding-left:4mm}
-.densa .lista li::before{top:1.7mm;width:2.2mm}
-.densa p.small{font-size:7.8pt;line-height:1.45}
-.densa .cols2{gap:6mm}
-.densa .dl{font-size:8pt;gap:1mm 5mm}
-.densa .legal{font-size:6.4pt}
 /* princípios em duas colunas: título embutido no parágrafo ocupa bem menos
    altura que cinco cards estreitos */
 .principios{display:grid;grid-template-columns:1fr 1fr;gap:1.5mm 6mm}
@@ -275,24 +262,35 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   border-radius:20mm 0 0 0;
   margin-bottom:5.5mm}
 
+/* ---------- respiro elástico entre faixas ----------
+   Em página de altura fechada sobra espaço que varia de um documento para
+   outro. Em vez de empurrar tudo para as bordas com um único vão enorme, o
+   excedente é dividido entre as faixas: cada respiro cresce na mesma medida,
+   entre um piso e um teto, e o que não couber fica na margem inferior. */
+.esp{flex:1 1 0;min-height:4mm;max-height:11mm}
+.esp.lg{min-height:4mm;max-height:17mm}
+
 /* ---------- perfil do consultor ----------
    A página trata três tipos de informação de formas diferentes: a declaração
    de propósito em destaque ao lado do retrato, a trajetória como linha do
    tempo, e os interesses como fatos curtos. */
-.pf-topo{display:grid;grid-template-columns:50mm 1fr;gap:8mm;align-items:end;margin-bottom:6mm}
+.pf-topo{display:grid;grid-template-columns:38mm 1fr;gap:0 8mm;align-items:end}
 .pf-topo .rt-img{margin:0}
 .pf-topo .ey{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.18em;
   text-transform:uppercase;color:var(--brand);margin-bottom:2mm}
 .pf-topo h1{margin:0;font-size:22pt;font-weight:800;text-transform:uppercase;
   line-height:1.04;letter-spacing:-.015em}
 .pf-topo .papel{margin:2mm 0 0;font-size:9pt;color:var(--ink-2)}
-.pf-topo .frase{margin:5mm 0 0;padding-top:4mm;border-top:1px solid var(--line);
-  font-size:11.5pt;line-height:1.44;font-weight:300;color:var(--ink)}
+/* a declaração atravessa as duas colunas, sob um fio de largura inteira, e
+   respira antes da faixa de credenciais */
+.pf-topo .frase{grid-column:1/-1;margin:7mm 0 0;padding-top:5mm;
+  border-top:1px solid var(--line);
+  font-size:11.5pt;line-height:1.5;font-weight:300;color:var(--ink)}
 
 /* faixa de credenciais */
 .cred{display:grid;grid-template-columns:repeat(var(--n,3),1fr);
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:6mm}
-.cred>div{min-width:0;padding:4mm 6mm;border-left:1px solid var(--line)}
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.cred>div{min-width:0;padding:3mm 6mm;border-left:1px solid var(--line)}
 .cred>div:first-child{padding-left:0;border-left:0}
 .cred>div:last-child{padding-right:0}
 .cred h3{margin:0 0 2mm;font-size:6.2pt;font-weight:700;letter-spacing:.16em;
@@ -304,7 +302,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 /* o rótulo fica acima do texto, e não numa coluna à esquerda: os marcos vão de
    "2016" a "Pandemia" e a "Há 3 anos", e coluna fixa não comporta os dois */
 .marcos{list-style:none;margin:0;padding:0}
-.marcos li{position:relative;padding:0 0 4mm 8mm}
+.marcos li{position:relative;padding:0 0 3mm 8mm}
 .marcos li:last-child{padding-bottom:0}
 .marcos li::before{content:"";position:absolute;left:1.15mm;top:4.2mm;bottom:-.4mm;
   width:1px;background:var(--line)}
@@ -316,11 +314,11 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .marcos p{margin:0;font-size:8.2pt;line-height:1.45;color:var(--ink-2)}
 
 /* interesses e contato, na faixa final */
-.pf-rodape{margin-top:auto;padding-top:4mm;border-top:1px solid var(--line);
+.pf-rodape{padding-top:4mm;border-top:1px solid var(--line);
   display:grid;grid-template-columns:1.6fr 1fr;gap:8mm;align-items:start}
 .pf-rodape h3{margin:0 0 2mm;font-size:6.2pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
 .pf-rodape .dl{font-size:8pt;gap:1mm 5mm}
-.tags{display:flex;flex-wrap:wrap;gap:1.5mm;margin-bottom:2mm}
+.tags{display:flex;flex-wrap:wrap;gap:1.4mm;margin-bottom:1.5mm}
 .tags span{font-size:7.2pt;padding:1mm 3mm;border:1px solid var(--line);
   border-radius:8mm;color:var(--ink-2)}
 
@@ -328,7 +326,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
    A primeira página da apresentação tem texto corrido de extensão bem variável
    entre um consultor e outro. Esta escala, um pouco menor que a padrão mas com
    entrelinha mais generosa, acomoda o mais longo sem apertar o mais curto. */
-.perfil{font-size:8.8pt;line-height:1.58;flex:1 1 auto;min-height:0;
+.perfil{font-size:8.8pt;line-height:1.5;flex:1 1 auto;min-height:0;
   display:flex;flex-direction:column}
 .perfil .lead{font-size:9.6pt;margin-bottom:6mm}
 .perfil h2{font-size:8.8pt;margin:5mm 0 2mm}
@@ -350,9 +348,29 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .page.dark .lista.mut li{color:rgba(255,255,255,.78)}
 .page.dark .legal{color:rgba(255,255,255,.5)}
 .page.dark .dl dt{color:rgba(255,255,255,.62)}
-.page.dark .principios strong{color:var(--accent)}
+.page.dark .principios strong{color:#fff}
+.page.dark .lista li::before,.page.dark .plan li::before{background:rgba(255,255,255,.55)}
+.page.dark .card,.page.dark .plan.hl{border-color:rgba(255,255,255,.28)}
+.page.dark .card .n,.page.dark .toc .n,.page.dark .plan .n{color:#fff}
+.page.dark .ph{background:rgba(255,255,255,.16);color:#fff}
 .page.dark .pill{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.24)}
-.page.dark .note{background:rgba(255,255,255,.06);border-left-color:var(--accent)}
+.page.dark .note{background:rgba(255,255,255,.06);border-left-color:rgba(255,255,255,.4)}
+
+/* respiro das páginas do plano: o mesmo ritmo do h2 vale para as grelhas que
+   seguem um bloco de texto, e a escala sobe um pouco porque estas páginas
+   têm menos matéria que as de relatório */
+.page.dark .pg-body>.cols2,.page.dark .pg-body>.principios{margin-top:10mm}
+.page.dark .pg-body>h2+.cols2,.page.dark .pg-body>h2+.principios{margin-top:0}
+.page.dark h2{margin:11mm 0 5mm}
+.page.dark .lead{font-size:11pt;line-height:1.55;margin-bottom:2mm}
+.page.dark .lista{font-size:9.2pt;line-height:1.62}
+.page.dark .lista li{padding-left:6mm;margin-bottom:4mm}
+.page.dark .lista li::before{top:2.4mm;width:3.2mm}
+.page.dark .principios{gap:6mm 10mm}
+.page.dark .principios p{font-size:8.8pt;line-height:1.6}
+.page.dark .small{font-size:9pt;line-height:1.62}
+.page.dark .cols2{gap:12mm}
+.page.dark .dl{font-size:9pt;gap:3mm 6mm}
 
 </style>
 </head>
@@ -406,11 +424,13 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
     <span class="ey">Me Diz o Que Fazer</span>
     <h1>Danilo Barbosa</h1>
     <p class="papel">Consultor de investimentos na AUVP Capital</p>
-    <p class="frase">Vamos construir juntos o seu futuro financeiro, tijolo a tijolo, focando sempre no que o seu <em>eu do futuro</em> espera das decisões tomadas hoje.</p>
   </div>
+  <p class="frase">Vamos construir juntos o seu futuro financeiro, tijolo a tijolo, focando sempre no que o seu <em>eu do futuro</em> espera das decisões tomadas hoje.</p>
 </div>
+<div class="esp"></div>
 <div class="cred" style="--n:3"><div><h3>Formação</h3><ul class="lista"><li>Administração de Empresas</li><li>Gestão Financeira</li></ul></div><div><h3>Especialização</h3><ul class="lista"><li>Análise de Dados</li></ul></div><div><h3>Certificações</h3><div class="chips"><span class="pill">CPA</span><span class="pill">C-Pro I</span><span class="pill">C-Pro R</span></div></div></div>
-<div class="cols2u" style="flex:0 1 auto">
+<div class="esp"></div>
+<div class="cols2u">
   <div>
     <h2>Trajetória no mercado financeiro</h2>
     <ol class="marcos"><li><span class="q">2016</span><p>Começo no mundo dos investimentos, entre aportes e estudo do tema.</p></li><li><span class="q">Depois</span><p>Passo a compartilhar essa experiência com muitas pessoas — o que acabou se tornando o meu trabalho.</p></li><li><span class="q">Hoje</span><p>Consultor na AUVP Capital, acompanhando investidores que realizaram a casa própria, o casamento, o primeiro carro ou o simples alívio de ter clareza.</p></li></ol>
@@ -420,6 +440,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
     <p>Vamos traçar esse caminho com responsabilidade, planejamento e estratégia, visando seus objetivos e a constância no longo prazo. É assim que se alcança o que se almeja com tranquilidade e sem correr riscos desnecessários.</p><p>Investir é uma ferramenta fundamental não só para potencializar seus resultados, mas também para proteger você dos reveses da vida. Comigo você terá um olhar maduro e livre de conflito de interesses sobre o seu patrimônio.</p>
   </div>
 </div>
+<div class="esp lg"></div>
 <div class="pf-rodape">
   <div>
     <h3>Fora do escritório</h3>
@@ -440,7 +461,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <section class="page dark">
   <div class="grain"></div>
   <header class="pg-head">
-    <div class="sec">O plano e a AUVP Capital</div>
+    <div class="sec">O plano</div>
     <div class="rt"><div class="dt"><span class="ph">{{data_apresentacao}}</span></div><div class="logo" style="width:17.5mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
@@ -480,52 +501,87 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 </svg></div></div>
   </header>
   <div class="pg-body">
-<div class="densa"><span class="eyebrow">AUVP Capital &middot; Consultoria de investimentos</span>
+<span class="eyebrow">AUVP Capital &middot; Consultoria de investimentos</span>
 <h1 class="t">Me Diz o Que Fazer</h1>
-<p class="lead">Você tem um consultor de investimentos à disposição para dizer o que fazer com o seu dinheiro. A conta continua sendo sua e quem executa é você. O nosso trabalho é trazer a análise e a recomendação de cada decisão.</p>
+<p class="lead" style="max-width:none">Você tem um consultor de investimentos à disposição para dizer o que fazer com o seu dinheiro. A conta continua sendo sua e quem executa é você. O nosso trabalho é trazer a análise e a recomendação de cada decisão.</p>
+<h2>Como funciona no dia a dia</h2>
+<ul class="lista"><li>O atendimento é pelo WhatsApp e funciona sob demanda: você chama quando precisa, sem depender da nossa agenda.</li><li>Não tem limite de conversa nem dia certo para falar com a gente, e também não existe reunião marcada de tempos em tempos.</li><li>Quem compra e quem vende é você, na sua conta. O consultor diz o que faz sentido, quanto e por quê, e fica com você tirando dúvida até a hora de executar.</li></ul>
 <div class="cols2">
-  <div>
-    <h2>Como funciona no dia a dia</h2>
-    <ul class="lista"><li>O atendimento é pelo WhatsApp e funciona sob demanda: você chama quando precisa, sem depender da nossa agenda.</li><li>Não tem limite de conversa nem dia certo para falar com a gente, e também não existe reunião marcada de tempos em tempos.</li><li>Quem compra e quem vende é você, na sua conta. O consultor diz o que faz sentido, quanto e por quê, e fica com você tirando dúvida até a hora de executar.</li></ul>
-  </div>
   <div>
     <h2>O que você pode pedir ao seu consultor</h2>
     <ul class="lista"><li>Uma carteira recomendada, montada a partir do seu perfil de investidor e dos seus objetivos.</li><li>Análise da carteira que você já tem, para saber o que vale manter e o que ficou repetido.</li><li>Direcionamento dos aportes, para saber onde colocar o dinheiro que entrou este mês.</li><li>As recomendações de renda fixa que a gente filtra toda semana.</li><li>Explicação sobre um produto ou uma estratégia que você não entendeu.</li><li>Dúvidas sobre mercado e notícias, e o que elas mudam na sua estratégia.</li></ul>
   </div>
-</div>
-<div class="cols2">
   <div>
     <h2>O que já vem incluído</h2>
     <ul class="lista"><li>Cashback do spread da renda fixa e do aluguel de ações.</li><li>Operações sem taxa de corretagem. ¹</li><li>Carteiras recomendadas para diferentes perfis de investidor.</li><li>Relatório semanal com seleção de notícias e análise de mercado.</li><li>Relatório mensal com a análise do cenário macroeconômico.</li><li>Acesso aos grupos fechados e aos eventos da AUVP Capital.</li><li>Cartões de crédito AUVP Capital. ²</li><li>Kinvo Premium por até 12 meses. ³</li></ul>
   </div>
-  <div>
-    <h2>O que não faz parte deste plano</h2>
-    <ul class="lista mut"><li>O consultor não acompanha a sua carteira todo dia para agir sozinho quando o mercado se mexe. Ele responde quando você chama.</li><li>Nenhuma ordem é executada por nós. A compra e a venda são sempre suas.</li><li>O atendimento é por escrito. Ligações e reuniões periódicas não fazem parte do plano.</li><li>Não há uma estratégia de alocação montada só para o seu caso, com ajustes conforme o cenário muda. Esse acompanhamento é o do <strong>Resolve Aí</strong>, o plano de consultoria completa para quem tem R$ 300 mil ou mais, com consultor dedicado e reuniões bimestrais.</li></ul>
-  </div>
 </div>
-<h2>Como pensamos investimento</h2>
-<p class="small mut" style="margin-bottom:2.5mm">A AUVP Capital nasceu da metodologia da AUVP Escola. É ela que orienta cada recomendação que você recebe aqui.</p>
-<div class="principios"><p><strong>Longo prazo e Buy and Hold.</strong> A gente investe para carregar. Day trade e operação de curto prazo não entram nas recomendações, e girar a carteira atrás de oportunidade rápida também não.</p><p><strong>Empresas perenes.</strong> Na renda variável, olhamos para empresas sólidas, com histórico e resultado consistente, que você consegue imaginar funcionando daqui a vinte anos.</p><p><strong>Renda fixa bem escolhida.</strong> Duas aplicações com a mesma taxa podem ser bem diferentes. Antes de recomendar, olhamos o emissor, o prazo, o indexador e a garantia.</p><p><strong>Diversificação.</strong> Cada classe cumpre um papel: proteger, gerar renda, fazer crescer. Diversificar é distribuir entre esses papéis na proporção do seu momento de vida.</p><p><strong>Explicar antes de recomendar.</strong> Toda recomendação vem com o motivo junto. A AUVP começou como escola, e o cliente decide melhor quando entende o que está fazendo.</p></div>
-<div class="cols2" style="margin-top:4.5mm">
-  <div>
-    <h2>Como somos remunerados</h2>
-    <p class="small">A AUVP Capital trabalha no modelo <em>fee based</em>: neste plano, a consultoria cobra <strong>0,075% ao mês</strong> sobre o patrimônio orientado, o que dá <strong>0,9% ao ano</strong>.</p>
-    <p class="small">No modelo comissionado, o mais comum no mercado, quem indica o investimento é pago pelo produto que vende — quanto maior a comissão, maior o incentivo para oferecer justamente aquele produto e para sugerir troca na carteira mais vezes do que seria necessário.</p>
-    <p class="small">No <em>fee based</em> esse conflito não aparece: a remuneração é a mesma seja qual for o investimento recomendado, e a comissão que a indicação geraria volta para a sua conta em forma de cashback. Como a taxa é um percentual do que você tem investido, a consultoria só ganha mais quando o seu patrimônio cresce.</p>
-  </div>
-  <div>
-    <h2>Onde acompanhar a AUVP Capital</h2>
-    <div class="dl">
-      <dt>Instagram</dt><dd>@auvpcapital</dd>
-      <dt>YouTube</dt><dd>@AUVPCapital</dd>
-      <dt>Spotify</dt><dd>Podcast da AUVP Capital</dd>
-    </div>
-    <p class="small mut" style="margin-top:3mm">Sempre que precisar, é só mandar mensagem para o seu consultor.</p>
-    <p class="legal" style="margin-top:3mm">¹ Referente às operações de renda variável na conta nacional. ² Sujeitos a análise de crédito. ³ Conforme disponibilidade; as condições devem ser consultadas.</p>
-  </div>
-</div></div>
   </div>
   <footer class="pg-foot"><span class="no">02</span><span>AUVP Capital · Consultoria de investimentos</span></footer>
+</section>
+<section class="page dark">
+  <div class="grain"></div>
+  <header class="pg-head">
+    <div class="sec">A AUVP Capital</div>
+    <div class="rt"><div class="dt"><span class="ph">{{data_apresentacao}}</span></div><div class="logo" style="width:17.5mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+  <defs>
+    <style>
+      .lg-1 {
+        fill: #fff;
+      }
+      .lg-2 {
+        isolation: isolate;
+      }
+    </style>
+  </defs>
+  <g class="lg-2">
+    <g class="lg-2">
+      <path class="lg-1" d="M749.7,247.77c-7.18,0-12.64-2.01-16.08-6.03-3.45-4.02-5.46-9.77-5.46-17.23v-12.64c0-7.47,1.72-12.92,5.46-16.95,3.45-4.02,8.9-6.03,16.08-6.03s4.31,0,6.03.57c1.72.29,3.45.86,4.88,1.44s2.58,1.15,3.73,2.01l.57,8.04c-1.72-1.15-3.73-2.3-6.03-3.16s-4.88-1.44-8.04-1.44c-4.6,0-8.04,1.44-10.34,4.02-2.3,2.58-3.45,6.61-3.45,11.49v12.06c0,4.88,1.15,8.62,3.45,11.49,2.3,2.87,5.74,4.02,10.63,4.02s5.74-.57,8.04-1.44,4.31-2.01,6.32-3.16l-.57,8.33c-1.15.57-2.3,1.44-3.73,2.01s-3.16,1.15-5.17,1.44-4.02.57-6.32.57v.57h0Z"/>
+    </g>
+    <g class="lg-2">
+      <path class="lg-1" d="M772.1,246.62l17.23-56.58h13.79l17.23,56.58h-8.9l-14.65-50.55h-1.15l-14.65,50.55h-8.9,0ZM783.3,230.82v-7.47h25.56v7.47h-25.56Z"/>
+      <path class="lg-1" d="M830.4,246.62v-56.58h8.62v56.58h-8.62ZM836.15,228.52v-7.47h15.51c3.45,0,6.03-.86,7.75-2.58s2.3-4.31,2.3-7.18v-3.73c0-3.16-.86-5.74-2.3-7.47s-4.02-2.58-7.75-2.58h-15.8v-7.18h15.8c6.61,0,11.2,1.44,14.36,4.6,3.16,3.16,4.6,7.18,4.6,12.64v4.31c0,5.46-1.44,9.48-4.6,12.64s-7.75,4.6-14.36,4.6h-15.8l.29-.57Z"/>
+      <path class="lg-1" d="M891.29,246.62h-8.9v-56.58h8.9v56.58Z"/>
+    </g>
+    <g class="lg-2">
+      <path class="lg-1" d="M899.33,197.5v-7.47h42.22v7.47h-42.22ZM915.99,246.62v-54.86h8.9v54.86h-8.9Z"/>
+    </g>
+    <g class="lg-2">
+      <path class="lg-1" d="M939.83,246.62l17.23-56.58h13.79l17.23,56.58h-8.9l-14.65-50.55h-1.15l-14.65,50.55h-8.9,0ZM951.32,230.82v-7.47h25.56v7.47h-25.56Z"/>
+      <path class="lg-1" d="M1007.33,246.62h-8.9v-56.58h8.9v56.58ZM1003.31,239.15h29.58v7.47h-29.58v-7.47Z"/>
+    </g>
+  </g>
+  <path class="lg-1" d="M326.05,109.33C243.62,2.77,109.78,2.77,27.35,109.33l-15.8,20.39,15.8,20.39c82.43,106.56,216.27,106.56,298.7,0l15.8-20.39-15.8-20.39ZM239.03,128c.57,16.37-5.17,31.88-16.37,43.94-11.2,12.06-26.42,18.96-42.79,19.53h-2.3c-15.51,0-30.44-5.74-41.65-16.37-9.19-8.33-15.22-19.24-18.09-31.31-.29-1.44.57-2.87,2.01-3.16.57,0,1.44,0,2.01.29s1.15.86,1.15,1.72c2.58,10.91,8.04,20.97,16.37,28.72,10.91,10.05,25.27,15.51,40.21,14.94,14.94-.57,28.72-6.89,39.06-17.81,10.05-10.91,15.51-25.27,14.94-40.21-.57-14.94-6.89-28.72-17.81-38.77-10.91-10.05-24.99-15.51-40.21-14.94-14.94.57-28.72,6.89-39.06,17.81-2.58,2.58-4.6,5.46-6.61,8.62-.86,1.15-2.58,1.72-3.73.86-.57-.29-1.15-.86-1.15-1.72,0-.57,0-1.44.29-2.01,2.01-3.45,4.6-6.61,7.18-9.48,11.2-12.06,26.42-18.96,42.79-19.53,16.37-.57,31.88,5.17,43.94,16.37,12.06,11.2,18.96,26.42,19.53,42.79h0l.29-.29h0ZM192.21,124.84c3.45,0,6.32-1.72,7.75-4.6,1.44,3.16,2.3,6.32,2.3,10.05,0,13.21-10.63,23.84-23.84,23.84s-23.84-10.63-23.84-23.84,10.63-23.84,23.84-23.84,6.61.57,9.48,2.01c-2.58,1.44-4.31,4.31-4.31,7.75,0,4.88,4.02,8.9,8.9,8.62,0,0-.29,0-.29,0ZM194.22,109.9c.57,0,.86,0,1.44.57v2.3s-.57-.29-1.15-.57-1.15,0-1.72,0h-1.44c-.29,0,0,0,0,.29h0v.29l.57.29s.57,0,1.15.29c.57,0,1.15.57,1.72.57s.86.57,1.15.86.29.86.29,1.44h0c0,1.15-.29,2.01-.86,2.3-.29.29-1.15.57-1.72.57v1.44h-2.3v-1.44h-2.3v-2.58s.57.29,1.15.57h2.87c.19,0,.29-.19.29-.57h0v-.57l-.57-.29c-.57-.29-.57,0-.86-.29-.57,0-1.15-.57-1.72-.57s-.86-.57-1.15-.86-.29-.86-.29-1.44h0c0-1.15.29-1.72.86-2.3.57-.29.86-.57,1.72-.57v-1.44h2.3v1.44h.57s0,.29,0,.29ZM184.17,92.67c-10.05-1.15-20.1,1.72-27.86,7.75-8.04,6.32-12.92,15.22-14.07,25.27-1.15,10.05,1.72,20.1,8.04,27.86,6.32,7.75,15.22,12.92,25.27,14.07,7.75.86,15.51-.57,22.4-4.31,6.61-3.73,12.06-9.19,15.8-15.8.57-1.44,2.3-1.72,3.73-1.15.57.29,1.15.86,1.44,1.72s0,1.44,0,2.01c-4.02,7.75-10.34,14.07-17.81,18.09-6.32,3.45-13.5,5.17-20.39,5.17s-3.45,0-5.17-.29c-11.49-1.44-21.83-7.18-29.01-16.37-7.18-9.19-10.34-20.39-9.19-31.88,1.44-11.49,7.18-21.83,16.37-29.01s20.39-10.34,31.88-8.9c16.08,2.01,29.87,12.64,35.61,27.86v2.01c0,.57-.86,1.15-1.44,1.44-1.44.57-2.87,0-3.45-1.72-5.17-13.5-16.95-22.69-31.02-24.41h0l-1.15.57h0ZM239.6,191.76c-16.37,16.37-38.2,25.27-61.46,25.27s-45.09-8.9-61.46-25.27-25.27-38.2-25.27-61.46,8.9-45.09,25.27-61.46c16.37-16.37,38.2-25.27,61.46-25.27s6.61,0,9.77.57c.57,0,1.44.57,1.72.86.57.57.57,1.44.57,2.01s-.57,1.44-.86,1.72-1.15.57-2.01.57c-3.16-.29-6.32-.57-9.19-.57-21.83,0-42.22,8.62-57.44,23.84-15.22,15.22-23.84,35.9-23.84,57.44s8.62,42.22,23.84,57.44c15.22,15.22,35.9,23.84,57.44,23.84s42.22-8.33,57.44-23.84c15.22-15.22,23.84-35.9,23.84-57.44s-5.46-34.47-16.08-48.54c-.57-.57-.57-1.44-.57-2.01s.57-1.44,1.15-1.72c.57-.57,1.15-.57,2.01-.57.57,0,1.44.57,1.72,1.15,11.2,14.94,17.23,33.03,17.23,51.99s-8.9,45.09-25.27,61.46h0Z"/>
+  <g>
+    <path class="lg-1" d="M531.99,153.85l-17.81-30.16h0l-12.35-21.25-23.26-39.06-53.13,90.19h-31.02l66.92-111.44c3.16-5.17,8.9-8.33,14.94-8.33h16.37l72.09,120.06h-32.74Z"/>
+    <path class="lg-1" d="M676.17,26.9h26.42v70.94c0,39.35-19.82,57.73-69.79,57.73s-69.79-18.38-69.79-57.73V26.9h28.15v70.94c0,22.4,9.77,31.02,42.51,31.02s42.22-8.62,42.22-31.02V26.9h.29,0Z"/>
+    <path class="lg-1" d="M712.65,26.9h33.03l53.13,90.76,52.85-90.76h31.31l-72.09,120.06h-26.14l-72.09-120.06h0Z"/>
+    <path class="lg-1" d="M919.15,119.67v-26.42h66.06c13.21,0,21.25-7.75,21.25-19.53s-7.75-19.53-21.25-19.53h-63.19v99.66h-27V26.9h90.19c30.16,0,47.68,17.81,47.68,45.95s-17.52,46.82-47.68,46.82h-66.06Z"/>
+  </g>
+  <path class="lg-1" d="M390.68,213.59h313.06v11.2h-301.86c-6.03,0-11.2-4.88-11.2-11.2Z"/>
+</svg></div></div>
+  </header>
+  <div class="pg-body">
+<span class="eyebrow">A casa por trás da recomendação</span>
+<h1 class="t">Como pensamos investimento</h1>
+<p class="lead" style="max-width:none">A AUVP Capital nasceu da metodologia da AUVP Escola. É ela que orienta cada recomendação que você recebe aqui.</p>
+<div class="principios"><p><strong>Longo prazo e Buy and Hold.</strong> A gente investe para carregar. Day trade e operação de curto prazo não entram nas recomendações, e girar a carteira atrás de oportunidade rápida também não.</p><p><strong>Empresas perenes.</strong> Na renda variável, olhamos para empresas sólidas, com histórico e resultado consistente, que você consegue imaginar funcionando daqui a vinte anos.</p><p><strong>Renda fixa bem escolhida.</strong> Duas aplicações com a mesma taxa podem ser bem diferentes. Antes de recomendar, olhamos o emissor, o prazo, o indexador e a garantia.</p><p><strong>Diversificação.</strong> Cada classe cumpre um papel: proteger, gerar renda, fazer crescer. Diversificar é distribuir entre esses papéis na proporção do seu momento de vida.</p><p><strong>Explicar antes de recomendar.</strong> Toda recomendação vem com o motivo junto. A AUVP começou como escola, e o cliente decide melhor quando entende o que está fazendo.</p></div>
+<h2>Como somos remunerados</h2>
+<div class="cols2">
+  <div>
+    <p class="small">A AUVP Capital trabalha no modelo <em>fee based</em>: neste plano, a consultoria cobra <strong>0,075% ao mês</strong> sobre o patrimônio orientado, o que dá <strong>0,9% ao ano</strong>. Como a taxa é um percentual do que você tem investido, a consultoria só ganha mais quando o seu patrimônio cresce.</p>
+  </div>
+  <div>
+    <p class="small">No modelo comissionado, quem indica o investimento é pago pelo produto que vende. No <em>fee based</em> esse conflito não aparece: a remuneração é a mesma seja qual for a recomendação, e a comissão que ela geraria volta para a sua conta em forma de cashback.</p>
+  </div>
+</div>
+<h2>O que não faz parte deste plano</h2>
+<ul class="lista mut"><li>O consultor não acompanha a sua carteira todo dia para agir sozinho quando o mercado se mexe. Ele responde quando você chama.</li><li>Nenhuma ordem é executada por nós. A compra e a venda são sempre suas.</li><li>O atendimento é por escrito. Ligações e reuniões periódicas não fazem parte do plano.</li><li>Não há uma estratégia de alocação montada só para o seu caso, com ajustes conforme o cenário muda. Esse acompanhamento é o do <strong>Resolve Aí</strong>, o plano de consultoria completa para quem tem R$ 300 mil ou mais, com consultor dedicado e reuniões bimestrais.</li></ul>
+<div style="margin-top:auto">
+  <p class="legal">¹ Referente às operações de renda variável na conta nacional. &nbsp; ² Sujeitos a análise de crédito. &nbsp; ³ Conforme disponibilidade; as condições devem ser consultadas.</p>
+</div>
+  </div>
+  <footer class="pg-foot"><span class="no">03</span><span>AUVP Capital · Consultoria de investimentos</span></footer>
 </section>
 </body>
 </html>

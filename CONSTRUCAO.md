@@ -51,6 +51,9 @@ autossuficientes na entrega, fonte única na manutenção.
 | `gerador/layout.py` | montagem de página e de slide, e os componentes (`table`, `kpis`, `flow`, `chart`, …) |
 | `gerador/d_*.py` | um módulo por tipo de documento; contém o conteúdo e a ordem das seções |
 | `gerador/consultores.py` | texto de apresentação dos consultores, um dicionário por pessoa |
+| `scripts/fotos.py` | prepara os retratos: recorta pelo rosto e normaliza a exposição |
+| `assets/consultores/` | retratos prontos, saída do `scripts/fotos.py` |
+| `consultores resolve ai/` | fotos originais, como vieram |
 | `gerador/build.py` | entrada: percorre documentos × segmentos e escreve `modelos/` |
 | `scripts/render.mjs` | HTML → PDF |
 | `scripts/check.mjs` | valida estouro de página em modo de impressão |
@@ -165,6 +168,29 @@ Cada um é uma função em `gerador/layout.py` que devolve HTML.
 Modificadores de página, aplicados como `class` num `div` que envolve o conteúdo:
 `.densa` aperta a escala inteira, para documento de página fechada que não pode
 transbordar; `.principios` põe título e texto no mesmo parágrafo, em duas colunas.
+
+`page_retrato()` monta uma página com banda escura em sangria no topo, sem papel
+timbrado — a banda faz o papel dele, com a logo em branco. É a abertura da apresentação
+do consultor, e existe para dar a ela uma diagramação diferente da segunda página sem
+sair da identidade: mesma tipografia, mesmos fios, mesmo acento, mesmo grafismo.
+
+### Retratos
+
+Os originais chegam muito diferentes entre si — estúdio escuro com o letreiro da AUVP,
+externa em luz de dia, estúdio claro — em enquadramentos e proporções que não combinam.
+`scripts/fotos.py` resolve as duas coisas que quebram a consistência:
+
+- **enquadramento**: detecta o rosto com o classificador Haar do OpenCV e recorta em 3:4
+  com o rosto sempre no mesmo ponto e no mesmo tamanho relativo — nos sete, entre 42% e
+  45% da largura do recorte. Quando o recorte ideal não cabe, encolhe mantendo a
+  proporção em vez de distorcer;
+- **exposição**: normaliza média e desvio da luminância em LAB e reduz um pouco a
+  saturação, para a foto clara e a escura não parecerem de produtos diferentes.
+
+É um passo de uma vez só, rodado à mão: `python3 scripts/fotos.py`. A saída fica
+versionada em `assets/consultores/` e o `npm run build` só a embute em base64, o que
+mantém o build sem dependências. Precisa de Pillow e de **opencv-python-headless 4.x** —
+na 5 o `CascadeClassifier` saiu do módulo raiz.
 
 Auxiliares de grelha, usados como `class`: `.cols2`, `.cols3`, `.cols2u` (1,35 : 1),
 `.center` (usa a sobra vertical do slide), `.gap`.
@@ -304,8 +330,12 @@ como o arquivo variável do Google Fonts.
 **`@font-face` com URL relativa não carrega em `file://`.** O modelo precisa abrir com
 duplo clique, e nesse contexto o navegador recusa a fonte. Daí o base64 embutido.
 
-**`BASE` passa por formatação `%`.** Qualquer `%` literal no CSS dessa string precisa
-ser escrito `%%`. Um `50%` esquecido derruba o build com `TypeError`.
+**Cuidado com `%` no CSS, nos dois sentidos.** `BASE` e as folhas montadas com o
+operador `%` exigem `%%` para um `%` literal — um `50%` esquecido derruba o build com
+`TypeError`. Já os blocos acrescentados com `CSS_A4 += """…"""` **não** passam por
+formatação: ali `%%` vai para o arquivo como `%%` literal e invalida a regra em silêncio,
+sem erro nenhum. Foi assim que um `width:100%%` deixou um retrato aparecer em tamanho
+natural dentro da banda.
 
 **`<style>` dentro de SVG inline vaza para o documento.** Os SVGs da AUVP usam classes
 `.cls-1`, `.cls-2`… e colidiriam entre si. `load_svg()` renomeia com um prefixo por

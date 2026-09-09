@@ -130,7 +130,7 @@ CONSULTORES = [
         ],
         graduacao=["Experiências acadêmicas em Marketing e em Direito", "Aluno da AUVP Escola"],
         pos=["Inglês fluente", "Rotina constante de atualização de mercado"],
-        certificacoes=["C-Pro I", "C-Pro R"],
+        certificacoes=["CPA", "C-Pro I", "C-Pro R"],
     ),
     dict(
         slug="danilo-barbosa",

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+import os
+
 from common import *
+from common import _b64  # nome privado não vem no import *
 
 # Placeholder de data usado no cabeçalho; cada documento define o seu.
 DATE_PH = "mes_referencia"
@@ -247,3 +250,31 @@ def year(eventos):
         '<li class="on"><span class="mo">%02d</span><span class="nm">%s</span>'
         '<span class="ev">%s</span></li>' % (i, MESES_CURTOS[i - 1], ev)
         for i, ev in enumerate(eventos, start=1))
+
+
+def page_retrato(t, no, banda_html, corpo_html, rodape=None):
+    """Página com banda escura em sangria no topo, usada na abertura da
+    apresentação do consultor. Não tem papel timbrado: a banda faz o papel
+    dele, com a logo em branco."""
+    return """<section class="page retrato">
+  <div class="banda">
+    <div class="grain"></div>
+    %(graf)s
+    %(logo)s
+%(banda)s
+  </div>
+  <div class="corpo">
+%(corpo)s
+  </div>
+  <footer class="pg-foot"><span class="no">%(no)s</span><span>%(rodape)s</span></footer>
+</section>""" % dict(
+        graf=graf_arcos(168.0, "top-right", sangria=6.0),
+        logo=logo_svg(t, 8.0), banda=banda_html, corpo=corpo_html,
+        no="%02d" % no, rodape=rodape or CONFID)
+
+
+def foto_consultor(slug):
+    """Retrato preparado por `scripts/fotos.py`, embutido em base64 para o
+    modelo continuar abrindo sozinho."""
+    return '<div class="rt-foto"><img alt="" src="data:image/jpeg;base64,%s"></div>' % _b64(
+        os.path.join("assets", "consultores", slug + ".jpg"))

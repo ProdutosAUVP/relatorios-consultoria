@@ -32,9 +32,13 @@ segmento — `consultoria`, `alta-renda`, `private`, `assessoria`. Na apresenta�
 consultor é o nome dele, e o tema é sempre o da consultoria.
 
 A **apresentação do consultor** é o único documento que já vem escrito, e não em branco:
-o texto dos consultores e do plano Me Diz o Que Fazer veio pronto. Só a foto e os
-contatos ficaram como campo preenchível. Página 1 apresenta o consultor; página 2, o
-plano e a AUVP Capital.
+o texto dos consultores e do plano Me Diz o Que Fazer veio pronto, e os retratos estão
+embutidos. Só os contatos ficaram como campo preenchível.
+
+As duas páginas têm diagramação diferente de propósito: a primeira é uma abertura, com
+banda escura em sangria, retrato e faixa de credenciais; a segunda é informativa, em
+grelha. O que as mantém no mesmo documento é a tipografia, os fios, o acento e o
+grafismo — não o arranjo.
 
 ## Como usar
 
@@ -290,6 +294,9 @@ scripts/check.mjs               verificação de estouro de página
 scripts/variaveis.mjs           gera o VARIAVEIS.md a partir dos modelos
 gerador/                        fonte dos modelos (Python, só biblioteca padrão)
 gerador/consultores.py          texto de apresentação dos sete consultores
+scripts/fotos.py                prepara os retratos (passo de uma vez só)
+assets/consultores/             retratos prontos
+consultores resolve ai/         fotos originais
 assets/fonts/                   Anek Latin (woff2)
 assets relatórios/              logos, grafismos e referências originais (fonte de verdade)
 MODELO SLIDES AUVP CAPITAL.pdf  deck institucional de referência

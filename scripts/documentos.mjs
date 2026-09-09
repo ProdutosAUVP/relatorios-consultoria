@@ -7,14 +7,12 @@
  * `render.mjs`, para saber em que pasta de `pdf/` cada arquivo vai.
  */
 
-// Rótulo e ordem dos produtos. A chave é o sufixo do arquivo, exceto no plano
-// Me Diz o Que Fazer, cujas variantes são os consultores.
+// Rótulo e ordem dos produtos. A chave é o sufixo do arquivo.
 export const PRODUTOS = [
   { chave: 'consultoria', nome: 'Consultoria', descricao: 'Consultoria de investimentos AUVP Capital.' },
   { chave: 'alta-renda', nome: 'Alta Renda', descricao: 'Clientes de alta renda, identidade em verde quase preto.' },
   { chave: 'private', nome: 'Private Banking', descricao: 'Marca própria, paleta em cinzas, sem amarelo.' },
   { chave: 'assessoria', nome: 'Assessoria', descricao: 'Assessoria de investimentos, verde mais claro.' },
-  { chave: 'me-diz-o-que-fazer', nome: 'Me Diz o Que Fazer', descricao: 'Apresentação individual dos consultores do plano.' },
 ];
 
 export const DOCUMENTOS = [
@@ -34,6 +32,22 @@ export const DOCUMENTOS = [
     descricao: 'Perfil do consultor, o plano e a AUVP Capital.' },
 ];
 
+// Ordem dos planos da consultoria na ferramenta, do autoatendimento à
+// consultoria completa. O gerador é a fonte dos planos; aqui fica só a ordem
+// de exibição, e um plano que não esteja nesta lista cai no fim, em ordem
+// alfabética, junto com os consultores.
+export const PLANOS = ['se-vira-ai', 'me-diz-o-que-fazer', 'resolve-ai'];
+
+/** Posição da variante na lista: primeiro o segmento, depois os planos, depois
+ *  as pessoas. */
+export function ordemVariante(sufixo) {
+  const seg = PRODUTOS.findIndex((p) => p.chave === sufixo);
+  if (seg >= 0) return [0, seg];
+  const plano = PLANOS.indexOf(sufixo);
+  if (plano >= 0) return [1, plano];
+  return [2, 0];
+}
+
 // A chave mais longa primeiro: `relatorio-mensal-apresentacao` também começa
 // com `relatorio-mensal`.
 const POR_TAMANHO = [...DOCUMENTOS].sort((a, b) => b.chave.length - a.chave.length);
@@ -47,13 +61,22 @@ export function classifica(arquivo) {
   const doc = POR_TAMANHO.find((d) => arquivo.startsWith(d.chave + '-'));
   if (!doc) return null;
   const sufixo = arquivo.slice(doc.chave.length + 1).replace(/\.(html|pdf|json)$/, '');
-  const produto = doc.chave === 'apresentacao-consultor' ? 'me-diz-o-que-fazer' : sufixo;
+  // Quando a variante é um segmento, o produto é ela mesma. Quando não é, é um
+  // plano ou um consultor — e os três planos e os sete consultores são todos
+  // da consultoria.
+  const produto = PRODUTOS.some((p) => p.chave === sufixo) ? sufixo : 'consultoria';
   return { doc, sufixo, produto };
 }
 
-/** `danilo-barbosa` -> `Danilo Barbosa`; um segmento vira o nome do produto. */
-export function rotuloVariante(sufixo) {
+/**
+ * O rótulo da variante. Um segmento vira o nome do produto; o resto — planos e
+ * consultores — vem do `<title>` do próprio modelo, que o gerador escreve com
+ * a grafia certa. Deduzir do sufixo daria `Se Vira Ai` e `Resolve Ai`.
+ */
+export function rotuloVariante(sufixo, html) {
   const p = PRODUTOS.find((x) => x.chave === sufixo);
   if (p) return p.nome;
-  return sufixo.split('-').map((s) => s[0].toUpperCase() + s.slice(1)).join(' ');
+  const titulo = html && html.match(/<title>([^<]*)<\/title>/)?.[1];
+  const depois = titulo && titulo.split('—').slice(1).join('—').trim();
+  return depois || sufixo.split('-').map((s) => s[0].toUpperCase() + s.slice(1)).join(' ');
 }

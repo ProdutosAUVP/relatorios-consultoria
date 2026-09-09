@@ -1,24 +1,26 @@
 # -*- coding: utf-8 -*-
-"""Apresentação do consultor — plano Me Diz o Que Fazer.
+"""Apresentação do consultor.
 
 Três páginas: o consultor, o plano e a AUVP Capital. As duas últimas partilham
-a escala `.plano`, e só a última roda no negativo — é o fecho do documento. Ao
-contrário dos outros documentos, este vem escrito: o texto dos consultores e do
-segmento já existe. Só ficam como campo preenchível a foto e os contatos, que
-não vieram nos originais.
+a escala `.plano`, e só a última roda no negativo — é o fecho do documento.
 
-Uma variante por consultor; os dados estão em `consultores.py`.
+O documento existe em duas formas, e a diferença é só o quanto vem escrito:
+
+- **Escrita**, uma por consultor do Me Diz o Que Fazer. O texto das pessoas e
+  do plano já existe, e ficam preenchíveis apenas a data e os contatos. Os
+  dados estão em `consultores.py`.
+- **Em branco**, uma por segmento. Mesma diagramação, mas consultor, plano e
+  limites entram como campo, então qualquer produto usa o documento com o seu
+  consultor e as suas condições. É o que a ferramenta de preenchimento oferece
+  fora do Me Diz o Que Fazer.
+
+O que vale para os dois lados fica escrito nas duas: o método de investimento
+e a lógica do fee based são da casa, não do plano.
 """
 from consultores import CONSULTORES
 from layout import *
 
 POR_SLUG = {c["slug"]: c for c in CONSULTORES}
-
-PLANO = "Me Diz o Que Fazer"
-
-# Este documento é entregue ao cliente, então não leva o aviso de
-# confidencialidade que vale para os relatórios de carteira.
-RODAPE = "AUVP Capital · Consultoria de investimentos"
 
 
 def _paras(textos):
@@ -38,7 +40,34 @@ def _tags(itens):
     return '<div class="tags">%s</div>' % "".join("<span>%s</span>" % i for i in itens)
 
 
-def _pagina_consultor(c):
+def _numerados(base, n, dica=""):
+    return [ph("%s_%d" % (base, i), dica) for i in range(1, n + 1)]
+
+
+def _consultor_vazio():
+    """O mesmo formato de `consultores.py`, com campo no lugar do texto.
+
+    As quantidades são fixas — três marcos, dois parágrafos de propósito,
+    quatro interesses — porque a página tem altura fechada e foi acertada
+    para caber o consultor de texto mais longo. Quem preencher com menos
+    deixa o campo em branco, e ele sai destacado no arquivo.
+    """
+    return dict(
+        nome=ph("nome_consultor"),
+        papel=ph("papel_consultor", "Consultor de investimentos, especialista, planejador…"),
+        frase=ph("frase_consultor", "Uma frase em primeira pessoa sobre como você trabalha."),
+        graduacao=_numerados("formacao", 2),
+        pos=_numerados("especializacao", 2),
+        certificacoes=_numerados("certificacao", 3),
+        marcos=[(ph("marco_%d_quando" % i, "2016, Depois, Hoje…"), ph("marco_%d_texto" % i))
+                for i in (1, 2, 3)],
+        proposito=_numerados("proposito", 2),
+        interesses=_numerados("interesse", 4),
+        fora=ph("fora_do_escritorio", "Uma ou duas frases sobre a vida fora do trabalho."),
+    )
+
+
+def _pagina_consultor(c, t, plano, foto, primeiro):
     """Retrato e declaração no topo, credenciais em faixa, trajetória como
     linha do tempo e os interesses como fatos curtos no rodapé."""
     cred = []
@@ -54,7 +83,7 @@ def _pagina_consultor(c):
   <div>
     <span class="ey">%(plano)s</span>
     <h1>%(nome)s</h1>
-    <p class="papel">%(papel)s na AUVP Capital</p>
+    <p class="papel">%(papel)s na %(marca)s</p>
   </div>
   <p class="frase">%(frase)s</p>
 </div>
@@ -86,78 +115,66 @@ def _pagina_consultor(c):
   </div>
   <p class="small mut desc">%(fora)s</p>
 </div>""" % dict(
-        foto=foto_consultor(c["slug"]), plano=PLANO, nome=c["nome"], papel=c["papel"],
+        foto=foto, plano=plano, nome=c["nome"], papel=c["papel"], marca=t["marca"],
         frase=c["frase"], nc=len(cred),
-        cred="".join("<div><h3>%s</h3>%s</div>" % (t, b) for t, b in cred),
+        cred="".join("<div><h3>%s</h3>%s</div>" % (t_, b) for t_, b in cred),
         marcos=_marcos(c["marcos"]), proposito=_paras(c["proposito"]),
-        tags=_tags(c["interesses"]), fora=c["fora"], primeiro=c["nome"].split()[0],
+        tags=_tags(c["interesses"]), fora=c["fora"], primeiro=primeiro,
         whats=ph("whatsapp_consultor"), email=ph("email_consultor"))
 
 
-PAGINA_PLANO = """<h1 class="t">Me Diz o Que Fazer</h1>
-<p class="lead" style="max-width:none">Você tem um consultor de investimentos à disposição para dizer o que fazer com o seu dinheiro. A conta continua sendo sua e quem executa é você. O nosso trabalho é trazer a análise e a recomendação de cada decisão.</p>
+PAGINA_PLANO = """<h1 class="t">%(plano)s</h1>
+<p class="lead" style="max-width:none">%(resumo)s</p>
+%(destaque)s
 <div class="esp"></div>
 <h2>Como funciona no dia a dia</h2>
 %(funciona)s
 <div class="esp"></div>
 <div class="cols2">
   <div>
-    <h2>O que você pode pedir ao seu consultor</h2>
-    %(pedir)s
-  </div>
-  <div>
-    <h2>O que já vem incluído</h2>
+    <h2>O que está incluído</h2>
     %(incluido)s
   </div>
-</div>""" % dict(
-    funciona=_lista([
-        "O atendimento é pelo WhatsApp e funciona sob demanda: você chama quando precisa, sem depender da nossa agenda.",
-        "Não tem limite de conversa nem dia certo para falar com a gente, e também não existe reunião marcada de tempos em tempos.",
-        "Quem compra e quem vende é você, na sua conta. O consultor diz o que faz sentido, quanto e por quê, e fica com você tirando dúvida até a hora de executar.",
-    ]),
-    pedir=_lista([
-        "Uma carteira recomendada, montada a partir do seu perfil de investidor e dos seus objetivos.",
-        "Análise da carteira que você já tem, para saber o que vale manter e o que ficou repetido.",
-        "Direcionamento dos aportes, para saber onde colocar o dinheiro que entrou este mês.",
-        "As recomendações de renda fixa que a gente filtra toda semana.",
-        "Explicação sobre um produto ou uma estratégia que você não entendeu.",
-        "Dúvidas sobre mercado e notícias, e o que elas mudam na sua estratégia.",
-    ]),
-    incluido=_lista([
-        "Cashback do spread da renda fixa e do aluguel de ações.",
-        "Operações sem taxa de corretagem. ¹",
-        "Carteiras recomendadas para diferentes perfis de investidor.",
-        "Relatório semanal com seleção de notícias e análise de mercado.",
-        "Relatório mensal com a análise do cenário macroeconômico.",
-        "Acesso aos grupos fechados e aos eventos da AUVP Capital.",
-        "Cartões de crédito AUVP Capital. ²",
-        "Kinvo Premium por até 12 meses. ³",
-    ]),
-)
-
+  <div>
+    <h2>O que não está incluído</h2>
+    %(fora)s
+  </div>
+</div>"""
 
 PAGINA_CASA = """<h1 class="t">Como pensamos investimento</h1>
-<p class="lead" style="max-width:none">A AUVP Capital nasceu da metodologia da AUVP Escola. É ela que orienta cada recomendação que você recebe aqui.</p>
+<p class="lead" style="max-width:none">A %(marca)s nasceu da metodologia da AUVP Escola. É ela que orienta cada recomendação que você recebe aqui.</p>
 <div class="esp"></div>
 %(metodo)s
 <div class="esp"></div>
 <h2>Como somos remunerados</h2>
 <div class="cols2">
   <div>
-    <p class="small">A AUVP Capital trabalha no modelo <em>fee based</em>: neste plano, a consultoria cobra <strong>0,075%% ao mês</strong> sobre o patrimônio orientado, o que dá <strong>0,9%% ao ano</strong>. Como a taxa é um percentual do que você tem investido, a consultoria só ganha mais quando o seu patrimônio cresce.</p>
+    <p class="small">A %(marca)s trabalha no modelo <em>fee based</em>: neste plano, a consultoria cobra <strong>%(mes)s ao mês</strong> sobre o patrimônio orientado, o que dá <strong>%(ano)s ao ano</strong>. Como a taxa é um percentual do que você tem investido, a consultoria só ganha mais quando o seu patrimônio cresce.</p>
   </div>
   <div>
     <p class="small">No modelo comissionado, quem indica o investimento é pago pelo produto que vende. No <em>fee based</em> esse conflito não aparece: a remuneração é a mesma seja qual for a recomendação, e a comissão que ela geraria volta para a sua conta em forma de cashback.</p>
   </div>
 </div>
 <div class="esp"></div>
-<h2>O que não faz parte deste plano</h2>
-%(fora)s
+<h2>Onde acompanhar a %(marca)s</h2>
+<div class="cols2">
+  <div class="dl">
+    <dt>Instagram</dt><dd>@auvpcapital</dd>
+    <dt>YouTube</dt><dd>@AUVPCapital</dd>
+    <dt>Spotify</dt><dd>Podcast da AUVP Capital</dd>
+  </div>
+  <div>
+    <p class="small mut" style="margin:0">Sempre que precisar, é só mandar mensagem para o seu consultor.</p>
+  </div>
+</div>
 <div style="margin-top:auto">
-  <p class="legal">¹ Referente às operações de renda variável na conta nacional. &nbsp; ² Sujeitos a análise de crédito. &nbsp; ³ Conforme disponibilidade; as condições devem ser consultadas.</p>
-</div>""" % dict(
-    metodo='<div class="principios">%s</div>' % "".join(
-        "<p><strong>%s.</strong> %s</p>" % (tit, txt) for tit, txt in (
+  <p class="legal">%(notas)s</p>
+</div>"""
+
+# O método é da casa e vale em qualquer segmento, então fica escrito nas duas
+# formas do documento.
+METODO = '<div class="principios">%s</div>' % "".join(
+    "<p><strong>%s.</strong> %s</p>" % (tit, txt) for tit, txt in (
         ("Longo prazo e Buy and Hold",
          "A gente investe para carregar. Day trade e operação de curto prazo não entram nas recomendações, e girar a carteira atrás de oportunidade rápida também não."),
         ("Empresas perenes",
@@ -168,22 +185,138 @@ PAGINA_CASA = """<h1 class="t">Como pensamos investimento</h1>
          "Cada classe cumpre um papel: proteger, gerar renda, fazer crescer. Diversificar é distribuir entre esses papéis na proporção do seu momento de vida."),
         ("Explicar antes de recomendar",
          "Toda recomendação vem com o motivo junto. A AUVP começou como escola, e o cliente decide melhor quando entende o que está fazendo."),
-    )),
-    fora=_lista([
-        "O consultor não acompanha a sua carteira todo dia para agir sozinho quando o mercado se mexe. Ele responde quando você chama.",
-        "Nenhuma ordem é executada por nós. A compra e a venda são sempre suas.",
-        "O atendimento é por escrito. Ligações e reuniões periódicas não fazem parte do plano.",
-        "Não há uma estratégia de alocação montada só para o seu caso, com ajustes conforme o cenário muda. Esse acompanhamento é o do <strong>Resolve Aí</strong>, o plano de consultoria completa para quem tem R$ 300 mil ou mais, com consultor dedicado e reuniões bimestrais.",
-    ], cls="lista mut"),
-)
+    ))
+
+NOTAS = ("¹ Sujeito a análise de crédito. &nbsp; ² As condições e a disponibilidade do Kinvo "
+         "devem ser consultadas. &nbsp; ³ Referente às operações de renda variável na conta nacional.")
+
+# Os três planos da consultoria. O conteúdo é o da tabela comercial: descrição,
+# taxa, o que está incluído e o que não está. A página não muda de forma entre
+# eles — muda o texto —, então trocar de plano é trocar este dicionário.
+PLANOS = {
+    "se-vira-ai": dict(
+        plano="Se Vira Aí",
+        rotulo="Se Vira Aí (autoatendimento)",
+        resumo="Você investe com autonomia total, usando a plataforma e usufruindo dos benefícios de ser membro da AUVP Capital.",
+        destaque="",
+        funciona=[
+            "A decisão é sua, do começo ao fim: você escolhe o que comprar, quanto e quando, direto na plataforma.",
+            "O material de apoio chega toda semana — curadoria de notícias e leitura do cenário — para você decidir com informação.",
+            "Não há consultor designado nem recomendação individual. O plano é o acesso à plataforma e aos benefícios de membro.",
+        ],
+        incluido=[
+            "Uso da plataforma de investimentos.",
+            "Cashback em renda fixa e aluguel de ações.",
+            "Relatório semanal com curadoria de notícias e análise do cenário macroeconômico.",
+            "Operações sem cobrança de corretagem. ³",
+            "Acesso a cartões de crédito AUVP Capital. ¹",
+            "Kinvo Premium por até 12 meses. ²",
+        ],
+        fora=[
+            "Suporte para dúvidas técnicas de investimentos.",
+            "Monitoramento ativo da carteira.",
+            "Estratégia de alocação personalizada.",
+            "Gestão ativa.",
+        ],
+        mes="0,025% a 0,033%", ano="0,3% a 0,4%", notas=NOTAS,
+    ),
+    "me-diz-o-que-fazer": dict(
+        plano="Me Diz o Que Fazer",
+        rotulo="Me Diz o Que Fazer (básico)",
+        resumo="Orientação em investimentos para quem quer clareza e direção na hora de montar ou ajustar a carteira. A conta continua sendo sua e quem executa é você.",
+        destaque="",
+        funciona=[
+            "O atendimento é pelo WhatsApp e funciona sob demanda: você chama quando precisa, sem depender da nossa agenda.",
+            "Não tem limite de conversa nem dia certo para falar com a gente, e também não existe reunião marcada de tempos em tempos.",
+            "Quem compra e quem vende é você, na sua conta. O consultor diz o que faz sentido, quanto e por quê, e fica com você tirando dúvida até a hora de executar.",
+        ],
+        incluido=[
+            "Tudo o que você precisa para investir com estratégia profissional.",
+            "Direcionamento para os seus investimentos, sob demanda.",
+            "Carteiras recomendadas de acordo com o perfil do investidor.",
+            "Recomendações semanais filtradas dos melhores investimentos em renda fixa.",
+            "Atendimento para esclarecimento de dúvidas.",
+            "Apoio para entender produtos, estratégias e organização da carteira.",
+            "Relatórios mensais de análise do cenário macroeconômico.",
+        ],
+        fora=[
+            "Monitoramento ativo da carteira.",
+            "Estratégia de alocação personalizada.",
+            "Gestão ativa.",
+        ],
+        mes="0,075%", ano="0,9%", notas=NOTAS,
+    ),
+    "resolve-ai": dict(
+        plano="Resolve Aí",
+        rotulo="Resolve Aí (consultoria completa)",
+        resumo="Serviço de consultoria completa, com acompanhamento ativo, personalização e responsabilidade técnica sobre o patrimônio orientado.",
+        destaque="<p class=\"note\"><strong>Exclusivo para quem tem R$ 300 mil ou mais.</strong> Você não tá no mercado pra brincar.</p>",
+        funciona=[
+            "Você tem um consultor dedicado, pelo WhatsApp, acompanhando a carteira junto com você.",
+            "A estratégia de alocação é montada para o seu caso e vai sendo ajustada conforme o cenário e o seu momento mudam.",
+            "A cada dois meses há uma reunião de alinhamento, além do contato contínuo ao longo do período.",
+        ],
+        incluido=[
+            "Tudo o que você precisa para investir com estratégia profissional.",
+            "Acompanhamento ativo da carteira.",
+            "Estratégia de alocação personalizada.",
+            "Ajustes contínuos conforme o cenário e o perfil.",
+            "Atendimento com consultor dedicado via WhatsApp.",
+            "Apoio contínuo na tomada de decisão ao longo do tempo.",
+            "Reuniões bimestrais de alinhamento.",
+        ],
+        fora=[
+            "A execução das ordens continua sendo sua: a consultoria recomenda, não opera pela sua conta.",
+        ],
+        mes="definida conforme o patrimônio orientado", ano="variável", notas=NOTAS,
+    ),
+}
+
+
+def _em_branco():
+    return dict(
+        plano=ph("nome_plano", "O nome comercial do plano."),
+        resumo=ph("plano_resumo", "Duas ou três frases sobre o que o cliente contrata."),
+        destaque="",
+        funciona=_numerados("funciona", 3),
+        incluido=_numerados("incluido", 7),
+        fora=_numerados("nao_incluido", 4),
+        mes=ph("taxa_mensal", "Ex.: 0,075%"), ano=ph("taxa_anual", "Ex.: 0,9%"),
+        notas=ph("notas_de_rodape", "As ressalvas numeradas que os itens acima referenciam."),
+    )
 
 
 def build(t, variante):
+    """`variante` é um consultor, um plano da consultoria ou um segmento.
+
+    Consultor traz o texto da pessoa e o plano do Me Diz o Que Fazer; plano traz
+    o texto comercial com o consultor em branco; segmento deixa os dois em
+    branco, para o produto preencher com o seu consultor e as suas condições.
+    """
     set_date_ph("data_apresentacao")
-    c = POR_SLUG[variante]
+
+    if variante in POR_SLUG:
+        c = POR_SLUG[variante]
+        texto = PLANOS["me-diz-o-que-fazer"]
+        foto, primeiro = foto_consultor(c["slug"]), c["nome"].split()[0]
+    else:
+        c = _consultor_vazio()
+        texto = PLANOS.get(variante) or _em_branco()
+        foto, primeiro = foto_vaga(), "o seu consultor"
+
+    # Documento entregue ao cliente: sem o aviso de confidencialidade que vale
+    # para os relatórios de carteira.
+    rodape = t["nome_full"]
+
     return [
         page_a4(t, "O seu consultor", 1,
-                '<div class="perfil">%s</div>' % _pagina_consultor(c), rodape=RODAPE),
-        page_a4(t, "O plano", 2, PAGINA_PLANO, rodape=RODAPE, cls="plano"),
-        page_a4(t, "A AUVP Capital", 3, PAGINA_CASA, rodape=RODAPE, cls="plano", dark=True),
+                '<div class="perfil">%s</div>'
+                % _pagina_consultor(c, t, texto["plano"], foto, primeiro), rodape=rodape),
+        page_a4(t, "O plano", 2, PAGINA_PLANO % dict(
+            plano=texto["plano"], resumo=texto["resumo"], destaque=texto["destaque"],
+            funciona=_lista(texto["funciona"]), incluido=_lista(texto["incluido"]),
+            fora=_lista(texto["fora"], cls="lista mut")), rodape=rodape, cls="plano"),
+        page_a4(t, t["marca"], 3, PAGINA_CASA % dict(
+            marca=t["marca"], metodo=METODO, mes=texto["mes"], ano=texto["ano"],
+            notas=texto["notas"]), rodape=rodape, cls="plano", dark=True),
     ]

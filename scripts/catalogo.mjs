@@ -14,7 +14,8 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync, rmSync, existsSync
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 
-import { PRODUTOS, classifica, rotuloVariante } from './documentos.mjs';
+import { PRODUTOS, classifica, rotuloVariante, ordemVariante } from './documentos.mjs';
+import { exemplo } from './exemplos.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const srcDir = join(root, 'modelos');
@@ -56,7 +57,7 @@ function estrutura(html) {
     while ((m = re.exec(pag.corpo))) {
       const [, dica, nome] = m;
       if (!campos[nome]) {
-        campos[nome] = { rotulo: rotuloCampo(nome), pagina: pag.numero };
+        campos[nome] = { rotulo: rotuloCampo(nome), pagina: pag.numero, exemplo: exemplo(nome) };
         if (dica) campos[nome].dica = dica;
         nomes.push(nome);
       }
@@ -68,7 +69,9 @@ function estrutura(html) {
         rotulo: 'Retrato do consultor',
         descricao: 'Foto vertical, recortada em 3:4. Substitui o retrato que já vem no modelo.' });
     }
-    const ri = /<div class="(chart|imgbox)" data-img="(\d+)"[^>]*>([\s\S]*?)<div class="cd">([\s\S]*?)<\/div>/g;
+    // A classe pode trazer um modificador junto (`imgbox rt-vaga`), então o
+    // casamento é pelo nome do bloco dentro do atributo, não pelo atributo todo.
+    const ri = /<div class="[^"]*\b(chart|imgbox)\b[^"]*" data-img="(\d+)"[^>]*>([\s\S]*?)<div class="cd">([\s\S]*?)<\/div>/g;
     while ((m = ri.exec(pag.corpo))) {
       imagens.push({
         id: Number(m[2]),
@@ -121,7 +124,7 @@ function main() {
 
     if (!porDoc.has(doc.chave)) porDoc.set(doc.chave, { ...doc, variantes: [] });
     porDoc.get(doc.chave).variantes.push({
-      sufixo, rotulo: rotuloVariante(sufixo), arquivo: arq,
+      sufixo, rotulo: rotuloVariante(sufixo, html), arquivo: arq,
       paginas: paginas(html).length,
       campos: Object.keys(est.campos).length,
       imagens: est.imagens.length,
@@ -130,6 +133,14 @@ function main() {
 
   // Sem data de geração: `docs/` precisa ser reprodutível byte a byte para o
   // `git status` limpo continuar valendo como verificação.
+  for (const d of porDoc.values()) {
+    d.variantes.sort((a, b) => {
+      const [ga, pa] = ordemVariante(a.sufixo);
+      const [gb, pb] = ordemVariante(b.sufixo);
+      return ga - gb || pa - pb || a.rotulo.localeCompare(b.rotulo, 'pt-BR');
+    });
+  }
+
   const catalogo = { produtos: PRODUTOS, documentos: [...porDoc.values()] };
   writeFileSync(join(outDir, 'catalogo.json'), JSON.stringify(catalogo, null, 1));
 

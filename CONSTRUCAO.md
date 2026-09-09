@@ -57,6 +57,7 @@ autossuficientes na entrega, fonte única na manutenção.
 | `gerador/build.py` | entrada: percorre documentos × segmentos e escreve `modelos/` |
 | `scripts/render.mjs` | HTML → PDF, numa subpasta por produto |
 | `scripts/documentos.mjs` | a tabela de produtos e documentos, partilhada pelo render e pelo catálogo |
+| `scripts/exemplos.mjs` | o exemplo de preenchimento de cada campo, derivado do nome |
 | `scripts/check.mjs` | valida estouro de página em modo de impressão |
 | `scripts/variaveis.mjs` | gera o `VARIAVEIS.md` a partir dos modelos |
 | `scripts/catalogo.mjs` | monta `docs/`: copia os modelos e escreve o índice da ferramenta |
@@ -288,7 +289,7 @@ sai do gerador — só existe um desenho, e ele mora em `gerador/`.
 | `docs/campos/<modelo>.json` | campos, seções e espaços de imagem daquele modelo |
 | `docs/index.html`, `app.css`, `app.js` | a interface, nos tokens do design system da AUVP |
 
-Três decisões que valem explicação:
+Quatro decisões que valem explicação:
 
 **A estrutura fica num arquivo por variante, não no índice.** As variantes não são iguais
 — o relatório mensal de Alta Renda tem ofertas de renda fixa, o de Private tem
@@ -304,6 +305,18 @@ imagem com marcação aninhada, não quebra a montagem.
 espaço com `data-img`, e é por esse número que a foto enviada encontra o lugar dela. Sem
 isso a ferramenta dependeria da ordem dos elementos na página, que muda a cada edição de
 um documento.
+
+**O que é digitado fica guardado, e em dois lugares.** O texto vai para o `localStorage`,
+que é síncrono e sobrevive a qualquer coisa; as imagens vão para o IndexedDB, porque um
+data URL de foto passa de 1 MB e estouraria a cota de 5 MB do `localStorage` no primeiro
+documento com três gráficos. Guardar tudo junto faria o texto se perder junto com as
+imagens quando a cota acabasse.
+
+**Todo campo mostra um exemplo.** São 1743 nomes distintos, então a tabela de exemplos
+não é escrita à mão: `scripts/exemplos.mjs` deriva o exemplo do nome, varrendo as partes
+do fim para o começo — `pos_7_valor` casa em `valor`, `mes_referencia` em `mes`. O
+exemplo é o `placeholder` do campo, some ao digitar e nunca entra no documento. Os poucos
+campos institucionais que fogem ao vocabulário vêm escritos um a um.
 
 O PDF sai pela impressão do navegador, não por uma biblioteca: o `@page` dos modelos já
 tem o tamanho certo e `print-color-adjust:exact` garante os fundos, então o resultado é o

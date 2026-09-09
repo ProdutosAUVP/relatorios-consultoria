@@ -187,6 +187,19 @@ def chart(label, desc, skeleton="bars", style="", series=None):
             '<div class="cd">%s</div>%s</div>') % (_IMG[0], style, sk, label, desc, lg)
 
 
+def foto_vaga(desc="Foto vertical do consultor. Recorte 3:4, mínimo 900&nbsp;px de largura."):
+    """O lugar do retrato na versão sem consultor definido.
+
+    Sai como espaço de imagem numerado, igual aos gráficos, para a ferramenta
+    de preenchimento tratar os dois do mesmo jeito. A classe extra carrega a
+    geometria do retrato — proporção e canto arredondado — e sobrevive à troca
+    pela imagem enviada.
+    """
+    _IMG[0] += 1
+    return ('<div class="imgbox rt-vaga" data-img="%d"><div class="cl">Retrato</div>'
+            '<div class="cd">%s</div></div>') % (_IMG[0], desc)
+
+
 def imgbox(desc, style=""):
     _IMG[0] += 1
     return ('<div class="imgbox" data-img="%d" style="flex:1 1 auto;%s">'

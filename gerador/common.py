@@ -593,6 +593,21 @@ CSS_A4 += """
 .rt-img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 26%;
   border-radius:3mm 0 0 0;
   margin-bottom:5.5mm}
+/* O espaço de imagem só existia nos slides, que são onde os `imgbox` estavam.
+   A moldura vazia do retrato o traz para o A4, com a mesma escala do resto da
+   página. */
+.imgbox{border:1px dashed var(--line);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:1.5mm;text-align:center;padding:5mm;
+  background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(0,0,0,.022) 5px 10px)}
+.imgbox .cl{font-size:6.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--brand)}
+.imgbox .cd{font-size:7.4pt;max-width:70mm;line-height:1.4;color:var(--ink-2)}
+
+/* A moldura vazia do retrato ocupa a mesma caixa e tem o mesmo canto, para a
+   página não mudar de forma entre a versão escrita e a em branco. */
+.rt-vaga{width:100%;aspect-ratio:3/4;flex:none;align-self:end;
+  border-radius:3mm 0 0 0;padding:4mm 3mm}
+.rt-vaga .cd{font-size:6.6pt;line-height:1.35}
 
 /* ---------- respiro elástico entre faixas ----------
    Em página de altura fechada sobra espaço que varia de um documento para

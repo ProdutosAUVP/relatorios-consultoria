@@ -19,11 +19,6 @@
    "chave": "assessoria",
    "nome": "Assessoria",
    "descricao": "Assessoria de investimentos, verde mais claro."
-  },
-  {
-   "chave": "me-diz-o-que-fazer",
-   "nome": "Me Diz o Que Fazer",
-   "descricao": "Apresentação individual dos consultores do plano."
   }
  ],
  "documentos": [
@@ -34,8 +29,56 @@
    "descricao": "Perfil do consultor, o plano e a AUVP Capital.",
    "variantes": [
     {
+     "sufixo": "alta-renda",
+     "rotulo": "Alta Renda",
+     "arquivo": "apresentacao-consultor-alta-renda.html",
+     "paginas": 3,
+     "campos": 45,
+     "imagens": 1
+    },
+    {
+     "sufixo": "private",
+     "rotulo": "Private Banking",
+     "arquivo": "apresentacao-consultor-private.html",
+     "paginas": 3,
+     "campos": 45,
+     "imagens": 1
+    },
+    {
+     "sufixo": "assessoria",
+     "rotulo": "Assessoria",
+     "arquivo": "apresentacao-consultor-assessoria.html",
+     "paginas": 3,
+     "campos": 45,
+     "imagens": 1
+    },
+    {
+     "sufixo": "se-vira-ai",
+     "rotulo": "Se Vira Aí (autoatendimento)",
+     "arquivo": "apresentacao-consultor-se-vira-ai.html",
+     "paginas": 3,
+     "campos": 26,
+     "imagens": 1
+    },
+    {
+     "sufixo": "me-diz-o-que-fazer",
+     "rotulo": "Me Diz o Que Fazer (básico)",
+     "arquivo": "apresentacao-consultor-me-diz-o-que-fazer.html",
+     "paginas": 3,
+     "campos": 26,
+     "imagens": 1
+    },
+    {
+     "sufixo": "resolve-ai",
+     "rotulo": "Resolve Aí (consultoria completa)",
+     "arquivo": "apresentacao-consultor-resolve-ai.html",
+     "paginas": 3,
+     "campos": 26,
+     "imagens": 1
+    },
+    {
      "sufixo": "alan-santanna",
-     "rotulo": "Alan Santanna",
+     "rotulo": "Alan Sant'Anna",
      "arquivo": "apresentacao-consultor-alan-santanna.html",
      "paginas": 3,
      "campos": 3,
@@ -43,7 +86,7 @@
     },
     {
      "sufixo": "andre-arruda",
-     "rotulo": "Andre Arruda",
+     "rotulo": "André Arruda",
      "arquivo": "apresentacao-consultor-andre-arruda.html",
      "paginas": 3,
      "campos": 3,
@@ -51,7 +94,7 @@
     },
     {
      "sufixo": "bolivar-oliveira",
-     "rotulo": "Bolivar Oliveira",
+     "rotulo": "Bolívar Oliveira",
      "arquivo": "apresentacao-consultor-bolivar-oliveira.html",
      "paginas": 3,
      "campos": 3,
@@ -98,22 +141,6 @@
    "descricao": "Deck de apresentação do serviço, para reunião de proposta.",
    "variantes": [
     {
-     "sufixo": "alta-renda",
-     "rotulo": "Alta Renda",
-     "arquivo": "apresentacao-geral-alta-renda.html",
-     "paginas": 14,
-     "campos": 141,
-     "imagens": 1
-    },
-    {
-     "sufixo": "assessoria",
-     "rotulo": "Assessoria",
-     "arquivo": "apresentacao-geral-assessoria.html",
-     "paginas": 14,
-     "campos": 141,
-     "imagens": 1
-    },
-    {
      "sufixo": "consultoria",
      "rotulo": "Consultoria",
      "arquivo": "apresentacao-geral-consultoria.html",
@@ -122,9 +149,25 @@
      "imagens": 1
     },
     {
+     "sufixo": "alta-renda",
+     "rotulo": "Alta Renda",
+     "arquivo": "apresentacao-geral-alta-renda.html",
+     "paginas": 14,
+     "campos": 141,
+     "imagens": 1
+    },
+    {
      "sufixo": "private",
      "rotulo": "Private Banking",
      "arquivo": "apresentacao-geral-private.html",
+     "paginas": 14,
+     "campos": 141,
+     "imagens": 1
+    },
+    {
+     "sufixo": "assessoria",
+     "rotulo": "Assessoria",
+     "arquivo": "apresentacao-geral-assessoria.html",
      "paginas": 14,
      "campos": 141,
      "imagens": 1
@@ -138,22 +181,6 @@
    "descricao": "Calendário do ciclo de acompanhamento e pauta de cada encontro.",
    "variantes": [
     {
-     "sufixo": "alta-renda",
-     "rotulo": "Alta Renda",
-     "arquivo": "cronograma-reunioes-alta-renda.html",
-     "paginas": 6,
-     "campos": 153,
-     "imagens": 0
-    },
-    {
-     "sufixo": "assessoria",
-     "rotulo": "Assessoria",
-     "arquivo": "cronograma-reunioes-assessoria.html",
-     "paginas": 6,
-     "campos": 153,
-     "imagens": 0
-    },
-    {
      "sufixo": "consultoria",
      "rotulo": "Consultoria",
      "arquivo": "cronograma-reunioes-consultoria.html",
@@ -162,9 +189,25 @@
      "imagens": 0
     },
     {
+     "sufixo": "alta-renda",
+     "rotulo": "Alta Renda",
+     "arquivo": "cronograma-reunioes-alta-renda.html",
+     "paginas": 6,
+     "campos": 153,
+     "imagens": 0
+    },
+    {
      "sufixo": "private",
      "rotulo": "Private Banking",
      "arquivo": "cronograma-reunioes-private.html",
+     "paginas": 6,
+     "campos": 153,
+     "imagens": 0
+    },
+    {
+     "sufixo": "assessoria",
+     "rotulo": "Assessoria",
+     "arquivo": "cronograma-reunioes-assessoria.html",
      "paginas": 6,
      "campos": 153,
      "imagens": 0
@@ -178,22 +221,6 @@
    "descricao": "Leitura da carteira atual, riscos encontrados e plano de ajuste.",
    "variantes": [
     {
-     "sufixo": "alta-renda",
-     "rotulo": "Alta Renda",
-     "arquivo": "diagnostico-carteira-alta-renda.html",
-     "paginas": 10,
-     "campos": 327,
-     "imagens": 3
-    },
-    {
-     "sufixo": "assessoria",
-     "rotulo": "Assessoria",
-     "arquivo": "diagnostico-carteira-assessoria.html",
-     "paginas": 10,
-     "campos": 327,
-     "imagens": 3
-    },
-    {
      "sufixo": "consultoria",
      "rotulo": "Consultoria",
      "arquivo": "diagnostico-carteira-consultoria.html",
@@ -202,9 +229,25 @@
      "imagens": 3
     },
     {
+     "sufixo": "alta-renda",
+     "rotulo": "Alta Renda",
+     "arquivo": "diagnostico-carteira-alta-renda.html",
+     "paginas": 10,
+     "campos": 327,
+     "imagens": 3
+    },
+    {
      "sufixo": "private",
      "rotulo": "Private Banking",
      "arquivo": "diagnostico-carteira-private.html",
+     "paginas": 10,
+     "campos": 327,
+     "imagens": 3
+    },
+    {
+     "sufixo": "assessoria",
+     "rotulo": "Assessoria",
+     "arquivo": "diagnostico-carteira-assessoria.html",
      "paginas": 10,
      "campos": 327,
      "imagens": 3
@@ -218,22 +261,6 @@
    "descricao": "Cenário do mês no Brasil e no exterior e o que ele muda na estratégia.",
    "variantes": [
     {
-     "sufixo": "alta-renda",
-     "rotulo": "Alta Renda",
-     "arquivo": "relatorio-macroeconomico-alta-renda.html",
-     "paginas": 11,
-     "campos": 306,
-     "imagens": 3
-    },
-    {
-     "sufixo": "assessoria",
-     "rotulo": "Assessoria",
-     "arquivo": "relatorio-macroeconomico-assessoria.html",
-     "paginas": 11,
-     "campos": 306,
-     "imagens": 3
-    },
-    {
      "sufixo": "consultoria",
      "rotulo": "Consultoria",
      "arquivo": "relatorio-macroeconomico-consultoria.html",
@@ -242,9 +269,25 @@
      "imagens": 3
     },
     {
+     "sufixo": "alta-renda",
+     "rotulo": "Alta Renda",
+     "arquivo": "relatorio-macroeconomico-alta-renda.html",
+     "paginas": 11,
+     "campos": 306,
+     "imagens": 3
+    },
+    {
      "sufixo": "private",
      "rotulo": "Private Banking",
      "arquivo": "relatorio-macroeconomico-private.html",
+     "paginas": 11,
+     "campos": 306,
+     "imagens": 3
+    },
+    {
+     "sufixo": "assessoria",
+     "rotulo": "Assessoria",
+     "arquivo": "relatorio-macroeconomico-assessoria.html",
      "paginas": 11,
      "campos": 306,
      "imagens": 3
@@ -258,22 +301,6 @@
    "descricao": "Fechamento do mês: patrimônio, rentabilidade, alocação e movimentações.",
    "variantes": [
     {
-     "sufixo": "alta-renda",
-     "rotulo": "Alta Renda",
-     "arquivo": "relatorio-mensal-alta-renda.html",
-     "paginas": 16,
-     "campos": 690,
-     "imagens": 6
-    },
-    {
-     "sufixo": "assessoria",
-     "rotulo": "Assessoria",
-     "arquivo": "relatorio-mensal-assessoria.html",
-     "paginas": 16,
-     "campos": 690,
-     "imagens": 6
-    },
-    {
      "sufixo": "consultoria",
      "rotulo": "Consultoria",
      "arquivo": "relatorio-mensal-consultoria.html",
@@ -282,11 +309,27 @@
      "imagens": 6
     },
     {
+     "sufixo": "alta-renda",
+     "rotulo": "Alta Renda",
+     "arquivo": "relatorio-mensal-alta-renda.html",
+     "paginas": 16,
+     "campos": 690,
+     "imagens": 6
+    },
+    {
      "sufixo": "private",
      "rotulo": "Private Banking",
      "arquivo": "relatorio-mensal-private.html",
      "paginas": 16,
      "campos": 691,
+     "imagens": 6
+    },
+    {
+     "sufixo": "assessoria",
+     "rotulo": "Assessoria",
+     "arquivo": "relatorio-mensal-assessoria.html",
+     "paginas": 16,
+     "campos": 690,
      "imagens": 6
     }
    ]
@@ -298,22 +341,6 @@
    "descricao": "O fechamento do mês em formato de reunião.",
    "variantes": [
     {
-     "sufixo": "alta-renda",
-     "rotulo": "Alta Renda",
-     "arquivo": "relatorio-mensal-apresentacao-alta-renda.html",
-     "paginas": 12,
-     "campos": 193,
-     "imagens": 4
-    },
-    {
-     "sufixo": "assessoria",
-     "rotulo": "Assessoria",
-     "arquivo": "relatorio-mensal-apresentacao-assessoria.html",
-     "paginas": 12,
-     "campos": 193,
-     "imagens": 4
-    },
-    {
      "sufixo": "consultoria",
      "rotulo": "Consultoria",
      "arquivo": "relatorio-mensal-apresentacao-consultoria.html",
@@ -322,9 +349,25 @@
      "imagens": 4
     },
     {
+     "sufixo": "alta-renda",
+     "rotulo": "Alta Renda",
+     "arquivo": "relatorio-mensal-apresentacao-alta-renda.html",
+     "paginas": 12,
+     "campos": 193,
+     "imagens": 4
+    },
+    {
      "sufixo": "private",
      "rotulo": "Private Banking",
      "arquivo": "relatorio-mensal-apresentacao-private.html",
+     "paginas": 12,
+     "campos": 193,
+     "imagens": 4
+    },
+    {
+     "sufixo": "assessoria",
+     "rotulo": "Assessoria",
+     "arquivo": "relatorio-mensal-apresentacao-assessoria.html",
      "paginas": 12,
      "campos": 193,
      "imagens": 4

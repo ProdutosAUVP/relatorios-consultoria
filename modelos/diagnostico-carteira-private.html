@@ -234,10 +234,10 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .year .ev{display:block;font-size:6.8pt;color:var(--ink-2);line-height:1.35}
 
 /* ---------- lista com marcador em fio, e retrato ---------- */
-.lista{list-style:none;margin:0;padding:0;font-size:8.4pt;line-height:1.5}
-.lista li{position:relative;padding-left:5mm;margin-bottom:2.5mm}
+.lista{list-style:none;margin:0;padding:0;font-size:8.4pt;line-height:17px}
+.lista li{position:relative;padding-left:5mm;margin-bottom:9px}
 .lista li:last-child{margin-bottom:0}
-.lista li::before{content:"";position:absolute;left:0;top:2.1mm;width:2.6mm;height:1.33px;background:var(--accent)}
+.lista li::before{content:"";position:absolute;left:0;top:8px;width:2.6mm;height:1.33px;background:var(--accent)}
 .lista.mut li{color:var(--ink-2)}
 .foto{border:1px dashed var(--brand);display:flex;flex-direction:column;align-items:center;
   justify-content:center;gap:1.5mm;text-align:center;padding:4mm;
@@ -259,7 +259,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 
 /* ---------- retrato na coluna de apoio ---------- */
 .rt-img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 26%;
-  border-radius:20mm 0 0 0;
+  border-radius:6mm 0 0 0;
   margin-bottom:5.5mm}
 
 /* ---------- respiro elástico entre faixas ----------
@@ -274,7 +274,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
    A página trata três tipos de informação de formas diferentes: a declaração
    de propósito em destaque ao lado do retrato, a trajetória como linha do
    tempo, e os interesses como fatos curtos. */
-.pf-topo{display:grid;grid-template-columns:38mm 1fr;gap:0 8mm;align-items:end}
+.pf-topo{display:grid;grid-template-columns:36mm 1fr;gap:0 8mm;align-items:end}
 .pf-topo .rt-img{margin:0}
 .pf-topo .ey{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.18em;
   text-transform:uppercase;color:var(--brand);margin-bottom:2mm}
@@ -283,7 +283,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .pf-topo .papel{margin:2mm 0 0;font-size:9pt;color:var(--ink-2)}
 /* a declaração atravessa as duas colunas, sob um fio de largura inteira, e
    respira antes da faixa de credenciais */
-.pf-topo .frase{grid-column:1/-1;margin:7mm 0 0;padding-top:5mm;
+.pf-topo .frase{grid-column:1/-1;margin:6mm 0 0;padding-top:4mm;
   border-top:1px solid var(--line);
   font-size:11.5pt;line-height:1.5;font-weight:300;color:var(--ink)}
 
@@ -296,13 +296,13 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .cred h3{margin:0 0 2mm;font-size:6.2pt;font-weight:700;letter-spacing:.16em;
   text-transform:uppercase;color:var(--ink-2)}
 .cred .lista{font-size:7.6pt;margin:0}
-.cred .lista li{margin-bottom:1mm}
+.cred .lista li{margin-bottom:4px}
 
 /* trajetória como linha do tempo */
 /* o rótulo fica acima do texto, e não numa coluna à esquerda: os marcos vão de
    "2016" a "Pandemia" e a "Há 3 anos", e coluna fixa não comporta os dois */
 .marcos{list-style:none;margin:0;padding:0}
-.marcos li{position:relative;padding:0 0 3mm 8mm}
+.marcos li{position:relative;padding:0 0 10px 8mm}
 .marcos li:last-child{padding-bottom:0}
 .marcos li::before{content:"";position:absolute;left:1.15mm;top:4.2mm;bottom:-.4mm;
   width:1px;background:var(--line)}
@@ -314,12 +314,15 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .marcos p{margin:0;font-size:8.2pt;line-height:1.45;color:var(--ink-2)}
 
 /* interesses e contato, na faixa final */
-.pf-rodape{padding-top:4mm;border-top:1px solid var(--line);
-  display:grid;grid-template-columns:1.6fr 1fr;gap:8mm;align-items:start}
+.pf-rodape{padding:4mm 0 6mm;border-top:1px solid var(--line);
+  display:grid;grid-template-columns:1.6fr 1fr;gap:4mm 8mm;align-items:start}
 .pf-rodape h3{margin:0 0 2mm;font-size:6.2pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
 .pf-rodape .dl{font-size:8pt;gap:1mm 5mm}
-.tags{display:flex;flex-wrap:wrap;gap:1.4mm;margin-bottom:1.5mm}
-.tags span{font-size:7.2pt;padding:1mm 3mm;border:1px solid var(--line);
+/* a descrição fecha a faixa atravessando as duas colunas, e o padding de baixo
+   é o que a mantém longe do fio do rodapé */
+.pf-rodape .desc{grid-column:1/-1;margin:0;max-width:none}
+.tags{display:flex;flex-wrap:wrap;gap:1.4mm;margin:0}
+.tags span{font-size:7.2pt;padding:.8mm 2.8mm;border:1px solid var(--line);
   border-radius:8mm;color:var(--ink-2)}
 
 /* ---------- perfil ----------
@@ -363,9 +366,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
    matéria que as de relatório. */
 .page.plano h2{margin:0 0 5mm}
 .page.plano .lead{font-size:11pt;line-height:1.55;margin-bottom:2mm}
-.page.plano .lista{font-size:9.2pt;line-height:1.62}
-.page.plano .lista li{padding-left:6mm;margin-bottom:4mm}
-.page.plano .lista li::before{top:2.4mm;width:3.2mm}
+.page.plano .lista{font-size:9.2pt;line-height:20px}
+.page.plano .lista li{padding-left:6mm;margin-bottom:15px}
+.page.plano .lista li::before{top:9px;width:3.2mm}
 .page.plano .principios{gap:6mm 10mm}
 .page.plano .principios p{font-size:8.8pt;line-height:1.6}
 .page.plano .small{font-size:9pt;line-height:1.62}
@@ -452,11 +455,11 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   <path class="lg-1" d="M1056.15,139.94c-2.39,0-3.92-.39-4.62-1.19-.69-.8-1.04-2.47-1.04-5.01v-17.62c0-3.63-.91-6.36-2.71-8.2-1.8-1.84-4.37-2.76-7.67-2.76-2.73,0-5.39.84-7.98,2.49-1.92,1.23-3.86,2.99-5.82,5.26h0c0-2.41-.32-4.25-.95-5.53-.64-1.28-1.19-1.91-1.66-1.91-.17,0-.32.04-.49.11l-10.49,4.96c-.21.11-.25.32-.11.63.14.31.33.43.57.36,1.05-.42,1.98-.74,2.79-.98.81-.23,1.52-.35,2.1-.35,1.16,0,1.98.45,2.45,1.37.47.92.7,2.37.7,4.38v17.76c0,2.54-.36,4.21-1.06,5.01-.7.8-2.23,1.19-4.57,1.19-.18,0-.27.18-.27.54s.1.54.27.54h.01c1.06,0,2.3-.04,3.75-.1,1.44-.06,2.91-.1,4.46-.1s3.03.04,4.44.1c1.42.06,2.65.1,3.71.1.18,0,.27-.18.27-.54s-.09-.54-.27-.54c-2.4,0-3.92-.39-4.62-1.19-.69-.8-1.04-2.47-1.04-5.01v-19.33c1.24-1.4,2.61-2.59,4.14-3.53,2.27-1.37,4.5-2.06,6.68-2.06,2.85,0,4.95.82,6.29,2.48,1.34,1.66,2,4.27,2,7.84v14.6c0,2.54-.36,4.21-1.06,5.01-.72.8-2.23,1.19-4.57,1.19-.19,0-.27.18-.27.54s.1.54.27.54h0c1.06,0,2.3-.04,3.75-.1,1.44-.06,2.91-.1,4.46-.1s3.03.04,4.44.1c1.42.06,2.65.1,3.71.1.18,0,.27-.18.27-.54s-.09-.54-.27-.54Z"/>
   <path class="lg-1" d="M1090.08,109.29c1.37,0,2.58.16,3.62.48,1.05.32,1.85.6,2.4.84.24.13.44-.18.61-.93.17-.75.25-1.46.25-2.1,0-.49-.04-.94-.13-1.37s-.21-.64-.37-.64c-2.12,0-4.07.36-5.82,1.06-1.25.5-2.52,1.12-3.82,1.85-.47-.38-.98-.74-1.54-1.06-1.97-1.16-4.56-1.73-7.74-1.73-2.83,0-5.33.51-7.49,1.54-2.16,1.03-3.85,2.41-5.06,4.16-1.21,1.74-1.81,3.73-1.81,5.96,0,2.06.55,4,1.63,5.79,1.1,1.78,2.65,3.22,4.68,4.29.08.04.17.07.26.11-1.91,1.51-3.45,2.93-4.56,4.24-1.29,1.52-1.94,3.35-1.94,5.36s.67,3.46,1.99,4.38c1.27.88,2.96,1.44,5.05,1.68-2.3,1.62-4.21,3.25-5.71,4.9-2.39,2.61-3.57,5.4-3.57,8.23s1.16,5.18,3.48,7.06c2.33,1.88,5.57,2.83,9.76,2.83h.01c2.86-.01,5.64-.49,8.33-1.44,2.68-.95,5.07-2.27,7.17-3.95,2.1-1.68,3.76-3.61,4.99-5.8,1.22-2.18,1.84-4.62,1.84-7s-.55-4.21-1.62-5.49c-1.09-1.26-2.46-2.16-4.12-2.66-1.67-.5-3.4-.79-5.18-.87-1.77-.08-3.4-.12-4.86-.12-3.23-.01-5.8-.16-7.72-.45-1.92-.29-3.29-.8-4.13-1.52-.84-.72-1.25-1.73-1.25-3.02,0-1.11.3-2.15.89-3.11.51-.82,1.34-1.72,2.46-2.67,1.68.62,3.62.93,5.79.93h0c2.9,0,5.4-.55,7.53-1.66,2.11-1.11,3.75-2.56,4.9-4.37,1.16-1.79,1.74-3.73,1.74-5.82,0-1.83-.47-3.61-1.38-5.39-.44-.86-1.01-1.64-1.7-2.35,0,0,.01,0,.02,0,.67-.11,1.38-.17,2.15-.17ZM1085.21,144c2.14.27,3.81.95,5.02,2.04,1.22,1.09,1.82,2.89,1.82,5.39,0,3.72-1.32,6.67-3.97,8.83-2.65,2.16-6.02,3.23-10.12,3.23-2.54,0-4.69-.42-6.45-1.24-1.77-.82-3.1-2-4.02-3.53-.92-1.53-1.38-3.28-1.38-5.4s.44-3.89,1.31-5.31c.87-1.42,2.03-2.64,3.48-3.66.46-.33.97-.63,1.46-.95,1.68.12,3.47.2,5.37.2,2.85,0,5.33.13,7.47.41ZM1085.15,112.44h0s0,0,0,0h0ZM1083.41,125.75c-1.29,1.32-2.9,1.98-4.82,1.98h0c-1.55.01-3.08-.44-4.58-1.34-1.5-.91-2.76-2.28-3.77-4.14-1.01-1.86-1.52-4.08-1.52-7.01s.62-5.02,1.85-6.3c1.22-1.28,2.82-1.91,4.78-1.91,1.81,0,3.48.48,4.99,1.44,1.5.97,2.71,2.35,3.63,4.14.92,1.79,1.38,3.97,1.38,6.54,0,3.08-.64,5.27-1.94,6.6Z"/>
 </svg></div>
-  <h1 class="cv-t"><span class="lt">Diagnóstico</span><span class="bd">de Carteira</span></h1>
-  <div class="cv-conf">DOCUMENTO CONFIDENCIAL<br>PROIBIDO O COMPARTILHAMENTO</div>
+  <h1 class="cv-t"><span class="lt">Diagnóstico</span><span class="bd">de&nbsp;Carteira</span></h1>
+  <div class="cv-conf">DOCUMENTO CONFIDENCIAL<br>PROIBIDO O&nbsp;COMPARTILHAMENTO</div>
   <div class="rule r1"></div>
   <div class="rule r2"></div>
-  <div class="cv-b-t"><span style="font-weight:300">Sua </span><span style="font-weight:800">Situação Atual</span></div>
+  <div class="cv-b-t"><span style="font-weight:300">Sua </span><span style="font-weight:800">Situação&nbsp;Atual</span></div>
   <div class="cv-id"><div><span class="ph">{{nome_cliente}}</span></div><div>Patrimônio analisado &middot; <span class="ph">{{patrimonio_analisado}}</span></div><div>Banker &middot; <span class="ph">{{nome_responsavel}}</span></div><div><span class="ph">{{data_diagnostico}}</span></div></div>
 </section>
 <section class="page">
@@ -496,35 +499,35 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 </svg></div></div>
   </header>
   <div class="pg-body">
-<span class="eyebrow">Como lemos a sua carteira</span>
-<h1 class="t">Escopo e método</h1>
-<p class="lead">Este diagnóstico compara a sua carteira atual com a carteira que faria sentido para os seus objetivos, o seu horizonte e a sua tolerância a risco &mdash; sem julgamento sobre decisões passadas.</p>
-<h2>O que foi analisado</h2>
+<span class="eyebrow">Como lemos a sua&nbsp;carteira</span>
+<h1 class="t">Escopo e&nbsp;método</h1>
+<p class="lead">Este diagnóstico compara a sua carteira atual com a carteira que faria sentido para os seus objetivos, o seu horizonte e a sua tolerância a risco &mdash; sem julgamento sobre decisões&nbsp;passadas.</p>
+<h2>O que foi&nbsp;analisado</h2>
 <ol class="flow" style="--n:4"><li><span class="node"></span><span class="tag"><span class="ph">{{etapa_coleta_prazo}}</span></span><h4>Coleta</h4><p><span class="ph">{{etapa_coleta}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{etapa_consolidacao_prazo}}</span></span><h4>Consolidação</h4><p><span class="ph">{{etapa_consolidacao}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{etapa_analise_prazo}}</span></span><h4>Análise</h4><p><span class="ph">{{etapa_analise}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{etapa_proposta_prazo}}</span></span><h4>Proposta</h4><p><span class="ph">{{etapa_proposta}}</span></p></li></ol>
-<h2>Foco deste diagnóstico &mdash; Estrutura, liquidez e sucessão</h2>
-<p class="small mut">Como o patrimônio está estruturado entre pessoa física, veículos e jurisdições, e o que isso implica em liquidez, tributação e sucessão.</p>
+<h2>Foco deste diagnóstico &mdash; Estrutura, liquidez e&nbsp;sucessão</h2>
+<p class="small mut">Como o patrimônio está estruturado entre pessoa física, veículos e jurisdições, e o que isso implica em liquidez, tributação e&nbsp;sucessão.</p>
 <div class="cols2">
   <div>
-    <h2>Base de dados</h2>
+    <h2>Base de&nbsp;dados</h2>
     <div class="dl">
       <dt>Instituições</dt><dd><span class="ph">{{instituicoes_analisadas}}</span></dd>
-      <dt>Data de corte</dt><dd><span class="ph">{{data_corte}}</span></dd>
+      <dt>Data de&nbsp;corte</dt><dd><span class="ph">{{data_corte}}</span></dd>
       <dt>Documentos</dt><dd><span class="ph">{{documentos_base}}</span></dd>
-      <dt>Não incluído</dt><dd><span class="ph">{{ativos_fora_do_escopo}}</span></dd>
+      <dt>Não&nbsp;incluído</dt><dd><span class="ph">{{ativos_fora_do_escopo}}</span></dd>
     </div>
   </div>
   <div>
-    <h2>Neste documento</h2>
-    <ol class="toc"><li><span class="n">01</span><span>Perfil, objetivos e restrições</span><span class="d"></span><span class="p">03</span></li><li><span class="n">02</span><span>Fotografia da carteira atual</span><span class="d"></span><span class="p">04</span></li><li><span class="n">03</span><span>Pontos fortes e pontos de atenção</span><span class="d"></span><span class="p">05</span></li><li><span class="n">04</span><span>Riscos e concentração</span><span class="d"></span><span class="p">06</span></li><li><span class="n">05</span><span>Custos e eficiência tributária</span><span class="d"></span><span class="p">07</span></li><li><span class="n">06</span><span>Carteira proposta</span><span class="d"></span><span class="p">08</span></li><li><span class="n">07</span><span>Plano de transição</span><span class="d"></span><span class="p">09</span></li><li><span class="n">08</span><span>Notas e avisos</span><span class="d"></span><span class="p">10</span></li></ol>
+    <h2>Neste&nbsp;documento</h2>
+    <ol class="toc"><li><span class="n">01</span><span>Perfil, objetivos e&nbsp;restrições</span><span class="d"></span><span class="p">03</span></li><li><span class="n">02</span><span>Fotografia da carteira&nbsp;atual</span><span class="d"></span><span class="p">04</span></li><li><span class="n">03</span><span>Pontos fortes e pontos de&nbsp;atenção</span><span class="d"></span><span class="p">05</span></li><li><span class="n">04</span><span>Riscos e&nbsp;concentração</span><span class="d"></span><span class="p">06</span></li><li><span class="n">05</span><span>Custos e eficiência&nbsp;tributária</span><span class="d"></span><span class="p">07</span></li><li><span class="n">06</span><span>Carteira&nbsp;proposta</span><span class="d"></span><span class="p">08</span></li><li><span class="n">07</span><span>Plano de&nbsp;transição</span><span class="d"></span><span class="p">09</span></li><li><span class="n">08</span><span>Notas e&nbsp;avisos</span><span class="d"></span><span class="p">10</span></li></ol>
   </div>
 </div>
   </div>
-  <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
   <header class="pg-head">
-    <div class="sec">Perfil e objetivos</div>
+    <div class="sec">Perfil e&nbsp;objetivos</div>
     <div class="rt"><div class="dt"><span class="ph">{{data_diagnostico}}</span></div><div class="logo logo-ink" style="width:30.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
@@ -558,42 +561,42 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 </svg></div></div>
   </header>
   <div class="pg-body">
-<span class="eyebrow">Ponto de partida</span>
-<h1 class="t">Perfil, objetivos e restrições</h1>
-<p class="lead">Tudo o que vem depois neste documento se apoia nas informações abaixo. Se alguma delas estiver errada, a proposta muda.</p>
+<span class="eyebrow">Ponto de&nbsp;partida</span>
+<h1 class="t">Perfil, objetivos e&nbsp;restrições</h1>
+<p class="lead">Tudo o que vem depois neste documento se apoia nas informações abaixo. Se alguma delas estiver errada, a proposta&nbsp;muda.</p>
 <div class="cols2">
   <div>
-    <h2>Quem é você como investidor</h2>
+    <h2>Quem é você como&nbsp;investidor</h2>
     <div class="dl">
-      <dt>Perfil (suitability)</dt><dd><span class="ph">{{perfil_investidor}}</span></dd>
-      <dt>Horizonte principal</dt><dd><span class="ph">{{horizonte_principal}}</span></dd>
+      <dt>Perfil&nbsp;(suitability)</dt><dd><span class="ph">{{perfil_investidor}}</span></dd>
+      <dt>Horizonte&nbsp;principal</dt><dd><span class="ph">{{horizonte_principal}}</span></dd>
       <dt>Experiência</dt><dd><span class="ph">{{experiencia_investimentos}}</span></dd>
-      <dt>Renda x despesa</dt><dd><span class="ph">{{relacao_renda_despesa}}</span></dd>
-      <dt>Reserva de emergência</dt><dd><span class="ph">{{reserva_emergencia}}</span></dd>
-      <dt>Capacidade de aporte</dt><dd><span class="ph">{{capacidade_aporte_mensal}}</span></dd>
+      <dt>Renda x&nbsp;despesa</dt><dd><span class="ph">{{relacao_renda_despesa}}</span></dd>
+      <dt>Reserva de&nbsp;emergência</dt><dd><span class="ph">{{reserva_emergencia}}</span></dd>
+      <dt>Capacidade de&nbsp;aporte</dt><dd><span class="ph">{{capacidade_aporte_mensal}}</span></dd>
     </div>
   </div>
   <div>
-    <h2>Restrições declaradas</h2>
+    <h2>Restrições&nbsp;declaradas</h2>
     <div class="dl">
-      <dt>Liquidez mínima</dt><dd><span class="ph">{{liquidez_minima}}</span></dd>
-      <dt>Classes vetadas</dt><dd><span class="ph">{{classes_vetadas}}</span></dd>
-      <dt>Situação tributária</dt><dd><span class="ph">{{situacao_tributaria}}</span></dd>
-      <dt>Obrigações futuras</dt><dd><span class="ph">{{obrigacoes_futuras}}</span></dd>
-      <dt>Outros patrimônios</dt><dd><span class="ph">{{outros_patrimonios}}</span></dd>
+      <dt>Liquidez&nbsp;mínima</dt><dd><span class="ph">{{liquidez_minima}}</span></dd>
+      <dt>Classes&nbsp;vetadas</dt><dd><span class="ph">{{classes_vetadas}}</span></dd>
+      <dt>Situação&nbsp;tributária</dt><dd><span class="ph">{{situacao_tributaria}}</span></dd>
+      <dt>Obrigações&nbsp;futuras</dt><dd><span class="ph">{{obrigacoes_futuras}}</span></dd>
+      <dt>Outros&nbsp;patrimônios</dt><dd><span class="ph">{{outros_patrimonios}}</span></dd>
       <dt>Observações</dt><dd><span class="ph">{{observacoes_perfil}}</span></dd>
     </div>
   </div>
 </div>
-<h2>Objetivos priorizados</h2>
-<table class="tb"><thead><tr><th>#</th><th>Objetivo</th><th class="num">Valor-alvo</th><th>Prazo</th><th>Prioridade</th><th>Situação hoje</th></tr></thead><tbody><tr><td>1</td><td><span class="ph">{{obj_1_descricao}}</span></td><td class="num"><span class="ph">{{obj_1_valor}}</span></td><td><span class="ph">{{obj_1_prazo}}</span></td><td><span class="pill"><span class="ph">{{obj_1_prioridade}}</span></span></td><td><span class="ph">{{obj_1_situacao}}</span></td></tr><tr><td>2</td><td><span class="ph">{{obj_2_descricao}}</span></td><td class="num"><span class="ph">{{obj_2_valor}}</span></td><td><span class="ph">{{obj_2_prazo}}</span></td><td><span class="pill"><span class="ph">{{obj_2_prioridade}}</span></span></td><td><span class="ph">{{obj_2_situacao}}</span></td></tr><tr><td>3</td><td><span class="ph">{{obj_3_descricao}}</span></td><td class="num"><span class="ph">{{obj_3_valor}}</span></td><td><span class="ph">{{obj_3_prazo}}</span></td><td><span class="pill"><span class="ph">{{obj_3_prioridade}}</span></span></td><td><span class="ph">{{obj_3_situacao}}</span></td></tr><tr><td>4</td><td><span class="ph">{{obj_4_descricao}}</span></td><td class="num"><span class="ph">{{obj_4_valor}}</span></td><td><span class="ph">{{obj_4_prazo}}</span></td><td><span class="pill"><span class="ph">{{obj_4_prioridade}}</span></span></td><td><span class="ph">{{obj_4_situacao}}</span></td></tr></tbody></table>
+<h2>Objetivos&nbsp;priorizados</h2>
+<table class="tb"><thead><tr><th>#</th><th>Objetivo</th><th class="num">Valor-alvo</th><th>Prazo</th><th>Prioridade</th><th>Situação&nbsp;hoje</th></tr></thead><tbody><tr><td>1</td><td><span class="ph">{{obj_1_descricao}}</span></td><td class="num"><span class="ph">{{obj_1_valor}}</span></td><td><span class="ph">{{obj_1_prazo}}</span></td><td><span class="pill"><span class="ph">{{obj_1_prioridade}}</span></span></td><td><span class="ph">{{obj_1_situacao}}</span></td></tr><tr><td>2</td><td><span class="ph">{{obj_2_descricao}}</span></td><td class="num"><span class="ph">{{obj_2_valor}}</span></td><td><span class="ph">{{obj_2_prazo}}</span></td><td><span class="pill"><span class="ph">{{obj_2_prioridade}}</span></span></td><td><span class="ph">{{obj_2_situacao}}</span></td></tr><tr><td>3</td><td><span class="ph">{{obj_3_descricao}}</span></td><td class="num"><span class="ph">{{obj_3_valor}}</span></td><td><span class="ph">{{obj_3_prazo}}</span></td><td><span class="pill"><span class="ph">{{obj_3_prioridade}}</span></span></td><td><span class="ph">{{obj_3_situacao}}</span></td></tr><tr><td>4</td><td><span class="ph">{{obj_4_descricao}}</span></td><td class="num"><span class="ph">{{obj_4_valor}}</span></td><td><span class="ph">{{obj_4_prazo}}</span></td><td><span class="pill"><span class="ph">{{obj_4_prioridade}}</span></span></td><td><span class="ph">{{obj_4_situacao}}</span></td></tr></tbody></table>
   </div>
-  <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
   <header class="pg-head">
-    <div class="sec">Carteira atual</div>
+    <div class="sec">Carteira&nbsp;atual</div>
     <div class="rt"><div class="dt"><span class="ph">{{data_diagnostico}}</span></div><div class="logo logo-ink" style="width:30.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
@@ -628,18 +631,18 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   </header>
   <div class="pg-body">
 <span class="eyebrow">Fotografia</span>
-<h1 class="t">Como está a sua carteira hoje</h1>
-<p class="lead">Posição consolidada em <span class="ph">{{data_corte}}</span>, somando todas as instituições informadas.</p>
-<div class="kpis" style="--n:4"><div class="kpi"><div class="k">Patrimônio analisado</div><div class="v"><span class="ph">{{patrimonio_analisado}}</span></div><div class="s"><span class="ph">{{qtd_ativos}}</span> ativos</div></div><div class="kpi"><div class="k">Instituições</div><div class="v"><span class="ph">{{qtd_instituicoes}}</span></div><div class="s">Contas: <span class="ph">{{qtd_contas}}</span></div></div><div class="kpi"><div class="k">Retorno 12 meses</div><div class="v"><span class="ph">{{retorno_12m_atual}}</span></div><div class="s">% CDI: <span class="ph">{{retorno_12m_pct_cdi}}</span></div></div><div class="kpi"><div class="k">Custo total anual</div><div class="v"><span class="ph">{{custo_total_anual}}</span></div><div class="s"><span class="ph">{{custo_total_perc}}</span> a.a.</div></div></div>
+<h1 class="t">Como está a sua carteira&nbsp;hoje</h1>
+<p class="lead">Posição consolidada em <span class="ph">{{data_corte}}</span>, somando todas as instituições&nbsp;informadas.</p>
+<div class="kpis" style="--n:4"><div class="kpi"><div class="k">Patrimônio&nbsp;analisado</div><div class="v"><span class="ph">{{patrimonio_analisado}}</span></div><div class="s"><span class="ph">{{qtd_ativos}}</span>&nbsp;ativos</div></div><div class="kpi"><div class="k">Instituições</div><div class="v"><span class="ph">{{qtd_instituicoes}}</span></div><div class="s">Contas: <span class="ph">{{qtd_contas}}</span></div></div><div class="kpi"><div class="k">Retorno 12&nbsp;meses</div><div class="v"><span class="ph">{{retorno_12m_atual}}</span></div><div class="s">% CDI: <span class="ph">{{retorno_12m_pct_cdi}}</span></div></div><div class="kpi"><div class="k">Custo total&nbsp;anual</div><div class="v"><span class="ph">{{custo_total_anual}}</span></div><div class="s"><span class="ph">{{custo_total_perc}}</span>&nbsp;a.a.</div></div></div>
 <div class="gap"></div>
-<h2>Composição por classe e instituição</h2>
-<table class="tb sm"><thead><tr><th>Classe</th><th>Instituição</th><th class="num">Valor</th><th class="num">% do total</th><th>Liquidez</th><th class="num">Retorno 12m</th><th class="num">Custo a.a.</th></tr></thead><tbody><tr><td><span class="ph">{{at_1_classe}}</span></td><td><span class="ph">{{at_1_instituicao}}</span></td><td class="num"><span class="ph">{{at_1_valor}}</span></td><td class="num"><span class="ph">{{at_1_perc}}</span></td><td><span class="ph">{{at_1_liquidez}}</span></td><td class="num"><span class="ph">{{at_1_ret12m}}</span></td><td class="num"><span class="ph">{{at_1_custo}}</span></td></tr><tr><td><span class="ph">{{at_2_classe}}</span></td><td><span class="ph">{{at_2_instituicao}}</span></td><td class="num"><span class="ph">{{at_2_valor}}</span></td><td class="num"><span class="ph">{{at_2_perc}}</span></td><td><span class="ph">{{at_2_liquidez}}</span></td><td class="num"><span class="ph">{{at_2_ret12m}}</span></td><td class="num"><span class="ph">{{at_2_custo}}</span></td></tr><tr><td><span class="ph">{{at_3_classe}}</span></td><td><span class="ph">{{at_3_instituicao}}</span></td><td class="num"><span class="ph">{{at_3_valor}}</span></td><td class="num"><span class="ph">{{at_3_perc}}</span></td><td><span class="ph">{{at_3_liquidez}}</span></td><td class="num"><span class="ph">{{at_3_ret12m}}</span></td><td class="num"><span class="ph">{{at_3_custo}}</span></td></tr><tr><td><span class="ph">{{at_4_classe}}</span></td><td><span class="ph">{{at_4_instituicao}}</span></td><td class="num"><span class="ph">{{at_4_valor}}</span></td><td class="num"><span class="ph">{{at_4_perc}}</span></td><td><span class="ph">{{at_4_liquidez}}</span></td><td class="num"><span class="ph">{{at_4_ret12m}}</span></td><td class="num"><span class="ph">{{at_4_custo}}</span></td></tr><tr><td><span class="ph">{{at_5_classe}}</span></td><td><span class="ph">{{at_5_instituicao}}</span></td><td class="num"><span class="ph">{{at_5_valor}}</span></td><td class="num"><span class="ph">{{at_5_perc}}</span></td><td><span class="ph">{{at_5_liquidez}}</span></td><td class="num"><span class="ph">{{at_5_ret12m}}</span></td><td class="num"><span class="ph">{{at_5_custo}}</span></td></tr><tr><td><span class="ph">{{at_6_classe}}</span></td><td><span class="ph">{{at_6_instituicao}}</span></td><td class="num"><span class="ph">{{at_6_valor}}</span></td><td class="num"><span class="ph">{{at_6_perc}}</span></td><td><span class="ph">{{at_6_liquidez}}</span></td><td class="num"><span class="ph">{{at_6_ret12m}}</span></td><td class="num"><span class="ph">{{at_6_custo}}</span></td></tr><tr><td><span class="ph">{{at_7_classe}}</span></td><td><span class="ph">{{at_7_instituicao}}</span></td><td class="num"><span class="ph">{{at_7_valor}}</span></td><td class="num"><span class="ph">{{at_7_perc}}</span></td><td><span class="ph">{{at_7_liquidez}}</span></td><td class="num"><span class="ph">{{at_7_ret12m}}</span></td><td class="num"><span class="ph">{{at_7_custo}}</span></td></tr></tbody><tfoot><tr><td><strong>Total</strong></td><td></td><td class="num"><span class="ph">{{patrimonio_analisado}}</span></td><td class="num">100,0%</td><td>&mdash;</td><td class="num"><span class="ph">{{retorno_12m_atual}}</span></td><td class="num"><span class="ph">{{custo_total_perc}}</span></td></tr></tfoot></table>
+<h2>Composição por classe e&nbsp;instituição</h2>
+<table class="tb sm"><thead><tr><th>Classe</th><th>Instituição</th><th class="num">Valor</th><th class="num">% do&nbsp;total</th><th>Liquidez</th><th class="num">Retorno&nbsp;12m</th><th class="num">Custo&nbsp;a.a.</th></tr></thead><tbody><tr><td><span class="ph">{{at_1_classe}}</span></td><td><span class="ph">{{at_1_instituicao}}</span></td><td class="num"><span class="ph">{{at_1_valor}}</span></td><td class="num"><span class="ph">{{at_1_perc}}</span></td><td><span class="ph">{{at_1_liquidez}}</span></td><td class="num"><span class="ph">{{at_1_ret12m}}</span></td><td class="num"><span class="ph">{{at_1_custo}}</span></td></tr><tr><td><span class="ph">{{at_2_classe}}</span></td><td><span class="ph">{{at_2_instituicao}}</span></td><td class="num"><span class="ph">{{at_2_valor}}</span></td><td class="num"><span class="ph">{{at_2_perc}}</span></td><td><span class="ph">{{at_2_liquidez}}</span></td><td class="num"><span class="ph">{{at_2_ret12m}}</span></td><td class="num"><span class="ph">{{at_2_custo}}</span></td></tr><tr><td><span class="ph">{{at_3_classe}}</span></td><td><span class="ph">{{at_3_instituicao}}</span></td><td class="num"><span class="ph">{{at_3_valor}}</span></td><td class="num"><span class="ph">{{at_3_perc}}</span></td><td><span class="ph">{{at_3_liquidez}}</span></td><td class="num"><span class="ph">{{at_3_ret12m}}</span></td><td class="num"><span class="ph">{{at_3_custo}}</span></td></tr><tr><td><span class="ph">{{at_4_classe}}</span></td><td><span class="ph">{{at_4_instituicao}}</span></td><td class="num"><span class="ph">{{at_4_valor}}</span></td><td class="num"><span class="ph">{{at_4_perc}}</span></td><td><span class="ph">{{at_4_liquidez}}</span></td><td class="num"><span class="ph">{{at_4_ret12m}}</span></td><td class="num"><span class="ph">{{at_4_custo}}</span></td></tr><tr><td><span class="ph">{{at_5_classe}}</span></td><td><span class="ph">{{at_5_instituicao}}</span></td><td class="num"><span class="ph">{{at_5_valor}}</span></td><td class="num"><span class="ph">{{at_5_perc}}</span></td><td><span class="ph">{{at_5_liquidez}}</span></td><td class="num"><span class="ph">{{at_5_ret12m}}</span></td><td class="num"><span class="ph">{{at_5_custo}}</span></td></tr><tr><td><span class="ph">{{at_6_classe}}</span></td><td><span class="ph">{{at_6_instituicao}}</span></td><td class="num"><span class="ph">{{at_6_valor}}</span></td><td class="num"><span class="ph">{{at_6_perc}}</span></td><td><span class="ph">{{at_6_liquidez}}</span></td><td class="num"><span class="ph">{{at_6_ret12m}}</span></td><td class="num"><span class="ph">{{at_6_custo}}</span></td></tr><tr><td><span class="ph">{{at_7_classe}}</span></td><td><span class="ph">{{at_7_instituicao}}</span></td><td class="num"><span class="ph">{{at_7_valor}}</span></td><td class="num"><span class="ph">{{at_7_perc}}</span></td><td><span class="ph">{{at_7_liquidez}}</span></td><td class="num"><span class="ph">{{at_7_ret12m}}</span></td><td class="num"><span class="ph">{{at_7_custo}}</span></td></tr></tbody><tfoot><tr><td><strong>Total</strong></td><td></td><td class="num"><span class="ph">{{patrimonio_analisado}}</span></td><td class="num">100,0%</td><td>&mdash;</td><td class="num"><span class="ph">{{retorno_12m_atual}}</span></td><td class="num"><span class="ph">{{custo_total_perc}}</span></td></tr></tfoot></table>
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch;margin-top:5mm">
-  <div class="chart" style="flex:1 1 auto;min-height:44mm"><div class="sk-donut"></div><div class="cl">Composição atual</div><div class="cd">Peso de cada classe no patrimônio total.</div><ul class="legend"><li><i style="background:var(--c1)"></i>Renda fixa</li><li><i style="background:var(--c2)"></i>Multimercado</li><li><i style="background:var(--c3)"></i>Renda variável BR</li><li><i style="background:var(--c4)"></i>Internacional</li><li><i style="background:var(--c5)"></i>FIIs</li><li><i style="background:var(--c6)"></i>Alternativos</li></ul></div>
-  <div class="chart" style="flex:1 1 auto;min-height:44mm"><div class="sk-bars"><i style="height:42%"></i><i style="height:68%"></i><i style="height:55%"></i><i style="height:88%"></i><i style="height:72%"></i><i style="height:96%"></i></div><div class="cl">Liquidez da carteira</div><div class="cd">Quanto do patrimônio está disponível em D+0, até 30 dias, até 1 ano e acima disso.</div></div>
+  <div class="chart" style="flex:1 1 auto;min-height:44mm"><div class="sk-donut"></div><div class="cl">Composição&nbsp;atual</div><div class="cd">Peso de cada classe no patrimônio&nbsp;total.</div><ul class="legend"><li><i style="background:var(--c1)"></i>Renda&nbsp;fixa</li><li><i style="background:var(--c2)"></i>Multimercado</li><li><i style="background:var(--c3)"></i>Renda variável&nbsp;BR</li><li><i style="background:var(--c4)"></i>Internacional</li><li><i style="background:var(--c5)"></i>FIIs</li><li><i style="background:var(--c6)"></i>Alternativos</li></ul></div>
+  <div class="chart" style="flex:1 1 auto;min-height:44mm"><div class="sk-bars"><i style="height:42%"></i><i style="height:68%"></i><i style="height:55%"></i><i style="height:88%"></i><i style="height:72%"></i><i style="height:96%"></i></div><div class="cl">Liquidez da&nbsp;carteira</div><div class="cd">Quanto do patrimônio está disponível em D+0, até 30 dias, até 1 ano e acima&nbsp;disso.</div></div>
 </div>
   </div>
-  <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -679,16 +682,16 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   </header>
   <div class="pg-body">
 <span class="eyebrow">Leitura</span>
-<h1 class="t">Pontos fortes e pontos de atenção</h1>
-<p class="lead">O que já funciona e deve ser preservado, e o que custa dinheiro ou risco desnecessário hoje.</p>
-<h2>O que está bem construído</h2>
+<h1 class="t">Pontos fortes e pontos de&nbsp;atenção</h1>
+<p class="lead">O que já funciona e deve ser preservado, e o que custa dinheiro ou risco desnecessário&nbsp;hoje.</p>
+<h2>O que está bem&nbsp;construído</h2>
 <div class="cards" style="--n:3"><div class="card"><h4><span class="ph">{{forte_1_titulo}}</span></h4><p><span class="ph">{{forte_1_detalhe}}</span></p></div><div class="card"><h4><span class="ph">{{forte_2_titulo}}</span></h4><p><span class="ph">{{forte_2_detalhe}}</span></p></div><div class="card"><h4><span class="ph">{{forte_3_titulo}}</span></h4><p><span class="ph">{{forte_3_detalhe}}</span></p></div></div>
-<h2>O que merece atenção</h2>
-<table class="tb"><thead><tr><th>Gravidade</th><th>Ponto de atenção</th><th>Por que importa</th><th class="num">Impacto estimado</th><th>Encaminhamento</th></tr></thead><tbody><tr><td><span class="pill rk"><span class="ph">{{aten_1_gravidade}}</span></span></td><td><span class="ph">{{aten_1_titulo}}</span></td><td><span class="ph">{{aten_1_motivo}}</span></td><td class="num"><span class="ph">{{aten_1_impacto}}</span></td><td><span class="ph">{{aten_1_acao}}</span></td></tr><tr><td><span class="pill rk"><span class="ph">{{aten_2_gravidade}}</span></span></td><td><span class="ph">{{aten_2_titulo}}</span></td><td><span class="ph">{{aten_2_motivo}}</span></td><td class="num"><span class="ph">{{aten_2_impacto}}</span></td><td><span class="ph">{{aten_2_acao}}</span></td></tr><tr><td><span class="pill at"><span class="ph">{{aten_3_gravidade}}</span></span></td><td><span class="ph">{{aten_3_titulo}}</span></td><td><span class="ph">{{aten_3_motivo}}</span></td><td class="num"><span class="ph">{{aten_3_impacto}}</span></td><td><span class="ph">{{aten_3_acao}}</span></td></tr><tr><td><span class="pill at"><span class="ph">{{aten_4_gravidade}}</span></span></td><td><span class="ph">{{aten_4_titulo}}</span></td><td><span class="ph">{{aten_4_motivo}}</span></td><td class="num"><span class="ph">{{aten_4_impacto}}</span></td><td><span class="ph">{{aten_4_acao}}</span></td></tr><tr><td><span class="pill at"><span class="ph">{{aten_5_gravidade}}</span></span></td><td><span class="ph">{{aten_5_titulo}}</span></td><td><span class="ph">{{aten_5_motivo}}</span></td><td class="num"><span class="ph">{{aten_5_impacto}}</span></td><td><span class="ph">{{aten_5_acao}}</span></td></tr></tbody></table>
+<h2>O que merece&nbsp;atenção</h2>
+<table class="tb"><thead><tr><th>Gravidade</th><th>Ponto de&nbsp;atenção</th><th>Por que&nbsp;importa</th><th class="num">Impacto&nbsp;estimado</th><th>Encaminhamento</th></tr></thead><tbody><tr><td><span class="pill rk"><span class="ph">{{aten_1_gravidade}}</span></span></td><td><span class="ph">{{aten_1_titulo}}</span></td><td><span class="ph">{{aten_1_motivo}}</span></td><td class="num"><span class="ph">{{aten_1_impacto}}</span></td><td><span class="ph">{{aten_1_acao}}</span></td></tr><tr><td><span class="pill rk"><span class="ph">{{aten_2_gravidade}}</span></span></td><td><span class="ph">{{aten_2_titulo}}</span></td><td><span class="ph">{{aten_2_motivo}}</span></td><td class="num"><span class="ph">{{aten_2_impacto}}</span></td><td><span class="ph">{{aten_2_acao}}</span></td></tr><tr><td><span class="pill at"><span class="ph">{{aten_3_gravidade}}</span></span></td><td><span class="ph">{{aten_3_titulo}}</span></td><td><span class="ph">{{aten_3_motivo}}</span></td><td class="num"><span class="ph">{{aten_3_impacto}}</span></td><td><span class="ph">{{aten_3_acao}}</span></td></tr><tr><td><span class="pill at"><span class="ph">{{aten_4_gravidade}}</span></span></td><td><span class="ph">{{aten_4_titulo}}</span></td><td><span class="ph">{{aten_4_motivo}}</span></td><td class="num"><span class="ph">{{aten_4_impacto}}</span></td><td><span class="ph">{{aten_4_acao}}</span></td></tr><tr><td><span class="pill at"><span class="ph">{{aten_5_gravidade}}</span></span></td><td><span class="ph">{{aten_5_titulo}}</span></td><td><span class="ph">{{aten_5_motivo}}</span></td><td class="num"><span class="ph">{{aten_5_impacto}}</span></td><td><span class="ph">{{aten_5_acao}}</span></td></tr></tbody></table>
 <div class="gap"></div>
-<div class="note"><p><strong>Resumo em uma frase.</strong> <span class="ph">{{resumo_diagnostico}}</span></p></div>
+<div class="note"><p><strong>Resumo em uma&nbsp;frase.</strong> <span class="ph">{{resumo_diagnostico}}</span></p></div>
   </div>
-  <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -728,19 +731,19 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   </header>
   <div class="pg-body">
 <span class="eyebrow">Exposições</span>
-<h1 class="t">Riscos e concentração</h1>
-<p class="lead">Onde a carteira está concentrada e qual seria o efeito de um cenário adverso em cada frente.</p>
-<h2>Concentração por emissor e contraparte</h2>
-<table class="tb sm"><thead><tr><th>Emissor / contraparte</th><th class="num">Exposição</th><th class="num">% do total</th><th>Rating</th><th>Coberto pelo FGC</th><th class="num">Limite sugerido</th></tr></thead><tbody><tr><td><span class="ph">{{emis_1_nome}}</span></td><td class="num"><span class="ph">{{emis_1_valor}}</span></td><td class="num"><span class="ph">{{emis_1_perc}}</span></td><td><span class="ph">{{emis_1_rating}}</span></td><td><span class="ph">{{emis_1_fgc}}</span></td><td class="num"><span class="ph">{{emis_1_limite}}</span></td></tr><tr><td><span class="ph">{{emis_2_nome}}</span></td><td class="num"><span class="ph">{{emis_2_valor}}</span></td><td class="num"><span class="ph">{{emis_2_perc}}</span></td><td><span class="ph">{{emis_2_rating}}</span></td><td><span class="ph">{{emis_2_fgc}}</span></td><td class="num"><span class="ph">{{emis_2_limite}}</span></td></tr><tr><td><span class="ph">{{emis_3_nome}}</span></td><td class="num"><span class="ph">{{emis_3_valor}}</span></td><td class="num"><span class="ph">{{emis_3_perc}}</span></td><td><span class="ph">{{emis_3_rating}}</span></td><td><span class="ph">{{emis_3_fgc}}</span></td><td class="num"><span class="ph">{{emis_3_limite}}</span></td></tr><tr><td><span class="ph">{{emis_4_nome}}</span></td><td class="num"><span class="ph">{{emis_4_valor}}</span></td><td class="num"><span class="ph">{{emis_4_perc}}</span></td><td><span class="ph">{{emis_4_rating}}</span></td><td><span class="ph">{{emis_4_fgc}}</span></td><td class="num"><span class="ph">{{emis_4_limite}}</span></td></tr><tr><td><span class="ph">{{emis_5_nome}}</span></td><td class="num"><span class="ph">{{emis_5_valor}}</span></td><td class="num"><span class="ph">{{emis_5_perc}}</span></td><td><span class="ph">{{emis_5_rating}}</span></td><td><span class="ph">{{emis_5_fgc}}</span></td><td class="num"><span class="ph">{{emis_5_limite}}</span></td></tr></tbody></table>
-<h2>Outras concentrações</h2>
+<h1 class="t">Riscos e&nbsp;concentração</h1>
+<p class="lead">Onde a carteira está concentrada e qual seria o efeito de um cenário adverso em cada&nbsp;frente.</p>
+<h2>Concentração por emissor e&nbsp;contraparte</h2>
+<table class="tb sm"><thead><tr><th>Emissor /&nbsp;contraparte</th><th class="num">Exposição</th><th class="num">% do&nbsp;total</th><th>Rating</th><th>Coberto pelo&nbsp;FGC</th><th class="num">Limite&nbsp;sugerido</th></tr></thead><tbody><tr><td><span class="ph">{{emis_1_nome}}</span></td><td class="num"><span class="ph">{{emis_1_valor}}</span></td><td class="num"><span class="ph">{{emis_1_perc}}</span></td><td><span class="ph">{{emis_1_rating}}</span></td><td><span class="ph">{{emis_1_fgc}}</span></td><td class="num"><span class="ph">{{emis_1_limite}}</span></td></tr><tr><td><span class="ph">{{emis_2_nome}}</span></td><td class="num"><span class="ph">{{emis_2_valor}}</span></td><td class="num"><span class="ph">{{emis_2_perc}}</span></td><td><span class="ph">{{emis_2_rating}}</span></td><td><span class="ph">{{emis_2_fgc}}</span></td><td class="num"><span class="ph">{{emis_2_limite}}</span></td></tr><tr><td><span class="ph">{{emis_3_nome}}</span></td><td class="num"><span class="ph">{{emis_3_valor}}</span></td><td class="num"><span class="ph">{{emis_3_perc}}</span></td><td><span class="ph">{{emis_3_rating}}</span></td><td><span class="ph">{{emis_3_fgc}}</span></td><td class="num"><span class="ph">{{emis_3_limite}}</span></td></tr><tr><td><span class="ph">{{emis_4_nome}}</span></td><td class="num"><span class="ph">{{emis_4_valor}}</span></td><td class="num"><span class="ph">{{emis_4_perc}}</span></td><td><span class="ph">{{emis_4_rating}}</span></td><td><span class="ph">{{emis_4_fgc}}</span></td><td class="num"><span class="ph">{{emis_4_limite}}</span></td></tr><tr><td><span class="ph">{{emis_5_nome}}</span></td><td class="num"><span class="ph">{{emis_5_valor}}</span></td><td class="num"><span class="ph">{{emis_5_perc}}</span></td><td><span class="ph">{{emis_5_rating}}</span></td><td><span class="ph">{{emis_5_fgc}}</span></td><td class="num"><span class="ph">{{emis_5_limite}}</span></td></tr></tbody></table>
+<h2>Outras&nbsp;concentrações</h2>
 <div class="cols2">
-  <div><table class="tb"><thead><tr><th>Prazo</th><th class="num">Valor</th><th class="num">%</th></tr></thead><tbody><tr><td>Até 1 ano</td><td class="num"><span class="ph">{{prazo_1a_valor}}</span></td><td class="num"><span class="ph">{{prazo_1a_perc}}</span></td></tr><tr><td>1 a 3 anos</td><td class="num"><span class="ph">{{prazo_3a_valor}}</span></td><td class="num"><span class="ph">{{prazo_3a_perc}}</span></td></tr><tr><td>3 a 5 anos</td><td class="num"><span class="ph">{{prazo_5a_valor}}</span></td><td class="num"><span class="ph">{{prazo_5a_perc}}</span></td></tr><tr><td>Acima de 5 anos</td><td class="num"><span class="ph">{{prazo_5mais_valor}}</span></td><td class="num"><span class="ph">{{prazo_5mais_perc}}</span></td></tr></tbody></table></div>
-  <div><table class="tb"><thead><tr><th>Moeda</th><th class="num">Valor</th><th class="num">%</th></tr></thead><tbody><tr><td>Real (BRL)</td><td class="num"><span class="ph">{{moeda_brl_valor}}</span></td><td class="num"><span class="ph">{{moeda_brl_perc}}</span></td></tr><tr><td>Dólar (USD)</td><td class="num"><span class="ph">{{moeda_usd_valor}}</span></td><td class="num"><span class="ph">{{moeda_usd_perc}}</span></td></tr><tr><td>Euro (EUR)</td><td class="num"><span class="ph">{{moeda_eur_valor}}</span></td><td class="num"><span class="ph">{{moeda_eur_perc}}</span></td></tr><tr><td>Outras</td><td class="num"><span class="ph">{{moeda_out_valor}}</span></td><td class="num"><span class="ph">{{moeda_out_perc}}</span></td></tr></tbody></table></div>
+  <div><table class="tb"><thead><tr><th>Prazo</th><th class="num">Valor</th><th class="num">%</th></tr></thead><tbody><tr><td>Até 1&nbsp;ano</td><td class="num"><span class="ph">{{prazo_1a_valor}}</span></td><td class="num"><span class="ph">{{prazo_1a_perc}}</span></td></tr><tr><td>1 a 3&nbsp;anos</td><td class="num"><span class="ph">{{prazo_3a_valor}}</span></td><td class="num"><span class="ph">{{prazo_3a_perc}}</span></td></tr><tr><td>3 a 5&nbsp;anos</td><td class="num"><span class="ph">{{prazo_5a_valor}}</span></td><td class="num"><span class="ph">{{prazo_5a_perc}}</span></td></tr><tr><td>Acima de 5&nbsp;anos</td><td class="num"><span class="ph">{{prazo_5mais_valor}}</span></td><td class="num"><span class="ph">{{prazo_5mais_perc}}</span></td></tr></tbody></table></div>
+  <div><table class="tb"><thead><tr><th>Moeda</th><th class="num">Valor</th><th class="num">%</th></tr></thead><tbody><tr><td>Real&nbsp;(BRL)</td><td class="num"><span class="ph">{{moeda_brl_valor}}</span></td><td class="num"><span class="ph">{{moeda_brl_perc}}</span></td></tr><tr><td>Dólar&nbsp;(USD)</td><td class="num"><span class="ph">{{moeda_usd_valor}}</span></td><td class="num"><span class="ph">{{moeda_usd_perc}}</span></td></tr><tr><td>Euro&nbsp;(EUR)</td><td class="num"><span class="ph">{{moeda_eur_valor}}</span></td><td class="num"><span class="ph">{{moeda_eur_perc}}</span></td></tr><tr><td>Outras</td><td class="num"><span class="ph">{{moeda_out_valor}}</span></td><td class="num"><span class="ph">{{moeda_out_perc}}</span></td></tr></tbody></table></div>
 </div>
 <div class="gap"></div>
-<div class="note"><p><strong>Cobertura do FGC.</strong> <span class="ph">{{texto_cobertura_fgc}}</span></p></div>
+<div class="note"><p><strong>Cobertura do&nbsp;FGC.</strong> <span class="ph">{{texto_cobertura_fgc}}</span></p></div>
   </div>
-  <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -780,16 +783,16 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   </header>
   <div class="pg-body">
 <span class="eyebrow">Eficiência</span>
-<h1 class="t">Custos e eficiência tributária</h1>
-<p class="lead">Todo custo é aceitável desde que entregue algo em troca. Abaixo, o que a carteira paga hoje e o que dá para recuperar.</p>
-<h2>Custos identificados</h2>
-<table class="tb sm"><thead><tr><th>Origem do custo</th><th>Onde incide</th><th class="num">Custo a.a.</th><th class="num">Em R$/ano</th><th>Contrapartida</th><th class="num">Recuperável</th></tr></thead><tbody><tr><td><span class="ph">{{custo_1_origem}}</span></td><td><span class="ph">{{custo_1_onde}}</span></td><td class="num"><span class="ph">{{custo_1_perc}}</span></td><td class="num"><span class="ph">{{custo_1_reais}}</span></td><td><span class="ph">{{custo_1_contrapartida}}</span></td><td class="num"><span class="ph">{{custo_1_recuperavel}}</span></td></tr><tr><td><span class="ph">{{custo_2_origem}}</span></td><td><span class="ph">{{custo_2_onde}}</span></td><td class="num"><span class="ph">{{custo_2_perc}}</span></td><td class="num"><span class="ph">{{custo_2_reais}}</span></td><td><span class="ph">{{custo_2_contrapartida}}</span></td><td class="num"><span class="ph">{{custo_2_recuperavel}}</span></td></tr><tr><td><span class="ph">{{custo_3_origem}}</span></td><td><span class="ph">{{custo_3_onde}}</span></td><td class="num"><span class="ph">{{custo_3_perc}}</span></td><td class="num"><span class="ph">{{custo_3_reais}}</span></td><td><span class="ph">{{custo_3_contrapartida}}</span></td><td class="num"><span class="ph">{{custo_3_recuperavel}}</span></td></tr><tr><td><span class="ph">{{custo_4_origem}}</span></td><td><span class="ph">{{custo_4_onde}}</span></td><td class="num"><span class="ph">{{custo_4_perc}}</span></td><td class="num"><span class="ph">{{custo_4_reais}}</span></td><td><span class="ph">{{custo_4_contrapartida}}</span></td><td class="num"><span class="ph">{{custo_4_recuperavel}}</span></td></tr><tr><td><span class="ph">{{custo_5_origem}}</span></td><td><span class="ph">{{custo_5_onde}}</span></td><td class="num"><span class="ph">{{custo_5_perc}}</span></td><td class="num"><span class="ph">{{custo_5_reais}}</span></td><td><span class="ph">{{custo_5_contrapartida}}</span></td><td class="num"><span class="ph">{{custo_5_recuperavel}}</span></td></tr></tbody><tfoot><tr><td><strong>Total</strong></td><td></td><td class="num"><span class="ph">{{custo_total_perc}}</span></td><td class="num"><span class="ph">{{custo_total_anual}}</span></td><td></td><td class="num"><span class="ph">{{custo_recuperavel_total}}</span></td></tr></tfoot></table>
-<h2>Eficiência tributária</h2>
-<table class="tb"><thead><tr><th>Situação</th><th>Diagnóstico</th><th>Oportunidade</th></tr></thead><tbody><tr><td>Come-cotas em fundos</td><td><span class="ph">{{trib_comecotas_diag}}</span></td><td><span class="ph">{{trib_comecotas_op}}</span></td></tr><tr><td>Ativos isentos de IR</td><td><span class="ph">{{trib_isentos_diag}}</span></td><td><span class="ph">{{trib_isentos_op}}</span></td></tr><tr><td>Prejuízo acumulado a compensar</td><td><span class="ph">{{trib_prejuizo_diag}}</span></td><td><span class="ph">{{trib_prejuizo_op}}</span></td></tr><tr><td>Marcação e prazo para alíquota mínima</td><td><span class="ph">{{trib_prazo_diag}}</span></td><td><span class="ph">{{trib_prazo_op}}</span></td></tr></tbody></table>
+<h1 class="t">Custos e eficiência&nbsp;tributária</h1>
+<p class="lead">Todo custo é aceitável desde que entregue algo em troca. Abaixo, o que a carteira paga hoje e o que dá para&nbsp;recuperar.</p>
+<h2>Custos&nbsp;identificados</h2>
+<table class="tb sm"><thead><tr><th>Origem do&nbsp;custo</th><th>Onde&nbsp;incide</th><th class="num">Custo&nbsp;a.a.</th><th class="num">Em&nbsp;R$/ano</th><th>Contrapartida</th><th class="num">Recuperável</th></tr></thead><tbody><tr><td><span class="ph">{{custo_1_origem}}</span></td><td><span class="ph">{{custo_1_onde}}</span></td><td class="num"><span class="ph">{{custo_1_perc}}</span></td><td class="num"><span class="ph">{{custo_1_reais}}</span></td><td><span class="ph">{{custo_1_contrapartida}}</span></td><td class="num"><span class="ph">{{custo_1_recuperavel}}</span></td></tr><tr><td><span class="ph">{{custo_2_origem}}</span></td><td><span class="ph">{{custo_2_onde}}</span></td><td class="num"><span class="ph">{{custo_2_perc}}</span></td><td class="num"><span class="ph">{{custo_2_reais}}</span></td><td><span class="ph">{{custo_2_contrapartida}}</span></td><td class="num"><span class="ph">{{custo_2_recuperavel}}</span></td></tr><tr><td><span class="ph">{{custo_3_origem}}</span></td><td><span class="ph">{{custo_3_onde}}</span></td><td class="num"><span class="ph">{{custo_3_perc}}</span></td><td class="num"><span class="ph">{{custo_3_reais}}</span></td><td><span class="ph">{{custo_3_contrapartida}}</span></td><td class="num"><span class="ph">{{custo_3_recuperavel}}</span></td></tr><tr><td><span class="ph">{{custo_4_origem}}</span></td><td><span class="ph">{{custo_4_onde}}</span></td><td class="num"><span class="ph">{{custo_4_perc}}</span></td><td class="num"><span class="ph">{{custo_4_reais}}</span></td><td><span class="ph">{{custo_4_contrapartida}}</span></td><td class="num"><span class="ph">{{custo_4_recuperavel}}</span></td></tr><tr><td><span class="ph">{{custo_5_origem}}</span></td><td><span class="ph">{{custo_5_onde}}</span></td><td class="num"><span class="ph">{{custo_5_perc}}</span></td><td class="num"><span class="ph">{{custo_5_reais}}</span></td><td><span class="ph">{{custo_5_contrapartida}}</span></td><td class="num"><span class="ph">{{custo_5_recuperavel}}</span></td></tr></tbody><tfoot><tr><td><strong>Total</strong></td><td></td><td class="num"><span class="ph">{{custo_total_perc}}</span></td><td class="num"><span class="ph">{{custo_total_anual}}</span></td><td></td><td class="num"><span class="ph">{{custo_recuperavel_total}}</span></td></tr></tfoot></table>
+<h2>Eficiência&nbsp;tributária</h2>
+<table class="tb"><thead><tr><th>Situação</th><th>Diagnóstico</th><th>Oportunidade</th></tr></thead><tbody><tr><td>Come-cotas em&nbsp;fundos</td><td><span class="ph">{{trib_comecotas_diag}}</span></td><td><span class="ph">{{trib_comecotas_op}}</span></td></tr><tr><td>Ativos isentos de&nbsp;IR</td><td><span class="ph">{{trib_isentos_diag}}</span></td><td><span class="ph">{{trib_isentos_op}}</span></td></tr><tr><td>Prejuízo acumulado a&nbsp;compensar</td><td><span class="ph">{{trib_prejuizo_diag}}</span></td><td><span class="ph">{{trib_prejuizo_op}}</span></td></tr><tr><td>Marcação e prazo para alíquota&nbsp;mínima</td><td><span class="ph">{{trib_prazo_diag}}</span></td><td><span class="ph">{{trib_prazo_op}}</span></td></tr></tbody></table>
 <div class="gap"></div>
-<div class="kpis" style="--n:4"><div class="kpi"><div class="k">Custo atual</div><div class="v"><span class="ph">{{custo_total_anual}}</span></div><div class="s"><span class="ph">{{custo_total_perc}}</span> a.a.</div></div><div class="kpi"><div class="k">Custo na proposta</div><div class="v"><span class="ph">{{custo_proposto_anual}}</span></div><div class="s"><span class="ph">{{custo_proposto_perc}}</span> a.a.</div></div><div class="kpi"><div class="k">Economia estimada</div><div class="v"><span class="ph">{{economia_estimada_ano}}</span></div><div class="s">Por ano</div></div><div class="kpi"><div class="k">Em 10 anos</div><div class="v"><span class="ph">{{economia_estimada_10a}}</span></div><div class="s">Com reinvestimento</div></div></div>
+<div class="kpis" style="--n:4"><div class="kpi"><div class="k">Custo&nbsp;atual</div><div class="v"><span class="ph">{{custo_total_anual}}</span></div><div class="s"><span class="ph">{{custo_total_perc}}</span>&nbsp;a.a.</div></div><div class="kpi"><div class="k">Custo na&nbsp;proposta</div><div class="v"><span class="ph">{{custo_proposto_anual}}</span></div><div class="s"><span class="ph">{{custo_proposto_perc}}</span>&nbsp;a.a.</div></div><div class="kpi"><div class="k">Economia&nbsp;estimada</div><div class="v"><span class="ph">{{economia_estimada_ano}}</span></div><div class="s">Por&nbsp;ano</div></div><div class="kpi"><div class="k">Em 10&nbsp;anos</div><div class="v"><span class="ph">{{economia_estimada_10a}}</span></div><div class="s">Com&nbsp;reinvestimento</div></div></div>
   </div>
-  <footer class="pg-foot"><span class="no">07</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">07</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -829,20 +832,20 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   </header>
   <div class="pg-body">
 <span class="eyebrow">Recomendação</span>
-<h1 class="t">Carteira proposta</h1>
-<p class="lead">Alocação sugerida para o perfil <span class="ph">{{perfil_investidor}}</span> e os objetivos declarados, com o efeito esperado de cada mudança.</p>
-<table class="tb sm"><thead><tr><th>Classe</th><th class="num">Hoje</th><th class="num">Proposto</th><th class="num">Variação</th><th>Instrumento sugerido</th><th>Por quê</th></tr></thead><tbody><tr><td>Reserva e caixa</td><td class="num"><span class="ph">{{prop_caixa_hoje}}</span></td><td class="num"><span class="ph">{{prop_caixa_novo}}</span></td><td class="num"><span class="ph">{{prop_caixa_var}}</span></td><td><span class="ph">{{prop_caixa_instrumento}}</span></td><td><span class="ph">{{prop_caixa_motivo}}</span></td></tr><tr><td>Renda fixa pós</td><td class="num"><span class="ph">{{prop_rfpos_hoje}}</span></td><td class="num"><span class="ph">{{prop_rfpos_novo}}</span></td><td class="num"><span class="ph">{{prop_rfpos_var}}</span></td><td><span class="ph">{{prop_rfpos_instrumento}}</span></td><td><span class="ph">{{prop_rfpos_motivo}}</span></td></tr><tr><td>Renda fixa inflação</td><td class="num"><span class="ph">{{prop_rfipca_hoje}}</span></td><td class="num"><span class="ph">{{prop_rfipca_novo}}</span></td><td class="num"><span class="ph">{{prop_rfipca_var}}</span></td><td><span class="ph">{{prop_rfipca_instrumento}}</span></td><td><span class="ph">{{prop_rfipca_motivo}}</span></td></tr><tr><td>Renda fixa prefixada</td><td class="num"><span class="ph">{{prop_rfpre_hoje}}</span></td><td class="num"><span class="ph">{{prop_rfpre_novo}}</span></td><td class="num"><span class="ph">{{prop_rfpre_var}}</span></td><td><span class="ph">{{prop_rfpre_instrumento}}</span></td><td><span class="ph">{{prop_rfpre_motivo}}</span></td></tr><tr><td>Multimercado</td><td class="num"><span class="ph">{{prop_multi_hoje}}</span></td><td class="num"><span class="ph">{{prop_multi_novo}}</span></td><td class="num"><span class="ph">{{prop_multi_var}}</span></td><td><span class="ph">{{prop_multi_instrumento}}</span></td><td><span class="ph">{{prop_multi_motivo}}</span></td></tr><tr><td>Renda variável BR</td><td class="num"><span class="ph">{{prop_rvbr_hoje}}</span></td><td class="num"><span class="ph">{{prop_rvbr_novo}}</span></td><td class="num"><span class="ph">{{prop_rvbr_var}}</span></td><td><span class="ph">{{prop_rvbr_instrumento}}</span></td><td><span class="ph">{{prop_rvbr_motivo}}</span></td></tr><tr><td>Internacional</td><td class="num"><span class="ph">{{prop_intl_hoje}}</span></td><td class="num"><span class="ph">{{prop_intl_novo}}</span></td><td class="num"><span class="ph">{{prop_intl_var}}</span></td><td><span class="ph">{{prop_intl_instrumento}}</span></td><td><span class="ph">{{prop_intl_motivo}}</span></td></tr><tr><td>Alternativos</td><td class="num"><span class="ph">{{prop_alt_hoje}}</span></td><td class="num"><span class="ph">{{prop_alt_novo}}</span></td><td class="num"><span class="ph">{{prop_alt_var}}</span></td><td><span class="ph">{{prop_alt_instrumento}}</span></td><td><span class="ph">{{prop_alt_motivo}}</span></td></tr></tbody><tfoot><tr><td><strong>Total</strong></td><td class="num">100,0%</td><td class="num">100,0%</td><td class="num">&mdash;</td><td></td><td></td></tr></tfoot></table>
+<h1 class="t">Carteira&nbsp;proposta</h1>
+<p class="lead">Alocação sugerida para o perfil <span class="ph">{{perfil_investidor}}</span> e os objetivos declarados, com o efeito esperado de cada&nbsp;mudança.</p>
+<table class="tb sm"><thead><tr><th>Classe</th><th class="num">Hoje</th><th class="num">Proposto</th><th class="num">Variação</th><th>Instrumento&nbsp;sugerido</th><th>Por&nbsp;quê</th></tr></thead><tbody><tr><td>Reserva e&nbsp;caixa</td><td class="num"><span class="ph">{{prop_caixa_hoje}}</span></td><td class="num"><span class="ph">{{prop_caixa_novo}}</span></td><td class="num"><span class="ph">{{prop_caixa_var}}</span></td><td><span class="ph">{{prop_caixa_instrumento}}</span></td><td><span class="ph">{{prop_caixa_motivo}}</span></td></tr><tr><td>Renda fixa&nbsp;pós</td><td class="num"><span class="ph">{{prop_rfpos_hoje}}</span></td><td class="num"><span class="ph">{{prop_rfpos_novo}}</span></td><td class="num"><span class="ph">{{prop_rfpos_var}}</span></td><td><span class="ph">{{prop_rfpos_instrumento}}</span></td><td><span class="ph">{{prop_rfpos_motivo}}</span></td></tr><tr><td>Renda fixa&nbsp;inflação</td><td class="num"><span class="ph">{{prop_rfipca_hoje}}</span></td><td class="num"><span class="ph">{{prop_rfipca_novo}}</span></td><td class="num"><span class="ph">{{prop_rfipca_var}}</span></td><td><span class="ph">{{prop_rfipca_instrumento}}</span></td><td><span class="ph">{{prop_rfipca_motivo}}</span></td></tr><tr><td>Renda fixa&nbsp;prefixada</td><td class="num"><span class="ph">{{prop_rfpre_hoje}}</span></td><td class="num"><span class="ph">{{prop_rfpre_novo}}</span></td><td class="num"><span class="ph">{{prop_rfpre_var}}</span></td><td><span class="ph">{{prop_rfpre_instrumento}}</span></td><td><span class="ph">{{prop_rfpre_motivo}}</span></td></tr><tr><td>Multimercado</td><td class="num"><span class="ph">{{prop_multi_hoje}}</span></td><td class="num"><span class="ph">{{prop_multi_novo}}</span></td><td class="num"><span class="ph">{{prop_multi_var}}</span></td><td><span class="ph">{{prop_multi_instrumento}}</span></td><td><span class="ph">{{prop_multi_motivo}}</span></td></tr><tr><td>Renda variável&nbsp;BR</td><td class="num"><span class="ph">{{prop_rvbr_hoje}}</span></td><td class="num"><span class="ph">{{prop_rvbr_novo}}</span></td><td class="num"><span class="ph">{{prop_rvbr_var}}</span></td><td><span class="ph">{{prop_rvbr_instrumento}}</span></td><td><span class="ph">{{prop_rvbr_motivo}}</span></td></tr><tr><td>Internacional</td><td class="num"><span class="ph">{{prop_intl_hoje}}</span></td><td class="num"><span class="ph">{{prop_intl_novo}}</span></td><td class="num"><span class="ph">{{prop_intl_var}}</span></td><td><span class="ph">{{prop_intl_instrumento}}</span></td><td><span class="ph">{{prop_intl_motivo}}</span></td></tr><tr><td>Alternativos</td><td class="num"><span class="ph">{{prop_alt_hoje}}</span></td><td class="num"><span class="ph">{{prop_alt_novo}}</span></td><td class="num"><span class="ph">{{prop_alt_var}}</span></td><td><span class="ph">{{prop_alt_instrumento}}</span></td><td><span class="ph">{{prop_alt_motivo}}</span></td></tr></tbody><tfoot><tr><td><strong>Total</strong></td><td class="num">100,0%</td><td class="num">100,0%</td><td class="num">&mdash;</td><td></td><td></td></tr></tfoot></table>
 <div class="gap"></div>
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch">
-  <div class="chart" style="flex:1 1 auto;min-height:50mm"><div class="sk-donut"></div><div class="cl">Atual x proposta</div><div class="cd">Duas roscas comparando o peso de cada classe antes e depois da proposta.</div><ul class="legend"><li><i style="background:var(--c1)"></i>Renda fixa</li><li><i style="background:var(--c2)"></i>Multimercado</li><li><i style="background:var(--c3)"></i>Renda variável BR</li><li><i style="background:var(--c4)"></i>Internacional</li><li><i style="background:var(--c5)"></i>FIIs</li><li><i style="background:var(--c6)"></i>Alternativos</li></ul></div>
+  <div class="chart" style="flex:1 1 auto;min-height:50mm"><div class="sk-donut"></div><div class="cl">Atual x&nbsp;proposta</div><div class="cd">Duas roscas comparando o peso de cada classe antes e depois da&nbsp;proposta.</div><ul class="legend"><li><i style="background:var(--c1)"></i>Renda&nbsp;fixa</li><li><i style="background:var(--c2)"></i>Multimercado</li><li><i style="background:var(--c3)"></i>Renda variável&nbsp;BR</li><li><i style="background:var(--c4)"></i>Internacional</li><li><i style="background:var(--c5)"></i>FIIs</li><li><i style="background:var(--c6)"></i>Alternativos</li></ul></div>
   <div style="display:flex;flex-direction:column;gap:4mm">
-    <div class="note"><p><strong>O que muda na prática.</strong> <span class="ph">{{texto_o_que_muda}}</span></p></div>
-    <div><h3>Retorno esperado</h3><p class="small mut"><span class="ph">{{retorno_esperado_proposta}}</span></p></div>
-    <div><h3>Risco esperado</h3><p class="small mut"><span class="ph">{{risco_esperado_proposta}}</span></p></div>
+    <div class="note"><p><strong>O que muda na&nbsp;prática.</strong> <span class="ph">{{texto_o_que_muda}}</span></p></div>
+    <div><h3>Retorno&nbsp;esperado</h3><p class="small mut"><span class="ph">{{retorno_esperado_proposta}}</span></p></div>
+    <div><h3>Risco&nbsp;esperado</h3><p class="small mut"><span class="ph">{{risco_esperado_proposta}}</span></p></div>
   </div>
 </div>
   </div>
-  <footer class="pg-foot"><span class="no">08</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">08</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -882,25 +885,25 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   </header>
   <div class="pg-body">
 <span class="eyebrow">Execução</span>
-<h1 class="t">Plano de transição</h1>
-<p class="lead">Sair da carteira atual custa tempo e, às vezes, imposto. O plano abaixo respeita carências, vencimentos e o momento de mercado.</p>
+<h1 class="t">Plano de&nbsp;transição</h1>
+<p class="lead">Sair da carteira atual custa tempo e, às vezes, imposto. O plano abaixo respeita carências, vencimentos e o momento de&nbsp;mercado.</p>
 <h2>Etapas</h2>
 <ol class="flow" style="--n:4"><li><span class="node"></span><span class="tag"><span class="ph">{{transicao_1_quando}}</span></span><h4><span class="ph">{{transicao_1_titulo}}</span></h4><p><span class="ph">{{transicao_1_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{transicao_2_quando}}</span></span><h4><span class="ph">{{transicao_2_titulo}}</span></h4><p><span class="ph">{{transicao_2_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{transicao_3_quando}}</span></span><h4><span class="ph">{{transicao_3_titulo}}</span></h4><p><span class="ph">{{transicao_3_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{transicao_4_quando}}</span></span><h4><span class="ph">{{transicao_4_titulo}}</span></h4><p><span class="ph">{{transicao_4_detalhe}}</span></p></li></ol>
-<h2>Movimentos previstos</h2>
-<table class="tb sm"><thead><tr><th>Quando</th><th>Movimento</th><th>Ativo / posição</th><th class="num">Valor</th><th class="num">Custo da saída</th><th>Destino</th></tr></thead><tbody><tr><td><span class="ph">{{tr_1_quando}}</span></td><td><span class="ph">{{tr_1_movimento}}</span></td><td><span class="ph">{{tr_1_ativo}}</span></td><td class="num"><span class="ph">{{tr_1_valor}}</span></td><td class="num"><span class="ph">{{tr_1_custo}}</span></td><td><span class="ph">{{tr_1_destino}}</span></td></tr><tr><td><span class="ph">{{tr_2_quando}}</span></td><td><span class="ph">{{tr_2_movimento}}</span></td><td><span class="ph">{{tr_2_ativo}}</span></td><td class="num"><span class="ph">{{tr_2_valor}}</span></td><td class="num"><span class="ph">{{tr_2_custo}}</span></td><td><span class="ph">{{tr_2_destino}}</span></td></tr><tr><td><span class="ph">{{tr_3_quando}}</span></td><td><span class="ph">{{tr_3_movimento}}</span></td><td><span class="ph">{{tr_3_ativo}}</span></td><td class="num"><span class="ph">{{tr_3_valor}}</span></td><td class="num"><span class="ph">{{tr_3_custo}}</span></td><td><span class="ph">{{tr_3_destino}}</span></td></tr><tr><td><span class="ph">{{tr_4_quando}}</span></td><td><span class="ph">{{tr_4_movimento}}</span></td><td><span class="ph">{{tr_4_ativo}}</span></td><td class="num"><span class="ph">{{tr_4_valor}}</span></td><td class="num"><span class="ph">{{tr_4_custo}}</span></td><td><span class="ph">{{tr_4_destino}}</span></td></tr><tr><td><span class="ph">{{tr_5_quando}}</span></td><td><span class="ph">{{tr_5_movimento}}</span></td><td><span class="ph">{{tr_5_ativo}}</span></td><td class="num"><span class="ph">{{tr_5_valor}}</span></td><td class="num"><span class="ph">{{tr_5_custo}}</span></td><td><span class="ph">{{tr_5_destino}}</span></td></tr></tbody></table>
-<h2>Restrições de saída</h2>
-<div class="cards" style="--n:3"><div class="card"><h4>Carências e vencimentos</h4><p><span class="ph">{{restricao_carencia}}</span></p></div><div class="card"><h4>Imposto na saída</h4><p><span class="ph">{{restricao_imposto}}</span></p></div><div class="card"><h4>Marcação a mercado</h4><p><span class="ph">{{restricao_marcacao}}</span></p></div></div>
+<h2>Movimentos&nbsp;previstos</h2>
+<table class="tb sm"><thead><tr><th>Quando</th><th>Movimento</th><th>Ativo /&nbsp;posição</th><th class="num">Valor</th><th class="num">Custo da&nbsp;saída</th><th>Destino</th></tr></thead><tbody><tr><td><span class="ph">{{tr_1_quando}}</span></td><td><span class="ph">{{tr_1_movimento}}</span></td><td><span class="ph">{{tr_1_ativo}}</span></td><td class="num"><span class="ph">{{tr_1_valor}}</span></td><td class="num"><span class="ph">{{tr_1_custo}}</span></td><td><span class="ph">{{tr_1_destino}}</span></td></tr><tr><td><span class="ph">{{tr_2_quando}}</span></td><td><span class="ph">{{tr_2_movimento}}</span></td><td><span class="ph">{{tr_2_ativo}}</span></td><td class="num"><span class="ph">{{tr_2_valor}}</span></td><td class="num"><span class="ph">{{tr_2_custo}}</span></td><td><span class="ph">{{tr_2_destino}}</span></td></tr><tr><td><span class="ph">{{tr_3_quando}}</span></td><td><span class="ph">{{tr_3_movimento}}</span></td><td><span class="ph">{{tr_3_ativo}}</span></td><td class="num"><span class="ph">{{tr_3_valor}}</span></td><td class="num"><span class="ph">{{tr_3_custo}}</span></td><td><span class="ph">{{tr_3_destino}}</span></td></tr><tr><td><span class="ph">{{tr_4_quando}}</span></td><td><span class="ph">{{tr_4_movimento}}</span></td><td><span class="ph">{{tr_4_ativo}}</span></td><td class="num"><span class="ph">{{tr_4_valor}}</span></td><td class="num"><span class="ph">{{tr_4_custo}}</span></td><td><span class="ph">{{tr_4_destino}}</span></td></tr><tr><td><span class="ph">{{tr_5_quando}}</span></td><td><span class="ph">{{tr_5_movimento}}</span></td><td><span class="ph">{{tr_5_ativo}}</span></td><td class="num"><span class="ph">{{tr_5_valor}}</span></td><td class="num"><span class="ph">{{tr_5_custo}}</span></td><td><span class="ph">{{tr_5_destino}}</span></td></tr></tbody></table>
+<h2>Restrições de&nbsp;saída</h2>
+<div class="cards" style="--n:3"><div class="card"><h4>Carências e&nbsp;vencimentos</h4><p><span class="ph">{{restricao_carencia}}</span></p></div><div class="card"><h4>Imposto na&nbsp;saída</h4><p><span class="ph">{{restricao_imposto}}</span></p></div><div class="card"><h4>Marcação a&nbsp;mercado</h4><p><span class="ph">{{restricao_marcacao}}</span></p></div></div>
 <div class="sig">
   <div class="ln"><span class="ph">{{nome_responsavel}}</span><br><span class="mut">Banker &middot; <span class="ph">{{registro_cvm_ou_ancord}}</span></span></div>
-  <div class="ln"><span class="ph">{{data_diagnostico}}</span><br><span class="mut">AUVP Private Banking</span></div>
+  <div class="ln"><span class="ph">{{data_diagnostico}}</span><br><span class="mut">AUVP Private&nbsp;Banking</span></div>
 </div>
   </div>
-  <footer class="pg-foot"><span class="no">09</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">09</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
   <header class="pg-head">
-    <div class="sec">Notas e avisos</div>
+    <div class="sec">Notas e&nbsp;avisos</div>
     <div class="rt"><div class="dt"><span class="ph">{{data_diagnostico}}</span></div><div class="logo logo-ink" style="width:30.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
@@ -935,8 +938,8 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   </header>
   <div class="pg-body">
 <span class="eyebrow">Transparência</span>
-<h1 class="t">Notas metodológicas e avisos</h1>
-<h2>Premissas usadas</h2>
+<h1 class="t">Notas metodológicas e&nbsp;avisos</h1>
+<h2>Premissas&nbsp;usadas</h2>
 <ul class="small">
   <li>Retornos esperados por classe: <span class="ph">{{premissa_retornos}}</span>.</li>
   <li>Volatilidade e correlações: <span class="ph">{{premissa_risco}}</span>.</li>
@@ -944,22 +947,22 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   <li>Tributação considerada: <span class="ph">{{premissa_tributacao}}</span>.</li>
   <li>Custos considerados na comparação: <span class="ph">{{premissa_custos}}</span>.</li>
 </ul>
-<h2>Limitações deste diagnóstico</h2>
+<h2>Limitações deste&nbsp;diagnóstico</h2>
 <p class="small mut"><span class="ph">{{limitacoes_diagnostico}}</span></p>
-<h2>Avisos legais</h2>
+<h2>Avisos&nbsp;legais</h2>
 <p class="legal"><span class="ph" title="Texto aprovado pelo compliance para este segmento">{{disclaimer_regulatorio}}</span></p>
-<p class="legal">As projeções e estimativas apresentadas são exercícios baseados em premissas explicitadas acima e não constituem promessa ou garantia de resultado. Rentabilidade passada não representa garantia de rentabilidade futura. Os produtos citados podem não contar com garantia do Fundo Garantidor de Créditos (FGC). Antes de investir, leia o regulamento, a lâmina, o prospecto e o formulário de informações complementares de cada produto.</p>
-<p class="legal">Este material é destinado exclusivamente a <span class="ph">{{nome_cliente}}</span> e foi elaborado com base nas informações prestadas pelo próprio cliente e nos extratos fornecidos. Informações incompletas ou incorretas alteram as conclusões. É proibida a reprodução ou o compartilhamento total ou parcial sem autorização prévia e por escrito.</p>
+<p class="legal">As projeções e estimativas apresentadas são exercícios baseados em premissas explicitadas acima e não constituem promessa ou garantia de resultado. Rentabilidade passada não representa garantia de rentabilidade futura. Os produtos citados podem não contar com garantia do Fundo Garantidor de Créditos (FGC). Antes de investir, leia o regulamento, a lâmina, o prospecto e o formulário de informações complementares de cada&nbsp;produto.</p>
+<p class="legal">Este material é destinado exclusivamente a <span class="ph">{{nome_cliente}}</span> e foi elaborado com base nas informações prestadas pelo próprio cliente e nos extratos fornecidos. Informações incompletas ou incorretas alteram as conclusões. É proibida a reprodução ou o compartilhamento total ou parcial sem autorização prévia e por&nbsp;escrito.</p>
 <h2>Contato</h2>
 <div class="dl">
   <dt>Responsável</dt><dd><span class="ph">{{nome_responsavel}}</span> &middot; <span class="ph">{{registro_cvm_ou_ancord}}</span></dd>
   <dt>Atendimento</dt><dd><span class="ph">{{canal_atendimento}}</span></dd>
   <dt>E-mail</dt><dd><span class="ph">{{email_contato}}</span></dd>
   <dt>Ouvidoria</dt><dd><span class="ph">{{canal_ouvidoria}}</span></dd>
-  <dt>Razão social</dt><dd><span class="ph">{{razao_social}}</span> &middot; CNPJ <span class="ph">{{cnpj}}</span></dd>
+  <dt>Razão&nbsp;social</dt><dd><span class="ph">{{razao_social}}</span> &middot; CNPJ <span class="ph">{{cnpj}}</span></dd>
 </div>
   </div>
-  <footer class="pg-foot"><span class="no">10</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">10</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 </body>
 </html>

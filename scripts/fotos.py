@@ -46,7 +46,8 @@ ROSTO_LARGURA = 0.42       # largura do rosto como fração da largura do recort
 ROSTO_X, ROSTO_Y = 0.50, 0.36   # onde o centro do rosto fica dentro do recorte
 SAIDA = (900, 1200)
 
-L_MEDIA, L_DESVIO = 118.0, 52.0   # alvos de luminância
+L_MEDIA, L_DESVIO = 112.0, 44.0   # alvos de luminância
+L_JOELHO, L_TETO = 195.0, 238.0   # a partir do joelho as altas luzes comprimem
 SATURACAO = 0.88
 
 
@@ -76,12 +77,29 @@ def recorte(w, h, rosto):
     return int(esq), int(topo), int(esq + cw), int(topo + ch)
 
 
+def altas_luzes(L):
+    """Comprime o topo da escala em vez de cortá-lo.
+
+    Esticar o desvio para o alvo empurra tudo o que já era claro contra o 255,
+    e o corte vira mancha: o letreiro de neon atrás de um consultor, a janela
+    atrás de outro, o realce na testa de quem foi fotografado com luz dura. A
+    partir do joelho a curva passa a se aproximar do teto, então o que era
+    branco continua claro mas volta a ter desenho.
+    """
+    alto = L > L_JOELHO
+    L[alto] = L_JOELHO + (L_TETO - L_JOELHO) * np.tanh(
+        (L[alto] - L_JOELHO) / (255.0 - L_JOELHO))
+    return L
+
+
 def normaliza(im):
-    """Aproxima média e desvio da luminância dos alvos e reduz a saturação."""
+    """Aproxima média e desvio da luminância dos alvos, segura as altas luzes
+    e reduz a saturação."""
     lab = cv2.cvtColor(np.asarray(im), cv2.COLOR_RGB2LAB).astype(np.float32)
     L = lab[:, :, 0]
     desvio = L.std() or 1.0
-    lab[:, :, 0] = np.clip((L - L.mean()) * (L_DESVIO / desvio) + L_MEDIA, 0, 255)
+    lab[:, :, 0] = np.clip(
+        altas_luzes((L - L.mean()) * (L_DESVIO / desvio) + L_MEDIA), 0, 255)
     for c in (1, 2):                # a e b são centrados em 128
         lab[:, :, c] = np.clip((lab[:, :, c] - 128.0) * SATURACAO + 128.0, 0, 255)
     return Image.fromarray(cv2.cvtColor(lab.astype(np.uint8), cv2.COLOR_LAB2RGB))

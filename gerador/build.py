@@ -8,6 +8,7 @@ Só depende da biblioteca padrão. Depois de rodar, regere os PDFs e o
 dicionário com `npm run pdf` e `npm run vars`.
 """
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -56,11 +57,23 @@ def variantes(doc):
     return [(seg, THEMES[seg]["nome_full"], seg) for seg in SEGMENTOS]
 
 
+# Última palavra de um bloco de texto, com o espaço que a antecede. Prender as
+# duas com espaço inquebrável evita a linha final de uma palavra só, que num
+# documento com muita coluna estreita aparece o tempo todo. Só vale para texto
+# corrido: o casamento não acontece se o bloco terminar em tag.
+VIUVA = re.compile(r"\s+([^\s<>]+)(\s*</(?:p|li|h1|h2|h3|h4|dd|dt|td|th|div|span|strong|em)>)")
+
+
+def sem_viuvas(html):
+    return VIUVA.sub(lambda m: "&nbsp;" + m.group(1) + m.group(2), html)
+
+
 def monta(doc, sufixo, rotulo, tema):
     t = THEMES[tema]
     paginas = doc["builder"](t, sufixo if "variantes" in doc else tema)
     css = CSS_A4 if doc["formato"] == "a4" else CSS_SLIDE
-    html = head(doc["titulo"] % rotulo, tokens(t) + "\n" + css) + "\n".join(paginas) + "\n" + FOOT
+    html = head(doc["titulo"] % rotulo, tokens(t) + "\n" + css) + \
+        sem_viuvas("\n".join(paginas)) + "\n" + FOOT
     caminho = os.path.join(OUT, "%s-%s.html" % (doc["chave"], sufixo))
     with open(caminho, "w", encoding="utf-8") as f:
         f.write(html)

@@ -234,10 +234,10 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .year .ev{display:block;font-size:6.8pt;color:var(--ink-2);line-height:1.35}
 
 /* ---------- lista com marcador em fio, e retrato ---------- */
-.lista{list-style:none;margin:0;padding:0;font-size:8.4pt;line-height:1.5}
-.lista li{position:relative;padding-left:5mm;margin-bottom:2.5mm}
+.lista{list-style:none;margin:0;padding:0;font-size:8.4pt;line-height:17px}
+.lista li{position:relative;padding-left:5mm;margin-bottom:9px}
 .lista li:last-child{margin-bottom:0}
-.lista li::before{content:"";position:absolute;left:0;top:2.1mm;width:2.6mm;height:1.33px;background:var(--accent)}
+.lista li::before{content:"";position:absolute;left:0;top:8px;width:2.6mm;height:1.33px;background:var(--accent)}
 .lista.mut li{color:var(--ink-2)}
 .foto{border:1px dashed var(--brand);display:flex;flex-direction:column;align-items:center;
   justify-content:center;gap:1.5mm;text-align:center;padding:4mm;
@@ -259,7 +259,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 
 /* ---------- retrato na coluna de apoio ---------- */
 .rt-img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 26%;
-  border-radius:20mm 0 0 0;
+  border-radius:6mm 0 0 0;
   margin-bottom:5.5mm}
 
 /* ---------- respiro elástico entre faixas ----------
@@ -274,7 +274,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
    A página trata três tipos de informação de formas diferentes: a declaração
    de propósito em destaque ao lado do retrato, a trajetória como linha do
    tempo, e os interesses como fatos curtos. */
-.pf-topo{display:grid;grid-template-columns:38mm 1fr;gap:0 8mm;align-items:end}
+.pf-topo{display:grid;grid-template-columns:36mm 1fr;gap:0 8mm;align-items:end}
 .pf-topo .rt-img{margin:0}
 .pf-topo .ey{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.18em;
   text-transform:uppercase;color:var(--brand);margin-bottom:2mm}
@@ -283,7 +283,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .pf-topo .papel{margin:2mm 0 0;font-size:9pt;color:var(--ink-2)}
 /* a declaração atravessa as duas colunas, sob um fio de largura inteira, e
    respira antes da faixa de credenciais */
-.pf-topo .frase{grid-column:1/-1;margin:7mm 0 0;padding-top:5mm;
+.pf-topo .frase{grid-column:1/-1;margin:6mm 0 0;padding-top:4mm;
   border-top:1px solid var(--line);
   font-size:11.5pt;line-height:1.5;font-weight:300;color:var(--ink)}
 
@@ -296,13 +296,13 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .cred h3{margin:0 0 2mm;font-size:6.2pt;font-weight:700;letter-spacing:.16em;
   text-transform:uppercase;color:var(--ink-2)}
 .cred .lista{font-size:7.6pt;margin:0}
-.cred .lista li{margin-bottom:1mm}
+.cred .lista li{margin-bottom:4px}
 
 /* trajetória como linha do tempo */
 /* o rótulo fica acima do texto, e não numa coluna à esquerda: os marcos vão de
    "2016" a "Pandemia" e a "Há 3 anos", e coluna fixa não comporta os dois */
 .marcos{list-style:none;margin:0;padding:0}
-.marcos li{position:relative;padding:0 0 3mm 8mm}
+.marcos li{position:relative;padding:0 0 10px 8mm}
 .marcos li:last-child{padding-bottom:0}
 .marcos li::before{content:"";position:absolute;left:1.15mm;top:4.2mm;bottom:-.4mm;
   width:1px;background:var(--line)}
@@ -314,12 +314,15 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .marcos p{margin:0;font-size:8.2pt;line-height:1.45;color:var(--ink-2)}
 
 /* interesses e contato, na faixa final */
-.pf-rodape{padding-top:4mm;border-top:1px solid var(--line);
-  display:grid;grid-template-columns:1.6fr 1fr;gap:8mm;align-items:start}
+.pf-rodape{padding:4mm 0 6mm;border-top:1px solid var(--line);
+  display:grid;grid-template-columns:1.6fr 1fr;gap:4mm 8mm;align-items:start}
 .pf-rodape h3{margin:0 0 2mm;font-size:6.2pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
 .pf-rodape .dl{font-size:8pt;gap:1mm 5mm}
-.tags{display:flex;flex-wrap:wrap;gap:1.4mm;margin-bottom:1.5mm}
-.tags span{font-size:7.2pt;padding:1mm 3mm;border:1px solid var(--line);
+/* a descrição fecha a faixa atravessando as duas colunas, e o padding de baixo
+   é o que a mantém longe do fio do rodapé */
+.pf-rodape .desc{grid-column:1/-1;margin:0;max-width:none}
+.tags{display:flex;flex-wrap:wrap;gap:1.4mm;margin:0}
+.tags span{font-size:7.2pt;padding:.8mm 2.8mm;border:1px solid var(--line);
   border-radius:8mm;color:var(--ink-2)}
 
 /* ---------- perfil ----------
@@ -363,9 +366,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
    matéria que as de relatório. */
 .page.plano h2{margin:0 0 5mm}
 .page.plano .lead{font-size:11pt;line-height:1.55;margin-bottom:2mm}
-.page.plano .lista{font-size:9.2pt;line-height:1.62}
-.page.plano .lista li{padding-left:6mm;margin-bottom:4mm}
-.page.plano .lista li::before{top:2.4mm;width:3.2mm}
+.page.plano .lista{font-size:9.2pt;line-height:20px}
+.page.plano .lista li{padding-left:6mm;margin-bottom:15px}
+.page.plano .lista li::before{top:9px;width:3.2mm}
 .page.plano .principios{gap:6mm 10mm}
 .page.plano .principios p{font-size:8.8pt;line-height:1.6}
 .page.plano .small{font-size:9pt;line-height:1.62}
@@ -510,8 +513,8 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   <path class="lg-1" d="M1056.15,139.94c-2.39,0-3.92-.39-4.62-1.19-.69-.8-1.04-2.47-1.04-5.01v-17.62c0-3.63-.91-6.36-2.71-8.2-1.8-1.84-4.37-2.76-7.67-2.76-2.73,0-5.39.84-7.98,2.49-1.92,1.23-3.86,2.99-5.82,5.26h0c0-2.41-.32-4.25-.95-5.53-.64-1.28-1.19-1.91-1.66-1.91-.17,0-.32.04-.49.11l-10.49,4.96c-.21.11-.25.32-.11.63.14.31.33.43.57.36,1.05-.42,1.98-.74,2.79-.98.81-.23,1.52-.35,2.1-.35,1.16,0,1.98.45,2.45,1.37.47.92.7,2.37.7,4.38v17.76c0,2.54-.36,4.21-1.06,5.01-.7.8-2.23,1.19-4.57,1.19-.18,0-.27.18-.27.54s.1.54.27.54h.01c1.06,0,2.3-.04,3.75-.1,1.44-.06,2.91-.1,4.46-.1s3.03.04,4.44.1c1.42.06,2.65.1,3.71.1.18,0,.27-.18.27-.54s-.09-.54-.27-.54c-2.4,0-3.92-.39-4.62-1.19-.69-.8-1.04-2.47-1.04-5.01v-19.33c1.24-1.4,2.61-2.59,4.14-3.53,2.27-1.37,4.5-2.06,6.68-2.06,2.85,0,4.95.82,6.29,2.48,1.34,1.66,2,4.27,2,7.84v14.6c0,2.54-.36,4.21-1.06,5.01-.72.8-2.23,1.19-4.57,1.19-.19,0-.27.18-.27.54s.1.54.27.54h0c1.06,0,2.3-.04,3.75-.1,1.44-.06,2.91-.1,4.46-.1s3.03.04,4.44.1c1.42.06,2.65.1,3.71.1.18,0,.27-.18.27-.54s-.09-.54-.27-.54Z"/>
   <path class="lg-1" d="M1090.08,109.29c1.37,0,2.58.16,3.62.48,1.05.32,1.85.6,2.4.84.24.13.44-.18.61-.93.17-.75.25-1.46.25-2.1,0-.49-.04-.94-.13-1.37s-.21-.64-.37-.64c-2.12,0-4.07.36-5.82,1.06-1.25.5-2.52,1.12-3.82,1.85-.47-.38-.98-.74-1.54-1.06-1.97-1.16-4.56-1.73-7.74-1.73-2.83,0-5.33.51-7.49,1.54-2.16,1.03-3.85,2.41-5.06,4.16-1.21,1.74-1.81,3.73-1.81,5.96,0,2.06.55,4,1.63,5.79,1.1,1.78,2.65,3.22,4.68,4.29.08.04.17.07.26.11-1.91,1.51-3.45,2.93-4.56,4.24-1.29,1.52-1.94,3.35-1.94,5.36s.67,3.46,1.99,4.38c1.27.88,2.96,1.44,5.05,1.68-2.3,1.62-4.21,3.25-5.71,4.9-2.39,2.61-3.57,5.4-3.57,8.23s1.16,5.18,3.48,7.06c2.33,1.88,5.57,2.83,9.76,2.83h.01c2.86-.01,5.64-.49,8.33-1.44,2.68-.95,5.07-2.27,7.17-3.95,2.1-1.68,3.76-3.61,4.99-5.8,1.22-2.18,1.84-4.62,1.84-7s-.55-4.21-1.62-5.49c-1.09-1.26-2.46-2.16-4.12-2.66-1.67-.5-3.4-.79-5.18-.87-1.77-.08-3.4-.12-4.86-.12-3.23-.01-5.8-.16-7.72-.45-1.92-.29-3.29-.8-4.13-1.52-.84-.72-1.25-1.73-1.25-3.02,0-1.11.3-2.15.89-3.11.51-.82,1.34-1.72,2.46-2.67,1.68.62,3.62.93,5.79.93h0c2.9,0,5.4-.55,7.53-1.66,2.11-1.11,3.75-2.56,4.9-4.37,1.16-1.79,1.74-3.73,1.74-5.82,0-1.83-.47-3.61-1.38-5.39-.44-.86-1.01-1.64-1.7-2.35,0,0,.01,0,.02,0,.67-.11,1.38-.17,2.15-.17ZM1085.21,144c2.14.27,3.81.95,5.02,2.04,1.22,1.09,1.82,2.89,1.82,5.39,0,3.72-1.32,6.67-3.97,8.83-2.65,2.16-6.02,3.23-10.12,3.23-2.54,0-4.69-.42-6.45-1.24-1.77-.82-3.1-2-4.02-3.53-.92-1.53-1.38-3.28-1.38-5.4s.44-3.89,1.31-5.31c.87-1.42,2.03-2.64,3.48-3.66.46-.33.97-.63,1.46-.95,1.68.12,3.47.2,5.37.2,2.85,0,5.33.13,7.47.41ZM1085.15,112.44h0s0,0,0,0h0ZM1083.41,125.75c-1.29,1.32-2.9,1.98-4.82,1.98h0c-1.55.01-3.08-.44-4.58-1.34-1.5-.91-2.76-2.28-3.77-4.14-1.01-1.86-1.52-4.08-1.52-7.01s.62-5.02,1.85-6.3c1.22-1.28,2.82-1.91,4.78-1.91,1.81,0,3.48.48,4.99,1.44,1.5.97,2.71,2.35,3.63,4.14.92,1.79,1.38,3.97,1.38,6.54,0,3.08-.64,5.27-1.94,6.6Z"/>
 </svg></div>
-  <h1 class="cv-t"><span class="lt">Cronograma</span><span class="bd">de Reuniões</span></h1>
-  <div class="cv-conf">DOCUMENTO CONFIDENCIAL<br>PROIBIDO O COMPARTILHAMENTO</div>
+  <h1 class="cv-t"><span class="lt">Cronograma</span><span class="bd">de&nbsp;Reuniões</span></h1>
+  <div class="cv-conf">DOCUMENTO CONFIDENCIAL<br>PROIBIDO O&nbsp;COMPARTILHAMENTO</div>
   <div class="rule r1"></div>
   <div class="rule r2"></div>
   <div class="cv-b-t"><span style="font-weight:300">Seu </span><span style="font-weight:800">Acompanhamento</span></div>
@@ -520,7 +523,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <section class="page">
   
   <header class="pg-head">
-    <div class="sec">Como funciona</div>
+    <div class="sec">Como&nbsp;funciona</div>
     <div class="rt"><div class="dt"><span class="ph">{{ano_vigencia}}</span></div><div class="logo logo-ink" style="width:30.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
@@ -554,17 +557,17 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 </svg></div></div>
   </header>
   <div class="pg-body">
-<span class="eyebrow">O acordo de acompanhamento</span>
-<h1 class="t">Como funciona o seu acompanhamento</h1>
-<p class="lead">Este documento fixa a cadência de contato do ciclo <span class="ph">{{ano_vigencia}}</span>: o que acontece, quando acontece e o que cada encontro entrega. Nada aqui impede um contato extra quando você precisar.</p>
-<h2>Ritmo do segmento Private Banking</h2>
-<table class="tb"><thead><tr><th>Encontro / entrega</th><th>Frequência</th><th>O que acontece</th><th>Duração</th><th>Formato</th></tr></thead><tbody><tr><td>Reunião de carteira</td><td><span class="pill">Mensal</span></td><td>Acompanhamento de performance, liquidez e movimentações.</td><td><span class="ph">{{dur_1}}</span></td><td><span class="ph">{{fmt_1}}</span></td></tr><tr><td>Comitê de investimentos com a família</td><td><span class="pill">Trimestral</span></td><td>Alocação estratégica, riscos e decisões de maior porte.</td><td><span class="ph">{{dur_2}}</span></td><td><span class="ph">{{fmt_2}}</span></td></tr><tr><td>Revisão patrimonial e sucessória</td><td><span class="pill">Semestral</span></td><td>Estruturas, jurisdições, seguros e plano sucessório.</td><td><span class="ph">{{dur_3}}</span></td><td><span class="ph">{{fmt_3}}</span></td></tr><tr><td>Planejamento anual</td><td><span class="pill">Anual</span></td><td>Orçamento de liquidez, tributos do ano e metas da família.</td><td><span class="ph">{{dur_4}}</span></td><td><span class="ph">{{fmt_4}}</span></td></tr></tbody></table>
-<h2>Quem participa</h2>
-<table class="tb"><thead><tr><th>Papel</th><th>Nome</th><th>Contato</th><th>Quando aciona</th></tr></thead><tbody><tr><td>Banker responsável</td><td><span class="ph">{{time_principal_nome}}</span></td><td><span class="ph">{{time_principal_contato}}</span></td><td><span class="ph">{{time_principal_quando}}</span></td></tr><tr><td>Backup do time</td><td><span class="ph">{{time_backup_nome}}</span></td><td><span class="ph">{{time_backup_contato}}</span></td><td><span class="ph">{{time_backup_quando}}</span></td></tr><tr><td>Mesa de renda fixa</td><td><span class="ph">{{time_mesa_nome}}</span></td><td><span class="ph">{{time_mesa_contato}}</span></td><td><span class="ph">{{time_mesa_quando}}</span></td></tr><tr><td>Atendimento e operações</td><td><span class="ph">{{time_ops_nome}}</span></td><td><span class="ph">{{time_ops_contato}}</span></td><td><span class="ph">{{time_ops_quando}}</span></td></tr></tbody></table>
+<span class="eyebrow">O acordo de&nbsp;acompanhamento</span>
+<h1 class="t">Como funciona o seu&nbsp;acompanhamento</h1>
+<p class="lead">Este documento fixa a cadência de contato do ciclo <span class="ph">{{ano_vigencia}}</span>: o que acontece, quando acontece e o que cada encontro entrega. Nada aqui impede um contato extra quando você&nbsp;precisar.</p>
+<h2>Ritmo do segmento Private&nbsp;Banking</h2>
+<table class="tb"><thead><tr><th>Encontro /&nbsp;entrega</th><th>Frequência</th><th>O que&nbsp;acontece</th><th>Duração</th><th>Formato</th></tr></thead><tbody><tr><td>Reunião de&nbsp;carteira</td><td><span class="pill">Mensal</span></td><td>Acompanhamento de performance, liquidez e&nbsp;movimentações.</td><td><span class="ph">{{dur_1}}</span></td><td><span class="ph">{{fmt_1}}</span></td></tr><tr><td>Comitê de investimentos com a&nbsp;família</td><td><span class="pill">Trimestral</span></td><td>Alocação estratégica, riscos e decisões de maior&nbsp;porte.</td><td><span class="ph">{{dur_2}}</span></td><td><span class="ph">{{fmt_2}}</span></td></tr><tr><td>Revisão patrimonial e&nbsp;sucessória</td><td><span class="pill">Semestral</span></td><td>Estruturas, jurisdições, seguros e plano&nbsp;sucessório.</td><td><span class="ph">{{dur_3}}</span></td><td><span class="ph">{{fmt_3}}</span></td></tr><tr><td>Planejamento&nbsp;anual</td><td><span class="pill">Anual</span></td><td>Orçamento de liquidez, tributos do ano e metas da&nbsp;família.</td><td><span class="ph">{{dur_4}}</span></td><td><span class="ph">{{fmt_4}}</span></td></tr></tbody></table>
+<h2>Quem&nbsp;participa</h2>
+<table class="tb"><thead><tr><th>Papel</th><th>Nome</th><th>Contato</th><th>Quando&nbsp;aciona</th></tr></thead><tbody><tr><td>Banker&nbsp;responsável</td><td><span class="ph">{{time_principal_nome}}</span></td><td><span class="ph">{{time_principal_contato}}</span></td><td><span class="ph">{{time_principal_quando}}</span></td></tr><tr><td>Backup do&nbsp;time</td><td><span class="ph">{{time_backup_nome}}</span></td><td><span class="ph">{{time_backup_contato}}</span></td><td><span class="ph">{{time_backup_quando}}</span></td></tr><tr><td>Mesa de renda&nbsp;fixa</td><td><span class="ph">{{time_mesa_nome}}</span></td><td><span class="ph">{{time_mesa_contato}}</span></td><td><span class="ph">{{time_mesa_quando}}</span></td></tr><tr><td>Atendimento e&nbsp;operações</td><td><span class="ph">{{time_ops_nome}}</span></td><td><span class="ph">{{time_ops_contato}}</span></td><td><span class="ph">{{time_ops_quando}}</span></td></tr></tbody></table>
 <div class="gap"></div>
-<div class="note"><p><strong>Antes de cada reunião.</strong> Você recebe a pauta e o material de apoio com <span class="ph">{{antecedencia_pauta}}</span> de antecedência. Depois do encontro, enviamos o resumo com as decisões e os prazos acordados em até <span class="ph">{{prazo_resumo_pos_reuniao}}</span>.</p></div>
+<div class="note"><p><strong>Antes de cada&nbsp;reunião.</strong> Você recebe a pauta e o material de apoio com <span class="ph">{{antecedencia_pauta}}</span> de antecedência. Depois do encontro, enviamos o resumo com as decisões e os prazos acordados em até <span class="ph">{{prazo_resumo_pos_reuniao}}</span>.</p></div>
   </div>
-  <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -604,18 +607,18 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   </header>
   <div class="pg-body">
 <span class="eyebrow">Ciclo <span class="ph">{{ano_vigencia}}</span></span>
-<h1 class="t">Calendário do ano</h1>
-<p class="lead">Datas propostas para o ciclo. Confirmamos cada uma com pelo menos <span class="ph">{{antecedencia_confirmacao}}</span> de antecedência.</p>
+<h1 class="t">Calendário do&nbsp;ano</h1>
+<p class="lead">Datas propostas para o ciclo. Confirmamos cada uma com pelo menos <span class="ph">{{antecedencia_confirmacao}}</span> de&nbsp;antecedência.</p>
 <ol class="year"><li class="on"><span class="mo">01</span><span class="nm">Jan</span><span class="ev"><span class="ph">{{cal_01_tipo}}</span></span></li><li class="on"><span class="mo">02</span><span class="nm">Fev</span><span class="ev"><span class="ph">{{cal_02_tipo}}</span></span></li><li class="on"><span class="mo">03</span><span class="nm">Mar</span><span class="ev"><span class="ph">{{cal_03_tipo}}</span></span></li><li class="on"><span class="mo">04</span><span class="nm">Abr</span><span class="ev"><span class="ph">{{cal_04_tipo}}</span></span></li><li class="on"><span class="mo">05</span><span class="nm">Mai</span><span class="ev"><span class="ph">{{cal_05_tipo}}</span></span></li><li class="on"><span class="mo">06</span><span class="nm">Jun</span><span class="ev"><span class="ph">{{cal_06_tipo}}</span></span></li><li class="on"><span class="mo">07</span><span class="nm">Jul</span><span class="ev"><span class="ph">{{cal_07_tipo}}</span></span></li><li class="on"><span class="mo">08</span><span class="nm">Ago</span><span class="ev"><span class="ph">{{cal_08_tipo}}</span></span></li><li class="on"><span class="mo">09</span><span class="nm">Set</span><span class="ev"><span class="ph">{{cal_09_tipo}}</span></span></li><li class="on"><span class="mo">10</span><span class="nm">Out</span><span class="ev"><span class="ph">{{cal_10_tipo}}</span></span></li><li class="on"><span class="mo">11</span><span class="nm">Nov</span><span class="ev"><span class="ph">{{cal_11_tipo}}</span></span></li><li class="on"><span class="mo">12</span><span class="nm">Dez</span><span class="ev"><span class="ph">{{cal_12_tipo}}</span></span></li></ol>
 <div class="gap"></div>
-<table class="tb sm"><thead><tr><th>Mês</th><th>Data prevista</th><th>Encontro / entrega</th><th>Pauta principal</th><th>Entregável</th><th>Status</th></tr></thead><tbody><tr><td>Janeiro</td><td><span class="ph">{{cal_01_data}}</span></td><td><span class="ph">{{cal_01_encontro}}</span></td><td><span class="ph">{{cal_01_pauta}}</span></td><td><span class="ph">{{cal_01_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_01_status}}</span></span></td></tr><tr><td>Fevereiro</td><td><span class="ph">{{cal_02_data}}</span></td><td><span class="ph">{{cal_02_encontro}}</span></td><td><span class="ph">{{cal_02_pauta}}</span></td><td><span class="ph">{{cal_02_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_02_status}}</span></span></td></tr><tr><td>Março</td><td><span class="ph">{{cal_03_data}}</span></td><td><span class="ph">{{cal_03_encontro}}</span></td><td><span class="ph">{{cal_03_pauta}}</span></td><td><span class="ph">{{cal_03_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_03_status}}</span></span></td></tr><tr><td>Abril</td><td><span class="ph">{{cal_04_data}}</span></td><td><span class="ph">{{cal_04_encontro}}</span></td><td><span class="ph">{{cal_04_pauta}}</span></td><td><span class="ph">{{cal_04_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_04_status}}</span></span></td></tr><tr><td>Maio</td><td><span class="ph">{{cal_05_data}}</span></td><td><span class="ph">{{cal_05_encontro}}</span></td><td><span class="ph">{{cal_05_pauta}}</span></td><td><span class="ph">{{cal_05_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_05_status}}</span></span></td></tr><tr><td>Junho</td><td><span class="ph">{{cal_06_data}}</span></td><td><span class="ph">{{cal_06_encontro}}</span></td><td><span class="ph">{{cal_06_pauta}}</span></td><td><span class="ph">{{cal_06_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_06_status}}</span></span></td></tr><tr><td>Julho</td><td><span class="ph">{{cal_07_data}}</span></td><td><span class="ph">{{cal_07_encontro}}</span></td><td><span class="ph">{{cal_07_pauta}}</span></td><td><span class="ph">{{cal_07_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_07_status}}</span></span></td></tr><tr><td>Agosto</td><td><span class="ph">{{cal_08_data}}</span></td><td><span class="ph">{{cal_08_encontro}}</span></td><td><span class="ph">{{cal_08_pauta}}</span></td><td><span class="ph">{{cal_08_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_08_status}}</span></span></td></tr><tr><td>Setembro</td><td><span class="ph">{{cal_09_data}}</span></td><td><span class="ph">{{cal_09_encontro}}</span></td><td><span class="ph">{{cal_09_pauta}}</span></td><td><span class="ph">{{cal_09_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_09_status}}</span></span></td></tr><tr><td>Outubro</td><td><span class="ph">{{cal_10_data}}</span></td><td><span class="ph">{{cal_10_encontro}}</span></td><td><span class="ph">{{cal_10_pauta}}</span></td><td><span class="ph">{{cal_10_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_10_status}}</span></span></td></tr><tr><td>Novembro</td><td><span class="ph">{{cal_11_data}}</span></td><td><span class="ph">{{cal_11_encontro}}</span></td><td><span class="ph">{{cal_11_pauta}}</span></td><td><span class="ph">{{cal_11_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_11_status}}</span></span></td></tr><tr><td>Dezembro</td><td><span class="ph">{{cal_12_data}}</span></td><td><span class="ph">{{cal_12_encontro}}</span></td><td><span class="ph">{{cal_12_pauta}}</span></td><td><span class="ph">{{cal_12_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_12_status}}</span></span></td></tr></tbody></table>
+<table class="tb sm"><thead><tr><th>Mês</th><th>Data&nbsp;prevista</th><th>Encontro /&nbsp;entrega</th><th>Pauta&nbsp;principal</th><th>Entregável</th><th>Status</th></tr></thead><tbody><tr><td>Janeiro</td><td><span class="ph">{{cal_01_data}}</span></td><td><span class="ph">{{cal_01_encontro}}</span></td><td><span class="ph">{{cal_01_pauta}}</span></td><td><span class="ph">{{cal_01_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_01_status}}</span></span></td></tr><tr><td>Fevereiro</td><td><span class="ph">{{cal_02_data}}</span></td><td><span class="ph">{{cal_02_encontro}}</span></td><td><span class="ph">{{cal_02_pauta}}</span></td><td><span class="ph">{{cal_02_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_02_status}}</span></span></td></tr><tr><td>Março</td><td><span class="ph">{{cal_03_data}}</span></td><td><span class="ph">{{cal_03_encontro}}</span></td><td><span class="ph">{{cal_03_pauta}}</span></td><td><span class="ph">{{cal_03_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_03_status}}</span></span></td></tr><tr><td>Abril</td><td><span class="ph">{{cal_04_data}}</span></td><td><span class="ph">{{cal_04_encontro}}</span></td><td><span class="ph">{{cal_04_pauta}}</span></td><td><span class="ph">{{cal_04_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_04_status}}</span></span></td></tr><tr><td>Maio</td><td><span class="ph">{{cal_05_data}}</span></td><td><span class="ph">{{cal_05_encontro}}</span></td><td><span class="ph">{{cal_05_pauta}}</span></td><td><span class="ph">{{cal_05_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_05_status}}</span></span></td></tr><tr><td>Junho</td><td><span class="ph">{{cal_06_data}}</span></td><td><span class="ph">{{cal_06_encontro}}</span></td><td><span class="ph">{{cal_06_pauta}}</span></td><td><span class="ph">{{cal_06_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_06_status}}</span></span></td></tr><tr><td>Julho</td><td><span class="ph">{{cal_07_data}}</span></td><td><span class="ph">{{cal_07_encontro}}</span></td><td><span class="ph">{{cal_07_pauta}}</span></td><td><span class="ph">{{cal_07_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_07_status}}</span></span></td></tr><tr><td>Agosto</td><td><span class="ph">{{cal_08_data}}</span></td><td><span class="ph">{{cal_08_encontro}}</span></td><td><span class="ph">{{cal_08_pauta}}</span></td><td><span class="ph">{{cal_08_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_08_status}}</span></span></td></tr><tr><td>Setembro</td><td><span class="ph">{{cal_09_data}}</span></td><td><span class="ph">{{cal_09_encontro}}</span></td><td><span class="ph">{{cal_09_pauta}}</span></td><td><span class="ph">{{cal_09_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_09_status}}</span></span></td></tr><tr><td>Outubro</td><td><span class="ph">{{cal_10_data}}</span></td><td><span class="ph">{{cal_10_encontro}}</span></td><td><span class="ph">{{cal_10_pauta}}</span></td><td><span class="ph">{{cal_10_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_10_status}}</span></span></td></tr><tr><td>Novembro</td><td><span class="ph">{{cal_11_data}}</span></td><td><span class="ph">{{cal_11_encontro}}</span></td><td><span class="ph">{{cal_11_pauta}}</span></td><td><span class="ph">{{cal_11_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_11_status}}</span></span></td></tr><tr><td>Dezembro</td><td><span class="ph">{{cal_12_data}}</span></td><td><span class="ph">{{cal_12_encontro}}</span></td><td><span class="ph">{{cal_12_pauta}}</span></td><td><span class="ph">{{cal_12_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_12_status}}</span></span></td></tr></tbody></table>
   </div>
-  <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
   <header class="pg-head">
-    <div class="sec">As reuniões</div>
+    <div class="sec">As&nbsp;reuniões</div>
     <div class="rt"><div class="dt"><span class="ph">{{ano_vigencia}}</span></div><div class="logo logo-ink" style="width:30.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
@@ -649,31 +652,31 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 </svg></div></div>
   </header>
   <div class="pg-body">
-<span class="eyebrow">O que esperar</span>
-<h1 class="t">O que acontece em cada encontro</h1>
-<p class="lead">Cada tipo de reunião tem uma pauta padrão. Você pode acrescentar temas até <span class="ph">{{prazo_inclusao_pauta}}</span> antes da data.</p>
-<h2>Reunião de carteira</h2>
+<span class="eyebrow">O que&nbsp;esperar</span>
+<h1 class="t">O que acontece em cada&nbsp;encontro</h1>
+<p class="lead">Cada tipo de reunião tem uma pauta padrão. Você pode acrescentar temas até <span class="ph">{{prazo_inclusao_pauta}}</span> antes da&nbsp;data.</p>
+<h2>Reunião de&nbsp;carteira</h2>
 <div class="cols2u">
-  <div><h3>Pauta padrão</h3><p class="small mut"><span class="ph">{{pauta_1}}</span></p></div>
-  <div><h3>Você sai com</h3><p class="small mut"><span class="ph">{{entrega_1}}</span></p></div>
-</div><h2>Comitê de investimentos com a família</h2>
+  <div><h3>Pauta&nbsp;padrão</h3><p class="small mut"><span class="ph">{{pauta_1}}</span></p></div>
+  <div><h3>Você sai&nbsp;com</h3><p class="small mut"><span class="ph">{{entrega_1}}</span></p></div>
+</div><h2>Comitê de investimentos com a&nbsp;família</h2>
 <div class="cols2u">
-  <div><h3>Pauta padrão</h3><p class="small mut"><span class="ph">{{pauta_2}}</span></p></div>
-  <div><h3>Você sai com</h3><p class="small mut"><span class="ph">{{entrega_2}}</span></p></div>
-</div><h2>Revisão patrimonial e sucessória</h2>
+  <div><h3>Pauta&nbsp;padrão</h3><p class="small mut"><span class="ph">{{pauta_2}}</span></p></div>
+  <div><h3>Você sai&nbsp;com</h3><p class="small mut"><span class="ph">{{entrega_2}}</span></p></div>
+</div><h2>Revisão patrimonial e&nbsp;sucessória</h2>
 <div class="cols2u">
-  <div><h3>Pauta padrão</h3><p class="small mut"><span class="ph">{{pauta_3}}</span></p></div>
-  <div><h3>Você sai com</h3><p class="small mut"><span class="ph">{{entrega_3}}</span></p></div>
+  <div><h3>Pauta&nbsp;padrão</h3><p class="small mut"><span class="ph">{{pauta_3}}</span></p></div>
+  <div><h3>Você sai&nbsp;com</h3><p class="small mut"><span class="ph">{{entrega_3}}</span></p></div>
 </div>
-<h2>Como se preparar</h2>
-<ol class="flow" style="--n:4"><li><span class="node"></span><span class="tag"><span class="ph">{{preparo_material_quando}}</span></span><h4>Leia o material</h4><p><span class="ph">{{preparo_material}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{preparo_duvidas_quando}}</span></span><h4>Anote as dúvidas</h4><p><span class="ph">{{preparo_duvidas}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{preparo_mudancas_quando}}</span></span><h4>Traga mudanças de vida</h4><p><span class="ph">{{preparo_mudancas}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{preparo_confirmacao_quando}}</span></span><h4>Confirme presença</h4><p><span class="ph">{{preparo_confirmacao}}</span></p></li></ol>
+<h2>Como se&nbsp;preparar</h2>
+<ol class="flow" style="--n:4"><li><span class="node"></span><span class="tag"><span class="ph">{{preparo_material_quando}}</span></span><h4>Leia o&nbsp;material</h4><p><span class="ph">{{preparo_material}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{preparo_duvidas_quando}}</span></span><h4>Anote as&nbsp;dúvidas</h4><p><span class="ph">{{preparo_duvidas}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{preparo_mudancas_quando}}</span></span><h4>Traga mudanças de&nbsp;vida</h4><p><span class="ph">{{preparo_mudancas}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{preparo_confirmacao_quando}}</span></span><h4>Confirme&nbsp;presença</h4><p><span class="ph">{{preparo_confirmacao}}</span></p></li></ol>
   </div>
-  <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
   <header class="pg-head">
-    <div class="sec">Canais e prazos</div>
+    <div class="sec">Canais e&nbsp;prazos</div>
     <div class="rt"><div class="dt"><span class="ph">{{ano_vigencia}}</span></div><div class="logo logo-ink" style="width:30.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
@@ -707,19 +710,19 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 </svg></div></div>
   </header>
   <div class="pg-body">
-<span class="eyebrow">Entre uma reunião e outra</span>
-<h1 class="t">Canais, prazos e responsáveis</h1>
-<p class="lead">Fora do calendário, é por aqui que falamos. Os prazos abaixo valem em dias úteis.</p>
-<h2>Canais de atendimento</h2>
-<table class="tb"><thead><tr><th>Canal</th><th>Para quê</th><th>Horário</th><th>Endereço / número</th></tr></thead><tbody><tr><td>WhatsApp direto</td><td><span class="ph">{{canal_whats_para}}</span></td><td><span class="ph">{{canal_whats_horario}}</span></td><td><span class="ph">{{canal_whats_endereco}}</span></td></tr><tr><td>E-mail</td><td><span class="ph">{{canal_email_para}}</span></td><td><span class="ph">{{canal_email_horario}}</span></td><td><span class="ph">{{canal_email_endereco}}</span></td></tr><tr><td>Telefone da central</td><td><span class="ph">{{canal_tel_para}}</span></td><td><span class="ph">{{canal_tel_horario}}</span></td><td><span class="ph">{{canal_tel_endereco}}</span></td></tr><tr><td>Portal do cliente</td><td><span class="ph">{{canal_portal_para}}</span></td><td><span class="ph">{{canal_portal_horario}}</span></td><td><span class="ph">{{canal_portal_endereco}}</span></td></tr></tbody></table>
-<h2>Prazos de resposta</h2>
-<table class="tb"><thead><tr><th>Tipo de solicitação</th><th class="num">Prazo de resposta</th><th class="num">Prazo de execução</th><th>Quem responde</th></tr></thead><tbody><tr><td><span class="ph">{{sla_1_tipo}}</span></td><td class="num"><span class="ph">{{sla_1_resposta}}</span></td><td class="num"><span class="ph">{{sla_1_execucao}}</span></td><td><span class="ph">{{sla_1_quem}}</span></td></tr><tr><td><span class="ph">{{sla_2_tipo}}</span></td><td class="num"><span class="ph">{{sla_2_resposta}}</span></td><td class="num"><span class="ph">{{sla_2_execucao}}</span></td><td><span class="ph">{{sla_2_quem}}</span></td></tr><tr><td><span class="ph">{{sla_3_tipo}}</span></td><td class="num"><span class="ph">{{sla_3_resposta}}</span></td><td class="num"><span class="ph">{{sla_3_execucao}}</span></td><td><span class="ph">{{sla_3_quem}}</span></td></tr><tr><td><span class="ph">{{sla_4_tipo}}</span></td><td class="num"><span class="ph">{{sla_4_resposta}}</span></td><td class="num"><span class="ph">{{sla_4_execucao}}</span></td><td><span class="ph">{{sla_4_quem}}</span></td></tr></tbody></table>
+<span class="eyebrow">Entre uma reunião e&nbsp;outra</span>
+<h1 class="t">Canais, prazos e&nbsp;responsáveis</h1>
+<p class="lead">Fora do calendário, é por aqui que falamos. Os prazos abaixo valem em dias&nbsp;úteis.</p>
+<h2>Canais de&nbsp;atendimento</h2>
+<table class="tb"><thead><tr><th>Canal</th><th>Para&nbsp;quê</th><th>Horário</th><th>Endereço /&nbsp;número</th></tr></thead><tbody><tr><td>WhatsApp&nbsp;direto</td><td><span class="ph">{{canal_whats_para}}</span></td><td><span class="ph">{{canal_whats_horario}}</span></td><td><span class="ph">{{canal_whats_endereco}}</span></td></tr><tr><td>E-mail</td><td><span class="ph">{{canal_email_para}}</span></td><td><span class="ph">{{canal_email_horario}}</span></td><td><span class="ph">{{canal_email_endereco}}</span></td></tr><tr><td>Telefone da&nbsp;central</td><td><span class="ph">{{canal_tel_para}}</span></td><td><span class="ph">{{canal_tel_horario}}</span></td><td><span class="ph">{{canal_tel_endereco}}</span></td></tr><tr><td>Portal do&nbsp;cliente</td><td><span class="ph">{{canal_portal_para}}</span></td><td><span class="ph">{{canal_portal_horario}}</span></td><td><span class="ph">{{canal_portal_endereco}}</span></td></tr></tbody></table>
+<h2>Prazos de&nbsp;resposta</h2>
+<table class="tb"><thead><tr><th>Tipo de&nbsp;solicitação</th><th class="num">Prazo de&nbsp;resposta</th><th class="num">Prazo de&nbsp;execução</th><th>Quem&nbsp;responde</th></tr></thead><tbody><tr><td><span class="ph">{{sla_1_tipo}}</span></td><td class="num"><span class="ph">{{sla_1_resposta}}</span></td><td class="num"><span class="ph">{{sla_1_execucao}}</span></td><td><span class="ph">{{sla_1_quem}}</span></td></tr><tr><td><span class="ph">{{sla_2_tipo}}</span></td><td class="num"><span class="ph">{{sla_2_resposta}}</span></td><td class="num"><span class="ph">{{sla_2_execucao}}</span></td><td><span class="ph">{{sla_2_quem}}</span></td></tr><tr><td><span class="ph">{{sla_3_tipo}}</span></td><td class="num"><span class="ph">{{sla_3_resposta}}</span></td><td class="num"><span class="ph">{{sla_3_execucao}}</span></td><td><span class="ph">{{sla_3_quem}}</span></td></tr><tr><td><span class="ph">{{sla_4_tipo}}</span></td><td class="num"><span class="ph">{{sla_4_resposta}}</span></td><td class="num"><span class="ph">{{sla_4_execucao}}</span></td><td><span class="ph">{{sla_4_quem}}</span></td></tr></tbody></table>
 <div class="gap"></div>
-<div class="note"><p><strong>Fora do horário e urgências.</strong> <span class="ph">{{procedimento_urgencia}}</span></p></div>
-<h2>Ouvidoria e reclamações</h2>
+<div class="note"><p><strong>Fora do horário e&nbsp;urgências.</strong> <span class="ph">{{procedimento_urgencia}}</span></p></div>
+<h2>Ouvidoria e&nbsp;reclamações</h2>
 <p class="small mut"><span class="ph">{{texto_ouvidoria}}</span></p>
   </div>
-  <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -759,20 +762,20 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   </header>
   <div class="pg-body">
 <span class="eyebrow">Confirmação</span>
-<h1 class="t">Agendar, remarcar e confirmar</h1>
-<p class="lead">Use o link abaixo para escolher horários, remarcar um encontro ou pedir uma conversa fora do calendário.</p>
+<h1 class="t">Agendar, remarcar e&nbsp;confirmar</h1>
+<p class="lead">Use o link abaixo para escolher horários, remarcar um encontro ou pedir uma conversa fora do&nbsp;calendário.</p>
 <div class="cols2u" style="align-items:start">
   <div>
-    <h2>Regras de remarcação</h2>
+    <h2>Regras de&nbsp;remarcação</h2>
     <ul class="small">
-      <li>Avise com pelo menos <span class="ph">{{antecedencia_remarcacao}}</span> de antecedência sempre que possível.</li>
-      <li>Reuniões remarcadas são reagendadas dentro do mesmo mês de referência.</li>
+      <li>Avise com pelo menos <span class="ph">{{antecedencia_remarcacao}}</span> de antecedência sempre que&nbsp;possível.</li>
+      <li>Reuniões remarcadas são reagendadas dentro do mesmo mês de&nbsp;referência.</li>
       <li><span class="ph">{{regra_remarcacao_2}}</span></li>
       <li><span class="ph">{{regra_remarcacao_3}}</span></li>
     </ul>
-    <h2>Registro das decisões</h2>
+    <h2>Registro das&nbsp;decisões</h2>
     <p class="small mut"><span class="ph">{{texto_registro_decisoes}}</span></p>
-    <h2>Revisão deste cronograma</h2>
+    <h2>Revisão deste&nbsp;cronograma</h2>
     <p class="small mut"><span class="ph">{{texto_revisao_cronograma}}</span></p>
   </div>
   <div style="display:flex;flex-direction:column;align-items:center;gap:4mm">
@@ -782,12 +785,12 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 </div>
 <div class="sig">
   <div class="ln"><span class="ph">{{nome_responsavel}}</span><br><span class="mut">Banker &middot; <span class="ph">{{registro_cvm_ou_ancord}}</span></span></div>
-  <div class="ln"><span class="ph">{{nome_cliente}}</span><br><span class="mut">Cliente &middot; ciente do cronograma</span></div>
+  <div class="ln"><span class="ph">{{nome_cliente}}</span><br><span class="mut">Cliente &middot; ciente do&nbsp;cronograma</span></div>
 </div>
 <div class="gap"></div>
 <p class="legal">Este cronograma reflete o padrão de acompanhamento do segmento Private Banking e pode ser ajustado de comum acordo. Datas previstas dependem de confirmação e podem mudar por indisponibilidade de qualquer das partes. Este documento não constitui recomendação de investimento. É proibida a reprodução ou o compartilhamento total ou parcial sem autorização prévia e por escrito. <span class="ph">{{razao_social}}</span> &middot; CNPJ <span class="ph">{{cnpj}}</span>.</p>
   </div>
-  <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 </body>
 </html>

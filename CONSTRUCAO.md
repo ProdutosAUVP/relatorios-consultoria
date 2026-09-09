@@ -158,7 +158,17 @@ margens de página, que têm origem própria.
 
 **Fios**: `1px` (0,75 pt) para todo fio — régua, hairline de tabela, borda de cabeçalho,
 moldura tracejada, traço de grafismo — e `1.33px` (1 pt) para acento: borda esquerda de
-card, topo de card de indicador, linha de total de tabela. Não há um terceiro peso.
+card, topo de card de indicador, linha de total de tabela, traço de tópico de lista. Não
+há um terceiro peso.
+
+**Ritmo vertical das listas em px inteiros.** O traço de tópico é um retângulo de altura
+fracionária posicionado dentro do `li`. Se o passo entre os itens for medido em mm — que
+nunca dá px inteiro —, cada traço cai numa fase de subpixel diferente e a rasterização
+engorda uns e afina outros, o que se vê como fio de espessura variável na mesma lista.
+Por isso `line-height`, `margin-bottom` e o `top` do marcador de `.lista`, `.plan` e
+`.marcos` são os únicos valores do sistema declarados em px inteiros: assim todos os
+traços herdam a mesma fase da origem da lista e saem idênticos. Se mexer na escala
+dessas listas, ajuste os três juntos e mantenha-os inteiros.
 
 A escala é generosa por decisão: este é um material de produto financeiro, e o espaço em
 branco faz parte do acabamento. Quando um conteúdo não cabe na página, a resposta certa é
@@ -232,14 +242,29 @@ externa em luz de dia, estúdio claro — em enquadramentos e proporções que n
   45% da largura do recorte. Quando o recorte ideal não cabe, encolhe mantendo a
   proporção em vez de distorcer;
 - **exposição**: normaliza média e desvio da luminância em LAB e reduz um pouco a
-  saturação, para a foto clara e a escura não parecerem de produtos diferentes.
+  saturação, para a foto clara e a escura não parecerem de produtos diferentes;
+- **altas luzes**: esticar o desvio até o alvo empurra contra o 255 tudo o que já era
+  claro, e o corte vira mancha — o letreiro de neon atrás de um consultor, a janela
+  atrás de outro, o realce na testa de quem foi fotografado com luz dura. Acima do
+  joelho (`L_JOELHO`) a curva passa a se aproximar do teto em vez de cortar, então o
+  que era branco continua claro mas volta a ter desenho.
 
 É um passo de uma vez só, rodado à mão: `python3 scripts/fotos.py`. A saída fica
 versionada em `assets/consultores/` e o `npm run build` só a embute em base64, o que
 mantém o build sem dependências. Precisa de Pillow e de **opencv-python-headless 4.x** —
 na 5 o `CascadeClassifier` saiu do módulo raiz.
 
-Auxiliares de grelha, usados como `class`: `.cols2`, `.cols3`, `.cols2u` (1,35 : 1),
+### Palavras órfãs
+
+Coluna estreita e texto em português produzem linha final de uma palavra só o tempo todo.
+`sem_viuvas()`, em `gerador/build.py`, roda sobre o HTML pronto e troca por `&nbsp;` o
+espaço que antecede a última palavra de cada bloco de texto — `p`, `li`, títulos, células
+de tabela e os inline que fecham um bloco. As duas últimas palavras passam a quebrar
+juntas, então a linha final nunca fica sozinha. Casos em que o bloco termina em tag
+(`…</span></p>`) ficam de fora por construção; se aparecer um, é sinal de que o texto
+precisa de outra redação, não de outra regra.
+
+Auxiliares de grelha, usados como `class`: `.cols2`, `.cols3`, `.cols2u` (1,5 : 1),
 `.center` (usa a sobra vertical do slide), `.gap`.
 
 ## Como fazer

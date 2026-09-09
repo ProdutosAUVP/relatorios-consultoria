@@ -5,9 +5,11 @@
   "description": "Modelos de uso dos relatórios e apresentações da AUVP Capital e AUVP Private Banking",
   "type": "module",
   "scripts": {
+    "build": "python3 gerador/build.py",
     "pdf": "node scripts/render.mjs",
     "check": "node scripts/check.mjs",
-    "vars": "node scripts/variaveis.mjs"
+    "vars": "node scripts/variaveis.mjs",
+    "all": "npm run build && npm run vars && npm run check && npm run pdf"
   },
   "devDependencies": {
     "playwright": "^1.49.1"

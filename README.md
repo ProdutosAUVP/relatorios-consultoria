@@ -8,6 +8,10 @@ qualquer navegador e não depende de nenhum outro arquivo do repositório.
 Todo campo preenchível aparece como `{{nome_da_variavel}}`, destacado em dourado no
 documento. O dicionário completo está em [`VARIAVEIS.md`](VARIAVEIS.md).
 
+Os modelos são **gerados** a partir de `gerador/`, e não editados à mão. Para
+acrescentar uma página, um documento ou um segmento, veja
+[`CONSTRUCAO.md`](CONSTRUCAO.md).
+
 ## Os 24 modelos
 
 Os seis documentos existem nos quatro segmentos.
@@ -41,6 +45,9 @@ npm install
 npm run pdf                          # todos os modelos -> pdf/
 npm run pdf -- relatorio-mensal      # só os que casam com o filtro
 ```
+
+Se a mudança foi no sistema visual e não no preenchimento, o caminho é outro: edite
+`gerador/` e rode `npm run all`, que reconstrói os 24 modelos, o dicionário e os PDFs.
 
 Os PDFs são reproduzíveis a partir de `modelos/`; ao editar um modelo, regere o PDF
 correspondente no mesmo commit para os dois não saírem de sincronia.
@@ -273,6 +280,7 @@ pdf/                            um PDF de cada modelo, versionado (saída do npm
 scripts/render.mjs              HTML -> PDF via Playwright
 scripts/check.mjs               verificação de estouro de página
 scripts/variaveis.mjs           gera o VARIAVEIS.md a partir dos modelos
+gerador/                        fonte dos modelos (Python, só biblioteca padrão)
 assets/fonts/                   Anek Latin (woff2)
 assets relatórios/              logos, grafismos e referências originais (fonte de verdade)
 MODELO SLIDES AUVP CAPITAL.pdf  deck institucional de referência

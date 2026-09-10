@@ -133,11 +133,14 @@ function main() {
 
   // Sem data de geração: `docs/` precisa ser reprodutível byte a byte para o
   // `git status` limpo continuar valendo como verificação.
+  const rotuloBase = (v) => v.rotulo.replace(/, sem data$/, '');
   for (const d of porDoc.values()) {
     d.variantes.sort((a, b) => {
-      const [ga, pa] = ordemVariante(a.sufixo);
-      const [gb, pb] = ordemVariante(b.sufixo);
-      return ga - gb || pa - pb || a.rotulo.localeCompare(b.rotulo, 'pt-BR');
+      const [ga, pa, da] = ordemVariante(a.sufixo);
+      const [gb, pb, db] = ordemVariante(b.sufixo);
+      // A gêmea sem data vem logo depois da sua, e não em outro ponto da lista.
+      return ga - gb || pa - pb
+        || rotuloBase(a).localeCompare(rotuloBase(b), 'pt-BR') || da - db;
     });
   }
 

@@ -308,14 +308,44 @@ def _em_branco():
     )
 
 
+SEM_DATA = "-sem-data"
+
+
+def variantes(consultores, temas, segmentos):
+    """(sufixo, rótulo, tema) de cada variante.
+
+    A lista mora aqui, e não em `build.py`, porque os planos são deste módulo:
+    acrescentar um plano em `PLANOS` já o coloca no build.
+
+    Só a apresentação de cada consultor sai também sem data. É o documento que
+    a pessoa manda para um cliente novo a qualquer momento, e uma data
+    carimbada nele nasce vencida. Os planos e as versões em branco continuam
+    com data: ali ela diz de quando são as condições comerciais.
+    """
+    return ([(chave, dados["rotulo"], "consultoria") for chave, dados in PLANOS.items()]
+            + [v for c in consultores
+               for v in ((c["slug"], c["nome"], "consultoria"),
+                         (c["slug"] + SEM_DATA, c["nome"] + ", sem data", "consultoria"))]
+            + [(seg, temas[seg]["nome_full"], seg)
+               for seg in segmentos if seg != "consultoria"])
+
+
 def build(t, variante):
     """`variante` é um consultor, um plano da consultoria ou um segmento.
 
     Consultor traz o texto da pessoa e o plano do Me Diz o Que Fazer; plano traz
     o texto comercial com o consultor em branco; segmento deixa os dois em
     branco, para o produto preencher com o seu consultor e as suas condições.
+
+    O sufixo `-sem-data` devolve a mesma variante sem a data no cabeçalho. Este
+    documento não é de um período: uma apresentação carimbada nasce vencida, e
+    quem imprime um lote hoje não quer refazê-lo em janeiro.
     """
     set_date_ph("data_apresentacao")
+
+    data = not variante.endswith(SEM_DATA)
+    if not data:
+        variante = variante[:-len(SEM_DATA)]
 
     if variante in POR_SLUG:
         c = POR_SLUG[variante]
@@ -333,12 +363,15 @@ def build(t, variante):
     return [
         page_a4(t, "O seu consultor", 1,
                 '<div class="perfil">%s</div>'
-                % _pagina_consultor(c, t, texto["plano"], foto, primeiro), rodape=rodape),
+                % _pagina_consultor(c, t, texto["plano"], foto, primeiro),
+                rodape=rodape, data=data),
         page_a4(t, "O plano", 2, PAGINA_PLANO % dict(
             plano=texto["plano"], resumo=texto["resumo"],
             funciona=_lista(texto["funciona"]), incluido=_lista(texto["incluido"]),
-            fora=_lista(texto["fora"], cls="lista mut")), rodape=rodape, cls="plano"),
+            fora=_lista(texto["fora"], cls="lista mut")),
+            rodape=rodape, cls="plano", data=data),
         page_a4(t, t["marca"], 3, PAGINA_CASA % dict(
             marca=t["marca"], metodo=METODO, mes=texto["mes"], ano=texto["ano"],
-            notas=texto["notas"], **CANAIS), rodape=rodape, cls="plano", dark=True),
+            notas=texto["notas"], **CANAIS),
+            rodape=rodape, cls="plano", dark=True, data=data),
     ]

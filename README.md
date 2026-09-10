@@ -12,11 +12,11 @@ Os modelos são **gerados** a partir de `gerador/`, e não editados à mão. Par
 acrescentar uma página, um documento ou um segmento, veja
 [`CONSTRUCAO.md`](CONSTRUCAO.md).
 
-## Os 37 modelos
+## Os 44 modelos
 
 Seis documentos existem nos quatro segmentos. A apresentação do consultor tem uma variante
 por plano da consultoria, uma por consultor do Me Diz o Que Fazer e uma em branco por
-segmento — treze ao todo.
+segmento — treze ao todo, e a de cada consultor sai também sem a data no cabeçalho.
 
 | Documento | Formato | Páginas | Consultoria | Alta Renda | Private | Assessoria |
 | --- | --- | --- | :-: | :-: | :-: | :-: |
@@ -27,6 +27,11 @@ segmento — treze ao todo.
 | Relatório mensal em apresentação | 16:9 | 12 | ✓ | ✓ | ✓ | ✓ |
 | Cronograma de reuniões | A4 retrato | 6 | ✓ | ✓ | ✓ | ✓ |
 | Apresentação do consultor | A4 retrato | 3 | 3 planos + 7 consultores | ✓ | ✓ | ✓ |
+
+A apresentação de cada consultor existe duas vezes: com e sem a data no cabeçalho, esta
+última no sufixo `-sem-data`. É o documento que a pessoa manda para um cliente novo a
+qualquer momento, e uma data carimbada nele nasce vencida. Os planos e as versões em branco
+continuam só com data: ali ela diz de quando são as condições comerciais.
 
 Nomes de arquivo: `modelos/<documento>-<variante>.html`. Na maioria a variante é o
 segmento — `consultoria`, `alta-renda`, `private`, `assessoria`. Na apresentação do
@@ -88,7 +93,7 @@ mesmo arquivo no navegador: os campos ainda não preenchidos ficam destacados.
 
 **2. Gerar o PDF.**
 
-A pasta `pdf/` já traz um PDF de cada um dos 37 modelos, numa subpasta por produto, para quem só quer ler o
+A pasta `pdf/` já traz um PDF de cada um dos 44 modelos, numa subpasta por produto, para quem só quer ler o
 resultado sem instalar nada. Para regerar depois de editar um modelo:
 
 ```sh
@@ -332,7 +337,7 @@ trimestral no private e semestral com contatos da mesa na assessoria.
 ## Estrutura do repositório
 
 ```
-modelos/                        37 modelos HTML independentes
+modelos/                        44 modelos HTML independentes
 pdf/<produto>/                  um PDF de cada modelo, versionado (saída do npm run pdf)
 scripts/render.mjs              HTML -> PDF via Playwright
 scripts/check.mjs               verificação de estouro de página

@@ -55,7 +55,7 @@ autossuficientes na entrega, fonte única na manutenção.
 | `assets/consultores/` | retratos prontos, saída do `scripts/fotos.py` |
 | `consultores resolve ai/` | fotos originais, como vieram |
 | `gerador/build.py` | entrada: percorre documentos × segmentos e escreve `modelos/` |
-| `scripts/render.mjs` | HTML → PDF, numa subpasta por produto |
+| `scripts/render.mjs` | HTML → PDF, numa subpasta por produto; apaga o que não é mais gerado |
 | `scripts/documentos.mjs` | a tabela de produtos e documentos, partilhada pelo render e pelo catálogo |
 | `scripts/exemplos.mjs` | o exemplo de preenchimento de cada campo, derivado do nome |
 | `scripts/check.mjs` | valida estouro de página em modo de impressão |
@@ -242,6 +242,17 @@ estridente, então marcador de lista, fio de card e destaque em negrito passam a
 No fundo branco vale o contrário — a logo da AUVP é sempre preta. `.perfil` é a escala da primeira página, um pouco menor que a padrão
 mas com entrelinha mais generosa, para acomodar o consultor de texto mais longo sem
 apertar o de texto mais curto.
+
+### Sem data
+
+`page_a4(..., data=False)` tira a data do cabeçalho, e a apresentação de cada consultor sai
+nas duas formas: `danilo-barbosa` e `danilo-barbosa-sem-data`. A razão é o uso — é o
+documento que a pessoa manda para um cliente novo a qualquer momento, e uma data carimbada
+nele nasce vencida. Os planos e as versões em branco por segmento continuam só com data:
+ali ela diz de quando são as condições comerciais.
+
+O sufixo não muda a que produto a variante pertence nem onde ela entra na lista — só a põe
+logo depois da gêmea com data.
 
 ### Links
 

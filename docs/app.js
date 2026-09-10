@@ -151,7 +151,10 @@ const AMOSTRAS = {
  *  Quando a variante é um segmento, o produto é ela mesma; quando não é, é um
  *  plano ou um consultor, e os dois são da consultoria. */
 function produtoDaVariante(sufixo) {
-  return estado.catalogo.produtos.some((p) => p.chave === sufixo) ? sufixo : 'consultoria';
+  // O `-sem-data` é a mesma variante sem a data no cabeçalho, e não muda de
+  // produto: `alta-renda-sem-data` continua sendo Alta Renda.
+  const base = sufixo.replace(/-sem-data$/, '');
+  return estado.catalogo.produtos.some((p) => p.chave === base) ? base : 'consultoria';
 }
 
 const variantesDoProduto = (doc, produto) =>

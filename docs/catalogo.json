@@ -85,11 +85,27 @@
      "imagens": 1
     },
     {
+     "sufixo": "alan-santanna-sem-data",
+     "rotulo": "Alan Sant'Anna, sem data",
+     "arquivo": "apresentacao-consultor-alan-santanna-sem-data.html",
+     "paginas": 3,
+     "campos": 0,
+     "imagens": 1
+    },
+    {
      "sufixo": "andre-arruda",
      "rotulo": "André Arruda",
      "arquivo": "apresentacao-consultor-andre-arruda.html",
      "paginas": 3,
      "campos": 1,
+     "imagens": 1
+    },
+    {
+     "sufixo": "andre-arruda-sem-data",
+     "rotulo": "André Arruda, sem data",
+     "arquivo": "apresentacao-consultor-andre-arruda-sem-data.html",
+     "paginas": 3,
+     "campos": 0,
      "imagens": 1
     },
     {
@@ -101,11 +117,27 @@
      "imagens": 1
     },
     {
+     "sufixo": "bolivar-oliveira-sem-data",
+     "rotulo": "Bolívar Oliveira, sem data",
+     "arquivo": "apresentacao-consultor-bolivar-oliveira-sem-data.html",
+     "paginas": 3,
+     "campos": 1,
+     "imagens": 1
+    },
+    {
      "sufixo": "danilo-barbosa",
      "rotulo": "Danilo Barbosa",
      "arquivo": "apresentacao-consultor-danilo-barbosa.html",
      "paginas": 3,
      "campos": 1,
+     "imagens": 1
+    },
+    {
+     "sufixo": "danilo-barbosa-sem-data",
+     "rotulo": "Danilo Barbosa, sem data",
+     "arquivo": "apresentacao-consultor-danilo-barbosa-sem-data.html",
+     "paginas": 3,
+     "campos": 0,
      "imagens": 1
     },
     {
@@ -117,6 +149,14 @@
      "imagens": 1
     },
     {
+     "sufixo": "erika-barreto-sem-data",
+     "rotulo": "Erika Barreto, sem data",
+     "arquivo": "apresentacao-consultor-erika-barreto-sem-data.html",
+     "paginas": 3,
+     "campos": 0,
+     "imagens": 1
+    },
+    {
      "sufixo": "nasser-tanure",
      "rotulo": "Nasser Tanure",
      "arquivo": "apresentacao-consultor-nasser-tanure.html",
@@ -125,11 +165,27 @@
      "imagens": 1
     },
     {
+     "sufixo": "nasser-tanure-sem-data",
+     "rotulo": "Nasser Tanure, sem data",
+     "arquivo": "apresentacao-consultor-nasser-tanure-sem-data.html",
+     "paginas": 3,
+     "campos": 0,
+     "imagens": 1
+    },
+    {
      "sufixo": "yuri-machado",
      "rotulo": "Yuri Machado",
      "arquivo": "apresentacao-consultor-yuri-machado.html",
      "paginas": 3,
      "campos": 1,
+     "imagens": 1
+    },
+    {
+     "sufixo": "yuri-machado-sem-data",
+     "rotulo": "Yuri Machado, sem data",
+     "arquivo": "apresentacao-consultor-yuri-machado-sem-data.html",
+     "paginas": 3,
+     "campos": 0,
      "imagens": 1
     }
    ]

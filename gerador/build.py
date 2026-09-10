@@ -43,17 +43,13 @@ DOCUMENTOS = [
          titulo="Relatório Mensal (apresentação) — %s", builder=d_mensal_apresentacao.build),
     dict(chave="cronograma-reunioes", formato="a4",
          titulo="Cronograma de Reuniões — %s", builder=d_cronograma.build),
-    # A apresentação do consultor tem três eixos de variante: os planos da
+    # A apresentação do consultor tem três eixos de variante — os planos da
     # consultoria, os consultores do Me Diz o Que Fazer e os outros segmentos,
-    # em branco. Por isso as variantes trazem o tema junto, em vez de sair do
-    # sufixo.
+    # em branco —, e cada uma sai também sem data. A lista é montada no próprio
+    # módulo, e as variantes trazem o tema junto em vez de sair do sufixo.
     dict(chave="apresentacao-consultor", formato="a4",
          titulo="Apresentação do consultor — %s", builder=d_consultor.build,
-         variantes=[(chave, dados["rotulo"], "consultoria")
-                    for chave, dados in d_consultor.PLANOS.items()]
-                   + [(c["slug"], c["nome"], "consultoria") for c in consultores.CONSULTORES]
-                   + [(seg, THEMES[seg]["nome_full"], seg)
-                      for seg in SEGMENTOS if seg != "consultoria"]),
+         variantes=d_consultor.variantes(consultores.CONSULTORES, THEMES, SEGMENTOS)),
 ]
 
 

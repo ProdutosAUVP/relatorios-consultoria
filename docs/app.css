@@ -229,3 +229,15 @@ main { padding: 28px 24px 64px; }
 
 .salvo { font-family: var(--font-ui); font-size: 10px; letter-spacing: .06em;
   text-transform: uppercase; color: var(--success); }
+
+/* ---------- escolha de páginas ---------- */
+
+.secao.paginas > summary { background: var(--muted); }
+.secao.fora > summary { opacity: .5; text-decoration: line-through; }
+
+.pg-item { display: grid; grid-template-columns: auto 7mm 1fr; align-items: center; gap: 8px;
+  padding: 5px 0; font-size: 13px; cursor: pointer; }
+.pg-item input { margin: 0; accent-color: var(--primary); width: 15px; height: 15px; }
+.pg-item .n { font-family: var(--font-ui); font-size: 10px; color: var(--muted-foreground); }
+.pg-item input:not(:checked) ~ span { opacity: .45; }
+.campos > .dica { margin: 0 0 6px; font-size: 12px; color: var(--muted-foreground); }

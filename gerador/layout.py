@@ -301,9 +301,3 @@ def year(eventos):
         '<span class="ev">%s</span></li>' % (i, MESES_CURTOS[i - 1], ev)
         for i, ev in enumerate(eventos, start=1))
 
-
-def foto_consultor(slug):
-    """Retrato preparado por `scripts/fotos.py`, embutido em base64 para o
-    modelo continuar abrindo sozinho."""
-    return '<img class="rt-img" alt="" src="data:image/jpeg;base64,%s">' % _b64(
-        os.path.join("assets", "consultores", slug + ".jpg"))

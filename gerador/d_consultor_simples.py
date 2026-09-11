@@ -17,8 +17,12 @@ para A4, que é o formato do resto do sistema.
 
 Não tem data. Uma folha de apresentação de uma pessoa não é de um período, e
 carimbar uma data nela só encurtaria a validade do arquivo.
+
+O gerador não conhece consultor nenhum: o que ele produz é o modelo, e a
+pessoa entra como campo. Os documentos nominais que já existem ficam em
+`documentos/consultores/`.
 """
-from d_consultor import _consultor_vazio, _link, _whatsapp, POR_SLUG
+from d_consultor import _consultor_vazio, _link, _whatsapp
 from layout import *  # noqa: F403
 
 # Geometria, em mm sobre a folha A4, derivada das frações do original.
@@ -102,34 +106,31 @@ FOLHA_HTML = """<section class="page dark folha" data-sec="O seu consultor">
 </section>"""
 
 
-def _retrato(c, escrito, f=FOLHA):
-    """O retrato entra recortado em círculo. Na versão em branco é o mesmo
-    círculo vazio, para a página não mudar de forma."""
+def _retrato(f=FOLHA):
+    """O lugar do retrato, recortado em círculo.
+
+    Leva a classe `imgbox` para ser reconhecido como espaço de imagem pelo
+    catálogo da ferramenta, e para a foto enviada herdar a classe que faz o
+    recorte circular.
+    """
     pos = 'style="left:%.2fmm;top:%.2fmm;width:%.2fmm;height:%.2fmm"' % (
         f["centro_x"] - f["raio_foto"], f["centro_y"] - f["raio_foto"],
         f["raio_foto"] * 2, f["raio_foto"] * 2)
-    if escrito:
-        return '<div class="fl-foto" %s>%s</div>' % (pos, foto_consultor(c["slug"]))
-    # A moldura vazia leva a classe `imgbox` para ser reconhecida como espaço de
-    # imagem pelo catálogo da ferramenta, e para a foto enviada herdar a classe
-    # que faz o recorte circular.
     return ('<div class="imgbox fl-foto" %s data-img="%d"><div class="cl">Retrato</div>'
             '<div class="cd">Foto vertical, recortada em círculo.</div></div>') % (
         pos, proximo_img())
 
 
-def variantes(consultores, temas, segmentos):
-    """Uma por consultor, escrita, e uma em branco por segmento.
+def variantes(temas, segmentos):
+    """Uma em branco por segmento.
 
     Não há variante por plano: esta folha não fala de plano nenhum.
     """
-    return ([(c["slug"], c["nome"], "consultoria") for c in consultores]
-            + [(seg, temas[seg]["nome_full"], seg) for seg in segmentos])
+    return [(seg, temas[seg]["nome_full"], seg) for seg in segmentos]
 
 
 def build(t, variante):
-    escrito = variante in POR_SLUG
-    c = POR_SLUG[variante] if escrito else _consultor_vazio()
+    c = _consultor_vazio()
 
     contatos = [
         _contato("email", _link("mailto:" + c["email"], c["email"]) if c.get("email")
@@ -140,6 +141,6 @@ def build(t, variante):
     ]
 
     return [FOLHA_HTML % dict(
-        aneis=aneis(), foto=_retrato(c, escrito), nome=c["nome"], papel=c["papel"],
+        aneis=aneis(), foto=_retrato(), nome=c["nome"], papel=c["papel"],
         bio=_bio(c), contatos="".join(contatos),
         logo=logo_svg(t, 9.0, cls="fl-logo"))]

@@ -22,6 +22,7 @@ const estado = {
   modelo: null,      // Document do modelo, já parseado
   valores: {},       // campo -> texto
   imagens: {},       // espaço de imagem -> data URL
+  fora: new Set(),   // páginas tiradas do documento
   pagina: 1,
   tela: 'produto',
 };
@@ -92,7 +93,9 @@ function anunciarSalvo(texto = 'Salvo neste navegador') {
 
 function salvar() {
   try {
-    localStorage.setItem(chaveArmazem(), JSON.stringify({ valores: estado.valores }));
+    localStorage.setItem(chaveArmazem(), JSON.stringify({
+      valores: estado.valores, fora: [...estado.fora],
+    }));
     anunciarSalvo();
   } catch (e) {
     anunciarSalvo('Este navegador não está guardando o rascunho');
@@ -108,6 +111,7 @@ async function carregar() {
   try {
     const d = JSON.parse(localStorage.getItem(chaveArmazem()) || 'null');
     estado.valores = (d && d.valores) || {};
+    estado.fora = new Set((d && d.fora) || []);
     // Rascunho salvo antes de as imagens irem para o IndexedDB.
     if (d && d.imagens) estado.imagens = d.imagens;
   } catch (e) { /* rascunho corrompido: começa vazio */ }
@@ -219,6 +223,7 @@ async function escolherVariante(v) {
     estado.modelo = new DOMParser().parseFromString(texto, 'text/html');
     estado.valores = {};
     estado.imagens = {};
+    estado.fora = new Set();
     estado.pagina = 1;
     await carregar();
     telaPreencher();
@@ -227,6 +232,46 @@ async function escolherVariante(v) {
     $('#carregando').textContent = 'Não foi possível carregar o modelo.';
     setTimeout(() => mostrar('documento'), 1500);
   }
+}
+
+/* ------------------------------------------------------------------- páginas */
+
+/* O documento sai com as páginas que o usuário deixar marcadas. A escolha vive
+ * no rascunho junto com os valores, e vale para a prévia, para o PDF e para o
+ * HTML — tirar uma página não é um recorte do arquivo exportado, é o documento
+ * ter outro tamanho. */
+
+const dentro = (n) => !estado.fora.has(n);
+const incluidas = () => (estado.estrutura.indice || []).filter((p) => dentro(p.numero));
+
+function alternarPagina(n) {
+  if (estado.fora.has(n)) estado.fora.delete(n);
+  else estado.fora.add(n);
+  // Nunca todas fora: um documento sem página nenhuma não é exportável.
+  if (!incluidas().length) estado.fora.delete(n);
+  salvar();
+  telaPreencher();
+}
+
+function listaDePaginas() {
+  const idx = estado.estrutura.indice || [];
+  if (idx.length < 2) return '';
+  const n = incluidas().length;
+  return `<details class="secao paginas"${n < idx.length ? ' open' : ''}>
+    <summary>
+      <span class="pg">${String(idx.length).padStart(2, '0')}</span>
+      <span>Páginas do documento</span>
+      <span class="contagem${n === idx.length ? ' pronto' : ''}">${n}/${idx.length}</span>
+    </summary>
+    <div class="campos">
+      <p class="dica" style="margin:0 0 2mm">Desmarque o que não deve entrar neste documento.</p>
+      ${idx.map((p) => `<label class="pg-item">
+        <input type="checkbox" data-pagina="${p.numero}"${dentro(p.numero) ? ' checked' : ''}>
+        <span class="n">${String(p.numero).padStart(2, '0')}</span>
+        <span>${escapa(p.secao)}</span>
+      </label>`).join('')}
+    </div>
+  </details>`;
 }
 
 /* ---------------------------------------------------------- tela 4: preencher */
@@ -249,8 +294,8 @@ function telaPreencher() {
   }
   const secoes = [...porPagina.values()].sort((a, b) => a.pagina - b.pagina);
 
-  $('#formulario').innerHTML = secoes.length ? secoes.map((s, i) => `
-    <details class="secao" data-pagina="${s.pagina}"${i === 0 ? ' open' : ''}>
+  $('#formulario').innerHTML = listaDePaginas() + (secoes.length ? secoes.map((s, i) => `
+    <details class="secao${dentro(s.pagina) ? '' : ' fora'}" data-pagina="${s.pagina}"${i === 0 && dentro(s.pagina) ? ' open' : ''}>
       <summary>
         <span class="pg">${String(s.pagina).padStart(2, '0')}</span>
         <span>${escapa(s.secao)}</span>
@@ -261,7 +306,7 @@ function telaPreencher() {
         ${s.campos.map((n) => campoTexto(n, campos[n])).join('')}
       </div>
     </details>`).join('')
-    : '<p class="solto">Este modelo não tem campos preenchíveis.</p>';
+    : '<p class="solto">Este modelo não tem campos preenchíveis.</p>');
 
   atualizarContagens();
   renderizar();
@@ -330,6 +375,15 @@ function atualizarContagens() {
 function montar(modo) {
   const doc = estado.modelo.cloneNode(true);
 
+  // As páginas desmarcadas saem, e as que ficam são renumeradas: o rodapé tem
+  // de contar o documento que existe, não o que existia antes do corte.
+  const paginas = [...doc.querySelectorAll('.page, .slide')];
+  paginas.forEach((p, i) => { if (!dentro(i + 1)) p.remove(); });
+  [...doc.querySelectorAll('.page, .slide')].forEach((p, i) => {
+    const no = p.querySelector('.pg-foot .no');
+    if (no) no.textContent = String(i + 1).padStart(2, '0');
+  });
+
   for (const span of doc.querySelectorAll('span.ph')) {
     const m = span.textContent.match(/^\{\{([a-z0-9_]+)\}\}$/);
     if (!m) continue;
@@ -340,11 +394,6 @@ function montar(modo) {
   }
 
   for (const [id, dado] of Object.entries(estado.imagens)) {
-    if (id === 'retrato') {
-      const img = doc.querySelector('img.rt-img');
-      if (img) img.src = dado;
-      continue;
-    }
     const bloco = doc.querySelector(`[data-img="${CSS.escape(String(id))}"]`);
     if (!bloco) continue;
     // A imagem herda o encaixe do bloco que substitui — o estilo e os
@@ -414,7 +463,14 @@ function ajustarQuadro() {
   moldura.style.height = `${a * escala}px`;
 }
 
-const irPara = (p) => { estado.pagina = p; ajustarQuadro(); };
+/** A prévia mostra só as páginas incluídas, então a seção do formulário — que
+ *  conhece o número original — aponta para a posição que a página tem agora. */
+function irPara(original) {
+  const i = (estado.estrutura.indice || []).filter((p) => dentro(p.numero))
+    .findIndex((p) => p.numero === original);
+  estado.pagina = i >= 0 ? i + 1 : original;
+  ajustarQuadro();
+}
 
 /* ----------------------------------------------------------- tela 5: exportar */
 
@@ -429,7 +485,9 @@ function telaExportar() {
   $('#resumo').innerHTML = `
     <div><div class="r">Documento</div><div class="v">${escapa(estado.documento.nome)}</div></div>
     <div><div class="r">Versão</div><div class="v">${escapa(estado.variante.rotulo)}</div></div>
-    <div><div class="r">Páginas</div><div class="v">${estado.estrutura.paginas}</div></div>
+    <div><div class="r">Páginas</div>
+      <div class="v${estado.fora.size ? ' alerta' : ''}">${incluidas().length || estado.estrutura.paginas}${
+        estado.fora.size ? ` de ${estado.estrutura.paginas}` : ''}</div></div>
     <div><div class="r">Campos preenchidos</div>
       <div class="v${faltam ? ' alerta' : ''}">${feitos} de ${nomes.length}</div></div>
     ${imagens.length ? `<div><div class="r">Imagens</div>
@@ -522,6 +580,10 @@ function ligar() {
     leitor.readAsDataURL(e.target.files[0]);
   });
 
+  form.addEventListener('change', (e) => {
+    if (e.target.dataset.pagina) alternarPagina(Number(e.target.dataset.pagina));
+  });
+
   form.addEventListener('click', (e) => {
     const id = e.target.dataset.tirar;
     if (!id) return;
@@ -530,9 +592,11 @@ function ligar() {
     telaPreencher();
   });
 
-  // Abrir uma seção leva a prévia para a página correspondente.
+  // Abrir uma seção leva a prévia para a página correspondente. A lista de
+  // páginas é a exceção: ela não é de uma página, é de todas.
   form.addEventListener('toggle', (e) => {
-    if (e.target.tagName === 'DETAILS' && e.target.open) irPara(Number(e.target.dataset.pagina));
+    const n = Number(e.target.dataset.pagina);
+    if (e.target.tagName === 'DETAILS' && e.target.open && n) irPara(n);
   }, true);
 
   $('#abrir-tudo').onclick = () => $$('.secao', form).forEach((d) => { d.open = true; });

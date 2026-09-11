@@ -19,11 +19,12 @@ da consultoria e por segmento, e a versão em branco sai também sem a data no c
 
 | Documento | Formato | Páginas | Consultoria | Alta Renda | Private | Assessoria |
 | --- | --- | --- | :-: | :-: | :-: | :-: |
-| Relatório mensal | A4 retrato | 15–16 | ✓ | ✓ | ✓ | ✓ |
+| Relatório mensal | A4 retrato | 11–12 | ✓ | ✓ | ✓ | ✓ |
 | Diagnóstico de carteira | A4 retrato | 10 | ✓ | ✓ | ✓ | ✓ |
 | Relatório macroeconômico | A4 retrato | 11 | ✓ | ✓ | ✓ | ✓ |
 | Apresentação geral | 16:9 | 14 | ✓ | ✓ | ✓ | ✓ |
-| Relatório mensal em apresentação | 16:9 | 12 | ✓ | ✓ | ✓ | ✓ |
+| Relatório mensal em apresentação | 16:9 | 11 | ✓ | ✓ | ✓ | ✓ |
+| Carta de apresentação | 16:9 | 13 | ✓ | ✓ | ✓ | ✓ |
 | Cronograma de reuniões | A4 retrato | 6 | ✓ | ✓ | ✓ | ✓ |
 | Apresentação do consultor | A4 retrato | 3 | 3 planos | ✓ | ✓ | ✓ |
 | Apresentação do consultor (uma página) | A4 retrato | 1 | ✓ | ✓ | ✓ | ✓ |
@@ -238,7 +239,7 @@ condicionais aqui e trazem o selo *Somente quando houver dado*.
 | Seção do relatório atual | O que mostra hoje | Onde está no modelo |
 | --- | --- | --- |
 | Capa | cliente, perfil e consultor sobre a arte de fundo | capa |
-| Resumo da carteira | patrimônio, rentabilidade no mês e no ano, ganhos, aplicações e tabela do portfólio | **Resumo da carteira** (8 cards, incluindo ganho em R$ e aplicações) + **Carteira consolidada** |
+| Resumo da carteira | patrimônio, rentabilidade no mês, no ano e em 12 meses, ganhos, aplicações e tabela do portfólio | **Resumo da carteira** (8 cards, incluindo ganho em R$ e aplicações) + **Carteira consolidada** |
 | Rentabilidade | gráfico da carteira contra benchmark (IPCA + 5% a.a.) | Resumo da carteira: tabela de referências e gráfico "Carteira x IPCA + 5% a.a." |
 | Movimentações e proventos | ativos comprados no mês e gráfico de proventos | **Movimentações e proventos**, com a tabela de operações e o gráfico de proventos por mês |
 | Alocação por estratégia | carteira atual contra a carteira meta | **Alocação por estratégia** |
@@ -301,10 +302,13 @@ tabelas — nenhum recurso novo de cor ou de peso.
 ## O que cada documento cobre
 
 **Relatório mensal** — carta do responsável e índice; resumo da carteira; carteira
-consolidada; alocação por estratégia; desempenho por classe e por ativo; movimentações
-e proventos; renda fixa; ações e FIIs; internacional; cenário e posicionamento;
-encerramento; notas metodológicas. Três dos quatro segmentos ganham ainda uma página
-própria: ofertas exclusivas na alta renda, estruturas e sucessão no private e
+consolidada; alocação por estratégia; movimentações e proventos; renda fixa; ações e
+FIIs; internacional; avisos legais. É um relatório de posição: mostra o que existe na
+carteira e quanto vale. Preço médio e rentabilidade por ativo não entram, e a
+rentabilidade aparece uma vez só, no resumo, para a carteira inteira; a comparação é
+contra IPCA + 5% a.a. e o Ibovespa, sem o CDI. Leitura de cenário, posicionamento e
+plano de ação são assunto da reunião, e estão no relatório em apresentação. Dois dos
+quatro segmentos ganham ainda uma página própria: estruturas e sucessão no private e
 transparência de remuneração na assessoria — esta última fecha o que a apresentação
 geral do segmento promete ao cliente.
 
@@ -322,10 +326,20 @@ para a carteira do segmento; agenda do mês seguinte.
 cinco etapas, diferenciais e entregas, governança e alçadas, tela de planos e taxas,
 time, primeiros passos e contato com QR code.
 
+**Carta de apresentação** — o documento que vai para quem ouviu a proposta e ainda não
+decidiu. Síntese do que se entendeu na primeira conversa; a remuneração, antes do método;
+as seis etapas do relacionamento; os quatro pilares da metodologia; o roadmap do primeiro ano;
+o relatório estratégico prometido para dez dias; e a doutrina de investimento da casa — função
+de cada classe, bandas da estrutura meta, as três camadas da renda fixa e os critérios de
+seleção de ação, FII e ETF. É o único documento que traz essa doutrina escrita. A remuneração
+separa os segmentos: consultoria, alta renda e private saem fee based, com percentual sobre o
+patrimônio; a assessoria sai sem taxa, remunerada pela distribuição.
+
 **Relatório mensal em apresentação** — a mesma informação do relatório mensal no ritmo
 de uma reunião: agenda, fechamento do mês, rentabilidade contra referências, alocação,
-destaques e detratores, movimentações, página do segmento, cenário, próximos passos e
-encerramento.
+movimentações, página do segmento, cenário, próximos passos e encerramento. Os números
+são os mesmos do relatório, com as mesmas ausências; o que o deck acrescenta é a
+conversa em volta deles.
 
 **Cronograma de reuniões** — ritmo de acompanhamento do segmento, calendário dos doze
 meses, pauta e entregável de cada tipo de encontro, canais e SLA de resposta, regras de

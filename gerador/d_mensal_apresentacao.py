@@ -32,7 +32,6 @@ def build(t, seg):
 <ol class="tl" style="grid-template-columns:1fr 1fr;flex:1 1 auto;align-content:start">
   <li><h4>Como fechou o mês</h4><p>Patrimônio, rentabilidade e comparação com as referências.</p></li>
   <li><h4>Alocação</h4><p>Onde a carteira está em relação ao alvo do seu perfil.</p></li>
-  <li><h4>Destaques e detratores</h4><p>O que puxou o resultado para cima e para baixo.</p></li>
   <li><h4>Movimentações</h4><p>O que foi comprado, vendido e por quê.</p></li>
   <li><h4>%(ext)s</h4><p>%(exd)s</p></li>
   <li><h4>Cenário e próximos passos</h4><p>O que esperamos e o que vamos fazer a respeito.</p></li>
@@ -54,8 +53,8 @@ def build(t, seg):
 </div>""" % dict(
         mes=ph("mes_referencia"),
         kpis=kpis([("Patrimônio total", ph("patrimonio_total"), "Em " + ph("data_posicao")),
-                   ("No mês", ph("rent_mes"), ph("rent_mes_pct_cdi") + " do CDI"),
-                   ("No ano", ph("rent_ano"), ph("rent_ano_pct_cdi") + " do CDI"),
+                   ("No mês", ph("rent_mes"), "No ano: " + ph("rent_ano")),
+                   ("Em 12 meses", ph("rent_12m"), "24 meses: " + ph("rent_24m")),
                    ("Aportes líquidos", ph("aporte_liquido_mes"), "Resgates: " + ph("resgates_mes"))]),
         ch=chart("Patrimônio nos últimos 12 meses", "Linha de patrimônio com barras de aportes e resgates.", "line", "min-height:52mm"),
         frase=ph("resumo_do_mes"), aten=ph("ponto_de_atencao_mes")), dark=True))
@@ -69,12 +68,10 @@ def build(t, seg):
 <p class="legal" style="margin-top:4mm">Rentabilidades líquidas de custos e brutas de impostos, salvo indicação em contrário. Rentabilidade passada não é garantia de rentabilidade futura.</p>""" % dict(
         tab=table(["Indicador", "Mês", "Ano", "12m", "24m"],
                   [["<strong>Sua carteira</strong>", ph("rent_mes"), ph("rent_ano"), ph("rent_12m"), ph("rent_24m")],
-                   ["CDI", ph("cdi_mes"), ph("cdi_ano"), ph("cdi_12m"), ph("cdi_24m")],
                    ["IPCA + 5%", ph("ipca5_mes"), ph("ipca5_ano"), ph("ipca5_12m"), ph("ipca5_24m")],
-                   ["Ibovespa", ph("ibov_mes"), ph("ibov_ano"), ph("ibov_12m"), ph("ibov_24m")],
-                   ["<strong>Carteira x CDI</strong>", ph("vs_cdi_mes"), ph("vs_cdi_ano"), ph("vs_cdi_12m"), ph("vs_cdi_24m")]],
+                   ["Ibovespa", ph("ibov_mes"), ph("ibov_ano"), ph("ibov_12m"), ph("ibov_24m")]],
                   nums=[1, 2, 3, 4]),
-        ch=chart("Carteira x CDI acumulado", "Duas linhas acumuladas desde o início do relacionamento.", "line", "min-height:60mm"))))
+        ch=chart("Carteira x IPCA + 5% a.a. acumulado", "Duas linhas acumuladas desde o início do relacionamento.", "line", "min-height:60mm"))))
 
     S.append(slide(t, "Alocação", 5, """<span class="eyebrow">Distribuição</span>
 <h1 class="t">Alvo x realizado</h1>
@@ -96,31 +93,7 @@ def build(t, seg):
         ch=chart("Composição atual", "Rosca com o peso de cada classe.", "donut", "min-height:46mm"),
         reb=ph("texto_rebalanceamento"))))
 
-    S.append(slide(t, "Atribuição", 6, """<span class="eyebrow">O que moveu o resultado</span>
-<h1 class="t">Destaques e detratores</h1>
-<div class="cols2" style="flex:1 1 auto">
-  <div>
-    <h2>Contribuíram para o resultado</h2>
-    %(tp)s
-    <div class="gap"></div>
-    <p class="small mut">%(cp)s</p>
-  </div>
-  <div>
-    <h2>Puxaram o resultado para baixo</h2>
-    %(tn)s
-    <div class="gap"></div>
-    <p class="small mut">%(cn)s</p>
-  </div>
-</div>""" % dict(
-        tp=table(["Ativo", "Retorno", "Contribuição"],
-                 [[ph("top_%d_ativo" % i), ph("top_%d_ret" % i), ph("top_%d_contrib" % i)] for i in (1, 2, 3, 4)],
-                 nums=[1, 2]),
-        tn=table(["Ativo", "Retorno", "Contribuição"],
-                 [[ph("bot_%d_ativo" % i), ph("bot_%d_ret" % i), ph("bot_%d_contrib" % i)] for i in (1, 2, 3, 4)],
-                 nums=[1, 2]),
-        cp=ph("comentario_destaques"), cn=ph("comentario_detratores"))))
-
-    S.append(slide(t, "Movimentações", 7, """<span class="eyebrow">O que fizemos</span>
+    S.append(slide(t, "Movimentações", 6, """<span class="eyebrow">O que fizemos</span>
 <h1 class="t">Movimentações do período</h1>
 %(tab)s
 <div class="gap"></div>
@@ -134,7 +107,7 @@ def build(t, seg):
                    ("Proventos", ph("total_proventos"), "Líquido de IR"),
                    ("Custos", ph("total_custos"), ph("custo_perc_patrimonio") + " do patrimônio")]))))
 
-    S.append(slide(t, ex_t, 8, """<span class="eyebrow">%(nome)s</span>
+    S.append(slide(t, ex_t, 7, """<span class="eyebrow">%(nome)s</span>
 <h1 class="t">%(ext)s</h1>
 <p class="lead">%(exd)s</p>
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch">
@@ -151,7 +124,7 @@ def build(t, seg):
                   "alta-renda": "Ofertas acessadas no período e peso na carteira.",
                   "private": "Patrimônio por moeda e por jurisdição."}[seg], "donut", "min-height:50mm"))))
 
-    S.append(slide(t, "Cenário", 9, """<span class="eyebrow">Contexto</span>
+    S.append(slide(t, "Cenário", 8, """<span class="eyebrow">Contexto</span>
 <h1 class="t">Cenário e posicionamento</h1>
 <div class="cols2" style="margin-bottom:6mm">
   <div><h2>Brasil</h2><p class="small">%(br)s</p></div>
@@ -166,7 +139,7 @@ def build(t, seg):
                                 ("Renda variável BR", "rvbr"), ("Internacional", "intl"),
                                 ("Alternativos", "alt")]])), dark=True))
 
-    S.append(slide(t, "Próximos passos", 10, """<span class="eyebrow">Plano de ação</span>
+    S.append(slide(t, "Próximos passos", 9, """<span class="eyebrow">Plano de ação</span>
 <h1 class="t">Próximos passos</h1>
 <div class="cols2u" style="flex:1 1 auto;align-items:start">
   <div>
@@ -191,7 +164,7 @@ def build(t, seg):
                       % (ph("pendencia_%d_titulo" % i), ph("pendencia_%d_detalhe" % i)) for i in (1, 2)),
         reu=ph("data_proxima_reuniao"), fmt=ph("formato_reuniao"), canal=ph("canal_atendimento"))))
 
-    S.append(slide(t, "Encerramento", 11, """<div style="display:flex;gap:16mm;flex:1 1 auto;align-items:center">
+    S.append(slide(t, "Encerramento", 10, """<div style="display:flex;gap:16mm;flex:1 1 auto;align-items:center">
   <div style="flex:1 1 auto">
     <span class="eyebrow">Obrigado</span>
     <h1 class="t">Alguma dúvida?</h1>
@@ -210,24 +183,17 @@ def build(t, seg):
                  whats=ph("whatsapp_contato"), email=ph("email_contato"), link=ph("link_agendamento")),
                    dark=True))
 
-    S.append(slide(t, "Avisos", 12, """<span class="eyebrow">Transparência</span>
+    S.append(slide(t, "Avisos", 11, """<span class="eyebrow">Transparência</span>
 <h1 class="t">Notas e avisos</h1>
 <div class="cols2" style="flex:1 1 auto">
   <div>
-    <h2>Como os números foram apurados</h2>
-    <ul class="small">
-      <li>Base e data de corte: %(base)s.</li>
-      <li>Cálculo de rentabilidade: %(met)s.</li>
-      <li>Contas consideradas: %(contas)s.</li>
-    </ul>
     <p class="legal">%(disc)s</p>
   </div>
   <div>
     <p class="legal">Rentabilidade passada não representa garantia de rentabilidade futura. Os investimentos apresentados podem não contar com garantia do Fundo Garantidor de Créditos (FGC). Antes de investir, leia os documentos oficiais de cada produto.</p>
     <p class="legal">Material destinado exclusivamente a %(cli)s. Não constitui oferta, recomendação pública ou solicitação de compra ou venda de ativos. É proibida a reprodução ou o compartilhamento total ou parcial sem autorização prévia e por escrito. %(razao)s &middot; CNPJ %(cnpj)s. Ouvidoria: %(ouv)s.</p>
   </div>
-</div>""" % dict(base=ph("fonte_dados"), met=ph("metodo_rentabilidade"), contas=ph("contas_consideradas"),
-                 disc=ph("disclaimer_regulatorio", "Texto aprovado pelo compliance para este segmento"),
+</div>""" % dict(disc=ph("disclaimer_regulatorio", "Texto aprovado pelo compliance para este segmento"),
                  cli=ph("nome_cliente"), razao=ph("razao_social"), cnpj=ph("cnpj"), ouv=ph("canal_ouvidoria"))))
 
     return S

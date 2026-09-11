@@ -2,10 +2,17 @@
 """Relatório mensal do cliente.
 
 A cobertura de seções segue a especificação do relatório gerado hoje pelo
-Consolidador (AUVP_Capital_Relatorios_Mensais.pdf): capa, resumo da carteira,
-rentabilidade contra benchmark, movimentações e proventos, alocação por
-estratégia, renda fixa, ações e FIIs, internacional e encerramento. As seções
-marcadas lá como "quando há dado" continuam condicionais aqui.
+Consolidador (AUVP_Capital_Relatorios_Mensais.pdf): capa, carta, resumo da
+carteira, carteira consolidada, alocação por estratégia, movimentações e
+proventos, renda fixa, ações e FIIs, internacional e notas. As seções marcadas
+lá como "quando há dado" continuam condicionais aqui.
+
+O relatório é de posição: ele mostra o que existe na carteira e quanto isso
+vale. Preço médio e rentabilidade por ativo não entram — a rentabilidade
+aparece uma vez, no resumo, e para a carteira inteira. O CDI também não é
+referência aqui; a comparação é contra IPCA + 5% a.a. e o Ibovespa. Leitura de
+cenário, posicionamento e plano de ação são assunto de outros documentos, não
+deste.
 """
 from layout import *
 
@@ -15,11 +22,11 @@ TRATAMENTO = {"private": "Prezado(a)", "alta-renda": "Prezado(a)",
 PAPEL = {"consultoria": "Consultor(a)", "alta-renda": "Consultor(a)",
          "private": "Banker", "assessoria": "Assessor(a)"}
 
-# Página extra por segmento, depois das seções comuns. A consultoria não tem:
-# tudo o que a distingue já está nas seções comuns.
+# Página extra por segmento, depois das seções comuns. Consultoria e Alta Renda
+# não têm: tudo o que as distingue já está nas seções comuns.
 EXTRA_TITULO = {
     "consultoria": None,
-    "alta-renda": "Produtos exclusivos e oportunidades",
+    "alta-renda": None,
     "private": "Estruturas, internacional e sucessão",
     "assessoria": "Transparência de remuneração",
 }
@@ -29,23 +36,6 @@ OPCIONAL = ('<span class="pill" style="margin-left:3mm;vertical-align:middle">'
 
 
 def pagina_extra(t, seg):
-    if seg == "alta-renda":
-        return """<span class="eyebrow">Alta Renda</span>
-<h1 class="t">Produtos exclusivos e oportunidades</h1>
-<p class="lead">Ofertas e estruturas disponíveis para o seu segmento no período, com o racional de adequação ao seu perfil e à sua carteira.</p>
-<h2>Ofertas do período</h2>
-%(tab)s
-<h2>Oportunidades em avaliação</h2>
-%(cards)s
-<div class="gap"></div>
-<div class="note"><p><strong>Adequação (suitability).</strong> %(sui)s</p></div>""" % dict(
-            tab=table(["Oferta", "Classe", "Emissor / gestor", "Taxa ou meta", "Prazo", "Ticket mín.", "Janela"],
-                      [[ph("oferta_%d_nome" % i), ph("oferta_%d_classe" % i), ph("oferta_%d_emissor" % i),
-                        ph("oferta_%d_taxa" % i), ph("oferta_%d_prazo" % i), ph("oferta_%d_ticket" % i),
-                        ph("oferta_%d_janela" % i)] for i in (1, 2, 3, 4)], nums=[3, 5], sm=True),
-            cards=cards([(ph("oportunidade_%d_titulo" % i), ph("oportunidade_%d_racional" % i)) for i in (1, 2, 3)]),
-            sui=ph("texto_suitability_oferta"))
-
     if seg == "private":
         return """<span class="eyebrow">Private Banking</span>
 <h1 class="t">Estruturas e sucessão</h1>
@@ -129,8 +119,8 @@ def build(t, seg):
 %(ch)s""" % dict(
         dtpos=ph("data_posicao"),
         kpis=kpis([("Patrimônio total", ph("patrimonio_total"), "Em " + ph("data_posicao")),
-                   ("Rentabilidade no mês", ph("rent_mes"), "% CDI: " + ph("rent_mes_pct_cdi")),
-                   ("Rentabilidade no ano", ph("rent_ano"), "% CDI: " + ph("rent_ano_pct_cdi")),
+                   ("Rentabilidade no mês", ph("rent_mes"), "No ano: " + ph("rent_ano")),
+                   ("Rentabilidade em 12 meses", ph("rent_12m"), "Desde o início: " + ph("rent_inicio")),
                    ("Ganho no mês", ph("ganho_mes_reais"), "No ano: " + ph("ganho_ano_reais"))]),
         kpis2=kpis([("Aplicações no mês", ph("aplicacoes_mes"), "Bruto"),
                     ("Resgates no mês", ph("resgates_mes"), "Bruto"),
@@ -138,10 +128,8 @@ def build(t, seg):
                     ("Proventos recebidos", ph("total_proventos"), "Líquido de IR")]),
         tab=table(["Indicador", "No mês", "No ano", "12 meses", "24 meses", "Desde o início"],
                   [["<strong>Sua carteira</strong>", ph("rent_mes"), ph("rent_ano"), ph("rent_12m"), ph("rent_24m"), ph("rent_inicio")],
-                   ["CDI", ph("cdi_mes"), ph("cdi_ano"), ph("cdi_12m"), ph("cdi_24m"), ph("cdi_inicio")],
                    ["IPCA + 5% a.a.", ph("ipca5_mes"), ph("ipca5_ano"), ph("ipca5_12m"), ph("ipca5_24m"), ph("ipca5_inicio")],
-                   ["Ibovespa", ph("ibov_mes"), ph("ibov_ano"), ph("ibov_12m"), ph("ibov_24m"), ph("ibov_inicio")],
-                   ["Carteira x CDI", ph("vs_cdi_mes"), ph("vs_cdi_ano"), ph("vs_cdi_12m"), ph("vs_cdi_24m"), ph("vs_cdi_inicio")]],
+                   ["Ibovespa", ph("ibov_mes"), ph("ibov_ano"), ph("ibov_12m"), ph("ibov_24m"), ph("ibov_inicio")]],
                   caption="Rentabilidades líquidas de custos e brutas de impostos, salvo indicação em contrário. Rentabilidade passada não é garantia de rentabilidade futura.",
                   nums=[1, 2, 3, 4, 5]),
         ch=chart("Carteira x IPCA + 5% a.a.",
@@ -154,12 +142,12 @@ def build(t, seg):
 <p class="lead">Todas as posições em %(dt)s, com a instituição em que estão custodiadas.</p>
 %(tab)s""" % dict(
         dt=ph("data_posicao"),
-        tab=table(["Ativo", "Classe", "Instituição", "Quantidade", "Preço médio", "Posição", "% da carteira", "Rent. 12m"],
+        tab=table(["Ativo", "Classe", "Instituição", "Quantidade", "Posição", "% da carteira"],
                   [[ph("pos_%d_ativo" % i), ph("pos_%d_classe" % i), ph("pos_%d_instituicao" % i),
-                    ph("pos_%d_qtd" % i), ph("pos_%d_preco_medio" % i), ph("pos_%d_valor" % i),
-                    ph("pos_%d_perc" % i), ph("pos_%d_ret12m" % i)] for i in range(1, 15)],
-                  foot=["<strong>Total</strong>", "", "", "", "", ph("patrimonio_total"), "100,0%", ph("rent_12m")],
-                  nums=[3, 4, 5, 6, 7], xs=True, widths=[18, 13, 13, 9, 11, 13, 10, 13],
+                    ph("pos_%d_qtd" % i), ph("pos_%d_valor" % i), ph("pos_%d_perc" % i)]
+                   for i in range(1, 15)],
+                  foot=["<strong>Total</strong>", "", "", "", ph("patrimonio_total"), "100,0%"],
+                  nums=[3, 4, 5], xs=True, widths=[24, 17, 17, 13, 16, 13],
                   caption="Repita as linhas conforme o número de posições. Ativos zerados no período aparecem na seção de movimentações.")))
 
     # --------------------------------------------------- alocação por estratégia
@@ -168,14 +156,7 @@ def build(t, seg):
 <p class="lead">Comparação entre a carteira meta do perfil %(perf)s e a posição efetiva na data de referência.</p>
 %(tab)s
 <div class="gap"></div>
-<div class="cols2u" style="flex:1 1 auto;align-items:stretch">
-  %(ch)s
-  <div style="display:flex;flex-direction:column;gap:4mm">
-    <div class="note"><p><strong>Desvio relevante.</strong> %(desvio)s</p></div>
-    <div><h3>O que está em linha</h3><p class="small mut">%(ok)s</p></div>
-    <div><h3>O que merece ajuste</h3><p class="small mut">%(aj)s</p></div>
-  </div>
-</div>""" % dict(
+%(ch)s""" % dict(
         perf=ph("perfil_investidor"),
         tab=table(["Classe de ativo", "Meta", "Atual", "Desvio", "Valor", "Leitura"],
                   [[c, ph("alvo_%s" % k), ph("atual_%s" % k), ph("desvio_%s" % k), ph("valor_%s" % k),
@@ -189,33 +170,8 @@ def build(t, seg):
                   nums=[1, 2, 3, 4],
                   caption="Meta conforme o diagrama do cerrado / carteira recomendada vigente para o perfil. Desvios acima da banda de tolerância acionam rebalanceamento."),
         ch=chart("Carteira atual x meta", "Duas roscas concêntricas: a interna com a meta, a externa com a posição atual.",
-                  "donut", "min-height:52mm", series=["Renda fixa", "Multimercado", "Renda variável BR", "Internacional", "FIIs", "Alternativos"]),
-        desvio=ph("texto_desvio_alocacao"), ok=ph("texto_alocacao_em_linha"), aj=ph("texto_alocacao_ajuste")))
-
-    # ------------------------------------------------------------- desempenho
-    add("Desempenho", "Desempenho por classe e por ativo", """<span class="eyebrow">Atribuição de resultado</span>
-<h1 class="t">Desempenho por classe e por ativo</h1>
-<p class="lead">Contribuição de cada classe para o resultado do mês e destaques individuais do período.</p>
-<h2>Contribuição por classe</h2>
-%(tab)s
-<div class="cols2">
-  <div><h2>Maiores contribuições positivas</h2>%(tp)s</div>
-  <div><h2>Maiores detratores</h2>%(tn)s</div>
-</div>""" % dict(
-        tab=table(["Classe", "Valor", "% da carteira", "Retorno no mês", "Contribuição", "Retorno 12m"],
-                  [[c, ph("d_%s_valor" % k), ph("d_%s_peso" % k), ph("d_%s_ret" % k),
-                    ph("d_%s_contrib" % k), ph("d_%s_ret12m" % k)]
-                   for c, k in [("Renda fixa", "rf"), ("Multimercado", "multi"),
-                                ("Renda variável Brasil", "rvbr"), ("Internacional", "intl"),
-                                ("Fundos imobiliários", "fii"), ("Alternativos", "alt"), ("Caixa", "caixa")]],
-                  foot=["<strong>Carteira</strong>", ph("patrimonio_total"), "100,0%", ph("rent_mes"), ph("rent_mes"), ph("rent_12m")],
-                  nums=[1, 2, 3, 4, 5]),
-        tp=table(["Ativo", "Retorno", "Contrib."],
-                 [[ph("top_%d_ativo" % i), ph("top_%d_ret" % i), ph("top_%d_contrib" % i)] for i in (1, 2, 3, 4)],
-                 nums=[1, 2]),
-        tn=table(["Ativo", "Retorno", "Contrib."],
-                 [[ph("bot_%d_ativo" % i), ph("bot_%d_ret" % i), ph("bot_%d_contrib" % i)] for i in (1, 2, 3, 4)],
-                 nums=[1, 2])))
+                  "donut", "flex:1 1 auto;min-height:52mm",
+                  series=["Renda fixa", "Multimercado", "Renda variável BR", "Internacional", "FIIs", "Alternativos"])))
 
     # ------------------------------------------------ movimentações e proventos
     add("Movimentações e proventos", "Movimentações e proventos", """<span class="eyebrow">Período</span>
@@ -263,10 +219,11 @@ def build(t, seg):
         tab2=table(["Faixa", "Valor", "% da RF", "% do patrimônio", "Acumulado", "Observação"],
                    [[n, ph("liq_%s_valor" % k), ph("liq_%s_perc_rf" % k), ph("liq_%s_perc_pat" % k),
                      ph("liq_%s_acum" % k), ph("liq_%s_obs" % k)]
-                    for n, k in [("Liquidez diária (D+0)", "d0"), ("Até 30 dias", "d30"),
-                                 ("31 a 180 dias", "d180"), ("181 a 360 dias", "d360"),
-                                 ("Acima de 360 dias", "d360mais")]],
-                   nums=[1, 2, 3, 4], sm=True,
+                    for n, k in [("D+0", "d0"), ("D+30", "d30"), ("D+60", "d60"),
+                                 ("D+90", "d90"), ("D+180", "d180"), ("1 ano", "a1"),
+                                 ("2 anos", "a2"), ("3 anos", "a3"), ("4 anos", "a4"),
+                                 ("5 anos", "a5"), ("Acima de 5 anos", "a5mais")]],
+                   nums=[1, 2, 3, 4], xs=True,
                    caption="Liquidez projetada considera carência, vencimento e liquidez de mercado do papel.")))
 
     add("Renda fixa", "Renda fixa: emissores", """<span class="eyebrow">Renda fixa</span>
@@ -298,23 +255,23 @@ def build(t, seg):
         ch=chart("Ações por setor", "Rosca com a distribuição setorial das ações, na curadoria de setor da AUVP.", "donut", "min-height:40mm"),
         ch2=chart("FIIs por segmento", "Rosca com a distribuição por segmento.",
                    "donut", "min-height:40mm", series=["Tijolo", "Papel", "Híbrido", "Fundo de fundos"]),
-        tab=table(["Ativo", "Empresa", "Setor", "Qtd.", "Preço médio", "Cotação", "Posição", "% da carteira", "Rent. 12m"],
+        tab=table(["Ativo", "Empresa", "Setor", "Qtd.", "Cotação", "Posição", "% da carteira"],
                   [[ph("acao_%d_ticker" % i), ph("acao_%d_empresa" % i), ph("acao_%d_setor" % i),
-                    ph("acao_%d_qtd" % i), ph("acao_%d_preco_medio" % i), ph("acao_%d_cotacao" % i),
-                    ph("acao_%d_valor" % i), ph("acao_%d_perc" % i), ph("acao_%d_ret12m" % i)]
-                   for i in (1, 2, 3, 4, 5)], nums=[3, 4, 5, 6, 7, 8], xs=True,
-                  widths=[9, 17, 14, 7, 11, 10, 12, 10, 10]),
-        tab2=table(["Ativo", "Segmento", "Qtd.", "Preço médio", "Cotação", "Posição", "% da carteira", "DY 12m"],
+                    ph("acao_%d_qtd" % i), ph("acao_%d_cotacao" % i), ph("acao_%d_valor" % i),
+                    ph("acao_%d_perc" % i)]
+                   for i in (1, 2, 3, 4, 5)], nums=[3, 4, 5, 6], xs=True,
+                  widths=[12, 19, 16, 10, 15, 15, 13]),
+        tab2=table(["Ativo", "Segmento", "Qtd.", "Cotação", "Posição", "% da carteira"],
                    [[ph("fii_%d_ticker" % i), ph("fii_%d_segmento" % i), ph("fii_%d_qtd" % i),
-                     ph("fii_%d_preco_medio" % i), ph("fii_%d_cotacao" % i), ph("fii_%d_valor" % i),
-                     ph("fii_%d_perc" % i), ph("fii_%d_dy" % i)] for i in (1, 2, 3, 4)],
-                   nums=[2, 3, 4, 5, 6, 7], xs=True,
-                   widths=[11, 18, 9, 13, 12, 13, 12, 12])))
+                     ph("fii_%d_cotacao" % i), ph("fii_%d_valor" % i), ph("fii_%d_perc" % i)]
+                    for i in (1, 2, 3, 4)],
+                   nums=[2, 3, 4, 5], sm=True,
+                   widths=[14, 28, 12, 15, 16, 15])))
 
     # ----------------------------------------------------------- internacional
     add("Internacional", "Internacional", """<span class="eyebrow">Internacional %(op)s</span>
 <h1 class="t">Carteira internacional</h1>
-<p class="lead">Posições denominadas em moeda estrangeira, convertidas pela PTAX de %(ptax)s. Esta seção só entra quando houver posição no exterior.</p>
+<p class="lead">Posições denominadas em moeda estrangeira, convertidas pela PTAX de %(ptax)s. A página mostra a posição no exterior; o resultado da carteira está no resumo. Esta seção só entra quando houver posição no exterior.</p>
 %(kpis)s
 <div class="gap"></div>
 <h2>Renda fixa internacional</h2>
@@ -324,106 +281,25 @@ def build(t, seg):
         op=OPCIONAL, ptax=ph("data_ptax"),
         kpis=kpis([("Total no exterior", ph("intl_total_usd"), "Em reais: " + ph("intl_total_brl")),
                    ("% do patrimônio", ph("intl_perc_patrimonio"), "Meta: " + ph("alvo_intl")),
-                   ("Retorno 12m em US$", ph("intl_ret12m_usd"), "Em R$: " + ph("intl_ret12m_brl")),
-                   ("Câmbio da conversão", ph("ptax_utilizada"), "PTAX de " + ph("data_ptax"))]),
+                   ("Câmbio da conversão", ph("ptax_utilizada"), "PTAX de " + ph("data_ptax"))], n=3),
         tab=table(["Ativo", "Emissor", "Moeda", "Vencimento", "Taxa", "Posição (US$)", "% do exterior"],
                   [[ph("irf_%d_ativo" % i), ph("irf_%d_emissor" % i), ph("irf_%d_moeda" % i),
                     ph("irf_%d_vencimento" % i), ph("irf_%d_taxa" % i), ph("irf_%d_valor_usd" % i),
                     ph("irf_%d_perc" % i)] for i in (1, 2, 3)], nums=[4, 5, 6], sm=True),
-        tab2=table(["Ativo", "Nome", "Tipo", "Qtd.", "Preço médio (US$)", "Cotação (US$)", "Posição (US$)", "Rent. 12m"],
+        tab2=table(["Ativo", "Nome", "Tipo", "Qtd.", "Cotação (US$)", "Posição (US$)", "% do exterior"],
                    [[ph("irv_%d_ticker" % i), ph("irv_%d_nome" % i), ph("irv_%d_tipo" % i),
-                     ph("irv_%d_qtd" % i), ph("irv_%d_preco_medio" % i), ph("irv_%d_cotacao" % i),
-                     ph("irv_%d_valor_usd" % i), ph("irv_%d_ret12m" % i)] for i in (1, 2, 3, 4)],
-                   nums=[3, 4, 5, 6, 7], xs=True,
-                   widths=[10, 20, 10, 8, 15, 13, 13, 11])))
+                     ph("irv_%d_qtd" % i), ph("irv_%d_cotacao" % i), ph("irv_%d_valor_usd" % i),
+                     ph("irv_%d_perc" % i)] for i in (1, 2, 3, 4)],
+                   nums=[3, 4, 5, 6], xs=True,
+                   widths=[13, 22, 13, 11, 15, 15, 11])))
 
     # ------------------------------------------------------- página do segmento
     if EXTRA_TITULO[seg]:
         add(EXTRA_TITULO[seg], EXTRA_TITULO[seg], pagina_extra(t, seg))
 
-    # ----------------------------------------------------------------- cenário
-    add("Cenário", "Cenário do período", """<span class="eyebrow">Contexto</span>
-<h1 class="t">Cenário do período</h1>
-<p class="lead">Resumo do que moveu os mercados no período. A análise completa está no Relatório Macroeconômico do mês.</p>
-<div class="cols2">
-  <div><h2>Brasil</h2><p class="small">%(br)s</p></div>
-  <div><h2>Internacional</h2><p class="small">%(int)s</p></div>
-</div>
-<h2>Mercados no período</h2>
-%(tab)s""" % dict(
-        br=ph("cenario_brasil"), int=ph("cenario_internacional"),
-        tab=table(["Indicador", "Fechamento", "No mês", "No ano", "12 meses"],
-                  [[n, ph("m_%s_fech" % k), ph("m_%s_mes" % k), ph("m_%s_ano" % k), ph("m_%s_12m" % k)]
-                   for n, k in [("CDI", "cdi"), ("IPCA", "ipca"), ("Selic", "selic"), ("Ibovespa", "ibov"),
-                                ("S&amp;P 500", "spx"), ("Dólar (PTAX)", "usd"), ("Ouro", "gold"),
-                                ("IFIX", "ifix"), ("IMA-B", "imab")]],
-                  nums=[1, 2, 3, 4])))
-
-    add("Posicionamento", "Posicionamento por classe", """<span class="eyebrow">Como isso chega à sua carteira</span>
-<h1 class="t">Posicionamento por classe</h1>
-<p class="lead">A leitura de cenário traduzida em decisão: o que mudou na sua carteira neste mês e por quê.</p>
-%(tab)s
-<div class="gap"></div>
-<div class="note"><p><strong>Em uma frase.</strong> %(frase)s</p></div>""" % dict(
-        tab=table(["Classe", "Visão", "Movimento no mês", "Racional"],
-                  [[c, '<span class="pill">' + ph("pos_%s_visao" % k) + "</span>",
-                    ph("pos_%s_mov" % k), ph("pos_%s_racional" % k)]
-                   for c, k in [("Renda fixa pós", "rfpos"), ("Renda fixa inflação", "rfipca"),
-                                ("Renda fixa prefixada", "rfpre"), ("Renda variável BR", "rvbr"),
-                                ("Internacional", "intl"), ("Fundos imobiliários", "fii"),
-                                ("Alternativos", "alt")]]),
-        frase=ph("sintese_posicionamento")))
-
-    # ---------------------------------------------------------- encerramento
-    add("Encerramento", "Encerramento e próximos passos", """<span class="eyebrow">Plano de ação</span>
-<h1 class="t">Encerramento e próximos passos</h1>
-<p>%(trat)s %(cli)s,</p>
-<p>%(msg)s</p>
-<h2>Ações propostas</h2>
-%(tab)s
-<h2>Pendências com você</h2>
-%(cards)s
-<h2>Agenda e contatos</h2>
-<div class="cols2">
-  <div class="dl">
-    <dt>Próxima reunião</dt><dd>%(reu)s</dd>
-    <dt>Formato</dt><dd>%(fmt)s</dd>
-    <dt>Pauta prevista</dt><dd>%(pauta)s</dd>
-  </div>
-  <div class="dl">
-    <dt>Canal direto</dt><dd>%(canal)s</dd>
-    <dt>WhatsApp</dt><dd>%(whats)s</dd>
-    <dt>E-mail</dt><dd>%(email)s</dd>
-  </div>
-</div>
-<div class="sig">
-  <div class="ln">%(resp)s<br><span class="mut">%(papel)s &middot; %(cert)s</span></div>
-  <div class="ln">%(mes)s<br><span class="mut">%(marca)s</span></div>
-</div>""" % dict(
-        trat=TRATAMENTO[seg], cli=ph("nome_cliente"),
-        msg=ph("mensagem_encerramento", "Fechamento do consultor, 2-3 frases"),
-        tab=table(["Prioridade", "Ação", "Classe envolvida", "Valor estimado", "Prazo"],
-                  [['<span class="pill">' + ph("acao_%d_prioridade" % i) + "</span>", ph("acao_%d_descricao" % i),
-                    ph("acao_%d_classe" % i), ph("acao_%d_valor" % i), ph("acao_%d_prazo" % i)]
-                   for i in (1, 2, 3, 4)], nums=[3]),
-        cards=cards([(ph("pendencia_%d_titulo" % i), ph("pendencia_%d_detalhe" % i)) for i in (1, 2, 3)]),
-        reu=ph("data_proxima_reuniao"), fmt=ph("formato_reuniao"), pauta=ph("pauta_proxima_reuniao"),
-        canal=ph("canal_atendimento"), whats=ph("whatsapp_contato"), email=ph("email_contato"),
-        resp=ph("nome_responsavel"), papel=papel, cert=ph("registro_cvm_ou_ancord"),
-        mes=ph("mes_referencia"), marca=t["marca"]))
-
     # ------------------------------------------------------------------ notas
     add("Notas e avisos", "Notas metodológicas e avisos", """<span class="eyebrow">Transparência</span>
 <h1 class="t">Notas metodológicas e avisos</h1>
-<h2>Como os números foram apurados</h2>
-<ul class="small">
-  <li>Fontes de dados: %(base)s.</li>
-  <li>Método de cálculo de rentabilidade: %(metodo)s.</li>
-  <li>Tratamento de aportes e resgates: %(fluxo)s.</li>
-  <li>Instituições e contas consideradas: %(contas)s.</li>
-  <li>Ativos internacionais convertidos pela PTAX de %(ptax)s.</li>
-  <li>Carteira meta: %(meta)s.</li>
-</ul>
 <h2>Avisos legais</h2>
 <p class="legal">%(disc)s</p>
 <p class="legal">Rentabilidade passada não representa garantia de rentabilidade futura. Os investimentos apresentados podem não ser adequados a todos os investidores e não contam, salvo quando expressamente indicado, com garantia do Fundo Garantidor de Créditos (FGC) nem de qualquer mecanismo de seguro. Antes de investir, leia atentamente os documentos de cada produto, incluindo regulamento, lâmina, prospecto e formulário de informações complementares.</p>
@@ -436,9 +312,6 @@ def build(t, seg):
   <dt>Ouvidoria</dt><dd>%(ouv)s</dd>
   <dt>Razão social</dt><dd>%(razao)s &middot; CNPJ %(cnpj)s</dd>
 </div>""" % dict(
-        base=ph("fonte_dados", "Ex.: API do BTG e Consolidador"), metodo=ph("metodo_rentabilidade"),
-        fluxo=ph("metodo_fluxo_caixa"), contas=ph("contas_consideradas"), ptax=ph("data_ptax"),
-        meta=ph("origem_carteira_meta"),
         disc=ph("disclaimer_regulatorio", "Texto aprovado pelo compliance para este segmento"),
         cli=ph("nome_cliente"), resp=ph("nome_responsavel"), cert=ph("registro_cvm_ou_ancord"),
         canal=ph("canal_atendimento"), email=ph("email_contato"), ouv=ph("canal_ouvidoria"),

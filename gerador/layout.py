@@ -55,6 +55,14 @@ def graf_span(n, x0_mm, x1_mm, y0_mm, opacidade=None):
     return '<div class="graf" style="%s">%s</div>' % (style, load_svg("GRAFISMO %d.svg" % n, "g%d" % n))
 
 
+# A capa e a divisória mostram o mesmo grafismo em lados opostos da dobra: a
+# capa com o centro no canto inferior direito, a divisória no superior. Só
+# continuam sendo o mesmo desenho se tiverem a mesma largura — com larguras
+# diferentes os raios mudam, e os arcos cruzam a borda em pontos que não se
+# encontram. Por isso a medida é uma só.
+GRAF_SLIDE_W = 190.0
+
+
 def graf_arcos(w_mm, canto="bottom-right", sangria=8.0):
     """O grafismo de arcos tem duas arestas retas (topo e direita). Como
     grafismo ele só pode mostrar arcos, então as duas retas saem sempre da
@@ -137,7 +145,7 @@ def cover_slide(t, title_light, title_bold, subtitle, ident_lines):
     <div class="cv-sub">%(sub)s</div>
   </div>
   <div class="cv-foot"><div class="cf">%(confid)s</div><div class="id">%(ident)s</div></div>
-</section>""" % dict(graf=graf_arcos(190.0, "bottom-right"),
+</section>""" % dict(graf=graf_arcos(GRAF_SLIDE_W, "bottom-right"),
                      rotulo='<div class="nm">%s</div>' % t["rotulo"] if t["rotulo"] else "",
                      logo=logo_svg(t, 7.0, ink=True), lt=lt, tb=title_bold, sub=subtitle,
                      confid=CONFID, ident=ident)
@@ -155,7 +163,7 @@ def divider_slide(t, no, title, sub=""):
     </div>
     <div style="font-size:7.6pt;letter-spacing:.14em;text-transform:uppercase;opacity:.5">%(confid)s</div>
   </div>
-</section>""" % dict(graf=graf_arcos(150.0, "top-right"), no="%02d" % no,
+</section>""" % dict(graf=graf_arcos(GRAF_SLIDE_W, "top-right"), no="%02d" % no,
                      title=title, confid=CONFID,
                      sub='<div class="dv-sub">%s</div>' % sub if sub else "")
 

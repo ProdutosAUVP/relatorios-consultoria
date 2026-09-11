@@ -213,7 +213,7 @@ h2{font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
 h2:first-child{margin-top:0}
 h3{font-size:9pt;font-weight:700;margin:5mm 0 2mm}
 .small{font-size:8pt}
-.legal{font-size:6.8pt;line-height:1.5;color:var(--ink-2)}
+.legal{font-size:7.2pt;line-height:1.5;color:var(--ink-2)}
 
 /* ---------- grelhas ---------- */
 .cols2{display:grid;grid-template-columns:1fr 1fr;gap:10mm}
@@ -339,7 +339,11 @@ h2{font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
 h2:first-child{margin-top:0}
 h3{font-size:10.5pt;font-weight:700;margin:4mm 0 1.5mm}
 .small{font-size:9pt}
-.legal{font-size:7.4pt;line-height:1.5;color:var(--ink-2)}
+/* No slide o `.legal` não é rodapé: na página de avisos ele é o conteúdo,
+   quatro parágrafos em duas colunas. E o slide tem 1,6 vez a largura do A4,
+   então o mesmo corpo em pontos aparece proporcionalmente menor quando a
+   página é reduzida para caber na tela. */
+.legal{font-size:9.4pt;line-height:1.55;color:var(--ink-2)}
 .cols2{display:grid;grid-template-columns:1fr 1fr;gap:10mm}
 /* usa a sobra vertical do slide em vez de deixá-la toda no rodapé */
 .center{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:8mm;min-height:0}

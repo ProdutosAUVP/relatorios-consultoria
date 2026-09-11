@@ -50,12 +50,13 @@ autossuficientes na entrega, fonte única na manutenção.
 | `gerador/common.py` | temas, tokens, folhas de estilo A4 e 16:9, fontes em base64, leitura dos SVGs |
 | `gerador/layout.py` | montagem de página e de slide, e os componentes (`table`, `kpis`, `flow`, `chart`, …) |
 | `gerador/d_*.py` | um módulo por tipo de documento; contém o conteúdo e a ordem das seções |
+| `gerador/d_consultor_simples.py` | a apresentação de uma página, com chrome próprio; reaproveita os dados e os auxiliares de `d_consultor` |
 | `gerador/consultores.py` | texto e contatos dos consultores, um dicionário por pessoa |
 | `scripts/fotos.py` | prepara os retratos: recorta pelo rosto, sem tocar em cor ou brilho |
 | `assets/consultores/` | retratos prontos, saída do `scripts/fotos.py` |
 | `consultores resolve ai/` | fotos originais, como vieram |
 | `gerador/build.py` | entrada: percorre documentos × segmentos e escreve `modelos/` |
-| `scripts/render.mjs` | HTML → PDF, numa subpasta por produto |
+| `scripts/render.mjs` | HTML → PDF, numa subpasta por produto; apaga o que não é mais gerado |
 | `scripts/documentos.mjs` | a tabela de produtos e documentos, partilhada pelo render e pelo catálogo |
 | `scripts/exemplos.mjs` | o exemplo de preenchimento de cada campo, derivado do nome |
 | `scripts/check.mjs` | valida estouro de página em modo de impressão |
@@ -242,6 +243,33 @@ estridente, então marcador de lista, fio de card e destaque em negrito passam a
 No fundo branco vale o contrário — a logo da AUVP é sempre preta. `.perfil` é a escala da primeira página, um pouco menor que a padrão
 mas com entrelinha mais generosa, para acomodar o consultor de texto mais longo sem
 apertar o de texto mais curto.
+
+### Páginas com chrome próprio
+
+`page_a4` monta a página padrão: cabeçalho com seção e data, rodapé com número e aviso.
+Duas páginas fogem disso e montam o seu próprio `<section>` — a capa, em `cover_a4`, e a
+apresentação de uma página, em `d_consultor_simples`. Nas duas o motivo é o mesmo: não há
+o que numerar nem seção a repetir, e o que estaria no cabeçalho já está na página.
+
+Quando uma página monta o próprio chrome ela perde o nome que o catálogo da ferramenta lê
+do cabeçalho corrido. O atributo `data-sec` no `<section>` devolve esse nome, e é o que
+faz a página aparecer na ferramenta como "O seu consultor" em vez de "Página 1".
+
+As medidas da apresentação de uma página saem das frações do modelo de referência —
+285,8 x 357,2 mm — reescritas para A4. Os anéis em volta do retrato são desenhados no
+gerador, e não num SVG de assets, porque os raios dependem do raio da foto: vão da borda
+dela até o ponto em que o conjunto sangra pela esquerda da folha.
+
+### Sem data
+
+`page_a4(..., data=False)` tira a data do cabeçalho, e a apresentação de cada consultor sai
+nas duas formas: `danilo-barbosa` e `danilo-barbosa-sem-data`. A razão é o uso — é o
+documento que a pessoa manda para um cliente novo a qualquer momento, e uma data carimbada
+nele nasce vencida. Os planos e as versões em branco por segmento continuam só com data:
+ali ela diz de quando são as condições comerciais.
+
+O sufixo não muda a que produto a variante pertence nem onde ela entra na lista — só a põe
+logo depois da gêmea com data.
 
 ### Links
 

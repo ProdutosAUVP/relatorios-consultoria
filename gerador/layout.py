@@ -21,6 +21,12 @@ _IMG = [0]
 def reset_img():
     _IMG[0] = 0
 
+
+def proximo_img():
+    """O número do próximo espaço de imagem, para quem monta a moldura à mão."""
+    _IMG[0] += 1
+    return _IMG[0]
+
 def logo_svg(t, h_mm, ink=False, cls=""):
     """A marca do Private Banking é muito mais larga que a do Capital; para as
     duas terem o mesmo peso visual a largura é derivada de uma altura-alvo."""
@@ -53,6 +59,14 @@ def graf_span(n, x0_mm, x1_mm, y0_mm, opacidade=None):
     if opacidade is not None:      # sobrepõe o padrão de 50% do componente
         style += ";opacity:%s" % ("%g" % opacidade).lstrip("0")
     return '<div class="graf" style="%s">%s</div>' % (style, load_svg("GRAFISMO %d.svg" % n, "g%d" % n))
+
+
+# A capa e a divisória mostram o mesmo grafismo em lados opostos da dobra: a
+# capa com o centro no canto inferior direito, a divisória no superior. Só
+# continuam sendo o mesmo desenho se tiverem a mesma largura — com larguras
+# diferentes os raios mudam, e os arcos cruzam a borda em pontos que não se
+# encontram. Por isso a medida é uma só.
+GRAF_SLIDE_W = 190.0
 
 
 def graf_arcos(w_mm, canto="bottom-right", sangria=8.0):
@@ -96,12 +110,18 @@ def cover_a4(t, kicker_light, kicker_bold, bottom_light, bottom_bold, ident_line
         confid=CONFID.replace(" · ", "<br>"), bl=bottom_light, bb=bottom_bold, ident=ident)
 
 
-def page_a4(t, sec, no, body, date_ph=None, rodape=None, dark=False, cls=""):
+def page_a4(t, sec, no, body, date_ph=None, rodape=None, dark=False, cls="", data=True):
+    """`data=False` tira a data do cabeçalho.
+
+    Vale para material que não é de um período: uma apresentação com data
+    carimbada nasce vencida, e quem imprime um lote hoje não quer refazê-lo em
+    janeiro.
+    """
     return """<section class="page%(cls)s%(dk)s">
   %(grain)s
   <header class="pg-head">
     <div class="sec">%(sec)s</div>
-    <div class="rt"><div class="dt">%(dt)s</div>%(logo)s</div>
+    <div class="rt">%(dt)s%(logo)s</div>
   </header>
   <div class="pg-body">
 %(body)s
@@ -109,7 +129,8 @@ def page_a4(t, sec, no, body, date_ph=None, rodape=None, dark=False, cls=""):
   <footer class="pg-foot"><span class="no">%(no)s</span><span>%(confid)s</span></footer>
 </section>""" % dict(dk=" dark" if dark else "", cls=" " + cls if cls else "",
                      grain='<div class="grain"></div>' if dark else "",
-                     sec=sec, dt=ph(date_ph or DATE_PH), logo=logo_svg(t, 4.6, ink=not dark),
+                     sec=sec, logo=logo_svg(t, 4.6, ink=not dark),
+                     dt='<div class="dt">%s</div>' % ph(date_ph or DATE_PH) if data else "",
                      body=body, no="%02d" % no, confid=rodape or CONFID)
 
 
@@ -130,7 +151,7 @@ def cover_slide(t, title_light, title_bold, subtitle, ident_lines):
     <div class="cv-sub">%(sub)s</div>
   </div>
   <div class="cv-foot"><div class="cf">%(confid)s</div><div class="id">%(ident)s</div></div>
-</section>""" % dict(graf=graf_arcos(190.0, "bottom-right"),
+</section>""" % dict(graf=graf_arcos(GRAF_SLIDE_W, "bottom-right"),
                      rotulo='<div class="nm">%s</div>' % t["rotulo"] if t["rotulo"] else "",
                      logo=logo_svg(t, 7.0, ink=True), lt=lt, tb=title_bold, sub=subtitle,
                      confid=CONFID, ident=ident)
@@ -148,7 +169,7 @@ def divider_slide(t, no, title, sub=""):
     </div>
     <div style="font-size:7.6pt;letter-spacing:.14em;text-transform:uppercase;opacity:.5">%(confid)s</div>
   </div>
-</section>""" % dict(graf=graf_arcos(150.0, "top-right"), no="%02d" % no,
+</section>""" % dict(graf=graf_arcos(GRAF_SLIDE_W, "top-right"), no="%02d" % no,
                      title=title, confid=CONFID,
                      sub='<div class="dv-sub">%s</div>' % sub if sub else "")
 

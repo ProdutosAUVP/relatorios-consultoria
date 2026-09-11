@@ -11,7 +11,7 @@
  * cabeçalhos de tabela dependem de fundos coloridos.
  */
 import { chromium } from 'playwright';
-import { readdirSync, mkdirSync, existsSync, statSync } from 'node:fs';
+import { readdirSync, mkdirSync, existsSync, statSync, rmSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 
@@ -94,6 +94,24 @@ for (const file of emOrdem) {
   await page.pdf({ path: out, printBackground: true, preferCSSPageSize: true });
   const kb = (statSync(out).size / 1024).toFixed(0);
   console.log(`    ${nome.padEnd(50)} ${kb} kB`);
+}
+
+// Sem filtro, o render é a lista completa: um PDF que sobrou de uma variante
+// renomeada continuaria em `pdf/` sem nada em `modelos/` que o produza. É a
+// mesma limpeza que o `build.py` faz.
+if (!filters.length) {
+  const esperados = new Set(emOrdem.map((f) => join(classifica(f).produto, f.replace(/\.html$/, '.pdf'))));
+  for (const pasta of readdirSync(outDir)) {
+    const dir = join(outDir, pasta);
+    if (!statSync(dir).isDirectory()) continue;
+    for (const arq of readdirSync(dir)) {
+      if (arq.endsWith('.pdf') && !esperados.has(join(pasta, arq))) {
+        rmSync(join(dir, arq));
+        console.log(`  removido ${pasta}/${arq} (não é mais gerado)`);
+      }
+    }
+    if (!readdirSync(dir).length) rmSync(dir, { recursive: true });
+  }
 }
 
 await browser.close();

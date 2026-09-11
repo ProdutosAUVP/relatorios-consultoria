@@ -34,7 +34,9 @@ function paginas(html) {
   const partes = html.split(/<section class="/).slice(1);
   return partes.map((p, i) => {
     const corpo = '<section class="' + p;
-    let secao = corpo.match(/<div class="sec">([^<]*)<\/div>/)?.[1]?.trim();
+    // `data-sec` nomeia a página quando ela não tem cabeçalho corrido.
+    let secao = corpo.match(/^<section [^>]*data-sec="([^"]*)"/)?.[1]?.trim()
+      || corpo.match(/<div class="sec">([^<]*)<\/div>/)?.[1]?.trim();
     if (!secao) {
       if (/class="[^"]*\bcover\b/.test(corpo)) secao = 'Capa';
       else if (/class="[^"]*\bdivider\b/.test(corpo)) {
@@ -71,7 +73,10 @@ function estrutura(html) {
     }
     // A classe pode trazer um modificador junto (`imgbox rt-vaga`), então o
     // casamento é pelo nome do bloco dentro do atributo, não pelo atributo todo.
-    const ri = /<div class="[^"]*\b(chart|imgbox)\b[^"]*" data-img="(\d+)"[^>]*>([\s\S]*?)<div class="cd">([\s\S]*?)<\/div>/g;
+    // A classe pode trazer modificadores e os atributos vêm em qualquer ordem,
+    // então o casamento é pelo nome do bloco e pelo `data-img`, não pela forma
+    // exata da tag.
+    const ri = /<div class="[^"]*\b(chart|imgbox)\b[^"]*"[^>]*\bdata-img="(\d+)"[^>]*>([\s\S]*?)<div class="cd">([\s\S]*?)<\/div>/g;
     while ((m = ri.exec(pag.corpo))) {
       imagens.push({
         id: Number(m[2]),
@@ -133,11 +138,14 @@ function main() {
 
   // Sem data de geração: `docs/` precisa ser reprodutível byte a byte para o
   // `git status` limpo continuar valendo como verificação.
+  const rotuloBase = (v) => v.rotulo.replace(/, sem data$/, '');
   for (const d of porDoc.values()) {
     d.variantes.sort((a, b) => {
-      const [ga, pa] = ordemVariante(a.sufixo);
-      const [gb, pb] = ordemVariante(b.sufixo);
-      return ga - gb || pa - pb || a.rotulo.localeCompare(b.rotulo, 'pt-BR');
+      const [ga, pa, da] = ordemVariante(a.sufixo);
+      const [gb, pb, db] = ordemVariante(b.sufixo);
+      // A gêmea sem data vem logo depois da sua, e não em outro ponto da lista.
+      return ga - gb || pa - pb
+        || rotuloBase(a).localeCompare(rotuloBase(b), 'pt-BR') || da - db;
     });
   }
 

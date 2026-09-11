@@ -213,7 +213,7 @@ h2{font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
 h2:first-child{margin-top:0}
 h3{font-size:9pt;font-weight:700;margin:5mm 0 2mm}
 .small{font-size:8pt}
-.legal{font-size:6.8pt;line-height:1.5;color:var(--ink-2)}
+.legal{font-size:7.2pt;line-height:1.5;color:var(--ink-2)}
 
 /* ---------- grelhas ---------- */
 .cols2{display:grid;grid-template-columns:1fr 1fr;gap:10mm}
@@ -339,7 +339,11 @@ h2{font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
 h2:first-child{margin-top:0}
 h3{font-size:10.5pt;font-weight:700;margin:4mm 0 1.5mm}
 .small{font-size:9pt}
-.legal{font-size:7.4pt;line-height:1.5;color:var(--ink-2)}
+/* No slide o `.legal` não é rodapé: na página de avisos ele é o conteúdo,
+   quatro parágrafos em duas colunas. E o slide tem 1,6 vez a largura do A4,
+   então o mesmo corpo em pontos aparece proporcionalmente menor quando a
+   página é reduzida para caber na tela. */
+.legal{font-size:9.4pt;line-height:1.55;color:var(--ink-2)}
 .cols2{display:grid;grid-template-columns:1fr 1fr;gap:10mm}
 /* usa a sobra vertical do slide em vez de deixá-la toda no rodapé */
 .center{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:8mm;min-height:0}
@@ -606,6 +610,25 @@ CSS_A4 += """
   color:var(--brand)}
 .imgbox .cd{font-size:7.4pt;max-width:70mm;line-height:1.4;color:var(--ink-2)}
 
+/* ---------- apresentação de uma página ----------
+   O retrato é maior que na de três páginas: aqui ele divide a folha com o
+   texto, em vez de abrir um documento que continua. */
+.sp-topo{display:grid;grid-template-columns:62mm 1fr;gap:0 10mm;align-items:end}
+.sp-topo .rt-img,.sp-topo .rt-vaga{margin:0}
+.sp-topo h1{margin:0;font-size:26pt;font-weight:800;text-transform:uppercase;
+  line-height:1.02;letter-spacing:-.018em}
+.sp-topo .papel{margin:2.5mm 0 0;font-size:9.5pt;color:var(--ink-2)}
+.sp-topo .frase{margin:6mm 0 0;padding-top:5mm;border-top:1px solid var(--line);
+  font-size:12pt;line-height:1.5;font-weight:300;color:var(--ink)}
+.sp-bio p{margin-bottom:3.5mm}
+.sp-bio p:last-child{margin-bottom:0}
+/* Numa página só, sem o plano para preencher as seguintes, sobra bem mais
+   espaço do que na apresentação de três páginas. Os respiros ganham um teto
+   maior para dividir essa sobra entre si, em vez de ela se acumular acima da
+   faixa de contato. */
+.page.simples .esp{max-height:30mm}
+.page.simples .esp.lg{max-height:34mm}
+
 /* A moldura vazia do retrato ocupa a mesma caixa e tem o mesmo canto, para a
    página não mudar de forma entre a versão escrita e a em branco. */
 .rt-vaga{width:100%;aspect-ratio:3/4;flex:none;align-self:end;
@@ -689,6 +712,60 @@ CSS_A4 += """
 .perfil h2{font-size:8.8pt;margin:5mm 0 2mm}
 .perfil p{margin-bottom:3mm}
 .perfil .side h3{margin-top:5mm}
+
+/* ---------- folha de uma página ----------
+   A apresentação de uma página tem chrome próprio, como as capas: sem
+   cabeçalho corrido e sem numeração, porque a página é uma só. As medidas vêm
+   das proporções do modelo de referência, reescritas para A4. */
+.page.folha{padding:0;display:block;position:relative}
+.page.folha .fl-aneis,.page.folha .fl-foto,.page.folha .fl-nome,
+.page.folha .fl-corpo,.page.folha .fl-pe{position:absolute}
+
+/* Os anéis sangram pela esquerda; o traço fica fino em qualquer escala. A
+   opacidade de cada um vem do gerador, que a calcula a partir do raio. */
+.fl-aneis{fill:none;stroke:#fff;stroke-width:.75pt;
+  vector-effect:non-scaling-stroke;overflow:visible}
+.fl-aneis circle{vector-effect:non-scaling-stroke}
+
+.fl-foto{border-radius:50%;overflow:hidden}
+.fl-foto img{width:100%;height:100%;object-fit:cover;object-position:50% 26%;display:block}
+/* A moldura vazia é o mesmo círculo, com a especificação dentro. */
+.fl-foto.imgbox{border-color:rgba(255,255,255,.35);padding:6mm;gap:2mm;
+  background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.04) 6px 12px)}
+.fl-foto.imgbox .cl{color:rgba(255,255,255,.72)}
+.fl-foto.imgbox .cd{font-size:6.6pt;line-height:1.35;color:rgba(255,255,255,.5)}
+
+/* O bloco do nome se centra pelo centro do círculo do retrato, não pelo topo
+   dele: é o eixo que os dois compartilham. */
+.fl-nome{left:93mm;right:24mm;top:58.5mm;transform:translateY(-50%)}
+.fl-nome h1{margin:0;font-size:32pt;font-weight:800;line-height:1.02;
+  letter-spacing:-.02em;color:#fff}
+.fl-nome p{margin:2mm 0 0;font-size:19pt;font-weight:300;line-height:1.15;
+  color:rgba(255,255,255,.88)}
+
+/* O texto corrido é justificado, como no original, e tem o corpo grande que
+   aquela página usa: 2,1% da largura da folha. */
+/* Texto e contatos ficam num bloco só, entre o retrato e o pé. O vão entre os
+   dois é elástico com teto, como o `.esp` do resto do sistema: um consultor de
+   texto curto não abre um buraco no meio da folha — a sobra vai para a margem
+   de baixo, onde se lê como margem. */
+.fl-corpo{left:24mm;right:24mm;top:112mm;bottom:34mm;
+  display:flex;flex-direction:column}
+.fl-bio{font-size:12.5pt;line-height:1.55;text-align:justify;color:rgba(255,255,255,.92)}
+.fl-bio p{margin:0 0 6mm}
+.fl-bio p:last-child{margin-bottom:0}
+.fl-vao{flex:1 1 0;min-height:12mm;max-height:30mm}
+
+.fl-contatos{display:grid;gap:7mm}
+.fl-ct{display:grid;grid-template-columns:11mm 1fr;align-items:center;
+  font-size:12.5pt;color:#fff}
+.fl-ct .ic svg{width:8.5mm;height:8.5mm;display:block;fill:none;
+  stroke:rgba(255,255,255,.85);stroke-width:1.3;
+  stroke-linecap:round;stroke-linejoin:round}
+
+.fl-pe{left:24mm;right:24mm;bottom:16mm;display:flex;align-items:center;gap:10mm}
+.fl-pe .rule{flex:1 1 auto;height:1px;background:rgba(255,255,255,.45)}
+.fl-pe .logo{flex:0 0 auto}
 
 /* ---------- página invertida ----------
    A última página da apresentação do consultor roda no negativo. É o que a

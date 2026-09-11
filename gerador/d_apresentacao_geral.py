@@ -186,7 +186,7 @@ def build(t, seg):
 
     S.append(slide(t, "Avisos", 14, """<span class="eyebrow">Transparência</span>
 <h1 class="t">Avisos importantes</h1>
-<div class="cols2" style="flex:1 1 auto">
+<div class="center"><div class="cols2">
   <div>
     <p class="legal">%(disc)s</p>
     <p class="legal">Este material tem caráter informativo e publicitário e não constitui oferta, recomendação individualizada ou proposta de investimento. Números, taxas e condições apresentados referem-se à data de elaboração e podem ser alterados sem aviso prévio.</p>
@@ -195,7 +195,7 @@ def build(t, seg):
     <p class="legal">Rentabilidade passada não representa garantia de rentabilidade futura. Investimentos envolvem risco de perda, inclusive do capital principal, e podem não contar com garantia do Fundo Garantidor de Créditos (FGC). Antes de investir, avalie a adequação do produto ao seu perfil e leia os documentos oficiais de cada investimento.</p>
     <p class="legal">%(razao)s &middot; CNPJ %(cnpj)s &middot; %(reg)s. Ouvidoria: %(ouv)s. É proibida a reprodução ou o compartilhamento total ou parcial deste material sem autorização prévia e por escrito.</p>
   </div>
-</div>""" % dict(disc=ph("disclaimer_regulatorio", "Texto aprovado pelo compliance para este segmento"),
+</div></div>""" % dict(disc=ph("disclaimer_regulatorio", "Texto aprovado pelo compliance para este segmento"),
                  razao=ph("razao_social"), cnpj=ph("cnpj"), reg=ph("registro_cvm_empresa"),
                  ouv=ph("canal_ouvidoria"))))
 

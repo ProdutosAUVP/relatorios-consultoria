@@ -17,6 +17,7 @@ from layout import *  # noqa: E402,F403  (traz também tudo de common)
 import consultores
 import d_apresentacao_geral
 import d_consultor
+import d_consultor_simples
 import d_cronograma
 import d_diagnostico
 import d_macro
@@ -50,6 +51,11 @@ DOCUMENTOS = [
     dict(chave="apresentacao-consultor", formato="a4",
          titulo="Apresentação do consultor — %s", builder=d_consultor.build,
          variantes=d_consultor.variantes(consultores.CONSULTORES, THEMES, SEGMENTOS)),
+    # A versão de uma página: só a pessoa, sem o plano e sem data. É o cartão
+    # que se manda antes de uma primeira conversa.
+    dict(chave="apresentacao-consultor-simples", formato="a4",
+         titulo="Apresentação do consultor — %s", builder=d_consultor_simples.build,
+         variantes=d_consultor_simples.variantes(consultores.CONSULTORES, THEMES, SEGMENTOS)),
 ]
 
 

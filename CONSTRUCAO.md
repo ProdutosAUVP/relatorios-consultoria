@@ -50,6 +50,7 @@ autossuficientes na entrega, fonte única na manutenção.
 | `gerador/common.py` | temas, tokens, folhas de estilo A4 e 16:9, fontes em base64, leitura dos SVGs |
 | `gerador/layout.py` | montagem de página e de slide, e os componentes (`table`, `kpis`, `flow`, `chart`, …) |
 | `gerador/d_*.py` | um módulo por tipo de documento; contém o conteúdo e a ordem das seções |
+| `gerador/d_consultor_simples.py` | a apresentação de uma página; reaproveita os dados e os auxiliares de `d_consultor` |
 | `gerador/consultores.py` | texto e contatos dos consultores, um dicionário por pessoa |
 | `scripts/fotos.py` | prepara os retratos: recorta pelo rosto, sem tocar em cor ou brilho |
 | `assets/consultores/` | retratos prontos, saída do `scripts/fotos.py` |

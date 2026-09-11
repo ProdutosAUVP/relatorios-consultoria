@@ -12,7 +12,7 @@ Os modelos são **gerados** a partir de `gerador/`, e não editados à mão. Par
 acrescentar uma página, um documento ou um segmento, veja
 [`CONSTRUCAO.md`](CONSTRUCAO.md).
 
-## Os 44 modelos
+## Os 55 modelos
 
 Seis documentos existem nos quatro segmentos. A apresentação do consultor tem uma variante
 por plano da consultoria, uma por consultor do Me Diz o Que Fazer e uma em branco por
@@ -27,6 +27,7 @@ segmento — treze ao todo, e a de cada consultor sai também sem a data no cabe
 | Relatório mensal em apresentação | 16:9 | 12 | ✓ | ✓ | ✓ | ✓ |
 | Cronograma de reuniões | A4 retrato | 6 | ✓ | ✓ | ✓ | ✓ |
 | Apresentação do consultor | A4 retrato | 3 | 3 planos + 7 consultores | ✓ | ✓ | ✓ |
+| Apresentação do consultor (uma página) | A4 retrato | 1 | 7 consultores | ✓ | ✓ | ✓ |
 
 A apresentação de cada consultor existe duas vezes: com e sem a data no cabeçalho, esta
 última no sufixo `-sem-data`. É o documento que a pessoa manda para um cliente novo a
@@ -52,6 +53,10 @@ um consultor, e nesses casos o tema é o da consultoria.
   resto do texto.
 - **Em branco, por segmento** — para Alta Renda, Private e Assessoria, com consultor e
   plano preenchíveis.
+
+Existe também a **versão de uma página**: só a pessoa — retrato, declaração, trajetória,
+credenciais e contatos —, sem o plano e sem data. É o cartão que se manda antes de uma
+primeira conversa, quando explicar as condições comerciais ainda não é o assunto.
 
 As três páginas se distinguem pela inversão, não por ornamento: as duas primeiras são
 abertas e claras, e a última roda no negativo. Mesma grelha, mesma tipografia, mesmos
@@ -93,7 +98,7 @@ mesmo arquivo no navegador: os campos ainda não preenchidos ficam destacados.
 
 **2. Gerar o PDF.**
 
-A pasta `pdf/` já traz um PDF de cada um dos 44 modelos, numa subpasta por produto, para quem só quer ler o
+A pasta `pdf/` já traz um PDF de cada um dos 55 modelos, numa subpasta por produto, para quem só quer ler o
 resultado sem instalar nada. Para regerar depois de editar um modelo:
 
 ```sh
@@ -337,7 +342,7 @@ trimestral no private e semestral com contatos da mesa na assessoria.
 ## Estrutura do repositório
 
 ```
-modelos/                        44 modelos HTML independentes
+modelos/                        55 modelos HTML independentes
 pdf/<produto>/                  um PDF de cada modelo, versionado (saída do npm run pdf)
 scripts/render.mjs              HTML -> PDF via Playwright
 scripts/check.mjs               verificação de estouro de página

@@ -191,6 +191,102 @@
    ]
   },
   {
+   "chave": "apresentacao-consultor-simples",
+   "nome": "Apresentação do consultor (uma página)",
+   "formato": "a4",
+   "descricao": "Só a pessoa: retrato, trajetória, credenciais e contatos. Sem o plano e sem data.",
+   "variantes": [
+    {
+     "sufixo": "consultoria",
+     "rotulo": "Consultoria",
+     "arquivo": "apresentacao-consultor-simples-consultoria.html",
+     "paginas": 1,
+     "campos": 20,
+     "imagens": 1
+    },
+    {
+     "sufixo": "alta-renda",
+     "rotulo": "Alta Renda",
+     "arquivo": "apresentacao-consultor-simples-alta-renda.html",
+     "paginas": 1,
+     "campos": 20,
+     "imagens": 1
+    },
+    {
+     "sufixo": "private",
+     "rotulo": "Private Banking",
+     "arquivo": "apresentacao-consultor-simples-private.html",
+     "paginas": 1,
+     "campos": 20,
+     "imagens": 1
+    },
+    {
+     "sufixo": "assessoria",
+     "rotulo": "Assessoria",
+     "arquivo": "apresentacao-consultor-simples-assessoria.html",
+     "paginas": 1,
+     "campos": 20,
+     "imagens": 1
+    },
+    {
+     "sufixo": "alan-santanna",
+     "rotulo": "Alan Sant'Anna",
+     "arquivo": "apresentacao-consultor-simples-alan-santanna.html",
+     "paginas": 1,
+     "campos": 1,
+     "imagens": 1
+    },
+    {
+     "sufixo": "andre-arruda",
+     "rotulo": "André Arruda",
+     "arquivo": "apresentacao-consultor-simples-andre-arruda.html",
+     "paginas": 1,
+     "campos": 1,
+     "imagens": 1
+    },
+    {
+     "sufixo": "bolivar-oliveira",
+     "rotulo": "Bolívar Oliveira",
+     "arquivo": "apresentacao-consultor-simples-bolivar-oliveira.html",
+     "paginas": 1,
+     "campos": 2,
+     "imagens": 1
+    },
+    {
+     "sufixo": "danilo-barbosa",
+     "rotulo": "Danilo Barbosa",
+     "arquivo": "apresentacao-consultor-simples-danilo-barbosa.html",
+     "paginas": 1,
+     "campos": 1,
+     "imagens": 1
+    },
+    {
+     "sufixo": "erika-barreto",
+     "rotulo": "Erika Barreto",
+     "arquivo": "apresentacao-consultor-simples-erika-barreto.html",
+     "paginas": 1,
+     "campos": 1,
+     "imagens": 1
+    },
+    {
+     "sufixo": "nasser-tanure",
+     "rotulo": "Nasser Tanure",
+     "arquivo": "apresentacao-consultor-simples-nasser-tanure.html",
+     "paginas": 1,
+     "campos": 1,
+     "imagens": 1
+    },
+    {
+     "sufixo": "yuri-machado",
+     "rotulo": "Yuri Machado",
+     "arquivo": "apresentacao-consultor-simples-yuri-machado.html",
+     "paginas": 1,
+     "campos": 1,
+     "imagens": 1
+    }
+   ]
+  },
+  {
    "chave": "apresentacao-geral",
    "nome": "Apresentação geral",
    "formato": "slide",

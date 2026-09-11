@@ -92,7 +92,11 @@ h2{font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
 h2:first-child{margin-top:0}
 h3{font-size:10.5pt;font-weight:700;margin:4mm 0 1.5mm}
 .small{font-size:9pt}
-.legal{font-size:7.4pt;line-height:1.5;color:var(--ink-2)}
+/* No slide o `.legal` não é rodapé: na página de avisos ele é o conteúdo,
+   quatro parágrafos em duas colunas. E o slide tem 1,6 vez a largura do A4,
+   então o mesmo corpo em pontos aparece proporcionalmente menor quando a
+   página é reduzida para caber na tela. */
+.legal{font-size:9.4pt;line-height:1.55;color:var(--ink-2)}
 .cols2{display:grid;grid-template-columns:1fr 1fr;gap:10mm}
 /* usa a sobra vertical do slide em vez de deixá-la toda no rodapé */
 .center{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:8mm;min-height:0}
@@ -449,7 +453,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 </section>
 <section class="slide dark divider">
   <div class="grain"></div>
-  <div class="graf" style="right:-19.31mm;top:-17.75mm;width:150.00mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 581.33">
+  <div class="graf" style="right:-22.33mm;top:-20.35mm;width:190.00mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 581.33">
   <defs>
     <style>
       .g3-1 {
@@ -706,7 +710,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 </section>
 <section class="slide dark divider">
   <div class="grain"></div>
-  <div class="graf" style="right:-19.31mm;top:-17.75mm;width:150.00mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 581.33">
+  <div class="graf" style="right:-22.33mm;top:-20.35mm;width:190.00mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 581.33">
   <defs>
     <style>
       .g3-1 {
@@ -1008,7 +1012,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 </section>
 <section class="slide dark divider">
   <div class="grain"></div>
-  <div class="graf" style="right:-19.31mm;top:-17.75mm;width:150.00mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 581.33">
+  <div class="graf" style="right:-22.33mm;top:-20.35mm;width:190.00mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 581.33">
   <defs>
     <style>
       .g3-1 {
@@ -1441,7 +1445,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     <div class="pg-body">
 <span class="eyebrow">Transparência</span>
 <h1 class="t">Avisos&nbsp;importantes</h1>
-<div class="cols2" style="flex:1 1 auto">
+<div class="center"><div class="cols2">
   <div>
     <p class="legal"><span class="ph" title="Texto aprovado pelo compliance para este segmento">{{disclaimer_regulatorio}}</span></p>
     <p class="legal">Este material tem caráter informativo e publicitário e não constitui oferta, recomendação individualizada ou proposta de investimento. Números, taxas e condições apresentados referem-se à data de elaboração e podem ser alterados sem aviso&nbsp;prévio.</p>
@@ -1450,7 +1454,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     <p class="legal">Rentabilidade passada não representa garantia de rentabilidade futura. Investimentos envolvem risco de perda, inclusive do capital principal, e podem não contar com garantia do Fundo Garantidor de Créditos (FGC). Antes de investir, avalie a adequação do produto ao seu perfil e leia os documentos oficiais de cada&nbsp;investimento.</p>
     <p class="legal"><span class="ph">{{razao_social}}</span> &middot; CNPJ <span class="ph">{{cnpj}}</span> &middot; <span class="ph">{{registro_cvm_empresa}}</span>. Ouvidoria: <span class="ph">{{canal_ouvidoria}}</span>. É proibida a reprodução ou o compartilhamento total ou parcial deste material sem autorização prévia e por&nbsp;escrito.</p>
   </div>
-</div>
+</div></div>
     </div>
     <footer class="pg-foot"><span class="no">14</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>

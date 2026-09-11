@@ -30,6 +30,8 @@ export const DOCUMENTOS = [
     descricao: 'Calendário do ciclo de acompanhamento e pauta de cada encontro.' },
   { chave: 'apresentacao-consultor', nome: 'Apresentação do consultor', formato: 'a4',
     descricao: 'Perfil do consultor, o plano e a AUVP Capital.' },
+  { chave: 'apresentacao-consultor-simples', nome: 'Apresentação do consultor (uma página)', formato: 'a4',
+    descricao: 'Só a pessoa: retrato, trajetória, credenciais e contatos. Sem o plano e sem data.' },
 ];
 
 // Ordem dos planos da consultoria na ferramenta, do autoatendimento à

@@ -713,6 +713,59 @@ CSS_A4 += """
 .perfil p{margin-bottom:3mm}
 .perfil .side h3{margin-top:5mm}
 
+/* ---------- folha de uma página ----------
+   A apresentação de uma página tem chrome próprio, como as capas: sem
+   cabeçalho corrido e sem numeração, porque a página é uma só. As medidas vêm
+   das proporções do modelo de referência, reescritas para A4. */
+.page.folha{padding:0;display:block;position:relative}
+.page.folha .fl-aneis,.page.folha .fl-foto,.page.folha .fl-nome,
+.page.folha .fl-corpo,.page.folha .fl-pe{position:absolute}
+
+/* Os anéis sangram pela esquerda; o traço fica fino em qualquer escala. A
+   opacidade é baixa porque os últimos passam por trás da primeira linha do
+   texto, como no original. */
+.fl-aneis{fill:none;stroke:rgba(255,255,255,.16);stroke-width:.75pt;
+  vector-effect:non-scaling-stroke;overflow:visible}
+.fl-aneis circle{vector-effect:non-scaling-stroke}
+
+.fl-foto{border-radius:50%;overflow:hidden}
+.fl-foto img{width:100%;height:100%;object-fit:cover;object-position:50% 26%;display:block}
+/* A moldura vazia é o mesmo círculo, com a especificação dentro. */
+.fl-foto.imgbox{border-color:rgba(255,255,255,.35);padding:6mm;gap:2mm;
+  background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.04) 6px 12px)}
+.fl-foto.imgbox .cl{color:rgba(255,255,255,.72)}
+.fl-foto.imgbox .cd{font-size:6.6pt;line-height:1.35;color:rgba(255,255,255,.5)}
+
+.fl-nome{left:93mm;right:24mm;top:34mm}
+.fl-nome h1{margin:0;font-size:32pt;font-weight:800;line-height:1.02;
+  letter-spacing:-.02em;color:#fff}
+.fl-nome p{margin:2mm 0 0;font-size:19pt;font-weight:300;line-height:1.15;
+  color:rgba(255,255,255,.88)}
+
+/* O texto corrido é justificado, como no original, e tem o corpo grande que
+   aquela página usa: 2,1% da largura da folha. */
+/* Texto e contatos ficam num bloco só, entre o retrato e o pé. O vão entre os
+   dois é elástico com teto, como o `.esp` do resto do sistema: um consultor de
+   texto curto não abre um buraco no meio da folha — a sobra vai para a margem
+   de baixo, onde se lê como margem. */
+.fl-corpo{left:24mm;right:24mm;top:112mm;bottom:34mm;
+  display:flex;flex-direction:column}
+.fl-bio{font-size:12.5pt;line-height:1.55;text-align:justify;color:rgba(255,255,255,.92)}
+.fl-bio p{margin:0 0 6mm}
+.fl-bio p:last-child{margin-bottom:0}
+.fl-vao{flex:1 1 0;min-height:12mm;max-height:30mm}
+
+.fl-contatos{display:grid;gap:7mm}
+.fl-ct{display:grid;grid-template-columns:11mm 1fr;align-items:center;
+  font-size:12.5pt;color:#fff}
+.fl-ct .ic svg{width:8.5mm;height:8.5mm;display:block;fill:none;
+  stroke:rgba(255,255,255,.85);stroke-width:1.3;
+  stroke-linecap:round;stroke-linejoin:round}
+
+.fl-pe{left:24mm;right:24mm;bottom:16mm;display:flex;align-items:center;gap:10mm}
+.fl-pe .rule{flex:1 1 auto;height:1px;background:rgba(255,255,255,.45)}
+.fl-pe .logo{flex:0 0 auto}
+
 /* ---------- página invertida ----------
    A última página da apresentação do consultor roda no negativo. É o que a
    fecha sem acrescentar ornamento: mesma grelha, mesma tipografia, mesmos

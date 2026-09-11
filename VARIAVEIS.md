@@ -203,14 +203,10 @@ Campos exclusivos da variante **simples-alan-santanna** (1):
 instagram_consultor
 ```
 
-Campos exclusivos da variante **simples-alta-renda** (20):
+Campos exclusivos da variante **simples-alta-renda** (8):
 
 ```
-certificacao_1                    certificacao_2                    certificacao_3
-email_consultor                   especializacao_1                  especializacao_2
-fora_do_escritorio                formacao_1                        formacao_2
-frase_consultor                   instagram_consultor               interesse_1
-interesse_2                       interesse_3                       interesse_4
+email_consultor                   fora_do_escritorio                instagram_consultor
 nome_consultor                    papel_consultor                   proposito_1
 proposito_2                       whatsapp_consultor
 ```
@@ -221,14 +217,10 @@ Campos exclusivos da variante **simples-andre-arruda** (1):
 instagram_consultor
 ```
 
-Campos exclusivos da variante **simples-assessoria** (20):
+Campos exclusivos da variante **simples-assessoria** (8):
 
 ```
-certificacao_1                    certificacao_2                    certificacao_3
-email_consultor                   especializacao_1                  especializacao_2
-fora_do_escritorio                formacao_1                        formacao_2
-frase_consultor                   instagram_consultor               interesse_1
-interesse_2                       interesse_3                       interesse_4
+email_consultor                   fora_do_escritorio                instagram_consultor
 nome_consultor                    papel_consultor                   proposito_1
 proposito_2                       whatsapp_consultor
 ```
@@ -239,14 +231,10 @@ Campos exclusivos da variante **simples-bolivar-oliveira** (2):
 instagram_consultor               whatsapp_consultor
 ```
 
-Campos exclusivos da variante **simples-consultoria** (20):
+Campos exclusivos da variante **simples-consultoria** (8):
 
 ```
-certificacao_1                    certificacao_2                    certificacao_3
-email_consultor                   especializacao_1                  especializacao_2
-fora_do_escritorio                formacao_1                        formacao_2
-frase_consultor                   instagram_consultor               interesse_1
-interesse_2                       interesse_3                       interesse_4
+email_consultor                   fora_do_escritorio                instagram_consultor
 nome_consultor                    papel_consultor                   proposito_1
 proposito_2                       whatsapp_consultor
 ```
@@ -269,14 +257,10 @@ Campos exclusivos da variante **simples-nasser-tanure** (1):
 instagram_consultor
 ```
 
-Campos exclusivos da variante **simples-private** (20):
+Campos exclusivos da variante **simples-private** (8):
 
 ```
-certificacao_1                    certificacao_2                    certificacao_3
-email_consultor                   especializacao_1                  especializacao_2
-fora_do_escritorio                formacao_1                        formacao_2
-frase_consultor                   instagram_consultor               interesse_1
-interesse_2                       interesse_3                       interesse_4
+email_consultor                   fora_do_escritorio                instagram_consultor
 nome_consultor                    papel_consultor                   proposito_1
 proposito_2                       whatsapp_consultor
 ```

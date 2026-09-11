@@ -54,9 +54,11 @@ um consultor, e nesses casos o tema é o da consultoria.
 - **Em branco, por segmento** — para Alta Renda, Private e Assessoria, com consultor e
   plano preenchíveis.
 
-Existe também a **versão de uma página**: só a pessoa — retrato, declaração, trajetória,
-credenciais e contatos —, sem o plano e sem data. É o cartão que se manda antes de uma
-primeira conversa, quando explicar as condições comerciais ainda não é o assunto.
+Existe também a **versão de uma página**, que segue a diagramação do modelo que a casa já
+usava: fundo no negativo, retrato em círculo cercado de anéis concêntricos no alto à
+esquerda, nome ao lado, texto corrido justificado e os contatos com ícone. Sem cabeçalho
+corrido, sem o plano e sem data — é o cartão que se manda antes de uma primeira conversa,
+quando explicar as condições comerciais ainda não é o assunto.
 
 As três páginas se distinguem pela inversão, não por ornamento: as duas primeiras são
 abertas e claras, e a última roda no negativo. Mesma grelha, mesma tipografia, mesmos

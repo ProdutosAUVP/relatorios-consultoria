@@ -377,6 +377,59 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .perfil p{margin-bottom:3mm}
 .perfil .side h3{margin-top:5mm}
 
+/* ---------- folha de uma página ----------
+   A apresentação de uma página tem chrome próprio, como as capas: sem
+   cabeçalho corrido e sem numeração, porque a página é uma só. As medidas vêm
+   das proporções do modelo de referência, reescritas para A4. */
+.page.folha{padding:0;display:block;position:relative}
+.page.folha .fl-aneis,.page.folha .fl-foto,.page.folha .fl-nome,
+.page.folha .fl-corpo,.page.folha .fl-pe{position:absolute}
+
+/* Os anéis sangram pela esquerda; o traço fica fino em qualquer escala. A
+   opacidade é baixa porque os últimos passam por trás da primeira linha do
+   texto, como no original. */
+.fl-aneis{fill:none;stroke:rgba(255,255,255,.16);stroke-width:.75pt;
+  vector-effect:non-scaling-stroke;overflow:visible}
+.fl-aneis circle{vector-effect:non-scaling-stroke}
+
+.fl-foto{border-radius:50%;overflow:hidden}
+.fl-foto img{width:100%;height:100%;object-fit:cover;object-position:50% 26%;display:block}
+/* A moldura vazia é o mesmo círculo, com a especificação dentro. */
+.fl-foto.imgbox{border-color:rgba(255,255,255,.35);padding:6mm;gap:2mm;
+  background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.04) 6px 12px)}
+.fl-foto.imgbox .cl{color:rgba(255,255,255,.72)}
+.fl-foto.imgbox .cd{font-size:6.6pt;line-height:1.35;color:rgba(255,255,255,.5)}
+
+.fl-nome{left:93mm;right:24mm;top:34mm}
+.fl-nome h1{margin:0;font-size:32pt;font-weight:800;line-height:1.02;
+  letter-spacing:-.02em;color:#fff}
+.fl-nome p{margin:2mm 0 0;font-size:19pt;font-weight:300;line-height:1.15;
+  color:rgba(255,255,255,.88)}
+
+/* O texto corrido é justificado, como no original, e tem o corpo grande que
+   aquela página usa: 2,1% da largura da folha. */
+/* Texto e contatos ficam num bloco só, entre o retrato e o pé. O vão entre os
+   dois é elástico com teto, como o `.esp` do resto do sistema: um consultor de
+   texto curto não abre um buraco no meio da folha — a sobra vai para a margem
+   de baixo, onde se lê como margem. */
+.fl-corpo{left:24mm;right:24mm;top:112mm;bottom:34mm;
+  display:flex;flex-direction:column}
+.fl-bio{font-size:12.5pt;line-height:1.55;text-align:justify;color:rgba(255,255,255,.92)}
+.fl-bio p{margin:0 0 6mm}
+.fl-bio p:last-child{margin-bottom:0}
+.fl-vao{flex:1 1 0;min-height:12mm;max-height:30mm}
+
+.fl-contatos{display:grid;gap:7mm}
+.fl-ct{display:grid;grid-template-columns:11mm 1fr;align-items:center;
+  font-size:12.5pt;color:#fff}
+.fl-ct .ic svg{width:8.5mm;height:8.5mm;display:block;fill:none;
+  stroke:rgba(255,255,255,.85);stroke-width:1.3;
+  stroke-linecap:round;stroke-linejoin:round}
+
+.fl-pe{left:24mm;right:24mm;bottom:16mm;display:flex;align-items:center;gap:10mm}
+.fl-pe .rule{flex:1 1 auto;height:1px;background:rgba(255,255,255,.45)}
+.fl-pe .logo{flex:0 0 auto}
+
 /* ---------- página invertida ----------
    A última página da apresentação do consultor roda no negativo. É o que a
    fecha sem acrescentar ornamento: mesma grelha, mesma tipografia, mesmos
@@ -419,11 +472,20 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 </style>
 </head>
 <body>
-<section class="page simples">
-  
-  <header class="pg-head">
-    <div class="sec">O seu&nbsp;consultor</div>
-    <div class="rt"><div class="logo logo-ink" style="width:30.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
+<section class="page dark folha" data-sec="O seu consultor">
+  <div class="grain"></div>
+  <svg class="fl-aneis" viewBox="0 0 100 100" style="left:0.70mm;top:8.50mm;width:100.00mm;height:100.00mm"><circle cx="50" cy="50" r="31.00"/><circle cx="50" cy="50" r="33.38"/><circle cx="50" cy="50" r="35.75"/><circle cx="50" cy="50" r="38.12"/><circle cx="50" cy="50" r="40.50"/><circle cx="50" cy="50" r="42.88"/><circle cx="50" cy="50" r="45.25"/><circle cx="50" cy="50" r="47.62"/><circle cx="50" cy="50" r="50.00"/></svg>
+  <div class="imgbox fl-foto" style="left:21.70mm;top:29.50mm;width:58.00mm;height:58.00mm" data-img="1"><div class="cl">Retrato</div><div class="cd">Foto vertical, recortada em&nbsp;círculo.</div></div>
+  <div class="fl-nome">
+    <h1><span class="ph">{{nome_consultor}}</span></h1>
+    <p><span class="ph" title="Consultor de investimentos, especialista, planejador…">{{papel_consultor}}</span></p>
+  </div>
+  <div class="fl-corpo">
+    <div class="fl-bio"><p><span class="ph">{{proposito_1}}</span></p><p><span class="ph">{{proposito_2}}</span></p><p><span class="ph" title="Uma ou duas frases sobre a vida fora do trabalho.">{{fora_do_escritorio}}</span></p></div>
+    <div class="fl-vao"></div>
+    <div class="fl-contatos"><div class="fl-ct"><span class="ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="6.5" width="15" height="11" rx="1.5"/><path d="M4.5 8.5 12 13.5 19.5 8.5"/></svg></span><span><span class="ph">{{email_consultor}}</span></span></div><div class="fl-ct"><span class="ic"><svg viewBox="0 0 24 24"><path d="M8.2 4.8c.6 0 1 .3 1.2.9l1 2.4c.2.5.1 1-.3 1.3l-1 .9c1 2 2.6 3.6 4.6 4.6l.9-1c.3-.4.8-.5 1.3-.3l2.4 1c.6.2.9.6.9 1.2v2.1c0 .8-.6 1.4-1.4 1.4C11.6 19.3 4.7 12.4 4.7 6.2c0-.8.6-1.4 1.4-1.4z"/></svg></span><span><span class="ph">{{whatsapp_consultor}}</span></span></div><div class="fl-ct"><span class="ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="4.5"/><circle cx="12" cy="12" r="3.7"/><circle cx="16.7" cy="7.3" r=".9"/></svg></span><span><span class="ph" title="@usuario">{{instagram_consultor}}</span></span></div></div>
+  </div>
+  <div class="fl-pe"><span class="rule"></span><div class="logo fl-logo" style="width:58.6mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
       .lg-1 {
@@ -454,45 +516,6 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   <path class="lg-1" d="M1056.15,139.94c-2.39,0-3.92-.39-4.62-1.19-.69-.8-1.04-2.47-1.04-5.01v-17.62c0-3.63-.91-6.36-2.71-8.2-1.8-1.84-4.37-2.76-7.67-2.76-2.73,0-5.39.84-7.98,2.49-1.92,1.23-3.86,2.99-5.82,5.26h0c0-2.41-.32-4.25-.95-5.53-.64-1.28-1.19-1.91-1.66-1.91-.17,0-.32.04-.49.11l-10.49,4.96c-.21.11-.25.32-.11.63.14.31.33.43.57.36,1.05-.42,1.98-.74,2.79-.98.81-.23,1.52-.35,2.1-.35,1.16,0,1.98.45,2.45,1.37.47.92.7,2.37.7,4.38v17.76c0,2.54-.36,4.21-1.06,5.01-.7.8-2.23,1.19-4.57,1.19-.18,0-.27.18-.27.54s.1.54.27.54h.01c1.06,0,2.3-.04,3.75-.1,1.44-.06,2.91-.1,4.46-.1s3.03.04,4.44.1c1.42.06,2.65.1,3.71.1.18,0,.27-.18.27-.54s-.09-.54-.27-.54c-2.4,0-3.92-.39-4.62-1.19-.69-.8-1.04-2.47-1.04-5.01v-19.33c1.24-1.4,2.61-2.59,4.14-3.53,2.27-1.37,4.5-2.06,6.68-2.06,2.85,0,4.95.82,6.29,2.48,1.34,1.66,2,4.27,2,7.84v14.6c0,2.54-.36,4.21-1.06,5.01-.72.8-2.23,1.19-4.57,1.19-.19,0-.27.18-.27.54s.1.54.27.54h0c1.06,0,2.3-.04,3.75-.1,1.44-.06,2.91-.1,4.46-.1s3.03.04,4.44.1c1.42.06,2.65.1,3.71.1.18,0,.27-.18.27-.54s-.09-.54-.27-.54Z"/>
   <path class="lg-1" d="M1090.08,109.29c1.37,0,2.58.16,3.62.48,1.05.32,1.85.6,2.4.84.24.13.44-.18.61-.93.17-.75.25-1.46.25-2.1,0-.49-.04-.94-.13-1.37s-.21-.64-.37-.64c-2.12,0-4.07.36-5.82,1.06-1.25.5-2.52,1.12-3.82,1.85-.47-.38-.98-.74-1.54-1.06-1.97-1.16-4.56-1.73-7.74-1.73-2.83,0-5.33.51-7.49,1.54-2.16,1.03-3.85,2.41-5.06,4.16-1.21,1.74-1.81,3.73-1.81,5.96,0,2.06.55,4,1.63,5.79,1.1,1.78,2.65,3.22,4.68,4.29.08.04.17.07.26.11-1.91,1.51-3.45,2.93-4.56,4.24-1.29,1.52-1.94,3.35-1.94,5.36s.67,3.46,1.99,4.38c1.27.88,2.96,1.44,5.05,1.68-2.3,1.62-4.21,3.25-5.71,4.9-2.39,2.61-3.57,5.4-3.57,8.23s1.16,5.18,3.48,7.06c2.33,1.88,5.57,2.83,9.76,2.83h.01c2.86-.01,5.64-.49,8.33-1.44,2.68-.95,5.07-2.27,7.17-3.95,2.1-1.68,3.76-3.61,4.99-5.8,1.22-2.18,1.84-4.62,1.84-7s-.55-4.21-1.62-5.49c-1.09-1.26-2.46-2.16-4.12-2.66-1.67-.5-3.4-.79-5.18-.87-1.77-.08-3.4-.12-4.86-.12-3.23-.01-5.8-.16-7.72-.45-1.92-.29-3.29-.8-4.13-1.52-.84-.72-1.25-1.73-1.25-3.02,0-1.11.3-2.15.89-3.11.51-.82,1.34-1.72,2.46-2.67,1.68.62,3.62.93,5.79.93h0c2.9,0,5.4-.55,7.53-1.66,2.11-1.11,3.75-2.56,4.9-4.37,1.16-1.79,1.74-3.73,1.74-5.82,0-1.83-.47-3.61-1.38-5.39-.44-.86-1.01-1.64-1.7-2.35,0,0,.01,0,.02,0,.67-.11,1.38-.17,2.15-.17ZM1085.21,144c2.14.27,3.81.95,5.02,2.04,1.22,1.09,1.82,2.89,1.82,5.39,0,3.72-1.32,6.67-3.97,8.83-2.65,2.16-6.02,3.23-10.12,3.23-2.54,0-4.69-.42-6.45-1.24-1.77-.82-3.1-2-4.02-3.53-.92-1.53-1.38-3.28-1.38-5.4s.44-3.89,1.31-5.31c.87-1.42,2.03-2.64,3.48-3.66.46-.33.97-.63,1.46-.95,1.68.12,3.47.2,5.37.2,2.85,0,5.33.13,7.47.41ZM1085.15,112.44h0s0,0,0,0h0ZM1083.41,125.75c-1.29,1.32-2.9,1.98-4.82,1.98h0c-1.55.01-3.08-.44-4.58-1.34-1.5-.91-2.76-2.28-3.77-4.14-1.01-1.86-1.52-4.08-1.52-7.01s.62-5.02,1.85-6.3c1.22-1.28,2.82-1.91,4.78-1.91,1.81,0,3.48.48,4.99,1.44,1.5.97,2.71,2.35,3.63,4.14.92,1.79,1.38,3.97,1.38,6.54,0,3.08-.64,5.27-1.94,6.6Z"/>
 </svg></div></div>
-  </header>
-  <div class="pg-body">
-<div class="perfil"><div class="sp-topo">
-  <div class="imgbox rt-vaga" data-img="1"><div class="cl">Retrato</div><div class="cd">Foto vertical do consultor. Recorte 3:4, mínimo 900&nbsp;px de&nbsp;largura.</div></div>
-  <div>
-    <h1><span class="ph">{{nome_consultor}}</span></h1>
-    <p class="papel"><span class="ph" title="Consultor de investimentos, especialista, planejador…">{{papel_consultor}}</span> na AUVP Private&nbsp;Banking</p>
-    <p class="frase"><span class="ph" title="Uma frase em primeira pessoa sobre como você trabalha.">{{frase_consultor}}</span></p>
-  </div>
-</div>
-<div class="esp"></div>
-<div class="cols2u">
-  <div class="sp-bio"><p><span class="ph">{{proposito_1}}</span></p><p><span class="ph">{{proposito_2}}</span></p><p class="mut"><span class="ph" title="Uma ou duas frases sobre a vida fora do trabalho.">{{fora_do_escritorio}}</span></p></div>
-  <div>
-    <h2>Formação e&nbsp;certificações</h2>
-    <ul class="lista"><li><span class="ph">{{formacao_1}}</span></li><li><span class="ph">{{formacao_2}}</span></li><li><span class="ph">{{especializacao_1}}</span></li><li><span class="ph">{{especializacao_2}}</span></li></ul><div class="chips" style="margin-top:3mm"><span class="pill"><span class="ph">{{certificacao_1}}</span></span><span class="pill"><span class="ph">{{certificacao_2}}</span></span><span class="pill"><span class="ph">{{certificacao_3}}</span></span></div>
-    <h2>Fora do&nbsp;escritório</h2>
-    <div class="tags"><span><span class="ph">{{interesse_1}}</span></span><span><span class="ph">{{interesse_2}}</span></span><span><span class="ph">{{interesse_3}}</span></span><span><span class="ph">{{interesse_4}}</span></span></div>
-  </div>
-</div>
-<div class="esp lg"></div>
-<div class="pf-rodape">
-  <div>
-    <h3>Falar com o seu&nbsp;consultor</h3>
-    <div class="dl">
-      <dt>WhatsApp</dt><dd><span class="ph">{{whatsapp_consultor}}</span></dd>
-      <dt>E-mail</dt><dd><span class="ph">{{email_consultor}}</span></dd>
-    </div>
-  </div>
-  <div>
-    <h3>Acompanhar</h3>
-    <div class="dl">
-      <dt>Instagram</dt><dd><span class="ph" title="@usuario">{{instagram_consultor}}</span></dd>
-      <dt>Private&nbsp;Banking</dt><dd><a href="https://auvpcapital.com.br">auvpcapital.com.br</a></dd>
-    </div>
-  </div>
-</div></div>
-  </div>
-  <footer class="pg-foot"><span class="no">01</span><span>AUVP Private&nbsp;Banking</span></footer>
 </section>
 </body>
 </html>

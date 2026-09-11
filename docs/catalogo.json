@@ -201,7 +201,7 @@
      "rotulo": "Consultoria",
      "arquivo": "apresentacao-consultor-simples-consultoria.html",
      "paginas": 1,
-     "campos": 20,
+     "campos": 8,
      "imagens": 1
     },
     {
@@ -209,7 +209,7 @@
      "rotulo": "Alta Renda",
      "arquivo": "apresentacao-consultor-simples-alta-renda.html",
      "paginas": 1,
-     "campos": 20,
+     "campos": 8,
      "imagens": 1
     },
     {
@@ -217,7 +217,7 @@
      "rotulo": "Private Banking",
      "arquivo": "apresentacao-consultor-simples-private.html",
      "paginas": 1,
-     "campos": 20,
+     "campos": 8,
      "imagens": 1
     },
     {
@@ -225,7 +225,7 @@
      "rotulo": "Assessoria",
      "arquivo": "apresentacao-consultor-simples-assessoria.html",
      "paginas": 1,
-     "campos": 20,
+     "campos": 8,
      "imagens": 1
     },
     {

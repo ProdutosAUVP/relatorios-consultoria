@@ -21,6 +21,12 @@ _IMG = [0]
 def reset_img():
     _IMG[0] = 0
 
+
+def proximo_img():
+    """O número do próximo espaço de imagem, para quem monta a moldura à mão."""
+    _IMG[0] += 1
+    return _IMG[0]
+
 def logo_svg(t, h_mm, ink=False, cls=""):
     """A marca do Private Banking é muito mais larga que a do Capital; para as
     duas terem o mesmo peso visual a largura é derivada de uma altura-alvo."""

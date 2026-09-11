@@ -34,7 +34,9 @@ function paginas(html) {
   const partes = html.split(/<section class="/).slice(1);
   return partes.map((p, i) => {
     const corpo = '<section class="' + p;
-    let secao = corpo.match(/<div class="sec">([^<]*)<\/div>/)?.[1]?.trim();
+    // `data-sec` nomeia a página quando ela não tem cabeçalho corrido.
+    let secao = corpo.match(/^<section [^>]*data-sec="([^"]*)"/)?.[1]?.trim()
+      || corpo.match(/<div class="sec">([^<]*)<\/div>/)?.[1]?.trim();
     if (!secao) {
       if (/class="[^"]*\bcover\b/.test(corpo)) secao = 'Capa';
       else if (/class="[^"]*\bdivider\b/.test(corpo)) {
@@ -71,7 +73,10 @@ function estrutura(html) {
     }
     // A classe pode trazer um modificador junto (`imgbox rt-vaga`), então o
     // casamento é pelo nome do bloco dentro do atributo, não pelo atributo todo.
-    const ri = /<div class="[^"]*\b(chart|imgbox)\b[^"]*" data-img="(\d+)"[^>]*>([\s\S]*?)<div class="cd">([\s\S]*?)<\/div>/g;
+    // A classe pode trazer modificadores e os atributos vêm em qualquer ordem,
+    // então o casamento é pelo nome do bloco e pelo `data-img`, não pela forma
+    // exata da tag.
+    const ri = /<div class="[^"]*\b(chart|imgbox)\b[^"]*"[^>]*\bdata-img="(\d+)"[^>]*>([\s\S]*?)<div class="cd">([\s\S]*?)<\/div>/g;
     while ((m = ri.exec(pag.corpo))) {
       imagens.push({
         id: Number(m[2]),

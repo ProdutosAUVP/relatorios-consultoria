@@ -29,6 +29,11 @@ FOLHA = dict(
     raio_foto=29.0,       # o retrato ocupa 27,6% da largura
     raio_anel=50.0,       # os anéis vazam pela esquerda, como no original
     aneis=9,
+    # Os anéis desbotam para fora: o mais próximo da foto é o mais presente, o
+    # maior quase some. É o que dá a impressão de que eles irradiam do retrato,
+    # em vez de serem uma moldura desenhada em volta.
+    opacidade_interna=0.30,
+    opacidade_externa=0.05,
 )
 
 
@@ -43,8 +48,10 @@ def aneis(f=FOLHA):
     """
     r0, r1, n = f["raio_foto"] + 2.0, f["raio_anel"], f["aneis"]
     passo = (r1 - r0) / (n - 1)
+    op0, op1 = f["opacidade_interna"], f["opacidade_externa"]
     circulos = "".join(
-        '<circle cx="%(c)g" cy="%(c)g" r="%(r).2f"/>' % dict(c=r1, r=r0 + i * passo)
+        '<circle cx="%(c)g" cy="%(c)g" r="%(r).2f" stroke-opacity="%(o).3f"/>' % dict(
+            c=r1, r=r0 + i * passo, o=op0 + (op1 - op0) * i / (n - 1))
         for i in range(n))
     return ('<svg class="fl-aneis" viewBox="0 0 %(d)g %(d)g" '
             'style="left:%(x).2fmm;top:%(y).2fmm;width:%(w).2fmm;height:%(w).2fmm">'

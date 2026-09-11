@@ -722,9 +722,8 @@ CSS_A4 += """
 .page.folha .fl-corpo,.page.folha .fl-pe{position:absolute}
 
 /* Os anéis sangram pela esquerda; o traço fica fino em qualquer escala. A
-   opacidade é baixa porque os últimos passam por trás da primeira linha do
-   texto, como no original. */
-.fl-aneis{fill:none;stroke:rgba(255,255,255,.16);stroke-width:.75pt;
+   opacidade de cada um vem do gerador, que a calcula a partir do raio. */
+.fl-aneis{fill:none;stroke:#fff;stroke-width:.75pt;
   vector-effect:non-scaling-stroke;overflow:visible}
 .fl-aneis circle{vector-effect:non-scaling-stroke}
 
@@ -736,7 +735,9 @@ CSS_A4 += """
 .fl-foto.imgbox .cl{color:rgba(255,255,255,.72)}
 .fl-foto.imgbox .cd{font-size:6.6pt;line-height:1.35;color:rgba(255,255,255,.5)}
 
-.fl-nome{left:93mm;right:24mm;top:34mm}
+/* O bloco do nome se centra pelo centro do círculo do retrato, não pelo topo
+   dele: é o eixo que os dois compartilham. */
+.fl-nome{left:93mm;right:24mm;top:58.5mm;transform:translateY(-50%)}
 .fl-nome h1{margin:0;font-size:32pt;font-weight:800;line-height:1.02;
   letter-spacing:-.02em;color:#fff}
 .fl-nome p{margin:2mm 0 0;font-size:19pt;font-weight:300;line-height:1.15;

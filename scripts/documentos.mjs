@@ -26,6 +26,8 @@ export const DOCUMENTOS = [
     descricao: 'Deck de apresentação do serviço, para reunião de proposta.' },
   { chave: 'relatorio-mensal-apresentacao', nome: 'Relatório mensal em apresentação', formato: 'slide',
     descricao: 'O fechamento do mês em formato de reunião.' },
+  { chave: 'carta-apresentacao', nome: 'Carta de apresentação', formato: 'slide',
+    descricao: 'Enviada depois da reunião de venda, para quem ainda não decidiu: o que entendemos, quanto custa e o que vem a seguir.' },
   { chave: 'cronograma-reunioes', nome: 'Cronograma de reuniões', formato: 'a4',
     descricao: 'Calendário do ciclo de acompanhamento e pauta de cada encontro.' },
   { chave: 'apresentacao-consultor', nome: 'Apresentação do consultor', formato: 'a4',

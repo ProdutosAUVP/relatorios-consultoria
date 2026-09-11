@@ -15,6 +15,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from layout import *  # noqa: E402,F403  (traz também tudo de common)
 import d_apresentacao_geral
+import d_carta_apresentacao
 import d_consultor
 import d_consultor_simples
 import d_cronograma
@@ -41,6 +42,11 @@ DOCUMENTOS = [
          titulo="Apresentação Geral — %s", builder=d_apresentacao_geral.build),
     dict(chave="relatorio-mensal-apresentacao", formato="slide",
          titulo="Relatório Mensal (apresentação) — %s", builder=d_mensal_apresentacao.build),
+    # Vai para quem ouviu a proposta e ainda não decidiu: fica entre a
+    # apresentação geral, que é da reunião, e o diagnóstico, que só existe
+    # depois do sim.
+    dict(chave="carta-apresentacao", formato="slide",
+         titulo="Carta de Apresentação — %s", builder=d_carta_apresentacao.build),
     dict(chave="cronograma-reunioes", formato="a4",
          titulo="Cronograma de Reuniões — %s", builder=d_cronograma.build),
     # A apresentação do consultor varia por plano da consultoria e por

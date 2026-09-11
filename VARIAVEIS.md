@@ -23,22 +23,22 @@ Estes se repetem na maior parte dos modelos. Vale manter um arquivo único com e
 
 | Variável | O que é | Em quantos modelos |
 | --- | --- | --- |
-| `razao_social` | Razão social da empresa emissora | 24 de 37 |
-| `cnpj` | CNPJ da empresa emissora | 24 de 37 |
-| `registro_cvm_empresa` | Registro da empresa na CVM | 4 de 37 |
-| `canal_ouvidoria` | Telefone ou e-mail da ouvidoria | 20 de 37 |
-| `disclaimer_regulatorio` | Texto legal aprovado pelo compliance, específico do segmento | 20 de 37 |
-| `nome_cliente` | Nome do cliente destinatário | 20 de 37 |
-| `nome_responsavel` | Consultor, assessor ou banker responsável | 20 de 37 |
-| `registro_cvm_ou_ancord` | Registro do responsável (CVM 19 / Ancord) | 12 de 37 |
-| `email_contato` | E-mail de contato exibido no documento | 20 de 37 |
-| `whatsapp_contato` | WhatsApp direto do responsável | 8 de 37 |
-| `canal_atendimento` | Canal e horário de atendimento | 12 de 37 |
-| `link_agendamento` | URL de agendamento (a mesma do QR code) | 12 de 37 |
-| `mes_referencia` | Mês de referência, ex.: Agosto de 2026 | 12 de 37 |
-| `data_posicao` | Data da posição consolidada | 8 de 37 |
-| `perfil_investidor` | Perfil de suitability do cliente | 8 de 37 |
-| `patrimonio_total` | Patrimônio total sob acompanhamento | 8 de 37 |
+| `razao_social` | Razão social da empresa emissora | 24 de 41 |
+| `cnpj` | CNPJ da empresa emissora | 24 de 41 |
+| `registro_cvm_empresa` | Registro da empresa na CVM | 4 de 41 |
+| `canal_ouvidoria` | Telefone ou e-mail da ouvidoria | 20 de 41 |
+| `disclaimer_regulatorio` | Texto legal aprovado pelo compliance, específico do segmento | 20 de 41 |
+| `nome_cliente` | Nome do cliente destinatário | 24 de 41 |
+| `nome_responsavel` | Consultor, assessor ou banker responsável | 24 de 41 |
+| `registro_cvm_ou_ancord` | Registro do responsável (CVM 19 / Ancord) | 12 de 41 |
+| `email_contato` | E-mail de contato exibido no documento | 24 de 41 |
+| `whatsapp_contato` | WhatsApp direto do responsável | 12 de 41 |
+| `canal_atendimento` | Canal e horário de atendimento | 12 de 41 |
+| `link_agendamento` | URL de agendamento (a mesma do QR code) | 16 de 41 |
+| `mes_referencia` | Mês de referência, ex.: Agosto de 2026 | 12 de 41 |
+| `data_posicao` | Data da posição consolidada | 8 de 41 |
+| `perfil_investidor` | Perfil de suitability do cliente | 12 de 41 |
+| `patrimonio_total` | Patrimônio total sob acompanhamento | 8 de 41 |
 
 ## Apresentação do consultor — Me Diz o Que Fazer
 
@@ -180,6 +180,82 @@ passo_4_prazo                     passo_4_detalhe                   requisito_1_
 requisito_1_detalhe               requisito_2_titulo                requisito_2_detalhe
 requisito_3_titulo                requisito_3_detalhe               chamada_final
 site                              endereco_escritorio
+```
+</details>
+
+## undefined
+
+Arquivos: `modelos/carta-apresentacao-alta-renda.html`
+
+Variantes: — &middot; 26 variáveis
+
+<details><summary>Ver as 20 variáveis específicas deste documento</summary>
+
+```
+subtitulo_carta                   data_carta                        data_primeira_reuniao
+momento_do_cliente                objetivo_principal                frase_de_abertura
+taxa_anual                        nota_taxas                        banda_rf_min
+banda_rf_max                      banda_irf_min                     banda_irf_max
+banda_irv_min                     banda_irv_max                     banda_acoes_min
+banda_acoes_max                   banda_fii_min                     banda_fii_max
+banda_alt_min                     banda_alt_max
+```
+</details>
+
+## undefined
+
+Arquivos: `modelos/carta-apresentacao-assessoria.html`
+
+Variantes: — &middot; 25 variáveis
+
+<details><summary>Ver as 19 variáveis específicas deste documento</summary>
+
+```
+subtitulo_carta                   data_carta                        data_primeira_reuniao
+momento_do_cliente                objetivo_principal                frase_de_abertura
+nota_remuneracao                  banda_rf_min                      banda_rf_max
+banda_irf_min                     banda_irf_max                     banda_irv_min
+banda_irv_max                     banda_acoes_min                   banda_acoes_max
+banda_fii_min                     banda_fii_max                     banda_alt_min
+banda_alt_max
+```
+</details>
+
+## undefined
+
+Arquivos: `modelos/carta-apresentacao-consultoria.html`
+
+Variantes: — &middot; 26 variáveis
+
+<details><summary>Ver as 20 variáveis específicas deste documento</summary>
+
+```
+subtitulo_carta                   data_carta                        data_primeira_reuniao
+momento_do_cliente                objetivo_principal                frase_de_abertura
+taxa_anual                        nota_taxas                        banda_rf_min
+banda_rf_max                      banda_irf_min                     banda_irf_max
+banda_irv_min                     banda_irv_max                     banda_acoes_min
+banda_acoes_max                   banda_fii_min                     banda_fii_max
+banda_alt_min                     banda_alt_max
+```
+</details>
+
+## undefined
+
+Arquivos: `modelos/carta-apresentacao-private.html`
+
+Variantes: — &middot; 26 variáveis
+
+<details><summary>Ver as 20 variáveis específicas deste documento</summary>
+
+```
+subtitulo_carta                   data_carta                        data_primeira_reuniao
+momento_do_cliente                objetivo_principal                frase_de_abertura
+taxa_anual                        nota_taxas                        banda_rf_min
+banda_rf_max                      banda_irf_min                     banda_irf_max
+banda_irv_min                     banda_irv_max                     banda_acoes_min
+banda_acoes_max                   banda_fii_min                     banda_fii_max
+banda_alt_min                     banda_alt_max
 ```
 </details>
 

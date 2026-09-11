@@ -183,6 +183,46 @@
    ]
   },
   {
+   "chave": "carta-apresentacao",
+   "nome": "Carta de apresentação",
+   "formato": "slide",
+   "descricao": "Enviada depois da reunião de venda, para quem ainda não decidiu: o que entendemos, quanto custa e o que vem a seguir.",
+   "variantes": [
+    {
+     "sufixo": "consultoria",
+     "rotulo": "Consultoria",
+     "arquivo": "carta-apresentacao-consultoria.html",
+     "paginas": 13,
+     "campos": 26,
+     "imagens": 0
+    },
+    {
+     "sufixo": "alta-renda",
+     "rotulo": "Alta Renda",
+     "arquivo": "carta-apresentacao-alta-renda.html",
+     "paginas": 13,
+     "campos": 26,
+     "imagens": 0
+    },
+    {
+     "sufixo": "private",
+     "rotulo": "Private Banking",
+     "arquivo": "carta-apresentacao-private.html",
+     "paginas": 13,
+     "campos": 26,
+     "imagens": 0
+    },
+    {
+     "sufixo": "assessoria",
+     "rotulo": "Assessoria",
+     "arquivo": "carta-apresentacao-assessoria.html",
+     "paginas": 13,
+     "campos": 25,
+     "imagens": 0
+    }
+   ]
+  },
+  {
    "chave": "cronograma-reunioes",
    "nome": "Cronograma de reuniões",
    "formato": "a4",

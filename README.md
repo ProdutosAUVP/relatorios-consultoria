@@ -24,6 +24,7 @@ da consultoria e por segmento, e a versão em branco sai também sem a data no c
 | Relatório macroeconômico | A4 retrato | 11 | ✓ | ✓ | ✓ | ✓ |
 | Apresentação geral | 16:9 | 14 | ✓ | ✓ | ✓ | ✓ |
 | Relatório mensal em apresentação | 16:9 | 11 | ✓ | ✓ | ✓ | ✓ |
+| Carta de apresentação | 16:9 | 13 | ✓ | ✓ | ✓ | ✓ |
 | Cronograma de reuniões | A4 retrato | 6 | ✓ | ✓ | ✓ | ✓ |
 | Apresentação do consultor | A4 retrato | 3 | 3 planos | ✓ | ✓ | ✓ |
 | Apresentação do consultor (uma página) | A4 retrato | 1 | ✓ | ✓ | ✓ | ✓ |
@@ -324,6 +325,15 @@ para a carteira do segmento; agenda do mês seguinte.
 **Apresentação geral** — capa, divisórias de seção, quem somos, números, método em
 cinco etapas, diferenciais e entregas, governança e alçadas, tela de planos e taxas,
 time, primeiros passos e contato com QR code.
+
+**Carta de apresentação** — o documento que vai para quem ouviu a proposta e ainda não
+decidiu. Síntese do que se entendeu na primeira conversa; a remuneração, antes do método;
+as seis etapas do relacionamento; os quatro pilares da metodologia; o roadmap do primeiro ano;
+o relatório estratégico prometido para dez dias; e a doutrina de investimento da casa — função
+de cada classe, bandas da estrutura meta, as três camadas da renda fixa e os critérios de
+seleção de ação, FII e ETF. É o único documento que traz essa doutrina escrita. A remuneração
+separa os segmentos: consultoria, alta renda e private saem fee based, com percentual sobre o
+patrimônio; a assessoria sai sem taxa, remunerada pela distribuição.
 
 **Relatório mensal em apresentação** — a mesma informação do relatório mensal no ritmo
 de uma reunião: agenda, fechamento do mês, rentabilidade contra referências, alocação,

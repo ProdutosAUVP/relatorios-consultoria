@@ -14,7 +14,6 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from layout import *  # noqa: E402,F403  (traz também tudo de common)
-import consultores
 import d_apresentacao_geral
 import d_consultor
 import d_consultor_simples
@@ -44,18 +43,17 @@ DOCUMENTOS = [
          titulo="Relatório Mensal (apresentação) — %s", builder=d_mensal_apresentacao.build),
     dict(chave="cronograma-reunioes", formato="a4",
          titulo="Cronograma de Reuniões — %s", builder=d_cronograma.build),
-    # A apresentação do consultor tem três eixos de variante — os planos da
-    # consultoria, os consultores do Me Diz o Que Fazer e os outros segmentos,
-    # em branco —, e cada uma sai também sem data. A lista é montada no próprio
+    # A apresentação do consultor varia por plano da consultoria e por
+    # segmento, e a em branco sai também sem data. A lista é montada no próprio
     # módulo, e as variantes trazem o tema junto em vez de sair do sufixo.
     dict(chave="apresentacao-consultor", formato="a4",
          titulo="Apresentação do consultor — %s", builder=d_consultor.build,
-         variantes=d_consultor.variantes(consultores.CONSULTORES, THEMES, SEGMENTOS)),
+         variantes=d_consultor.variantes(THEMES, SEGMENTOS)),
     # A versão de uma página: só a pessoa, sem o plano e sem data. É o cartão
     # que se manda antes de uma primeira conversa.
     dict(chave="apresentacao-consultor-simples", formato="a4",
          titulo="Apresentação do consultor — %s", builder=d_consultor_simples.build,
-         variantes=d_consultor_simples.variantes(consultores.CONSULTORES, THEMES, SEGMENTOS)),
+         variantes=d_consultor_simples.variantes(THEMES, SEGMENTOS)),
 ]
 
 

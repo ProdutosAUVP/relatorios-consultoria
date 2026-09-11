@@ -122,8 +122,12 @@ function main() {
     // fixa, o de Private tem compromissos de liquidez — e juntar tudo num
     // índice só faria a ferramenta baixar 1,5 MB para abrir a primeira tela.
     const est = estrutura(html);
+    // A lista de páginas, e não só a contagem: é ela que a ferramenta usa para
+    // deixar escolher quais entram no documento exportado, inclusive as que não
+    // têm campo nenhum — capa, divisória, fecho.
+    const pags = paginas(html).map((p) => ({ numero: p.numero, secao: p.secao }));
     writeFileSync(join(outCampos, arq.replace(/\.html$/, '.json')),
-                  JSON.stringify({ paginas: paginas(html).length, ...est }));
+                  JSON.stringify({ paginas: pags.length, indice: pags, ...est }));
     nc += Object.keys(est.campos).length;
     ni += est.imagens.length;
 

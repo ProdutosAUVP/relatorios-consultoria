@@ -37,6 +37,14 @@
      "imagens": 1
     },
     {
+     "sufixo": "alta-renda-sem-data",
+     "rotulo": "Alta Renda, sem data",
+     "arquivo": "apresentacao-consultor-alta-renda-sem-data.html",
+     "paginas": 3,
+     "campos": 44,
+     "imagens": 1
+    },
+    {
      "sufixo": "private",
      "rotulo": "Private Banking",
      "arquivo": "apresentacao-consultor-private.html",
@@ -45,11 +53,27 @@
      "imagens": 1
     },
     {
+     "sufixo": "private-sem-data",
+     "rotulo": "Private Banking, sem data",
+     "arquivo": "apresentacao-consultor-private-sem-data.html",
+     "paginas": 3,
+     "campos": 44,
+     "imagens": 1
+    },
+    {
      "sufixo": "assessoria",
      "rotulo": "Assessoria",
      "arquivo": "apresentacao-consultor-assessoria.html",
      "paginas": 3,
      "campos": 45,
+     "imagens": 1
+    },
+    {
+     "sufixo": "assessoria-sem-data",
+     "rotulo": "Assessoria, sem data",
+     "arquivo": "apresentacao-consultor-assessoria-sem-data.html",
+     "paginas": 3,
+     "campos": 44,
      "imagens": 1
     },
     {
@@ -74,118 +98,6 @@
      "arquivo": "apresentacao-consultor-resolve-ai.html",
      "paginas": 3,
      "campos": 26,
-     "imagens": 1
-    },
-    {
-     "sufixo": "alan-santanna",
-     "rotulo": "Alan Sant'Anna",
-     "arquivo": "apresentacao-consultor-alan-santanna.html",
-     "paginas": 3,
-     "campos": 1,
-     "imagens": 1
-    },
-    {
-     "sufixo": "alan-santanna-sem-data",
-     "rotulo": "Alan Sant'Anna, sem data",
-     "arquivo": "apresentacao-consultor-alan-santanna-sem-data.html",
-     "paginas": 3,
-     "campos": 0,
-     "imagens": 1
-    },
-    {
-     "sufixo": "andre-arruda",
-     "rotulo": "André Arruda",
-     "arquivo": "apresentacao-consultor-andre-arruda.html",
-     "paginas": 3,
-     "campos": 1,
-     "imagens": 1
-    },
-    {
-     "sufixo": "andre-arruda-sem-data",
-     "rotulo": "André Arruda, sem data",
-     "arquivo": "apresentacao-consultor-andre-arruda-sem-data.html",
-     "paginas": 3,
-     "campos": 0,
-     "imagens": 1
-    },
-    {
-     "sufixo": "bolivar-oliveira",
-     "rotulo": "Bolívar Oliveira",
-     "arquivo": "apresentacao-consultor-bolivar-oliveira.html",
-     "paginas": 3,
-     "campos": 2,
-     "imagens": 1
-    },
-    {
-     "sufixo": "bolivar-oliveira-sem-data",
-     "rotulo": "Bolívar Oliveira, sem data",
-     "arquivo": "apresentacao-consultor-bolivar-oliveira-sem-data.html",
-     "paginas": 3,
-     "campos": 1,
-     "imagens": 1
-    },
-    {
-     "sufixo": "danilo-barbosa",
-     "rotulo": "Danilo Barbosa",
-     "arquivo": "apresentacao-consultor-danilo-barbosa.html",
-     "paginas": 3,
-     "campos": 1,
-     "imagens": 1
-    },
-    {
-     "sufixo": "danilo-barbosa-sem-data",
-     "rotulo": "Danilo Barbosa, sem data",
-     "arquivo": "apresentacao-consultor-danilo-barbosa-sem-data.html",
-     "paginas": 3,
-     "campos": 0,
-     "imagens": 1
-    },
-    {
-     "sufixo": "erika-barreto",
-     "rotulo": "Erika Barreto",
-     "arquivo": "apresentacao-consultor-erika-barreto.html",
-     "paginas": 3,
-     "campos": 1,
-     "imagens": 1
-    },
-    {
-     "sufixo": "erika-barreto-sem-data",
-     "rotulo": "Erika Barreto, sem data",
-     "arquivo": "apresentacao-consultor-erika-barreto-sem-data.html",
-     "paginas": 3,
-     "campos": 0,
-     "imagens": 1
-    },
-    {
-     "sufixo": "nasser-tanure",
-     "rotulo": "Nasser Tanure",
-     "arquivo": "apresentacao-consultor-nasser-tanure.html",
-     "paginas": 3,
-     "campos": 1,
-     "imagens": 1
-    },
-    {
-     "sufixo": "nasser-tanure-sem-data",
-     "rotulo": "Nasser Tanure, sem data",
-     "arquivo": "apresentacao-consultor-nasser-tanure-sem-data.html",
-     "paginas": 3,
-     "campos": 0,
-     "imagens": 1
-    },
-    {
-     "sufixo": "yuri-machado",
-     "rotulo": "Yuri Machado",
-     "arquivo": "apresentacao-consultor-yuri-machado.html",
-     "paginas": 3,
-     "campos": 1,
-     "imagens": 1
-    },
-    {
-     "sufixo": "yuri-machado-sem-data",
-     "rotulo": "Yuri Machado, sem data",
-     "arquivo": "apresentacao-consultor-yuri-machado-sem-data.html",
-     "paginas": 3,
-     "campos": 0,
      "imagens": 1
     }
    ]
@@ -226,62 +138,6 @@
      "arquivo": "apresentacao-consultor-simples-assessoria.html",
      "paginas": 1,
      "campos": 8,
-     "imagens": 1
-    },
-    {
-     "sufixo": "alan-santanna",
-     "rotulo": "Alan Sant'Anna",
-     "arquivo": "apresentacao-consultor-simples-alan-santanna.html",
-     "paginas": 1,
-     "campos": 1,
-     "imagens": 1
-    },
-    {
-     "sufixo": "andre-arruda",
-     "rotulo": "André Arruda",
-     "arquivo": "apresentacao-consultor-simples-andre-arruda.html",
-     "paginas": 1,
-     "campos": 1,
-     "imagens": 1
-    },
-    {
-     "sufixo": "bolivar-oliveira",
-     "rotulo": "Bolívar Oliveira",
-     "arquivo": "apresentacao-consultor-simples-bolivar-oliveira.html",
-     "paginas": 1,
-     "campos": 2,
-     "imagens": 1
-    },
-    {
-     "sufixo": "danilo-barbosa",
-     "rotulo": "Danilo Barbosa",
-     "arquivo": "apresentacao-consultor-simples-danilo-barbosa.html",
-     "paginas": 1,
-     "campos": 1,
-     "imagens": 1
-    },
-    {
-     "sufixo": "erika-barreto",
-     "rotulo": "Erika Barreto",
-     "arquivo": "apresentacao-consultor-simples-erika-barreto.html",
-     "paginas": 1,
-     "campos": 1,
-     "imagens": 1
-    },
-    {
-     "sufixo": "nasser-tanure",
-     "rotulo": "Nasser Tanure",
-     "arquivo": "apresentacao-consultor-simples-nasser-tanure.html",
-     "paginas": 1,
-     "campos": 1,
-     "imagens": 1
-    },
-    {
-     "sufixo": "yuri-machado",
-     "rotulo": "Yuri Machado",
-     "arquivo": "apresentacao-consultor-simples-yuri-machado.html",
-     "paginas": 1,
-     "campos": 1,
      "imagens": 1
     }
    ]

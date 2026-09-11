@@ -12,11 +12,10 @@ Os modelos são **gerados** a partir de `gerador/`, e não editados à mão. Par
 acrescentar uma página, um documento ou um segmento, veja
 [`CONSTRUCAO.md`](CONSTRUCAO.md).
 
-## Os 55 modelos
+## Os 37 modelos
 
-Seis documentos existem nos quatro segmentos. A apresentação do consultor tem uma variante
-por plano da consultoria, uma por consultor do Me Diz o Que Fazer e uma em branco por
-segmento — treze ao todo, e a de cada consultor sai também sem a data no cabeçalho.
+Seis documentos existem nos quatro segmentos. A apresentação do consultor varia por plano
+da consultoria e por segmento, e a versão em branco sai também sem a data no cabeçalho.
 
 | Documento | Formato | Páginas | Consultoria | Alta Renda | Private | Assessoria |
 | --- | --- | --- | :-: | :-: | :-: | :-: |
@@ -26,8 +25,8 @@ segmento — treze ao todo, e a de cada consultor sai também sem a data no cabe
 | Apresentação geral | 16:9 | 14 | ✓ | ✓ | ✓ | ✓ |
 | Relatório mensal em apresentação | 16:9 | 12 | ✓ | ✓ | ✓ | ✓ |
 | Cronograma de reuniões | A4 retrato | 6 | ✓ | ✓ | ✓ | ✓ |
-| Apresentação do consultor | A4 retrato | 3 | 3 planos + 7 consultores | ✓ | ✓ | ✓ |
-| Apresentação do consultor (uma página) | A4 retrato | 1 | 7 consultores | ✓ | ✓ | ✓ |
+| Apresentação do consultor | A4 retrato | 3 | 3 planos | ✓ | ✓ | ✓ |
+| Apresentação do consultor (uma página) | A4 retrato | 1 | ✓ | ✓ | ✓ | ✓ |
 
 A apresentação de cada consultor existe duas vezes: com e sem a data no cabeçalho, esta
 última no sufixo `-sem-data`. É o documento que a pessoa manda para um cliente novo a
@@ -36,33 +35,38 @@ continuam só com data: ali ela diz de quando são as condições comerciais.
 
 Nomes de arquivo: `modelos/<documento>-<variante>.html`. Na maioria a variante é o
 segmento — `consultoria`, `alta-renda`, `private`, `assessoria`. Na apresentação do
-consultor pode ser também um plano (`se-vira-ai`, `me-diz-o-que-fazer`, `resolve-ai`) ou
-um consultor, e nesses casos o tema é o da consultoria.
+consultor pode ser também um plano (`se-vira-ai`, `me-diz-o-que-fazer`, `resolve-ai`), e
+nesse caso o tema é o da consultoria.
 
 ### A apresentação do consultor
 
-É o único documento que existe escrito, e não só em branco:
+O gerador não conhece consultor nenhum: o que ele produz é modelo, não documento pronto.
+A pessoa entra como campo, preenchida pela ferramenta ou à mão. Existe em duas formas:
 
-- **Por plano da consultoria** — Se Vira Aí, Me Diz o Que Fazer e Resolve Aí. O texto
-  comercial de cada um já vem pronto: descrição, como funciona, o que está e o que não
-  está incluído, e a taxa. O consultor fica em branco, para o retrato e a bio de quem vai
-  entregar o documento.
-- **Por consultor** — os sete do Me Diz o Que Fazer, com bio, trajetória, retrato e
-  contatos embutidos. Só a data fica como campo. WhatsApp, e-mail e os canais da casa são
-  links de verdade: o Chromium os leva para o PDF, e no papel continuam com a aparência do
-  resto do texto.
-- **Em branco, por segmento** — para Alta Renda, Private e Assessoria, com consultor e
-  plano preenchíveis.
+- **Por plano da consultoria** — Se Vira Aí, Me Diz o Que Fazer e Resolve Aí, com o texto
+  comercial de cada um já escrito: descrição, como funciona, o que está e o que não está
+  incluído, e a taxa.
+- **Em branco, por segmento** — o plano também entra como campo, para o produto preencher
+  com as suas condições. Sai com e sem a data no cabeçalho, esta última no sufixo
+  `-sem-data`: é o documento que o consultor manda para um cliente novo a qualquer
+  momento, e uma data carimbada nele nasce vencida. Os planos continuam só com data, que
+  ali diz de quando são as condições comerciais.
 
 Existe também a **versão de uma página**, que segue a diagramação do modelo que a casa já
 usava: fundo no negativo, retrato em círculo cercado de anéis concêntricos no alto à
 esquerda, nome ao lado, texto corrido justificado e os contatos com ícone. Sem cabeçalho
-corrido, sem o plano e sem data — é o cartão que se manda antes de uma primeira conversa,
-quando explicar as condições comerciais ainda não é o assunto.
+corrido, sem o plano e sem data — é o cartão que se manda antes de uma primeira conversa.
 
 As três páginas se distinguem pela inversão, não por ornamento: as duas primeiras são
 abertas e claras, e a última roda no negativo. Mesma grelha, mesma tipografia, mesmos
 fios — só o fundo troca.
+
+### Documentos prontos
+
+`documentos/consultores/` guarda as apresentações nominais já feitas — HTML e PDF de cada
+consultor. São documentos, não modelos: o `npm run all` não os toca, e mudança de
+diagramação no gerador não chega até eles. Para refazer um com o desenho novo, preencha o
+modelo em branco na ferramenta.
 
 ## Ferramenta de preenchimento
 
@@ -72,7 +76,8 @@ faz o caminho inteiro no navegador: escolher o produto, escolher o documento, pr
 campos com a prévia atualizando ao lado, enviar as fotos e os gráficos, e exportar em PDF
 ou HTML.
 
-O que ela entrega é o mesmo modelo deste repositório com os valores no lugar — não existe
+Dá também para escolher que páginas entram: desmarcar uma tira do arquivo exportado e
+renumera o resto. O que ela entrega é o mesmo modelo deste repositório com os valores no lugar — não existe
 um segundo desenho para manter em dia. Cada campo mostra um exemplo do formato esperado, e
 o que você digita e as imagens que envia ficam guardados no próprio navegador: o texto no
 `localStorage`, as imagens no IndexedDB, porque uma foto sozinha estouraria a cota do
@@ -100,7 +105,7 @@ mesmo arquivo no navegador: os campos ainda não preenchidos ficam destacados.
 
 **2. Gerar o PDF.**
 
-A pasta `pdf/` já traz um PDF de cada um dos 55 modelos, numa subpasta por produto, para quem só quer ler o
+A pasta `pdf/` já traz um PDF de cada um dos 37 modelos, numa subpasta por produto, para quem só quer ler o
 resultado sem instalar nada. Para regerar depois de editar um modelo:
 
 ```sh
@@ -344,7 +349,7 @@ trimestral no private e semestral com contatos da mesa na assessoria.
 ## Estrutura do repositório
 
 ```
-modelos/                        55 modelos HTML independentes
+modelos/                        37 modelos HTML independentes
 pdf/<produto>/                  um PDF de cada modelo, versionado (saída do npm run pdf)
 scripts/render.mjs              HTML -> PDF via Playwright
 scripts/check.mjs               verificação de estouro de página

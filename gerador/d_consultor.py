@@ -4,25 +4,23 @@
 Três páginas: o consultor, o plano e a AUVP Capital. As duas últimas partilham
 a escala `.plano`, e só a última roda no negativo — é o fecho do documento.
 
-O documento existe em duas formas, e a diferença é só o quanto vem escrito:
+O gerador não conhece consultor nenhum: ele produz modelo, não documento
+pronto. O consultor entra como campo, preenchido pela ferramenta ou à mão.
+Os documentos nominais que já existem ficam em `documentos/consultores/`.
 
-- **Escrita**, uma por consultor do Me Diz o Que Fazer. O texto das pessoas e
-  do plano já existe, e ficam preenchíveis apenas a data e os contatos. Os
-  dados estão em `consultores.py`.
-- **Em branco**, uma por segmento. Mesma diagramação, mas consultor, plano e
-  limites entram como campo, então qualquer produto usa o documento com o seu
-  consultor e as suas condições. É o que a ferramenta de preenchimento oferece
-  fora do Me Diz o Que Fazer.
+Duas formas, e a diferença é o quanto do plano já vem escrito:
+
+- **Por plano da consultoria** — Se Vira Aí, Me Diz o Que Fazer e Resolve Aí,
+  com o texto comercial de cada um.
+- **Em branco, por segmento** — o plano também entra como campo, para o
+  produto preencher com as suas condições.
 
 O que vale para os dois lados fica escrito nas duas: o método de investimento
 e a lógica do fee based são da casa, não do plano.
 """
 import re
 
-from consultores import CONSULTORES
 from layout import *
-
-POR_SLUG = {c["slug"]: c for c in CONSULTORES}
 
 
 def _paras(textos):
@@ -311,31 +309,29 @@ def _em_branco():
 SEM_DATA = "-sem-data"
 
 
-def variantes(consultores, temas, segmentos):
+def variantes(temas, segmentos):
     """(sufixo, rótulo, tema) de cada variante.
 
     A lista mora aqui, e não em `build.py`, porque os planos são deste módulo:
     acrescentar um plano em `PLANOS` já o coloca no build.
 
-    Só a apresentação de cada consultor sai também sem data. É o documento que
-    a pessoa manda para um cliente novo a qualquer momento, e uma data
-    carimbada nele nasce vencida. Os planos e as versões em branco continuam
-    com data: ali ela diz de quando são as condições comerciais.
+    O modelo em branco sai também sem data. É o documento que o consultor manda
+    para um cliente novo a qualquer momento, e uma data carimbada nele nasce
+    vencida. Os planos continuam só com data: ali ela diz de quando são as
+    condições comerciais.
     """
     return ([(chave, dados["rotulo"], "consultoria") for chave, dados in PLANOS.items()]
-            + [v for c in consultores
-               for v in ((c["slug"], c["nome"], "consultoria"),
-                         (c["slug"] + SEM_DATA, c["nome"] + ", sem data", "consultoria"))]
-            + [(seg, temas[seg]["nome_full"], seg)
-               for seg in segmentos if seg != "consultoria"])
+            + [v for seg in segmentos if seg != "consultoria"
+               for v in ((seg, temas[seg]["nome_full"], seg),
+                         (seg + SEM_DATA, temas[seg]["nome_full"] + ", sem data", seg))])
 
 
 def build(t, variante):
-    """`variante` é um consultor, um plano da consultoria ou um segmento.
+    """`variante` é um plano da consultoria ou um segmento.
 
-    Consultor traz o texto da pessoa e o plano do Me Diz o Que Fazer; plano traz
-    o texto comercial com o consultor em branco; segmento deixa os dois em
-    branco, para o produto preencher com o seu consultor e as suas condições.
+    Plano traz o texto comercial já escrito; segmento deixa também o plano em
+    branco, para o produto preencher com as suas condições. Nos dois o
+    consultor é campo.
 
     O sufixo `-sem-data` devolve a mesma variante sem a data no cabeçalho. Este
     documento não é de um período: uma apresentação carimbada nasce vencida, e
@@ -347,14 +343,9 @@ def build(t, variante):
     if not data:
         variante = variante[:-len(SEM_DATA)]
 
-    if variante in POR_SLUG:
-        c = POR_SLUG[variante]
-        texto = PLANOS["me-diz-o-que-fazer"]
-        foto, primeiro = foto_consultor(c["slug"]), c["nome"].split()[0]
-    else:
-        c = _consultor_vazio()
-        texto = PLANOS.get(variante) or _em_branco()
-        foto, primeiro = foto_vaga(), "o seu consultor"
+    c = _consultor_vazio()
+    texto = PLANOS.get(variante) or _em_branco()
+    foto, primeiro = foto_vaga(), "o seu consultor"
 
     # Documento entregue ao cliente: sem o aviso de confidencialidade que vale
     # para os relatórios de carteira.

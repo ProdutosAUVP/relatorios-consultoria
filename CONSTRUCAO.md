@@ -51,9 +51,9 @@ autossuficientes na entrega, fonte única na manutenção.
 | `gerador/layout.py` | montagem de página e de slide, e os componentes (`table`, `kpis`, `flow`, `chart`, …) |
 | `gerador/d_*.py` | um módulo por tipo de documento; contém o conteúdo e a ordem das seções |
 | `gerador/d_consultor_simples.py` | a apresentação de uma página, com chrome próprio; reaproveita os dados e os auxiliares de `d_consultor` |
-| `gerador/consultores.py` | texto e contatos dos consultores, um dicionário por pessoa |
-| `scripts/fotos.py` | prepara os retratos: recorta pelo rosto, sem tocar em cor ou brilho |
+| `scripts/fotos.py` | prepara os retratos para envio pela ferramenta: recorta pelo rosto, sem tocar em cor ou brilho |
 | `assets/consultores/` | retratos prontos, saída do `scripts/fotos.py` |
+| `documentos/` | documentos prontos, fora do pipeline: o `npm run all` não os toca |
 | `consultores resolve ai/` | fotos originais, como vieram |
 | `gerador/build.py` | entrada: percorre documentos × segmentos e escreve `modelos/` |
 | `scripts/render.mjs` | HTML → PDF, numa subpasta por produto; apaga o que não é mais gerado |
@@ -259,6 +259,28 @@ As medidas da apresentação de uma página saem das frações do modelo de refe
 285,8 x 357,2 mm — reescritas para A4. Os anéis em volta do retrato são desenhados no
 gerador, e não num SVG de assets, porque os raios dependem do raio da foto: vão da borda
 dela até o ponto em que o conjunto sangra pela esquerda da folha.
+
+### O gerador não conhece documento pronto
+
+O gerador produz modelo, não documento. Ele não sabe o nome de consultor nenhum: a pessoa
+é campo, preenchido pela ferramenta ou à mão. Os documentos nominais que já existem vivem
+em `documentos/consultores/`, em HTML e PDF, fora do pipeline — `build.py` e `render.mjs`
+apagam o que não é mais gerado, e essa pasta não é saída de nada.
+
+A consequência é que mudança de diagramação não chega a eles: um documento pronto é uma
+entrega, não um modelo que se regenera. Refazer um com o desenho novo é preencher o modelo
+em branco de novo, e por isso a ferramenta guarda rascunho em JSON.
+
+### Escolher páginas
+
+Cada variante publica em `docs/campos/<modelo>.json` um `indice` com todas as páginas —
+número e seção, inclusive as que não têm campo nenhum, como capa e divisória. É ele que
+deixa a ferramenta oferecer quais entram no documento.
+
+Tirar uma página não é recortar o arquivo exportado: a página sai do documento e as que
+ficam são renumeradas, porque o rodapé tem de contar o documento que existe. Capa e
+divisória não imprimem número — nunca imprimiram —, então a sequência visível pula essas
+posições, como já pulava antes.
 
 ### Sem data
 

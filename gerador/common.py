@@ -597,9 +597,6 @@ CSS_A4 += """
 
 CSS_A4 += """
 /* ---------- retrato na coluna de apoio ---------- */
-.rt-img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 26%;
-  border-radius:3mm 0 0 0;
-  margin-bottom:5.5mm}
 /* O espaço de imagem só existia nos slides, que são onde os `imgbox` estavam.
    A moldura vazia do retrato o traz para o A4, com a mesma escala do resto da
    página. */
@@ -610,24 +607,6 @@ CSS_A4 += """
   color:var(--brand)}
 .imgbox .cd{font-size:7.4pt;max-width:70mm;line-height:1.4;color:var(--ink-2)}
 
-/* ---------- apresentação de uma página ----------
-   O retrato é maior que na de três páginas: aqui ele divide a folha com o
-   texto, em vez de abrir um documento que continua. */
-.sp-topo{display:grid;grid-template-columns:62mm 1fr;gap:0 10mm;align-items:end}
-.sp-topo .rt-img,.sp-topo .rt-vaga{margin:0}
-.sp-topo h1{margin:0;font-size:26pt;font-weight:800;text-transform:uppercase;
-  line-height:1.02;letter-spacing:-.018em}
-.sp-topo .papel{margin:2.5mm 0 0;font-size:9.5pt;color:var(--ink-2)}
-.sp-topo .frase{margin:6mm 0 0;padding-top:5mm;border-top:1px solid var(--line);
-  font-size:12pt;line-height:1.5;font-weight:300;color:var(--ink)}
-.sp-bio p{margin-bottom:3.5mm}
-.sp-bio p:last-child{margin-bottom:0}
-/* Numa página só, sem o plano para preencher as seguintes, sobra bem mais
-   espaço do que na apresentação de três páginas. Os respiros ganham um teto
-   maior para dividir essa sobra entre si, em vez de ela se acumular acima da
-   faixa de contato. */
-.page.simples .esp{max-height:30mm}
-.page.simples .esp.lg{max-height:34mm}
 
 /* A moldura vazia do retrato ocupa a mesma caixa e tem o mesmo canto, para a
    página não mudar de forma entre a versão escrita e a em branco. */
@@ -648,7 +627,7 @@ CSS_A4 += """
    de propósito em destaque ao lado do retrato, a trajetória como linha do
    tempo, e os interesses como fatos curtos. */
 .pf-topo{display:grid;grid-template-columns:36mm 1fr;gap:0 8mm;align-items:end}
-.pf-topo .rt-img{margin:0}
+.pf-topo .rt-vaga{margin:0}
 .pf-topo .ey{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.18em;
   text-transform:uppercase;color:var(--brand);margin-bottom:2mm}
 .pf-topo h1{margin:0;font-size:22pt;font-weight:800;text-transform:uppercase;

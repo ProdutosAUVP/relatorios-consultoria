@@ -312,32 +312,32 @@
      "sufixo": "consultoria",
      "rotulo": "Consultoria",
      "arquivo": "relatorio-mensal-consultoria.html",
-     "paginas": 15,
-     "campos": 655,
+     "paginas": 11,
+     "campos": 467,
      "imagens": 6
     },
     {
      "sufixo": "alta-renda",
      "rotulo": "Alta Renda",
      "arquivo": "relatorio-mensal-alta-renda.html",
-     "paginas": 16,
-     "campos": 690,
+     "paginas": 11,
+     "campos": 467,
      "imagens": 6
     },
     {
      "sufixo": "private",
      "rotulo": "Private Banking",
      "arquivo": "relatorio-mensal-private.html",
-     "paginas": 16,
-     "campos": 691,
+     "paginas": 12,
+     "campos": 503,
      "imagens": 6
     },
     {
      "sufixo": "assessoria",
      "rotulo": "Assessoria",
      "arquivo": "relatorio-mensal-assessoria.html",
-     "paginas": 16,
-     "campos": 690,
+     "paginas": 12,
+     "campos": 502,
      "imagens": 6
     }
    ]
@@ -352,32 +352,32 @@
      "sufixo": "consultoria",
      "rotulo": "Consultoria",
      "arquivo": "relatorio-mensal-apresentacao-consultoria.html",
-     "paginas": 12,
-     "campos": 193,
+     "paginas": 11,
+     "campos": 154,
      "imagens": 4
     },
     {
      "sufixo": "alta-renda",
      "rotulo": "Alta Renda",
      "arquivo": "relatorio-mensal-apresentacao-alta-renda.html",
-     "paginas": 12,
-     "campos": 193,
+     "paginas": 11,
+     "campos": 154,
      "imagens": 4
     },
     {
      "sufixo": "private",
      "rotulo": "Private Banking",
      "arquivo": "relatorio-mensal-apresentacao-private.html",
-     "paginas": 12,
-     "campos": 193,
+     "paginas": 11,
+     "campos": 154,
      "imagens": 4
     },
     {
      "sufixo": "assessoria",
      "rotulo": "Assessoria",
      "arquivo": "relatorio-mensal-apresentacao-assessoria.html",
-     "paginas": 12,
-     "campos": 193,
+     "paginas": 11,
+     "campos": 154,
      "imagens": 4
     }
    ]

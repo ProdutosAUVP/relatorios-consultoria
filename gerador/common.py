@@ -879,9 +879,13 @@ CSS_LONGA = """
 .lg-id h1{margin:0;font-size:30pt;font-weight:800;text-transform:uppercase;
   line-height:1.02;letter-spacing:-.02em}
 .lg-id .papel{margin:3mm 0 0;font-size:11pt;font-weight:300;color:rgba(255,255,255,.85)}
-.lg-frase{grid-column:1/-1;margin:10mm 0 0;padding-top:6mm;
+/* a declaração fica na mesma coluna do nome, e não atravessando a folha: ela
+   é sobre a pessoa, e lida ao lado do retrato diz de quem é. Em corpo pequeno,
+   na escala das credenciais — é legenda do nome, não manchete. */
+.lg-frase{margin:5mm 0 0;padding-top:4mm;
   border-top:1px solid rgba(255,255,255,.3);
-  font-size:14pt;line-height:1.5;font-weight:300}
+  font-size:9pt;line-height:1.6;font-weight:300;
+  color:rgba(255,255,255,.88);max-width:112mm}
 
 /* a faixa de credenciais encosta no alto escuro, como legenda dele */
 .lg-cred{margin-top:9mm;display:grid;grid-template-columns:repeat(var(--n,3),1fr);

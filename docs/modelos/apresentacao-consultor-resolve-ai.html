@@ -496,9 +496,13 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .lg-id h1{margin:0;font-size:30pt;font-weight:800;text-transform:uppercase;
   line-height:1.02;letter-spacing:-.02em}
 .lg-id .papel{margin:3mm 0 0;font-size:11pt;font-weight:300;color:rgba(255,255,255,.85)}
-.lg-frase{grid-column:1/-1;margin:10mm 0 0;padding-top:6mm;
+/* a declaração fica na mesma coluna do nome, e não atravessando a folha: ela
+   é sobre a pessoa, e lida ao lado do retrato diz de quem é. Em corpo pequeno,
+   na escala das credenciais — é legenda do nome, não manchete. */
+.lg-frase{margin:5mm 0 0;padding-top:4mm;
   border-top:1px solid rgba(255,255,255,.3);
-  font-size:14pt;line-height:1.5;font-weight:300}
+  font-size:9pt;line-height:1.6;font-weight:300;
+  color:rgba(255,255,255,.88);max-width:112mm}
 
 /* a faixa de credenciais encosta no alto escuro, como legenda dele */
 .lg-cred{margin-top:9mm;display:grid;grid-template-columns:repeat(var(--n,3),1fr);
@@ -560,8 +564,8 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
         <span class="lg-plano">Resolve&nbsp;Aí</span>
         <h1><span class="ph">{{nome_consultor}}</span></h1>
         <p class="papel"><span class="ph" title="Consultor de investimentos, especialista, planejador…">{{papel_consultor}}</span> na AUVP&nbsp;Capital</p>
+        <p class="lg-frase"><span class="ph" title="Uma frase em primeira pessoa sobre como você trabalha.">{{frase_consultor}}</span></p>
       </div>
-      <p class="lg-frase"><span class="ph" title="Uma frase em primeira pessoa sobre como você trabalha.">{{frase_consultor}}</span></p>
     </div>
     <div class="lg-cred" style="--n:3"><div><h3>Formação</h3><ul class="lista"><li><span class="ph">{{formacao_1}}</span></li><li><span class="ph">{{formacao_2}}</span></li></ul></div><div><h3>Especialização</h3><ul class="lista"><li><span class="ph">{{especializacao_1}}</span></li><li><span class="ph">{{especializacao_2}}</span></li></ul></div><div><h3>Certificações</h3><div class="chips"><span class="pill"><span class="ph">{{certificacao_1}}</span></span><span class="pill"><span class="ph">{{certificacao_2}}</span></span><span class="pill"><span class="ph">{{certificacao_3}}</span></span></div></div></div>
   </header>

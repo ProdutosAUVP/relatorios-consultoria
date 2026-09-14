@@ -32,7 +32,7 @@
      "sufixo": "alta-renda",
      "rotulo": "Alta Renda",
      "arquivo": "apresentacao-consultor-alta-renda.html",
-     "paginas": 8,
+     "paginas": 1,
      "campos": 63,
      "imagens": 1
     },
@@ -40,7 +40,7 @@
      "sufixo": "alta-renda-sem-data",
      "rotulo": "Alta Renda, sem data",
      "arquivo": "apresentacao-consultor-alta-renda-sem-data.html",
-     "paginas": 8,
+     "paginas": 1,
      "campos": 62,
      "imagens": 1
     },
@@ -48,7 +48,7 @@
      "sufixo": "private",
      "rotulo": "Private Banking",
      "arquivo": "apresentacao-consultor-private.html",
-     "paginas": 8,
+     "paginas": 1,
      "campos": 63,
      "imagens": 1
     },
@@ -56,7 +56,7 @@
      "sufixo": "private-sem-data",
      "rotulo": "Private Banking, sem data",
      "arquivo": "apresentacao-consultor-private-sem-data.html",
-     "paginas": 8,
+     "paginas": 1,
      "campos": 62,
      "imagens": 1
     },
@@ -64,7 +64,7 @@
      "sufixo": "assessoria",
      "rotulo": "Assessoria",
      "arquivo": "apresentacao-consultor-assessoria.html",
-     "paginas": 8,
+     "paginas": 1,
      "campos": 63,
      "imagens": 1
     },
@@ -72,7 +72,7 @@
      "sufixo": "assessoria-sem-data",
      "rotulo": "Assessoria, sem data",
      "arquivo": "apresentacao-consultor-assessoria-sem-data.html",
-     "paginas": 8,
+     "paginas": 1,
      "campos": 62,
      "imagens": 1
     },
@@ -80,7 +80,7 @@
      "sufixo": "se-vira-ai",
      "rotulo": "Se Vira Aí (autoatendimento)",
      "arquivo": "apresentacao-consultor-se-vira-ai.html",
-     "paginas": 8,
+     "paginas": 1,
      "campos": 37,
      "imagens": 1
     },
@@ -88,7 +88,7 @@
      "sufixo": "me-diz-o-que-fazer",
      "rotulo": "Me Diz o Que Fazer (básico)",
      "arquivo": "apresentacao-consultor-me-diz-o-que-fazer.html",
-     "paginas": 8,
+     "paginas": 1,
      "campos": 37,
      "imagens": 1
     },
@@ -96,7 +96,7 @@
      "sufixo": "resolve-ai",
      "rotulo": "Resolve Aí (consultoria completa)",
      "arquivo": "apresentacao-consultor-resolve-ai.html",
-     "paginas": 8,
+     "paginas": 1,
      "campos": 37,
      "imagens": 1
     }

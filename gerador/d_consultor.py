@@ -1,23 +1,19 @@
 # -*- coding: utf-8 -*-
-"""Apresentação do consultor.
+"""Apresentação do consultor, numa folha só.
 
-Um documento longo, de leitura, e não um folheto. O cliente recebe uma peça
-sobre a pessoa que vai cuidar do dinheiro dele: quem ela é, o que ela acredita,
-o que ela já fez, o que o plano entrega e como a casa pensa investimento. É
-texto corrido na maior parte, com o ritmo quebrado de página em página — o
-retrato e as credenciais, a linha do tempo, as etiquetas, as duas colunas de
-listas, a grade de princípios — para a leitura não virar bloco.
+Uma página alta, de 210 por 1420 mm, com tudo: quem é a pessoa, o que ela
+acredita, o que já fez, o que o plano entrega e como a casa pensa
+investimento. Não é A4, e nem tenta ser — é uma folha de leitura corrida.
 
-Oito páginas, nesta ordem:
+Antes eram oito páginas A4, e a divisão era o problema: oito quebras, oito
+cabeçalhos repetidos e um vão no pé de cada uma, porque o texto de cada
+pessoa tem um tamanho diferente e nenhum deles fecha a página exatamente.
+Numa folha só o texto corre, e quem dá o ritmo são as faixas — o alto
+escuro com o retrato, o corpo claro, a faixa do plano em fundo suave, o pé
+escuro com os contatos.
 
-    1  abertura, com retrato, declaração e credenciais
-    2  o propósito, em texto corrido
-    3  a trajetória, com a linha do tempo ao lado
-    4  fora do escritório
-    5  o plano: como funciona e o que se pode pedir
-    6  o que vem incluído e o que não faz parte
-    7  como a casa pensa investimento
-    8  remuneração, canais e contato — a única no negativo
+Não há eyebrow sobre os títulos: sem cabeçalho corrido e sem numeração, o
+título de cada seção já diz onde se está, e a linha acima dele só repetia.
 
 O gerador não conhece consultor nenhum: ele produz modelo, não documento
 pronto. O consultor entra como campo, preenchido pela ferramenta ou à mão.
@@ -111,136 +107,120 @@ def _contato(c, chave, rotulo, escreve):
     return "<dt>%s</dt><dd>%s</dd>" % (rotulo, ph("%s_consultor" % chave))
 
 
-# ----------------------------------------------------------------- páginas
+# ------------------------------------------------------------------ a folha
 
-def _abertura(c, t, plano, foto, indice):
-    """Retrato e declaração no topo, credenciais em faixa, sumário no pé.
+FOLHA = """<section class="page longa" data-sec="Apresentação do consultor">
+  <header class="lg-topo">
+    <div class="grain"></div>
+    <div class="lg-id">
+      %(foto)s
+      <div>
+        <span class="lg-plano">%(plano)s</span>
+        <h1>%(nome)s</h1>
+        <p class="papel">%(papel)s na %(marca)s</p>
+      </div>
+      <p class="lg-frase">%(frase)s</p>
+    </div>
+    <div class="lg-cred" style="--n:%(nc)d">%(cred)s</div>
+  </header>
 
-    O sumário não é enfeite: o documento tem oito páginas, e quem recebe
-    precisa saber o que vem pela frente antes de começar a ler.
-    """
-    cred = []
-    if c["graduacao"]:
-        cred.append(("Formação", _lista(c["graduacao"])))
-    if c["pos"]:
-        cred.append(("Especialização", _lista(c["pos"])))
-    cred.append(("Certificações",
-                 '<div class="chips">%s</div>' % "".join(
-                     '<span class="pill">%s</span>' % x for x in c["certificacoes"])))
-    toc = "".join('<li><span class="n">%02d</span><span>%s</span><span class="d"></span>'
-                  '<span class="p">%02d</span></li>' % (i, nome, pg)
-                  for i, (nome, pg) in enumerate(indice, start=1))
-    return """<div class="pf-topo">
-  %(foto)s
-  <div>
-    <span class="ey">%(plano)s</span>
-    <h1>%(nome)s</h1>
-    <p class="papel">%(papel)s na %(marca)s</p>
-  </div>
-  <p class="frase">%(frase)s</p>
-</div>
-<div class="esp lg"></div>
-<div class="cred" style="--n:%(nc)d">%(cred)s</div>
-<div class="esp lg"></div>
-<div>
-  <h2>Neste documento</h2>
-  <ol class="toc">%(toc)s</ol>
-</div>""" % dict(
-        foto=foto, plano=plano, nome=c["nome"], papel=c["papel"], marca=t["marca"],
-        frase=c["frase"], nc=len(cred),
-        cred="".join("<div><h3>%s</h3>%s</div>" % (t_, b) for t_, b in cred),
-        toc=toc)
-
-
-PAGINA_PROPOSITO = """<span class="eyebrow">Sobre mim</span>
-<h1 class="t">O meu propósito</h1>
-<div class="corrido">%(texto)s</div>"""
-
-# A faixa de credenciais da abertura é a leitura rápida — diploma e sigla de
-# certificação. Aqui vem o que a pessoa escreveu sobre a própria formação, por
-# extenso, que é o que diz o que ela sabe fazer.
-PAGINA_TRAJETORIA = """<span class="eyebrow">Percurso</span>
-<h1 class="t">Formação e trajetória</h1>
-<div class="cols2u" style="flex:1 1 auto;align-items:stretch">
-  <div style="display:flex;flex-direction:column">
-    <h2 style="margin-top:0">Formação acadêmica e qualificações</h2>
-    <div class="corrido">%(formacao)s</div>
-    <div class="esp lg"></div>
-    <h2>No mercado financeiro</h2>
-    <div class="corrido">%(texto)s</div>
-  </div>
-  <div class="side">
-    <h3>Em marcos</h3>
-    %(marcos)s
-  </div>
-</div>"""
-
-PAGINA_FORA = """<span class="eyebrow">Fora do escritório</span>
-<h1 class="t">Além dos investimentos</h1>
-<div class="corrido">%(texto)s</div>%(extra)s
-<div style="margin-top:auto;padding-top:10mm">
-  <h2>O que me ocupa quando não é mercado</h2>
-  %(tags)s
-</div>"""
-
-PAGINA_PLANO = """<span class="eyebrow">O seu plano</span>
-<h1 class="t">%(plano)s</h1>
-<p class="lead" style="max-width:none">%(resumo)s</p>
-<div class="esp"></div>
-<h2>Como funciona no dia a dia</h2>
-<div class="corrido">%(funciona)s</div>%(pedir)s"""
-
-BLOCO_PEDIR = """
-<div class="esp"></div>
-<div>
-  <h2>O que você pode pedir ao seu consultor</h2>
-  %(itens)s
-</div>"""
-
-PAGINA_INCLUIDO = """<span class="eyebrow">O combinado</span>
-<h1 class="t">O que entra e o que não entra</h1>
-<div class="cols2" style="flex:1 1 auto;align-items:start">
-  <div>
-    <h2>O que já vem incluído</h2>
-    %(incluido)s
-  </div>
-  <div>
-    <h2>O que não faz parte deste plano</h2>
-    <p class="small mut">%(fora_lead)s</p>
-    %(fora)s
-  </div>
-</div>
-<p class="legal" style="margin-top:auto">%(notas)s</p>"""
-
-PAGINA_CASA = """<span class="eyebrow">Metodologia</span>
-<h1 class="t">Como pensamos investimento</h1>
-<p class="lead" style="max-width:none">A %(marca)s nasceu da metodologia da AUVP Escola. É ela que orienta cada recomendação que você recebe aqui.</p>
-<div class="esp"></div>
-%(metodo)s"""
-
-PAGINA_FECHO = """<span class="eyebrow">Transparência</span>
-<h1 class="t">Como somos remunerados</h1>
-<div class="corrido">%(remuneracao)s</div>
-<div class="esp"></div>
-<div class="cols2u" style="align-items:start">
-  <div>
-    <h2>Onde acompanhar a %(marca)s</h2>
-    <p class="small mut" style="margin:0 0 3mm">%(canais_lead)s</p>
-    <div class="dl">
-      <dt>Instagram</dt><dd>%(instagram)s</dd>
-      <dt>YouTube</dt><dd>%(youtube)s</dd>
-      <dt>Spotify</dt><dd>%(spotify)s</dd>
+  <div class="lg-corpo">
+    <div class="lg-sec">
+      <h2>O meu propósito</h2>
+      <div class="corrido">%(proposito)s</div>
+    </div>
+    <div class="esp"></div>
+    <div class="lg-sec">
+      <h2>Formação acadêmica e qualificações</h2>
+      <div class="corrido">%(qualificacoes)s</div>
+    </div>
+    <div class="esp"></div>
+    <div class="lg-sec">
+      <h2>A minha trajetória no mercado financeiro</h2>
+      <div class="cols2u" style="align-items:start">
+        <div class="corrido">%(trajetoria)s</div>
+        <div class="side"><h3 style="margin-top:0">Em marcos</h3>%(marcos)s</div>
+      </div>
+    </div>
+    <div class="esp"></div>
+    <div class="lg-sec">
+      <h2>Além dos investimentos</h2>
+      <div class="corrido">%(fora)s</div>%(fora_extra)s
+      <div style="margin-top:7mm">%(tags)s</div>
     </div>
   </div>
-  <div>
-    <h2>Falar com %(primeiro)s</h2>
-    <div class="dl">%(contatos)s</div>
-    <p class="small mut" style="margin:4mm 0 0">Sempre que precisar, é só mandar mensagem para o seu consultor.</p>
+
+  <div class="lg-faixa">
+    <div class="lg-sec">
+      <h2>%(plano)s</h2>
+      <p class="lead">%(resumo)s</p>
+    </div>
+    <div class="esp"></div>
+    <div class="lg-sec">
+      <h2>Como funciona no dia a dia</h2>
+      <div class="corrido">%(funciona)s</div>
+    </div>%(pedir)s
+    <div class="esp"></div>
+    <div class="lg-sec">
+      <div class="cols2">
+        <div>
+          <h2>O que já vem incluído</h2>
+          %(incluido)s
+        </div>
+        <div>
+          <h2>O que não faz parte deste plano</h2>
+          <p class="small mut">%(fora_lead)s</p>
+          %(nao_incluido)s
+        </div>
+      </div>
+      <p class="legal" style="margin-top:8mm">%(notas)s</p>
+    </div>
   </div>
-</div>
-<div style="margin-top:auto">
-  <p class="legal">%(notas)s</p>
-</div>"""
+
+  <div class="lg-corpo">
+    <div class="lg-sec">
+      <h2>Como pensamos investimento</h2>
+      <p class="lead" style="margin-bottom:7mm">A %(marca)s nasceu da metodologia da AUVP Escola. É ela que orienta cada recomendação que você recebe aqui.</p>
+      %(metodo)s
+    </div>
+    <div class="esp"></div>
+    <div class="lg-sec">
+      <h2>Como somos remunerados</h2>
+      <div class="corrido">%(remuneracao)s</div>
+    </div>
+  </div>
+
+  <footer class="lg-pe">
+    <div class="grain"></div>
+    <div class="cols2u" style="align-items:start">
+      <div>
+        <h2>Onde acompanhar a %(marca)s</h2>
+        <p class="small mut" style="margin:0 0 4mm">%(canais_lead)s</p>
+        <div class="dl">
+          <dt>Instagram</dt><dd>%(instagram)s</dd>
+          <dt>YouTube</dt><dd>%(youtube)s</dd>
+          <dt>Spotify</dt><dd>%(spotify)s</dd>
+        </div>
+      </div>
+      <div>
+        <h2>Falar com %(primeiro)s</h2>
+        <div class="dl">%(contatos)s</div>
+        <p class="small mut" style="margin:5mm 0 0">Sempre que precisar, é só mandar mensagem para o seu consultor.</p>
+      </div>
+    </div>
+    <div class="lg-assina">
+      %(data)s
+      %(logo)s
+    </div>
+  </footer>
+</section>"""
+
+BLOCO_PEDIR = """
+    <div class="esp"></div>
+    <div class="lg-sec">
+      <h2>O que você pode pedir ao seu consultor</h2>
+      %(itens)s
+    </div>"""
 
 
 # Os canais da casa. O endereço do Instagram e do YouTube sai do próprio
@@ -426,70 +406,58 @@ def variantes(temas, segmentos):
                          (seg + SEM_DATA, temas[seg]["nome_full"] + ", sem data", seg))])
 
 
-def paginas(t, variante, c=None, foto=None, primeiro=None):
-    """As páginas do documento, na ordem, como (seção, corpo, opções).
+def folha(t, variante, c=None, foto=None, primeiro=None, data=True):
+    """A folha inteira, num pedaço só de HTML.
 
-    Separada do `build` porque os documentos nominais de
-    `documentos/consultores/` montam as mesmas páginas com o consultor escrito
-    em vez de campo, e não devem repetir esta composição.
+    Recebe o consultor escrito ou monta o modelo em branco. Os documentos
+    nominais de `documentos/consultores/` passam `c`, `foto` e o primeiro nome;
+    o gerador não passa nada e continua sem saber o nome de ninguém.
     """
-    data = True
     c = c or _consultor_vazio()
     foto = foto or foto_vaga()
     primeiro = primeiro or "o seu consultor"
     texto = PLANOS.get(variante) or _em_branco()
 
-    # O sumário precisa do número real de cada página, e o número depende de
-    # quais páginas existem — a do plano só traz "o que você pode pedir" quando
-    # há consultor a quem pedir. Então a lista vem primeiro, e a abertura é
-    # montada depois dela.
-    corpo = [
-        ("O meu propósito", "O propósito",
-         PAGINA_PROPOSITO % dict(texto=_paras(c["proposito"])), dict(cls="plano")),
-        ("Formação e trajetória", "Formação e trajetória",
-         PAGINA_TRAJETORIA % dict(formacao=_paras(c["formacao_paras"]),
-                                  texto=_paras(c["trajetoria"]),
-                                  marcos=_marcos(c["marcos"])),
-         dict(cls="plano")),
-        ("Fora do escritório", "Fora do escritório",
-         PAGINA_FORA % dict(
-             texto=_paras(c["fora_paras"]), tags=_tags(c["interesses"]),
-             # Onde o texto termina anunciando uma lista, a lista vem depois
-             # dele, como no original — e não diluída dentro do parágrafo.
-             extra=_lista(c["fora_lista"]) if c.get("fora_lista") else ""),
-         dict(cls="plano")),
-        ("O plano", texto["plano"],
-         PAGINA_PLANO % dict(
-             plano=texto["plano"], resumo=texto["resumo"],
-             funciona=_paras(texto["funciona"]),
-             pedir=(BLOCO_PEDIR % dict(itens=_lista(texto["pedir"]))) if texto.get("pedir") else ""),
-         dict(cls="plano")),
-        ("O combinado", "O que entra e o que não entra",
-         PAGINA_INCLUIDO % dict(
-             incluido=_lista(texto["incluido"]), fora_lead=FORA_LEAD,
-             fora=_lista(texto["fora"], cls="lista mut"), notas=texto["notas"]),
-         dict(cls="plano")),
-        (t["marca"], "Como pensamos investimento",
-         PAGINA_CASA % dict(marca=t["marca"], metodo=METODO), dict(cls="plano")),
-        ("Transparência", "Como somos remunerados",
-         PAGINA_FECHO % dict(
-             remuneracao=_paras([p % dict(marca=t["marca"], mes=texto["mes"], ano=texto["ano"])
-                                 for p in REMUNERACAO]),
-             marca=t["marca"], canais_lead=CANAIS_LEAD, primeiro=primeiro,
-             notas=texto["notas"],
-             contatos=(_contato(c, "whatsapp", "WhatsApp", _whatsapp)
-                       + _contato(c, "email", "E-mail",
-                                  lambda e: _link("mailto:" + e, e))),
-             **CANAIS),
-         dict(cls="plano", dark=True)),
-    ]
+    cred = []
+    if c["graduacao"]:
+        cred.append(("Formação", _lista(c["graduacao"])))
+    if c["pos"]:
+        cred.append(("Especialização", _lista(c["pos"])))
+    cred.append(("Certificações",
+                 '<div class="chips">%s</div>' % "".join(
+                     '<span class="pill">%s</span>' % x for x in c["certificacoes"])))
 
-    indice = [(titulo, i) for i, (_, titulo, _, _) in enumerate(corpo, start=2)]
-    abertura = ("O seu consultor",
-                '<div class="perfil">%s</div>'
-                % _abertura(c, t, texto["plano"], foto, indice),
-                dict())
-    return [abertura] + [(sec, corpo_, opts) for sec, _, corpo_, opts in corpo]
+    return FOLHA % dict(
+        # o alto
+        foto=foto, plano=texto["plano"], nome=c["nome"], papel=c["papel"],
+        marca=t["marca"], frase=c["frase"], nc=len(cred),
+        cred="".join("<div><h3>%s</h3>%s</div>" % (rot, bloco) for rot, bloco in cred),
+        # a pessoa
+        proposito=_paras(c["proposito"]),
+        qualificacoes=_paras(c["formacao_paras"]),
+        trajetoria=_paras(c["trajetoria"]), marcos=_marcos(c["marcos"]),
+        fora=_paras(c["fora_paras"]), tags=_tags(c["interesses"]),
+        # onde o texto termina anunciando uma lista, a lista vem depois dele,
+        # como no original — e não diluída dentro do parágrafo
+        fora_extra=(_lista(c["fora_lista"]) if c.get("fora_lista") else ""),
+        # o plano
+        resumo=texto["resumo"], funciona=_paras(texto["funciona"]),
+        pedir=(BLOCO_PEDIR % dict(itens=_lista(texto["pedir"]))) if texto.get("pedir") else "",
+        incluido=_lista(texto["incluido"]), fora_lead=FORA_LEAD,
+        nao_incluido=_lista(texto["fora"], cls="lista mut"), notas=texto["notas"],
+        # a casa
+        metodo=METODO,
+        remuneracao=_paras([par % dict(marca=t["marca"], mes=texto["mes"], ano=texto["ano"])
+                            for par in REMUNERACAO]),
+        # o pé
+        canais_lead=CANAIS_LEAD, primeiro=primeiro,
+        contatos=(_contato(c, "whatsapp", "WhatsApp", _whatsapp)
+                  + _contato(c, "email", "E-mail", lambda e: _link("mailto:" + e, e))),
+        # Só a data, e do outro lado a marca — a logo. Escrever "AUVP Capital"
+        # ao lado dela era dizer duas vezes a mesma coisa.
+        data=('<span class="data">%s</span>' % ph("data_apresentacao")) if data else "<span></span>",
+        logo=logo_svg(t, 8.0),
+        **CANAIS)
 
 
 def build(t, variante):
@@ -499,19 +467,12 @@ def build(t, variante):
     branco, para o produto preencher com as suas condições. Nos dois o
     consultor é campo.
 
-    O sufixo `-sem-data` devolve a mesma variante sem a data no cabeçalho. Este
-    documento não é de um período: uma apresentação carimbada nasce vencida, e
-    quem imprime um lote hoje não quer refazê-lo em janeiro.
+    O sufixo `-sem-data` devolve a mesma folha sem a data no pé. Este documento
+    não é de um período: uma apresentação carimbada nasce vencida, e quem
+    imprime um lote hoje não quer refazê-lo em janeiro.
     """
     set_date_ph("data_apresentacao")
-
     data = not variante.endswith(SEM_DATA)
     if not data:
         variante = variante[:-len(SEM_DATA)]
-
-    # Documento entregue ao cliente: sem o aviso de confidencialidade que vale
-    # para os relatórios de carteira.
-    rodape = t["nome_full"]
-
-    return [page_a4(t, sec, i, corpo, rodape=rodape, data=data, **opts)
-            for i, (sec, corpo, opts) in enumerate(paginas(t, variante), start=1)]
+    return [folha(t, variante, data=data)]

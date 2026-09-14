@@ -801,3 +801,99 @@ CSS_A4 += """
 .page.plano .corrido p:last-child{margin-bottom:0}
 .page.plano .cols2u .corrido,.page.plano .cols2 .corrido{max-width:none}
 """
+
+
+# ---------------------------------------------------------------- folha longa
+# A apresentação do consultor não é um relatório: ela se lê de uma vez, do
+# começo ao fim. Em oito páginas A4 isso virava oito quebras, oito cabeçalhos
+# repetidos e um vão no pé de cada uma, porque o texto de cada pessoa tem um
+# tamanho diferente. Numa folha só, alta, o texto corre e as faixas é que dão o
+# ritmo — claro, escuro, claro — no lugar da quebra de página.
+#
+# A altura é fixa porque `@page` não aceita altura automática, e é ela que a
+# ferramenta usa ao imprimir pelo navegador. Foi acertada no consultor de texto
+# mais longo; quem escreveu menos tem a sobra distribuída pelos respiros
+# elásticos entre as seções.
+ALTURA_LONGA = 1420
+
+CSS_LONGA = """
+@page{size:210mm %(h)dmm;margin:0}
+.page.longa{height:%(h)dmm;padding:0;font-size:10pt}
+@media print{.page.longa{break-after:auto}}
+
+/* as faixas: a folha alterna fundo para marcar onde uma parte acaba e outra
+   começa, que é o que a quebra de página fazia antes */
+.lg-topo,.lg-pe{color:#fff;background:linear-gradient(225deg,var(--brand) 0%%,#000 100%%);
+  position:relative;overflow:hidden;flex:0 0 auto}
+.lg-corpo,.lg-faixa,.lg-topo,.lg-pe{padding:16mm 15.3mm}
+.lg-faixa{background:var(--soft);flex:0 0 auto;display:flex;flex-direction:column}
+.lg-corpo{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
+
+/* o alto: retrato à esquerda, identificação à direita, declaração cruzando as
+   duas colunas sob um fio — a mesma composição da abertura que existia antes */
+.lg-topo{padding-top:20mm;padding-bottom:18mm}
+.lg-topo .grain{position:absolute;inset:0;z-index:1}
+.lg-topo>*{position:relative;z-index:2}
+.lg-id{display:grid;grid-template-columns:44mm 1fr;gap:0 10mm;align-items:end}
+.lg-id .rt-img,.lg-id .rt-vaga{margin:0;align-self:end;border-radius:4mm 0 0 0}
+.lg-id .rt-vaga{border-color:rgba(255,255,255,.35);
+  background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.05) 6px 12px)}
+.lg-id .rt-vaga .cl{color:rgba(255,255,255,.72)}
+.lg-id .rt-vaga .cd{color:rgba(255,255,255,.5)}
+.lg-plano{display:block;font-size:7.2pt;font-weight:700;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:3mm}
+.lg-id h1{margin:0;font-size:30pt;font-weight:800;text-transform:uppercase;
+  line-height:1.02;letter-spacing:-.02em}
+.lg-id .papel{margin:3mm 0 0;font-size:11pt;font-weight:300;color:rgba(255,255,255,.85)}
+.lg-frase{grid-column:1/-1;margin:10mm 0 0;padding-top:6mm;
+  border-top:1px solid rgba(255,255,255,.3);
+  font-size:14pt;line-height:1.5;font-weight:300}
+
+/* a faixa de credenciais encosta no alto escuro, como legenda dele */
+.lg-cred{margin-top:9mm;display:grid;grid-template-columns:repeat(var(--n,3),1fr);
+  border-top:1px solid rgba(255,255,255,.3)}
+.lg-cred>div{min-width:0;padding:5mm 7mm;border-left:1px solid rgba(255,255,255,.22)}
+.lg-cred>div:first-child{padding-left:0;border-left:0}
+.lg-cred>div:last-child{padding-right:0}
+.lg-cred h3{margin:0 0 3mm;font-size:6.6pt;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(255,255,255,.62)}
+.lg-cred .lista{font-size:8.4pt;margin:0;color:rgba(255,255,255,.9)}
+.lg-cred .lista li{margin-bottom:5px}
+.lg-cred .lista li::before{background:rgba(255,255,255,.55)}
+.lg-cred .pill{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.28)}
+
+/* cada assunto é uma seção com título; o corpo é o texto corrido do sistema */
+.lg-sec{flex:0 0 auto}
+.lg-sec h2{margin:0 0 5mm}
+.longa .corrido{font-size:11pt;line-height:1.75;max-width:152mm}
+.longa .corrido p{margin:0 0 5mm}
+.longa .corrido p:last-child{margin-bottom:0}
+.longa .cols2u .corrido,.longa .cols2 .corrido{max-width:none}
+.longa .lista{font-size:9.4pt;line-height:20px}
+.longa .lista li{padding-left:6mm;margin-bottom:14px}
+.longa .lista li::before{top:9px;width:3.2mm}
+.longa .principios{gap:7mm 12mm}
+.longa .principios p{font-size:9.2pt;line-height:1.62}
+.longa .lead{font-size:11.5pt;line-height:1.55;max-width:none;margin-bottom:0}
+
+/* o respiro entre seções cresce com a sobra, entre um piso e um teto: é o que
+   acomoda a diferença de tamanho entre um consultor e outro sem abrir um
+   buraco único no meio da folha. O teto é alto porque a folha é alta: entre o
+   consultor que escreve pouco e o que escreve muito há uns 20 cm de diferença,
+   e é isso que se reparte aqui. */
+.longa .esp{flex:1 1 0;min-height:10mm;max-height:60mm}
+
+/* o pé: canais de um lado, contato do outro, régua e marca fechando */
+.lg-pe{padding-top:16mm;padding-bottom:14mm}
+.lg-pe .grain{position:absolute;inset:0;z-index:1}
+.lg-pe>*{position:relative;z-index:2}
+.lg-pe h2{margin:0 0 4mm;border-color:rgba(255,255,255,.3)}
+.lg-pe .dl{font-size:9.4pt;gap:3mm 6mm}
+.lg-pe .dl dt{color:rgba(255,255,255,.62)}
+.lg-pe .mut{color:rgba(255,255,255,.72)}
+.lg-pe .legal{color:rgba(255,255,255,.5)}
+.lg-assina{margin-top:12mm;padding-top:6mm;border-top:1px solid rgba(255,255,255,.3);
+  display:flex;align-items:center;justify-content:space-between;gap:10mm}
+.lg-assina .data{font-size:8pt;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.72)}
+""" % dict(h=ALTURA_LONGA)

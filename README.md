@@ -26,10 +26,10 @@ da consultoria e por segmento, e a versão em branco sai também sem a data no c
 | Relatório mensal em apresentação | 16:9 | 11 | ✓ | ✓ | ✓ | ✓ |
 | Carta de apresentação | 16:9 | 13 | ✓ | ✓ | ✓ | ✓ |
 | Cronograma de reuniões | A4 retrato | 6 | ✓ | ✓ | ✓ | ✓ |
-| Apresentação do consultor | A4 retrato | 8 | 3 planos | ✓ | ✓ | ✓ |
+| Apresentação do consultor | folha 210 × 1420 mm | 1 | 3 planos | ✓ | ✓ | ✓ |
 | Apresentação do consultor (uma página) | A4 retrato | 1 | ✓ | ✓ | ✓ | ✓ |
 
-A apresentação de cada consultor existe duas vezes: com e sem a data no cabeçalho, esta
+A apresentação de cada consultor existe duas vezes: com e sem a data no pé, esta
 última no sufixo `-sem-data`. É o documento que a pessoa manda para um cliente novo a
 qualquer momento, e uma data carimbada nele nasce vencida. Os planos e as versões em branco
 continuam só com data: ali ela diz de quando são as condições comerciais.
@@ -48,7 +48,7 @@ A pessoa entra como campo, preenchida pela ferramenta ou à mão. Existe em duas
   comercial de cada um já escrito: descrição, como funciona, o que está e o que não está
   incluído, e a taxa.
 - **Em branco, por segmento** — o plano também entra como campo, para o produto preencher
-  com as suas condições. Sai com e sem a data no cabeçalho, esta última no sufixo
+  com as suas condições. Sai com e sem a data no pé, esta última no sufixo
   `-sem-data`: é o documento que o consultor manda para um cliente novo a qualquer
   momento, e uma data carimbada nele nasce vencida. Os planos continuam só com data, que
   ali diz de quando são as condições comerciais.
@@ -58,22 +58,42 @@ usava: fundo no negativo, retrato em círculo cercado de anéis concêntricos no
 esquerda, nome ao lado, texto corrido justificado e os contatos com ícone. Sem cabeçalho
 corrido, sem o plano e sem data — é o cartão que se manda antes de uma primeira conversa.
 
-São oito páginas, e a maior parte delas é texto para ler do começo ao fim, não folheto:
-abertura com retrato, declaração e credenciais; o propósito; formação e trajetória, com a
-linha do tempo ao lado; fora do escritório; o plano, com o que se pode pedir ao consultor;
-o que vem incluído e o que não faz parte; como a casa pensa investimento; e o fecho com
-remuneração, canais e contato. O ritmo se quebra de página em página — o retrato e as
-credenciais, a linha do tempo, as etiquetas, as duas colunas de listas, a grade de
-princípios — para a leitura não virar bloco.
+#### Uma folha só, alta
 
-Só a última página roda no negativo, e a distinção é a inversão, não o ornamento: mesma
-grelha, mesma tipografia, mesmos fios — só o fundo troca.
+O documento inteiro cabe numa página de 210 por 1420 mm. Não é A4, e nem tenta ser: ele se
+lê de uma vez, do começo ao fim, e a quebra de página só atrapalhava. Em oito páginas A4
+eram oito quebras, oito cabeçalhos repetidos e um vão no pé de cada uma, porque o texto de
+cada pessoa tem um tamanho diferente e nenhum deles fecha a página exatamente.
+
+Numa folha só o texto corre, e quem dá o ritmo são as faixas de fundo: o alto escuro com o
+retrato, a declaração e as credenciais; o corpo claro com o propósito, a formação, a
+trajetória e a vida fora do trabalho; a faixa suave com o plano, o que se pode pedir e o
+que entra e não entra; o corpo claro de novo com o método e a remuneração; e o pé escuro
+com os canais e o contato.
+
+Também não há eyebrow sobre os títulos: sem cabeçalho corrido e sem numeração, o título de
+cada seção já diz onde se está.
+
+A altura é fixa porque o `@page` não aceita altura automática, e é o `@page` que a
+ferramenta usa ao imprimir pelo navegador. Ela vive em `ALTURA_LONGA`, em
+`gerador/common.py`, e a diferença entre um consultor que escreve muito e um que escreve
+pouco — uns 20 cm — é repartida pelos respiros elásticos entre as seções. Para conferir o
+número depois de mexer no conteúdo:
+
+```bash
+npm run altura                                  # os modelos
+npm run altura -- --dir=documentos/consultores  # os documentos prontos
+```
+
+O script mede quanto o conteúdo de cada folha ocupa de fato. A altura declarada tem de ser
+maior que a maior das medidas — senão aperta o desenho — e não muito maior, senão sobra
+vão. Quem diz se estourou de verdade continua sendo o `npm run check`.
 
 ### Documentos prontos
 
 `documentos/consultores/` guarda as apresentações nominais dos consultores do plano Me Diz
-o Que Fazer — HTML e PDF de cada um, nas três formas: a de oito páginas com data, a mesma
-sem data e a de uma página. São documentos, não modelos, e ficam fora do pipeline: o
+o Que Fazer — HTML e PDF de cada um, nas três formas: a folha longa com data, a mesma sem
+data e o cartão de uma página A4. São documentos, não modelos, e ficam fora do pipeline: o
 `npm run all` não os toca.
 
 O texto de cada consultor está em `documentos/consultores/consultores.py`, na íntegra e do
@@ -136,7 +156,7 @@ npm run pdf -- relatorio-mensal      # só os que casam com o filtro
 ```
 
 Se a mudança foi no sistema visual e não no preenchimento, o caminho é outro: edite
-`gerador/` e rode `npm run all`, que reconstrói os 24 modelos, o dicionário e os PDFs.
+`gerador/` e rode `npm run all`, que reconstrói os 41 modelos, o dicionário e os PDFs.
 
 Os PDFs são reproduzíveis a partir de `modelos/`; ao editar um modelo, regere o PDF
 correspondente no mesmo commit para os dois não saírem de sincronia.
@@ -386,13 +406,16 @@ trimestral no private e semestral com contatos da mesa na assessoria.
 modelos/                        37 modelos HTML independentes
 pdf/<produto>/                  um PDF de cada modelo, versionado (saída do npm run pdf)
 scripts/render.mjs              HTML -> PDF via Playwright
+scripts/altura.mjs              mede o conteúdo das folhas longas
 scripts/check.mjs               verificação de estouro de página
 scripts/variaveis.mjs           gera o VARIAVEIS.md a partir dos modelos
 gerador/                        fonte dos modelos (Python, só biblioteca padrão)
-gerador/consultores.py          texto de apresentação dos sete consultores
+documentos/consultores/         apresentações nominais prontas (fora do pipeline)
+documentos/consultores/consultores.py  texto de apresentação dos sete consultores
+documentos/consultores/gerar.py        remonta as apresentações nominais
 scripts/fotos.py                prepara os retratos (passo de uma vez só)
-assets/consultores/             retratos prontos
-consultores resolve ai/         fotos originais
+assets/consultores/             retratos prontos, recortados em 3:4
+assets/consultores/originais/   fotos originais, como vieram
 assets/fonts/                   Anek Latin (woff2)
 assets relatórios/              logos, grafismos e referências originais (fonte de verdade)
 MODELO SLIDES AUVP CAPITAL.pdf  deck institucional de referência

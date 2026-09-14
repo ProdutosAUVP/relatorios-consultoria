@@ -201,8 +201,7 @@ def _remuneracao(t, seg):
     e não a última, porque quem ainda não decidiu quer saber o preço antes de
     ouvir o método."""
     if seg in FEE_BASED:
-        return """<span class="eyebrow">Remuneração</span>
-<h1 class="t">Fee based, e só</h1>
+        return """<h1 class="t">Fee based, e só</h1>
 <div class="center"><div class="cols2u" style="align-items:center">
   <div>
     <div class="big">%(taxa)s</div>
@@ -225,8 +224,7 @@ def _remuneracao(t, seg):
                 n=1),
             nota=ph("nota_taxas", "Base de cálculo, cobrança, impostos e condições"))
 
-    return """<span class="eyebrow">Remuneração</span>
-<h1 class="t">Você não paga taxa de assessoria</h1>
+    return """<h1 class="t">Você não paga taxa de assessoria</h1>
 <div class="center"><div class="cols2u" style="align-items:center">
   <div>
     <div class="big">R$ 0,00</div>
@@ -265,8 +263,7 @@ def _beneficios(t, seg):
         segundo = ("Abrir o número muda o incentivo: uma recomendação que remunera mais precisa "
                    "se justificar tecnicamente diante de você, com o número na mesa, e não "
                    "apenas internamente.")
-    return """<span class="eyebrow">Modelo de atuação</span>
-<h1 class="t">O nosso único interesse é a evolução do seu patrimônio</h1>
+    return """<h1 class="t">O nosso único interesse é a evolução do seu patrimônio</h1>
 <div class="center"><div class="cols2u" style="align-items:start">
   <div>
     <p class="lead">%(t1)s</p>
@@ -296,8 +293,7 @@ def build(t, seg):
         [ph("nome_cliente"), "Elaborada por " + ph("nome_responsavel"), ph("data_carta")]))
 
     # ------------------------------------------------------- carta de abertura
-    S.append(slide(t, "Síntese", 2, """<span class="eyebrow">Síntese estratégica</span>
-<h1 class="t">O que entendemos até aqui</h1>
+    S.append(slide(t, "Síntese", 2, """<h1 class="t">O que entendemos até aqui</h1>
 <div class="cols2u" style="flex:1 1 auto;align-items:center">
   <div>
     <p class="lead">%(trat)s %(cli)s,</p>
@@ -328,14 +324,12 @@ def build(t, seg):
 
     # ------------------------------------------------------- o relacionamento
     etapas = RELACIONAMENTO + [ETAPA_6[seg]]
-    S.append(slide(t, "Relacionamento", 4, """<span class="eyebrow">Visão estratégica</span>
-<h1 class="t">Como o relacionamento se estrutura</h1>
+    S.append(slide(t, "Relacionamento", 4, """<h1 class="t">Como o relacionamento se estrutura</h1>
 <div class="center"><ol class="steps" style="--n:3">%(st)s</ol></div>""" % dict(
         st="".join("<li><h4>%s</h4><p>%s</p></li>" % (a, b) for a, b in etapas))))
 
     # ------------------------------------------------------------- metodologia
-    S.append(slide(t, "Metodologia", 5, """<span class="eyebrow">Metodologia</span>
-<h1 class="t">Os pilares que sustentam cada decisão</h1>
+    S.append(slide(t, "Metodologia", 5, """<h1 class="t">Os pilares que sustentam cada decisão</h1>
 <p class="lead">Investir bem é mais do que escolher bons ativos: é ter uma filosofia
 consistente, que guie a decisão independentemente do momento de mercado. É ela que nos mantém
 disciplinados quando o mercado oscila e atentos quando a oportunidade aparece.</p>
@@ -372,8 +366,7 @@ disciplinados quando o mercado oscila e atentos quando a oportunidade aparece.</
          "Fechamento do ciclo: desempenho do ano, revisão de metas, planejamento tributário de "
          "fim de ano e agenda do período seguinte."),
     ]
-    S.append(slide(t, "Cronograma", 6, """<span class="eyebrow">Roadmap inicial</span>
-<h1 class="t">O primeiro ano, encontro a encontro</h1>
+    S.append(slide(t, "Cronograma", 6, """<h1 class="t">O primeiro ano, encontro a encontro</h1>
 %(tab)s
 <div class="note" style="margin-top:auto"><p><strong>Depois do primeiro ano.</strong> O
 calendário do ciclo de acompanhamento, com pauta e entregável de cada encontro, está no
@@ -383,8 +376,7 @@ cronograma de reuniões.</p></div>""" % dict(
                   widths=[26, 12, 62]))))
 
     # --------------------------------------------------- o que vem a seguir
-    S.append(slide(t, "Próximos passos", 7, """<span class="eyebrow">O que esperar</span>
-<h1 class="t">Em até 10 dias, o seu relatório estratégico</h1>
+    S.append(slide(t, "Próximos passos", 7, """<h1 class="t">Em até 10 dias, o seu relatório estratégico</h1>
 <div class="center"><div class="cols2u" style="align-items:start">
   <div>
     <p class="lead">Depois da reunião de KYC, suitability e diagnóstico patrimonial, você recebe
@@ -400,8 +392,7 @@ cronograma de reuniões.</p></div>""" % dict(
 </div></div>""" % dict(itens="".join("<li>%s</li>" % i for i in ENTREGAS))))
 
     # ---------------------------------------------------- estrutura de alocação
-    S.append(slide(t, "Alocação", 8, """<span class="eyebrow">Visão macro</span>
-<h1 class="t">A função de cada classe no portfólio</h1>
+    S.append(slide(t, "Alocação", 8, """<h1 class="t">A função de cada classe no portfólio</h1>
 <p class="lead">A proposta se estrutura em grandes classes, cada uma com função definida, sem se
 limitar a elas quando o seu perfil e os seus objetivos pedirem outra coisa. A combinação entre
 elas é que busca o equilíbrio entre preservação, renda e crescimento.</p>
@@ -426,8 +417,7 @@ restrições e suitability.</p>""" % dict(
                   nums=[1, 2], sm=True, widths=[26, 12, 12, 50]))))
 
     # -------------------------------------------------------- doutrina: RF e RV
-    S.append(slide(t, "Estratégia", 10, """<span class="eyebrow">Renda fixa</span>
-<h1 class="t">A carteira de renda fixa em três camadas</h1>
+    S.append(slide(t, "Estratégia", 10, """<h1 class="t">A carteira de renda fixa em três camadas</h1>
 <p class="lead">A renda fixa é a espinha dorsal do portfólio: Tesouro como base soberana,
 crédito bancário para prêmio com risco mitigado pelo FGC e crédito privado para spreads
 maiores, com análise rigorosa. Em todos os casos, o ativo só é escolhido depois de definido o
@@ -437,8 +427,7 @@ papel daquela parcela na carteira.</p>
                   [["<strong>%s</strong>" % l[0], l[1], l[2], l[3]] for l in RENDA_FIXA],
                   sm=True, widths=[13, 29, 29, 29]))))
 
-    S.append(slide(t, "Estratégia", 11, """<span class="eyebrow">Renda variável</span>
-<h1 class="t">Ações, fundos imobiliários e internacional</h1>
+    S.append(slide(t, "Estratégia", 11, """<h1 class="t">Ações, fundos imobiliários e internacional</h1>
 <p class="lead">As três classes têm papéis diferentes — renda, crescimento e proteção cambial —
 e por isso são selecionadas por critérios diferentes. O que elas têm em comum é a exigência de
 fundamento: nenhuma posição entra por movimento de preço.</p>
@@ -453,7 +442,6 @@ fundamento: nenhuma posição entra por movimento de preço.</p>
     # ------------------------------------------------------------- compromisso
     S.append(slide(t, "Compromisso", 13, """<div style="display:flex;gap:16mm;flex:1 1 auto;align-items:center">
   <div style="flex:1 1 auto">
-    <span class="eyebrow">Nosso compromisso</span>
     <h1 class="t">O nosso trabalho começa agora</h1>
     <p class="lead" style="margin-top:4mm">%(trat)s %(cli)s, entendemos que a confiança
     depositada aqui vai além de uma relação comercial: é confiança sobre o que representa anos

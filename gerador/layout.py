@@ -110,7 +110,7 @@ def cover_a4(t, kicker_light, kicker_bold, bottom_light, bottom_bold, ident_line
         confid=CONFID.replace(" · ", "<br>"), bl=bottom_light, bb=bottom_bold, ident=ident)
 
 
-def page_a4(t, sec, no, body, date_ph=None, rodape=None, dark=False, cls="", data=True):
+def page_a4(t, sec, no, body, date_ph=None, dark=False, cls="", data=True):
     """`data=False` tira a data do cabeçalho.
 
     Vale para material que não é de um período: uma apresentação com data
@@ -131,7 +131,7 @@ def page_a4(t, sec, no, body, date_ph=None, rodape=None, dark=False, cls="", dat
                      grain='<div class="grain"></div>' if dark else "",
                      sec=sec, logo=logo_svg(t, 4.6, ink=not dark),
                      dt='<div class="dt">%s</div>' % ph(date_ph or DATE_PH) if data else "",
-                     body=body, no="%02d" % no, confid=rodape or CONFID)
+                     body=body, no="%02d" % no, confid=CONFID)
 
 
 # ---------------------------------------------------------------- 16:9

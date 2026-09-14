@@ -36,8 +36,12 @@ FOLHA = dict(
     # Os anéis desbotam para fora: o mais próximo da foto é o mais presente, o
     # maior quase some. É o que dá a impressão de que eles irradiam do retrato,
     # em vez de serem uma moldura desenhada em volta.
-    opacidade_interna=0.30,
-    opacidade_externa=0.05,
+    #
+    # Os dois extremos já foram o dobro disto. O conjunto pesava demais sobre o
+    # fundo escuro e disputava com o retrato; metade em cada anel mantém o
+    # degradê com a mesma forma e devolve o retrato ao primeiro plano.
+    opacidade_interna=0.15,
+    opacidade_externa=0.025,
 )
 
 

@@ -98,6 +98,58 @@ def _consultor_vazio():
     )
 
 
+# Quantos caracteres cabem numa linha da faixa de credenciais, com ela em três
+# colunas. É estimativa, e só serve para comparar um bloco com o outro.
+CRED_LINHA = 38
+CRED_CHIPS_POR_LINHA = 3
+
+
+def _linhas(itens, chips=False):
+    """Quantas linhas um bloco de credenciais ocupa, mais ou menos."""
+    if chips:
+        return -(-len(itens) // CRED_CHIPS_POR_LINHA)
+    return sum(1 + (len(re.sub(r"<[^>]+>", "", i)) - 1) // CRED_LINHA for i in itens)
+
+
+def _faixa_credenciais(c):
+    """A faixa de credenciais, e em quantas colunas ela sai.
+
+    Três blocos em três colunas é o caso comum. Mas quando um deles é bem mais
+    alto do que os outros dois somados — três especializações, cada uma em duas
+    linhas, ao lado de uma graduação de uma linha só —, as três colunas deixam
+    dois buracos do tamanho da diferença. Nesse caso os dois blocos leves
+    dividem uma coluna e o pesado fica com a outra, e a faixa fecha certa.
+
+    Quem escrever pouco em tudo continua com as três colunas: a regra existe
+    para o desequilíbrio, não para uniformizar.
+    """
+    blocos = []
+    if c["graduacao"]:
+        blocos.append(("Formação", _lista(c["graduacao"]), _linhas(c["graduacao"])))
+    if c["pos"]:
+        blocos.append(("Especialização", _lista(c["pos"]), _linhas(c["pos"])))
+    blocos.append(("Certificações",
+                   '<div class="chips">%s</div>' % "".join(
+                       '<span class="pill">%s</span>' % x for x in c["certificacoes"]),
+                   _linhas(c["certificacoes"], chips=True)))
+
+    escreve = lambda bs: "<div>%s</div>" % "".join(
+        "<h3>%s</h3>%s" % (rot, bloco) for rot, bloco, _ in bs)
+
+    pesos = [n for _, _, n in blocos]
+    if len(blocos) == 3 and max(pesos) > sum(pesos) - max(pesos):
+        i = pesos.index(max(pesos))
+        pesado = blocos[i]
+        leves = blocos[:i] + blocos[i + 1:]
+        # O bloco pesado vai para o lado que preserva melhor a ordem de
+        # leitura: à esquerda se ele for o primeiro dos três, à direita se não.
+        colunas = [escreve([pesado]), escreve(leves)] if i == 0 else \
+                  [escreve(leves), escreve([pesado])]
+        return "".join(colunas), 2
+
+    return "".join(escreve([b]) for b in blocos), len(blocos)
+
+
 def _contato(c, chave, rotulo, escreve):
     """A linha de contato, quando há o que pôr nela."""
     if c.get(chave):
@@ -418,20 +470,12 @@ def folha(t, variante, c=None, foto=None, primeiro=None, data=True):
     primeiro = primeiro or "o seu consultor"
     texto = PLANOS.get(variante) or _em_branco()
 
-    cred = []
-    if c["graduacao"]:
-        cred.append(("Formação", _lista(c["graduacao"])))
-    if c["pos"]:
-        cred.append(("Especialização", _lista(c["pos"])))
-    cred.append(("Certificações",
-                 '<div class="chips">%s</div>' % "".join(
-                     '<span class="pill">%s</span>' % x for x in c["certificacoes"])))
+    cred, ncred = _faixa_credenciais(c)
 
     return FOLHA % dict(
         # o alto
         foto=foto, plano=texto["plano"], nome=c["nome"], papel=c["papel"],
-        marca=t["marca"], frase=c["frase"], nc=len(cred),
-        cred="".join("<div><h3>%s</h3>%s</div>" % (rot, bloco) for rot, bloco in cred),
+        marca=t["marca"], frase=c["frase"], nc=ncred, cred=cred,
         # a pessoa
         proposito=_paras(c["proposito"]),
         qualificacoes=_paras(c["formacao_paras"]),

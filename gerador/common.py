@@ -898,6 +898,8 @@ CSS_LONGA = """
 .lg-cred>div:last-child{padding-right:0}
 .lg-cred h3{margin:0 0 3mm;font-size:6.6pt;font-weight:700;letter-spacing:.16em;
   text-transform:uppercase;color:rgba(255,255,255,.62)}
+/* dois blocos empilhados na mesma coluna precisam de ar entre eles */
+.lg-cred h3:not(:first-child){margin-top:7mm}
 .lg-cred .lista{font-size:8.4pt;margin:0;color:rgba(255,255,255,.9)}
 .lg-cred .lista li{margin-bottom:5px}
 .lg-cred .lista li::before{background:rgba(255,255,255,.55)}

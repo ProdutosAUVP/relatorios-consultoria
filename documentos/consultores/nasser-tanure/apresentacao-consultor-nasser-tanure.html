@@ -40,8 +40,6 @@ strong{font-weight:700}
 .dark .ph{background:var(--ph-dk);color:#fff}
 /* capas e divisórias são monocromáticas: nada de dourado sobre a arte da capa */
 .cover .ph,.divider .ph{background:rgba(255,255,255,.18);color:#fff}
-.pos{color:var(--pos);font-weight:700}
-.neg{color:var(--neg);font-weight:700}
 .mut{color:var(--ink-2)}
 .rule{height:1px;background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,.95))}
 .grain{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");opacity:.22;pointer-events:none}
@@ -199,8 +197,6 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .steps h4{font-size:9pt;font-weight:700;margin:0 0 1mm}
 .steps p{font-size:8pt;color:var(--ink-2);margin:0;line-height:1.4}
 .big{font-size:22pt;font-weight:800;line-height:1;letter-spacing:-.03em;color:var(--brand)}
-.stat{display:flex;flex-direction:column;gap:1mm}
-.stat .lb{font-size:7.6pt;color:var(--ink-2);line-height:1.35}
 
 /* ---------- processo: nós numerados sobre um trilho contínuo ---------- */
 .flow{list-style:none;margin:0;padding:0;counter-reset:fl;
@@ -242,11 +238,6 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .lista li:last-child{margin-bottom:0}
 .lista li::before{content:"";position:absolute;left:0;top:8px;width:2.6mm;height:1.33px;background:var(--accent)}
 .lista.mut li{color:var(--ink-2)}
-.foto{border:1px dashed var(--brand);display:flex;flex-direction:column;align-items:center;
-  justify-content:center;gap:1.5mm;text-align:center;padding:4mm;
-  background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(0,0,0,.022) 5px 10px)}
-.foto .cl{font-size:6.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
-.foto .cd{font-size:7.2pt;color:var(--ink-2);line-height:1.4}
 .chips{display:flex;flex-wrap:wrap;gap:1.5mm;margin-bottom:1mm}
 .side h3{font-size:6.8pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
   color:var(--ink-2);margin:5mm 0 2mm;padding-bottom:1mm;border-bottom:1px solid var(--line)}
@@ -289,39 +280,12 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
    excedente é dividido entre as faixas: cada respiro cresce na mesma medida,
    entre um piso e um teto, e o que não couber fica na margem inferior. */
 .esp{flex:1 1 0;min-height:4mm;max-height:11mm}
-.esp.lg{min-height:4mm;max-height:17mm}
 
-/* ---------- perfil do consultor ----------
-   A página trata três tipos de informação de formas diferentes: a declaração
-   de propósito em destaque ao lado do retrato, a trajetória como linha do
-   tempo, e os interesses como fatos curtos. */
-.pf-topo{display:grid;grid-template-columns:36mm 1fr;gap:0 8mm;align-items:end}
-.pf-topo .rt-vaga,.pf-topo .rt-img{margin:0;align-self:end}
-.pf-topo .ey{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--brand);margin-bottom:2mm}
-.pf-topo h1{margin:0;font-size:22pt;font-weight:800;text-transform:uppercase;
-  line-height:1.04;letter-spacing:-.015em}
-.pf-topo .papel{margin:2mm 0 0;font-size:9pt;color:var(--ink-2)}
-/* a declaração atravessa as duas colunas, sob um fio de largura inteira, e
-   respira antes da faixa de credenciais */
-.pf-topo .frase{grid-column:1/-1;margin:6mm 0 0;padding-top:4mm;
-  border-top:1px solid var(--line);
-  font-size:11.5pt;line-height:1.5;font-weight:300;color:var(--ink)}
-
-/* faixa de credenciais */
-.cred{display:grid;grid-template-columns:repeat(var(--n,3),1fr);
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.cred>div{min-width:0;padding:3mm 6mm;border-left:1px solid var(--line)}
-.cred>div:first-child{padding-left:0;border-left:0}
-.cred>div:last-child{padding-right:0}
-.cred h3{margin:0 0 2mm;font-size:6.2pt;font-weight:700;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--ink-2)}
-.cred .lista{font-size:7.6pt;margin:0}
-.cred .lista li{margin-bottom:4px}
-
-/* trajetória como linha do tempo */
-/* o rótulo fica acima do texto, e não numa coluna à esquerda: os marcos vão de
-   "2016" a "Pandemia" e a "Há 3 anos", e coluna fixa não comporta os dois */
+/* ---------- linha do tempo e etiquetas ----------
+   Dois blocos que a folha do consultor usa ao lado do texto corrido. Nos
+   marcos, o rótulo fica acima do texto e não numa coluna à esquerda: eles vão
+   de "2016" a "Pandemia" e a "Há três anos", e coluna fixa não comporta os
+   dois. */
 .marcos{list-style:none;margin:0;padding:0}
 .marcos li{position:relative;padding:0 0 10px 8mm}
 .marcos li:last-child{padding-bottom:0}
@@ -334,32 +298,10 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   text-transform:uppercase;color:var(--brand);margin-bottom:1mm}
 .marcos p{margin:0;font-size:8.2pt;line-height:1.45;color:var(--ink-2)}
 
-/* interesses e contato, na faixa final */
-.pf-rodape{padding:4mm 0 6mm;border-top:1px solid var(--line);
-  display:grid;grid-template-columns:1.2fr 1fr;gap:4mm 8mm;align-items:start}
-.pf-rodape h3{margin:0 0 2mm;font-size:6.2pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
-/* O e-mail é o item mais largo da página e não tem onde quebrar; a coluna foi
-   dimensionada para o maior deles caber numa linha, e o `anywhere` é a rede
-   para um endereço ainda mais longo não vazar a margem. */
-.pf-rodape .dl{font-size:8pt;gap:1mm 4mm}
-.pf-rodape .dl dd{min-width:0;overflow-wrap:anywhere}
-/* a descrição fecha a faixa atravessando as duas colunas, e o padding de baixo
-   é o que a mantém longe do fio do rodapé */
-.pf-rodape .desc{grid-column:1/-1;margin:0;max-width:none}
 .tags{display:flex;flex-wrap:wrap;gap:1.4mm;margin:0}
 .tags span{font-size:7.2pt;padding:.8mm 2.8mm;border:1px solid var(--line);
   border-radius:8mm;color:var(--ink-2)}
 
-/* ---------- perfil ----------
-   A primeira página da apresentação tem texto corrido de extensão bem variável
-   entre um consultor e outro. Esta escala, um pouco menor que a padrão mas com
-   entrelinha mais generosa, acomoda o mais longo sem apertar o mais curto. */
-.perfil{font-size:8.8pt;line-height:1.5;flex:1 1 auto;min-height:0;
-  display:flex;flex-direction:column}
-.perfil .lead{font-size:9.6pt;margin-bottom:6mm}
-.perfil h2{font-size:8.8pt;margin:5mm 0 2mm}
-.perfil p{margin-bottom:3mm}
-.perfil .side h3{margin-top:5mm}
 
 /* ---------- folha de uma página ----------
    A apresentação de uma página tem chrome próprio, como as capas: sem
@@ -438,32 +380,6 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .page.dark .pill{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.24)}
 .page.dark .note{background:rgba(255,255,255,.06);border-left-color:rgba(255,255,255,.4)}
 
-/* ---------- páginas do plano ----------
-   O ritmo é o mesmo com fundo claro ou escuro: `.plano` cuida do respiro e da
-   escala, `.dark` só da cor. As grelhas que seguem um bloco de texto herdam o
-   mesmo vão do h2, e a escala sobe um pouco porque estas páginas têm menos
-   matéria que as de relatório. */
-.page.plano h2{margin:0 0 5mm}
-.page.plano .lead{font-size:11pt;line-height:1.55;margin-bottom:2mm}
-.page.plano .lista{font-size:9.2pt;line-height:20px}
-.page.plano .lista li{padding-left:6mm;margin-bottom:15px}
-.page.plano .lista li::before{top:9px;width:3.2mm}
-.page.plano .principios{gap:6mm 10mm}
-.page.plano .principios p{font-size:8.8pt;line-height:1.6}
-.page.plano .small{font-size:9pt;line-height:1.62}
-.page.plano .cols2{gap:12mm}
-.page.plano .dl{font-size:9pt;gap:3mm 6mm}
-
-/* ---------- texto corrido das páginas de leitura ----------
-   A apresentação do consultor é, na maior parte, texto para ler do começo ao
-   fim, e não lista para bater o olho. Esta é a escala dele: corpo um pouco
-   maior que o das listas, entrelinha larga, e medida curta o bastante para o
-   olho achar o começo da linha seguinte sem se perder. Dentro de uma coluna a
-   medida já está dada pela grelha, e o teto sai do caminho. */
-.page.plano .corrido{font-size:11pt;line-height:1.75;max-width:152mm}
-.page.plano .corrido p{margin:0 0 5mm}
-.page.plano .corrido p:last-child{margin-bottom:0}
-.page.plano .cols2u .corrido,.page.plano .cols2 .corrido{max-width:none}
 
 @page{size:210mm 1420mm;margin:0}
 .page.longa{height:1420mm;padding:0;font-size:10pt}
@@ -515,6 +431,8 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .lg-cred>div:last-child{padding-right:0}
 .lg-cred h3{margin:0 0 3mm;font-size:6.6pt;font-weight:700;letter-spacing:.16em;
   text-transform:uppercase;color:rgba(255,255,255,.62)}
+/* dois blocos empilhados na mesma coluna precisam de ar entre eles */
+.lg-cred h3:not(:first-child){margin-top:7mm}
 .lg-cred .lista{font-size:8.4pt;margin:0;color:rgba(255,255,255,.9)}
 .lg-cred .lista li{margin-bottom:5px}
 .lg-cred .lista li::before{background:rgba(255,255,255,.55)}

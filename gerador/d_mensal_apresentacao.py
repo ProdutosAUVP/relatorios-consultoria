@@ -179,12 +179,12 @@ def build(t, seg):
                    dark=True))
 
     S.append(slide(t, "Avisos", 11, """<h1 class="t">Notas e avisos</h1>
-<div class="cols2" style="flex:1 1 auto">
-  <div>
-    <p class="legal">%(disc)s</p>
-  </div>
+<p class="legal">%(disc)s</p>
+<div class="cols2" style="margin-top:6mm">
   <div>
     <p class="legal">Rentabilidade passada não representa garantia de rentabilidade futura. Os investimentos apresentados podem não contar com garantia do Fundo Garantidor de Créditos (FGC). Antes de investir, leia os documentos oficiais de cada produto.</p>
+  </div>
+  <div>
     <p class="legal">Material destinado exclusivamente a %(cli)s. Não constitui oferta, recomendação pública ou solicitação de compra ou venda de ativos. É proibida a reprodução ou o compartilhamento total ou parcial sem autorização prévia e por escrito. %(razao)s &middot; CNPJ %(cnpj)s. Ouvidoria: %(ouv)s.</p>
   </div>
 </div>""" % dict(disc=ph("disclaimer_regulatorio", "Texto aprovado pelo compliance para este segmento"),

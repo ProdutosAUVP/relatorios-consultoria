@@ -54,7 +54,7 @@ autossuficientes na entrega, fonte única na manutenção.
 | `scripts/fotos.py` | prepara os retratos para envio pela ferramenta: recorta pelo rosto, sem tocar em cor ou brilho |
 | `assets/consultores/originais/` | fotos originais, como vieram |
 | `assets/consultores/` | retratos prontos, saída do `scripts/fotos.py` |
-| `documentos/consultores/` | apresentações nominais prontas, fora do pipeline: o `npm run all` não as toca |
+| `documentos/consultores/` | apresentações nominais prontas, uma pasta por consultor, fora do pipeline: o `npm run all` não as toca |
 | `gerador/build.py` | entrada: percorre documentos × segmentos e escreve `modelos/` |
 | `scripts/render.mjs` | HTML → PDF, numa subpasta por produto; apaga o que não é mais gerado |
 | `scripts/documentos.mjs` | a tabela de produtos e documentos, partilhada pelo render e pelo catálogo |

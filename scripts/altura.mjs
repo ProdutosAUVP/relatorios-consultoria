@@ -19,7 +19,7 @@
  * documento muda, e aí se roda isto e se acerta a constante à mão.
  */
 import { chromium } from 'playwright';
-import { readdirSync, existsSync } from 'node:fs';
+import { readdirSync, existsSync, statSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join, relative, resolve } from 'node:path';
 
@@ -48,10 +48,24 @@ async function launch() {
   }
 }
 
-const arquivos = readdirSync(srcDir)
-  .filter((f) => f.endsWith('.html'))
-  .filter((f) => filtros.length === 0 || filtros.some((q) => f.includes(q)))
-  .sort();
+/** Os HTML de uma pasta. Em `modelos/` é uma lista rasa; fora dela pode haver
+ *  uma pasta por assunto — uma por consultor, nos documentos nominais —, e o
+ *  caminho devolvido é relativo à raiz da busca. */
+function html(dir, prefixo = '') {
+  const achados = [];
+  for (const nome of readdirSync(dir).sort()) {
+    const cheio = join(dir, nome);
+    if (statSync(cheio).isDirectory()) {
+      achados.push(...html(cheio, join(prefixo, nome)));
+    } else if (nome.endsWith('.html')) {
+      achados.push(join(prefixo, nome));
+    }
+  }
+  return achados;
+}
+
+const arquivos = html(srcDir)
+  .filter((f) => filtros.length === 0 || filtros.some((q) => f.includes(q)));
 
 const browser = await launch();
 const page = await browser.newPage();

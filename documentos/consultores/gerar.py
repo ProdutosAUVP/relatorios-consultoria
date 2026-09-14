@@ -9,6 +9,12 @@ em branco; isto monta documento pronto, com nome, texto e retrato de gente de
 verdade. São coisas diferentes, e o build não deve apagar uma achando que é a
 outra.
 
+Cada consultor tem a sua pasta, com os três documentos dele em HTML e PDF.
+São 21 arquivos de cada tipo: numa lista só, achar a folha sem data do André é
+ler nome por nome; separados, é abrir uma pasta. O nome do arquivo continua
+completo, para um PDF baixado sozinho não virar `apresentacao-consultor.pdf`
+sem dizer de quem é.
+
 O desenho, porém, é o mesmo: as páginas saem de `gerador/d_consultor.py` e de
 `gerador/d_consultor_simples.py`, com o consultor escrito no lugar do campo.
 Quando a diagramação mudar lá, rode isto de novo e os documentos prontos
@@ -66,7 +72,7 @@ def foto_redonda(slug, f=d_consultor_simples.FOLHA):
     return '<div class="fl-foto" %s>%s</div>' % (pos, foto(slug, cls=""))
 
 
-def escreve(nome_arquivo, titulo, paginas, css=None):
+def escreve(slug, nome_arquivo, titulo, paginas, css=None):
     t = THEMES[TEMA]
     html = (head(titulo, tokens(t) + "\n" + (css or CSS_A4))
             + sem_viuvas("\n".join(paginas)) + "\n" + FOOT)
@@ -75,11 +81,13 @@ def escreve(nome_arquivo, titulo, paginas, css=None):
     # —, ele sai destacado no arquivo, que é como o gerador avisa que falta
     # dado. A conferência é de quem manda para o cliente.
     html = html.replace(ph("data_apresentacao"), mes_de_hoje())
-    caminho = os.path.join(AQUI, nome_arquivo)
+    pasta = os.path.join(AQUI, slug)
+    os.makedirs(pasta, exist_ok=True)
+    caminho = os.path.join(pasta, nome_arquivo)
     with open(caminho, "w", encoding="utf-8") as f:
         f.write(html)
     print("  %s" % os.path.relpath(caminho, RAIZ))
-    return nome_arquivo
+    return os.path.join(slug, nome_arquivo)
 
 
 def completa(c, data):
@@ -105,11 +113,12 @@ def main(filtros):
             continue
         titulo = "Apresentação do consultor — %s" % c["nome"]
         longa = CSS_A4 + CSS_LONGA
-        escritos.add(escreve("apresentacao-consultor-%s.html" % c["slug"],
+        slug = c["slug"]
+        escritos.add(escreve(slug, "apresentacao-consultor-%s.html" % slug,
                              titulo, completa(c, data=True), css=longa))
-        escritos.add(escreve("apresentacao-consultor-%s-sem-data.html" % c["slug"],
+        escritos.add(escreve(slug, "apresentacao-consultor-%s-sem-data.html" % slug,
                              titulo, completa(c, data=False), css=longa))
-        escritos.add(escreve("apresentacao-consultor-simples-%s.html" % c["slug"],
+        escritos.add(escreve(slug, "apresentacao-consultor-simples-%s.html" % slug,
                              titulo, simples(c)))
 
     if not escritos:
@@ -119,14 +128,21 @@ def main(filtros):
     # Sem filtro, isto é a lista completa: um arquivo que sobrou de um slug
     # renomeado não deve continuar aqui se ninguém mais o produz. O PDF vai
     # junto, porque um PDF órfão é o que alguém acaba mandando para o cliente.
+    # E a pasta que ficou vazia sai também.
     if not filtros:
-        for f in sorted(os.listdir(AQUI)):
-            if f.endswith(".html") and f not in escritos:
-                os.remove(os.path.join(AQUI, f))
-                print("  removido %s (não é mais gerado)" % f)
-            elif f.endswith(".pdf") and f[:-4] + ".html" not in escritos:
-                os.remove(os.path.join(AQUI, f))
-                print("  removido %s (não é mais gerado)" % f)
+        for pasta in sorted(os.listdir(AQUI)):
+            caminho = os.path.join(AQUI, pasta)
+            if not os.path.isdir(caminho):
+                continue
+            for f in sorted(os.listdir(caminho)):
+                rel = os.path.join(pasta, f)
+                html = rel[:-4] + ".html" if f.endswith(".pdf") else rel
+                if f.endswith((".html", ".pdf")) and html not in escritos:
+                    os.remove(os.path.join(caminho, f))
+                    print("  removido %s (não é mais gerado)" % rel)
+            if not os.listdir(caminho):
+                os.rmdir(caminho)
+                print("  removida a pasta %s/ (vazia)" % pasta)
 
     print("%d documento(s) em documentos/consultores/" % len(escritos))
     return 0

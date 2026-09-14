@@ -3,13 +3,13 @@
  *
  *   npm run check
  *   npm run check -- relatorio-mensal
- *   npm run check -- --dir=documentos/consultores   # outra pasta
+ *   npm run check -- --dir=documentos/consultores   # outra pasta, e as dela
  *
  * Roda em media print, que é o modo usado na exportação para PDF. Grafismos são
  * ignorados: eles sangram de propósito e ficam recortados por overflow:hidden.
  */
 import { chromium } from 'playwright';
-import { readdirSync, existsSync } from 'node:fs';
+import { readdirSync, existsSync, statSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 
@@ -38,10 +38,24 @@ async function launch() {
 }
 
 const filters = process.argv.slice(2).filter((a) => !a.startsWith('--'));
-const files = readdirSync(srcDir)
-  .filter((f) => f.endsWith('.html'))
-  .filter((f) => filters.length === 0 || filters.some((q) => f.includes(q)))
-  .sort();
+/** Os HTML de uma pasta. Em `modelos/` é uma lista rasa; fora dela pode haver
+ *  uma pasta por assunto — uma por consultor, nos documentos nominais —, e o
+ *  caminho devolvido é relativo à raiz da busca. */
+function html(dir, prefixo = '') {
+  const achados = [];
+  for (const nome of readdirSync(dir).sort()) {
+    const cheio = join(dir, nome);
+    if (statSync(cheio).isDirectory()) {
+      achados.push(...html(cheio, join(prefixo, nome)));
+    } else if (nome.endsWith('.html')) {
+      achados.push(join(prefixo, nome));
+    }
+  }
+  return achados;
+}
+
+const files = html(srcDir)
+  .filter((f) => filters.length === 0 || filters.some((q) => f.includes(q)));
 
 const browser = await launch();
 const page = await browser.newPage();

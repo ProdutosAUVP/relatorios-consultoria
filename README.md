@@ -92,9 +92,25 @@ vão. Quem diz se estourou de verdade continua sendo o `npm run check`.
 ### Documentos prontos
 
 `documentos/consultores/` guarda as apresentações nominais dos consultores do plano Me Diz
-o Que Fazer — HTML e PDF de cada um, nas três formas: a folha longa com data, a mesma sem
-data e o cartão de uma página A4. São documentos, não modelos, e ficam fora do pipeline: o
-`npm run all` não os toca.
+o Que Fazer. São documentos, não modelos, e ficam fora do pipeline: o `npm run all` não os
+toca.
+
+Cada consultor tem a sua pasta, com os três documentos dele em HTML e PDF — a folha longa
+com data, a mesma sem data e o cartão de uma página A4:
+
+```
+documentos/consultores/
+  consultores.py
+  gerar.py
+  andre-arruda/
+    apresentacao-consultor-andre-arruda.html          folha longa, com data
+    apresentacao-consultor-andre-arruda-sem-data.html a mesma, sem data
+    apresentacao-consultor-simples-andre-arruda.html  o cartão de uma página
+    … e os três PDFs
+```
+
+O nome do arquivo repete o slug de propósito: um PDF baixado sozinho não pode virar
+`apresentacao-consultor.pdf` sem dizer de quem é.
 
 O texto de cada consultor está em `documentos/consultores/consultores.py`, na íntegra e do
 jeito que a pessoa escreveu. O gerador continua sem saber o nome de ninguém — quem sabe é
@@ -106,8 +122,9 @@ npm run check -- --dir=documentos/consultores
 npm run pdf -- --dir=documentos/consultores --out=documentos/consultores
 ```
 
-Acrescentar um consultor é somar uma entrada em `consultores.py`, pôr o retrato em
-`assets/consultores/<slug>.jpg` e rodar isso.
+Acrescentar um consultor é somar uma entrada em `consultores.py`, pôr a foto original em
+`assets/consultores/originais/<slug>.jpg` (ou `.png`), rodar `python3 scripts/fotos.py` e
+depois isso. A pasta dele nasce sozinha.
 
 ## Ferramenta de preenchimento
 
@@ -410,7 +427,7 @@ scripts/altura.mjs              mede o conteúdo das folhas longas
 scripts/check.mjs               verificação de estouro de página
 scripts/variaveis.mjs           gera o VARIAVEIS.md a partir dos modelos
 gerador/                        fonte dos modelos (Python, só biblioteca padrão)
-documentos/consultores/         apresentações nominais prontas (fora do pipeline)
+documentos/consultores/         apresentações nominais prontas, uma pasta por consultor
 documentos/consultores/consultores.py  texto de apresentação dos sete consultores
 documentos/consultores/gerar.py        remonta as apresentações nominais
 scripts/fotos.py                prepara os retratos (passo de uma vez só)

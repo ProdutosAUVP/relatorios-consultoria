@@ -261,6 +261,11 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .principios strong{color:var(--brand)}
 
 /* ---------- retrato na coluna de apoio ---------- */
+/* O retrato escrito, quando existe pessoa: mesma caixa e mesmo canto da
+   moldura vazia, para a página não mudar de forma entre as duas. O corte sobe
+   um pouco o enquadramento, que é onde o rosto costuma estar. */
+.rt-img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;
+  object-position:50% 26%;border-radius:3mm 0 0 0}
 /* O espaço de imagem só existia nos slides, que são onde os `imgbox` estavam.
    A moldura vazia do retrato o traz para o A4, com a mesma escala do resto da
    página. */
@@ -291,7 +296,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
    de propósito em destaque ao lado do retrato, a trajetória como linha do
    tempo, e os interesses como fatos curtos. */
 .pf-topo{display:grid;grid-template-columns:36mm 1fr;gap:0 8mm;align-items:end}
-.pf-topo .rt-vaga{margin:0}
+.pf-topo .rt-vaga,.pf-topo .rt-img{margin:0;align-self:end}
 .pf-topo .ey{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.18em;
   text-transform:uppercase;color:var(--brand);margin-bottom:2mm}
 .pf-topo h1{margin:0;font-size:22pt;font-weight:800;text-transform:uppercase;
@@ -448,6 +453,17 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .page.plano .small{font-size:9pt;line-height:1.62}
 .page.plano .cols2{gap:12mm}
 .page.plano .dl{font-size:9pt;gap:3mm 6mm}
+
+/* ---------- texto corrido das páginas de leitura ----------
+   A apresentação do consultor é, na maior parte, texto para ler do começo ao
+   fim, e não lista para bater o olho. Esta é a escala dele: corpo um pouco
+   maior que o das listas, entrelinha larga, e medida curta o bastante para o
+   olho achar o começo da linha seguinte sem se perder. Dentro de uma coluna a
+   medida já está dada pela grelha, e o teto sai do caminho. */
+.page.plano .corrido{font-size:11pt;line-height:1.75;max-width:152mm}
+.page.plano .corrido p{margin:0 0 5mm}
+.page.plano .corrido p:last-child{margin-bottom:0}
+.page.plano .cols2u .corrido,.page.plano .cols2 .corrido{max-width:none}
 
 </style>
 </head>

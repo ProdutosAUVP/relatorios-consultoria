@@ -5,6 +5,11 @@
  *   npm run pdf                       # todos os modelos
  *   npm run pdf -- relatorio-mensal   # só os que casam com o filtro
  *
+ * Com `--dir` e `--out` renderiza outra pasta, lado a lado com o HTML e sem a
+ * separação por produto. É assim que saem os PDFs dos documentos nominais:
+ *
+ *   npm run pdf -- --dir=documentos/consultores --out=documentos/consultores
+ *
  * O tamanho da página vem do @page de cada arquivo (A4 nos relatórios,
  * 16:9 de 338,667 x 190,5 mm nas apresentações), por isso usamos
  * preferCSSPageSize. printBackground é obrigatório: as capas e os
@@ -13,13 +18,20 @@
 import { chromium } from 'playwright';
 import { readdirSync, mkdirSync, existsSync, statSync, rmSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join, relative, resolve } from 'node:path';
 
 import { PRODUTOS, classifica } from './documentos.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const srcDir = join(root, 'modelos');
-const outDir = join(root, 'pdf');
+const arg = (nome) => {
+  const a = process.argv.slice(2).find((x) => x.startsWith(`--${nome}=`));
+  return a && resolve(root, a.slice(nome.length + 3));
+};
+const srcDir = arg('dir') || join(root, 'modelos');
+const outDir = arg('out') || join(root, 'pdf');
+// Fora de `modelos/` não há produto a que pertencer: o PDF sai ao lado do
+// HTML, e a limpeza do que não é mais gerado é de quem gerou.
+const porProduto = !arg('dir');
 
 // Ambientes com PLAYWRIGHT_BROWSERS_PATH fixo podem ter um build de Chromium
 // diferente do esperado por esta versão do Playwright; nesse caso apontamos
@@ -48,7 +60,7 @@ async function launch() {
   }
 }
 
-const filters = process.argv.slice(2);
+const filters = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 const files = readdirSync(srcDir)
   .filter((f) => f.endsWith('.html'))
   .filter((f) => filters.length === 0 || filters.some((q) => f.includes(q)))
@@ -64,28 +76,33 @@ if (files.length === 0) {
 // arquivo continua completo, para um PDF baixado sozinho não virar
 // `relatorio-mensal.pdf` sem dizer de quem é.
 const ordem = new Map(PRODUTOS.map((p, i) => [p.chave, i]));
-const emOrdem = [...files].sort((a, b) => {
-  const pa = classifica(a)?.produto, pb = classifica(b)?.produto;
-  const d = (ordem.get(pa) ?? 99) - (ordem.get(pb) ?? 99);
-  return d || a.localeCompare(b);
-});
+const emOrdem = porProduto
+  ? [...files].sort((a, b) => {
+      const pa = classifica(a)?.produto, pb = classifica(b)?.produto;
+      const d = (ordem.get(pa) ?? 99) - (ordem.get(pb) ?? 99);
+      return d || a.localeCompare(b);
+    })
+  : [...files].sort();
 
 const browser = await launch();
 const page = await browser.newPage();
 let produtoAtual = null;
 
 for (const file of emOrdem) {
-  const achado = classifica(file);
-  if (!achado) {
-    console.error(`Modelo sem documento correspondente: ${file}`);
-    process.exit(1);
+  let pasta = outDir;
+  if (porProduto) {
+    const achado = classifica(file);
+    if (!achado) {
+      console.error(`Modelo sem documento correspondente: ${file}`);
+      process.exit(1);
+    }
+    pasta = join(outDir, achado.produto);
+    if (achado.produto !== produtoAtual) {
+      produtoAtual = achado.produto;
+      console.log(`\n  ${achado.produto}/`);
+    }
   }
-  const pasta = join(outDir, achado.produto);
-  if (achado.produto !== produtoAtual) {
-    produtoAtual = achado.produto;
-    mkdirSync(pasta, { recursive: true });
-    console.log(`\n  ${achado.produto}/`);
-  }
+  mkdirSync(pasta, { recursive: true });
 
   await page.goto(pathToFileURL(join(srcDir, file)).href, { waitUntil: 'load' });
   await page.evaluate(() => document.fonts.ready);
@@ -99,7 +116,7 @@ for (const file of emOrdem) {
 // Sem filtro, o render é a lista completa: um PDF que sobrou de uma variante
 // renomeada continuaria em `pdf/` sem nada em `modelos/` que o produza. É a
 // mesma limpeza que o `build.py` faz.
-if (!filters.length) {
+if (!filters.length && porProduto) {
   const esperados = new Set(emOrdem.map((f) => join(classifica(f).produto, f.replace(/\.html$/, '.pdf'))));
   for (const pasta of readdirSync(outDir)) {
     const dir = join(outDir, pasta);
@@ -115,4 +132,6 @@ if (!filters.length) {
 }
 
 await browser.close();
-console.log(`\n${emOrdem.length} PDF(s) em pdf/, em ${new Set(emOrdem.map((f) => classifica(f).produto)).size} pastas.`);
+console.log(porProduto
+  ? `\n${emOrdem.length} PDF(s) em pdf/, em ${new Set(emOrdem.map((f) => classifica(f).produto)).size} pastas.`
+  : `\n${emOrdem.length} PDF(s) em ${relative(root, outDir)}/.`);

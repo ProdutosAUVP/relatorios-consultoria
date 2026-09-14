@@ -451,16 +451,24 @@ function ajustarQuadro() {
   const alvo = paginas[estado.pagina - 1];
   const l = alvo.offsetWidth || 1;
   const a = alvo.offsetHeight || 1;
-  // Cabe na largura da coluna e na altura da janela: a página inteira à vista
-  // vale mais do que ver o topo em tamanho real.
   const palco = $('.palco');
   const alturaLivre = Math.max(240, window.innerHeight - palco.getBoundingClientRect().top - 60);
-  const escala = Math.min(1, (palco.clientWidth - 40) / l, alturaLivre / a);
+  // Cabe na largura da coluna e na altura da janela: a página inteira à vista
+  // vale mais do que ver o topo em tamanho real. A exceção é a folha longa da
+  // apresentação do consultor, que tem mais de um metro e meio de altura:
+  // encolhê-la até caber na janela deixaria o texto com um pixel e meio. Nela a
+  // escala sai só da largura, e a prévia rola, como o documento rola na tela de
+  // quem recebe.
+  const rolar = a / l > 2;
+  const escala = rolar
+    ? Math.min(1, (palco.clientWidth - 40) / l)
+    : Math.min(1, (palco.clientWidth - 40) / l, alturaLivre / a);
   quadro.style.width = `${l}px`;
   quadro.style.height = `${a}px`;
   quadro.style.transform = `scale(${escala})`;
   moldura.style.width = `${l * escala}px`;
-  moldura.style.height = `${a * escala}px`;
+  moldura.style.height = `${(rolar ? Math.min(a * escala, alturaLivre) : a * escala)}px`;
+  moldura.style.overflowY = rolar ? 'auto' : '';
 }
 
 /** A prévia mostra só as páginas incluídas, então a seção do formulário — que

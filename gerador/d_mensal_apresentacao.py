@@ -59,8 +59,7 @@ def build(t, seg):
         ch=chart("Patrimônio nos últimos 12 meses", "Linha de patrimônio com barras de aportes e resgates.", "line", "min-height:52mm"),
         frase=ph("resumo_do_mes"), aten=ph("ponto_de_atencao_mes")), dark=True))
 
-    S.append(slide(t, "Rentabilidade", 4, """<span class="eyebrow">Comparação</span>
-<h1 class="t">Sua carteira x referências</h1>
+    S.append(slide(t, "Rentabilidade", 4, """<h1 class="t">Sua carteira x referências</h1>
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch">
   <div>%(tab)s</div>
   %(ch)s
@@ -73,8 +72,7 @@ def build(t, seg):
                   nums=[1, 2, 3, 4]),
         ch=chart("Carteira x IPCA + 5% a.a. acumulado", "Duas linhas acumuladas desde o início do relacionamento.", "line", "min-height:60mm"))))
 
-    S.append(slide(t, "Alocação", 5, """<span class="eyebrow">Distribuição</span>
-<h1 class="t">Alvo x realizado</h1>
+    S.append(slide(t, "Alocação", 5, """<h1 class="t">Alvo x realizado</h1>
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch">
   <div>%(tab)s</div>
   <div style="display:flex;flex-direction:column;gap:5mm">
@@ -93,8 +91,7 @@ def build(t, seg):
         ch=chart("Composição atual", "Rosca com o peso de cada classe.", "donut", "min-height:46mm"),
         reb=ph("texto_rebalanceamento"))))
 
-    S.append(slide(t, "Movimentações", 6, """<span class="eyebrow">O que fizemos</span>
-<h1 class="t">Movimentações do período</h1>
+    S.append(slide(t, "Movimentações", 6, """<h1 class="t">Movimentações do período</h1>
 %(tab)s
 <div class="gap"></div>
 %(kpis)s""" % dict(
@@ -124,8 +121,7 @@ def build(t, seg):
                   "alta-renda": "Ofertas acessadas no período e peso na carteira.",
                   "private": "Patrimônio por moeda e por jurisdição."}[seg], "donut", "min-height:50mm"))))
 
-    S.append(slide(t, "Cenário", 8, """<span class="eyebrow">Contexto</span>
-<h1 class="t">Cenário e posicionamento</h1>
+    S.append(slide(t, "Cenário", 8, """<h1 class="t">Cenário e posicionamento</h1>
 <div class="cols2" style="margin-bottom:6mm">
   <div><h2>Brasil</h2><p class="small">%(br)s</p></div>
   <div><h2>Internacional</h2><p class="small">%(int)s</p></div>
@@ -139,8 +135,7 @@ def build(t, seg):
                                 ("Renda variável BR", "rvbr"), ("Internacional", "intl"),
                                 ("Alternativos", "alt")]])), dark=True))
 
-    S.append(slide(t, "Próximos passos", 9, """<span class="eyebrow">Plano de ação</span>
-<h1 class="t">Próximos passos</h1>
+    S.append(slide(t, "Próximos passos", 9, """<h1 class="t">Próximos passos</h1>
 <div class="cols2u" style="flex:1 1 auto;align-items:start">
   <div>
     <h2>O que vamos fazer</h2>
@@ -183,8 +178,7 @@ def build(t, seg):
                  whats=ph("whatsapp_contato"), email=ph("email_contato"), link=ph("link_agendamento")),
                    dark=True))
 
-    S.append(slide(t, "Avisos", 11, """<span class="eyebrow">Transparência</span>
-<h1 class="t">Notas e avisos</h1>
+    S.append(slide(t, "Avisos", 11, """<h1 class="t">Notas e avisos</h1>
 <div class="cols2" style="flex:1 1 auto">
   <div>
     <p class="legal">%(disc)s</p>

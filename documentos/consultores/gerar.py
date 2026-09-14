@@ -66,9 +66,9 @@ def foto_redonda(slug, f=d_consultor_simples.FOLHA):
     return '<div class="fl-foto" %s>%s</div>' % (pos, foto(slug, cls=""))
 
 
-def escreve(nome_arquivo, titulo, paginas):
+def escreve(nome_arquivo, titulo, paginas, css=None):
     t = THEMES[TEMA]
-    html = (head(titulo, tokens(t) + "\n" + CSS_A4)
+    html = (head(titulo, tokens(t) + "\n" + (css or CSS_A4))
             + sem_viuvas("\n".join(paginas)) + "\n" + FOOT)
     # O único campo que sobra num documento pronto é a data, e ela se resolve
     # sozinha. Se sobrar outro — o WhatsApp de quem não tem número, por exemplo
@@ -78,19 +78,17 @@ def escreve(nome_arquivo, titulo, paginas):
     caminho = os.path.join(AQUI, nome_arquivo)
     with open(caminho, "w", encoding="utf-8") as f:
         f.write(html)
-    print("  %-56s %2d páginas" % (os.path.relpath(caminho, RAIZ), len(paginas)))
+    print("  %s" % os.path.relpath(caminho, RAIZ))
     return nome_arquivo
 
 
 def completa(c, data):
-    """A apresentação de oito páginas, com e sem a data no cabeçalho."""
+    """A folha inteira, com e sem a data no pé."""
     t = THEMES[TEMA]
     reset_img()
     set_date_ph("data_apresentacao")
-    primeiro = c["nome"].split()[0]
-    paginas = d_consultor.paginas(t, PLANO, c=c, foto=foto(c["slug"]), primeiro=primeiro)
-    return [page_a4(t, sec, i, corpo, rodape=t["nome_full"], data=data, **opts)
-            for i, (sec, corpo, opts) in enumerate(paginas, start=1)]
+    return [d_consultor.folha(t, PLANO, c=c, foto=foto(c["slug"]),
+                              primeiro=c["nome"].split()[0], data=data)]
 
 
 def simples(c):
@@ -106,10 +104,11 @@ def main(filtros):
                                for q in filtros):
             continue
         titulo = "Apresentação do consultor — %s" % c["nome"]
+        longa = CSS_A4 + CSS_LONGA
         escritos.add(escreve("apresentacao-consultor-%s.html" % c["slug"],
-                             titulo, completa(c, data=True)))
+                             titulo, completa(c, data=True), css=longa))
         escritos.add(escreve("apresentacao-consultor-%s-sem-data.html" % c["slug"],
-                             titulo, completa(c, data=False)))
+                             titulo, completa(c, data=False), css=longa))
         escritos.add(escreve("apresentacao-consultor-simples-%s.html" % c["slug"],
                              titulo, simples(c)))
 

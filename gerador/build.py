@@ -52,7 +52,7 @@ DOCUMENTOS = [
     # A apresentação do consultor varia por plano da consultoria e por
     # segmento, e a em branco sai também sem data. A lista é montada no próprio
     # módulo, e as variantes trazem o tema junto em vez de sair do sufixo.
-    dict(chave="apresentacao-consultor", formato="a4",
+    dict(chave="apresentacao-consultor", formato="longa",
          titulo="Apresentação do consultor — %s", builder=d_consultor.build,
          variantes=d_consultor.variantes(THEMES, SEGMENTOS)),
     # A versão de uma página: só a pessoa, sem o plano e sem data. É o cartão
@@ -85,7 +85,9 @@ def monta(doc, sufixo, rotulo, tema):
     t = THEMES[tema]
     reset_img()
     paginas = doc["builder"](t, sufixo)
-    css = CSS_A4 if doc["formato"] == "a4" else CSS_SLIDE
+    # A folha longa é o A4 com a altura da página trocada: ela reaproveita a
+    # tipografia e os componentes inteiros, e só o `@page` e o corpo mudam.
+    css = {"a4": CSS_A4, "slide": CSS_SLIDE, "longa": CSS_A4 + CSS_LONGA}[doc["formato"]]
     html = head(doc["titulo"] % rotulo, tokens(t) + "\n" + css) + \
         sem_viuvas("\n".join(paginas)) + "\n" + FOOT
     caminho = os.path.join(OUT, "%s-%s.html" % (doc["chave"], sufixo))

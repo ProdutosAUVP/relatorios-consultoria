@@ -100,8 +100,7 @@ def build(t, seg):
                     '<span class="pill">' + ph("obj_%d_prioridade" % i) + "</span>", ph("obj_%d_situacao" % i)]
                    for i in (1, 2, 3, 4)], nums=[2]))))
 
-    P.append(page_a4(t, "Carteira atual", 4, """<span class="eyebrow">Fotografia</span>
-<h1 class="t">Como está a sua carteira hoje</h1>
+    P.append(page_a4(t, "Carteira atual", 4, """<h1 class="t">Como está a sua carteira hoje</h1>
 <p class="lead">Posição consolidada em %(corte)s, somando todas as instituições informadas.</p>
 %(kpis)s
 <div class="gap"></div>
@@ -127,8 +126,7 @@ def build(t, seg):
                  "donut", "min-height:44mm", series=["Renda fixa", "Multimercado", "Renda variável BR", "Internacional", "FIIs", "Alternativos"]),
         ch2=chart("Liquidez da carteira", "Quanto do patrimônio está disponível em D+0, até 30 dias, até 1 ano e acima disso.", "bars", "min-height:44mm"))))
 
-    P.append(page_a4(t, "Diagnóstico", 5, """<span class="eyebrow">Leitura</span>
-<h1 class="t">Pontos fortes e pontos de atenção</h1>
+    P.append(page_a4(t, "Diagnóstico", 5, """<h1 class="t">Pontos fortes e pontos de atenção</h1>
 <p class="lead">O que já funciona e deve ser preservado, e o que custa dinheiro ou risco desnecessário hoje.</p>
 <h2>O que está bem construído</h2>
 %(fortes)s
@@ -144,8 +142,7 @@ def build(t, seg):
                    for i, cls in [(1, "rk"), (2, "rk"), (3, "at"), (4, "at"), (5, "at")]], nums=[3]),
         resumo=ph("resumo_diagnostico"))))
 
-    P.append(page_a4(t, "Riscos", 6, """<span class="eyebrow">Exposições</span>
-<h1 class="t">Riscos e concentração</h1>
+    P.append(page_a4(t, "Riscos", 6, """<h1 class="t">Riscos e concentração</h1>
 <p class="lead">Onde a carteira está concentrada e qual seria o efeito de um cenário adverso em cada frente.</p>
 <h2>Concentração por emissor e contraparte</h2>
 %(tab)s
@@ -170,8 +167,7 @@ def build(t, seg):
                    nums=[1, 2]),
         fgc=ph("texto_cobertura_fgc"))))
 
-    P.append(page_a4(t, "Custos", 7, """<span class="eyebrow">Eficiência</span>
-<h1 class="t">Custos e eficiência tributária</h1>
+    P.append(page_a4(t, "Custos", 7, """<h1 class="t">Custos e eficiência tributária</h1>
 <p class="lead">Todo custo é aceitável desde que entregue algo em troca. Abaixo, o que a carteira paga hoje e o que dá para recuperar.</p>
 <h2>Custos identificados</h2>
 %(tab)s
@@ -194,8 +190,7 @@ def build(t, seg):
                    ("Economia estimada", ph("economia_estimada_ano"), "Por ano"),
                    ("Em 10 anos", ph("economia_estimada_10a"), "Com reinvestimento")]))))
 
-    P.append(page_a4(t, "Proposta", 8, """<span class="eyebrow">Recomendação</span>
-<h1 class="t">Carteira proposta</h1>
+    P.append(page_a4(t, "Proposta", 8, """<h1 class="t">Carteira proposta</h1>
 <p class="lead">Alocação sugerida para o perfil %(perf)s e os objetivos declarados, com o efeito esperado de cada mudança.</p>
 %(tab)s
 <div class="gap"></div>
@@ -221,8 +216,7 @@ def build(t, seg):
                  "donut", "min-height:50mm", series=["Renda fixa", "Multimercado", "Renda variável BR", "Internacional", "FIIs", "Alternativos"]),
         muda=ph("texto_o_que_muda"), ret=ph("retorno_esperado_proposta"), risco=ph("risco_esperado_proposta"))))
 
-    P.append(page_a4(t, "Transição", 9, """<span class="eyebrow">Execução</span>
-<h1 class="t">Plano de transição</h1>
+    P.append(page_a4(t, "Transição", 9, """<h1 class="t">Plano de transição</h1>
 <p class="lead">Sair da carteira atual custa tempo e, às vezes, imposto. O plano abaixo respeita carências, vencimentos e o momento de mercado.</p>
 <h2>Etapas</h2>
 %(fluxo)s
@@ -246,8 +240,7 @@ def build(t, seg):
         resp=ph("nome_responsavel"), papel=papel, cert=ph("registro_cvm_ou_ancord"),
         data=ph("data_diagnostico"), marca=t["marca"])))
 
-    P.append(page_a4(t, "Notas e avisos", 10, """<span class="eyebrow">Transparência</span>
-<h1 class="t">Notas metodológicas e avisos</h1>
+    P.append(page_a4(t, "Notas e avisos", 10, """<h1 class="t">Notas metodológicas e avisos</h1>
 <h2>Premissas usadas</h2>
 <ul class="small">
   <li>Retornos esperados por classe: %(prem1)s.</li>

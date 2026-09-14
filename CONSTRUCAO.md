@@ -60,6 +60,7 @@ autossuficientes na entrega, fonte única na manutenção.
 | `scripts/documentos.mjs` | a tabela de produtos e documentos, partilhada pelo render e pelo catálogo |
 | `scripts/exemplos.mjs` | o exemplo de preenchimento de cada campo, derivado do nome |
 | `scripts/check.mjs` | valida estouro de página em modo de impressão |
+| `scripts/altura.mjs` | mede o conteúdo das folhas longas, para acertar a altura da página |
 | `scripts/variaveis.mjs` | gera o `VARIAVEIS.md` a partir dos modelos |
 | `scripts/catalogo.mjs` | monta `docs/`: copia os modelos e escreve o índice da ferramenta |
 | `docs/` | a ferramenta de preenchimento, publicada no GitHub Pages |

@@ -82,8 +82,7 @@ def build(t, seg):
                                                "Acompanhamento", "Revisão"], start=1)]),
         prazo=ph("prazo_implantacao"))))
 
-    S.append(slide(t, "Como trabalhamos", 7, """<span class="eyebrow">Diferenciais</span>
-<h1 class="t">Por que %(nome)s</h1>
+    S.append(slide(t, "Como trabalhamos", 7, """<h1 class="t">Por que %(nome)s</h1>
 <div class="cards" style="--n:3;margin-bottom:8mm">%(pil)s</div>
 <h2>O que você recebe todo mês</h2>
 %(ent)s""" % dict(
@@ -152,8 +151,7 @@ def build(t, seg):
   </div>""" % (i, ph("pessoa_%d_nome" % i), ph("pessoa_%d_cargo" % i), ph("pessoa_%d_bio" % i))
                       for i in (1, 2, 3)))))
 
-    S.append(slide(t, "Próximos passos", 12, """<span class="eyebrow">Começar</span>
-<h1 class="t">Como damos o primeiro passo</h1>
+    S.append(slide(t, "Próximos passos", 12, """<h1 class="t">Como damos o primeiro passo</h1>
 <div class="center">%(flow)s
 <div><h2 style="margin-top:0">O que precisamos de você</h2>
 <div class="cols3">%(need)s</div></div></div>""" % dict(
@@ -184,8 +182,7 @@ def build(t, seg):
                  email=ph("email_contato"), site=ph("site"), end=ph("endereco_escritorio"),
                  link=ph("link_agendamento")), dark=True))
 
-    S.append(slide(t, "Avisos", 14, """<span class="eyebrow">Transparência</span>
-<h1 class="t">Avisos importantes</h1>
+    S.append(slide(t, "Avisos", 14, """<h1 class="t">Avisos importantes</h1>
 <div class="center"><div class="cols2">
   <div>
     <p class="legal">%(disc)s</p>

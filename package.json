@@ -11,7 +11,8 @@
     "vars": "node scripts/variaveis.mjs",
     "site": "node scripts/catalogo.mjs",
     "servir": "python3 -m http.server 8099 --directory docs",
-    "all": "npm run build && npm run vars && npm run check && npm run site && npm run pdf"
+    "all": "npm run build && npm run vars && npm run check && npm run site && npm run pdf",
+    "altura": "node scripts/altura.mjs"
   },
   "devDependencies": {
     "playwright": "^1.49.1"

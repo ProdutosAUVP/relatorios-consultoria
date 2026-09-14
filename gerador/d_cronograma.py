@@ -46,8 +46,7 @@ def build(t, seg):
                        "Ciclo " + ph("ano_vigencia"),
                        ph("data_emissao")], grafismo=1))
 
-    P.append(page_a4(t, "Como funciona", 2, """<span class="eyebrow">O acordo de acompanhamento</span>
-<h1 class="t">Como funciona o seu acompanhamento</h1>
+    P.append(page_a4(t, "Como funciona", 2, """<h1 class="t">Como funciona o seu acompanhamento</h1>
 <p class="lead">Este documento fixa a cadência de contato do ciclo %(ano)s: o que acontece, quando acontece e o que cada encontro entrega. Nada aqui impede um contato extra quando você precisar.</p>
 <h2>Ritmo do segmento %(nome)s</h2>
 %(tab)s
@@ -80,8 +79,7 @@ def build(t, seg):
                     ph("cal_%02d_entregavel" % i), '<span class="pill">' + ph("cal_%02d_status" % i) + "</span>"]
                    for i, m in enumerate(MESES, start=1)], sm=True))))
 
-    P.append(page_a4(t, "As reuniões", 4, """<span class="eyebrow">O que esperar</span>
-<h1 class="t">O que acontece em cada encontro</h1>
+    P.append(page_a4(t, "As reuniões", 4, """<h1 class="t">O que acontece em cada encontro</h1>
 <p class="lead">Cada tipo de reunião tem uma pauta padrão. Você pode acrescentar temas até %(prazo)s antes da data.</p>
 %(blocos)s
 <h2>Como se preparar</h2>
@@ -118,8 +116,7 @@ def build(t, seg):
                     for i in (1, 2, 3, 4)], nums=[1, 2]),
         urg=ph("procedimento_urgencia"), ouv=ph("texto_ouvidoria"))))
 
-    P.append(page_a4(t, "Agendamento", 6, """<span class="eyebrow">Confirmação</span>
-<h1 class="t">Agendar, remarcar e confirmar</h1>
+    P.append(page_a4(t, "Agendamento", 6, """<h1 class="t">Agendar, remarcar e confirmar</h1>
 <p class="lead">Use o link abaixo para escolher horários, remarcar um encontro ou pedir uma conversa fora do calendário.</p>
 <div class="cols2u" style="align-items:start">
   <div>

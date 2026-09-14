@@ -37,8 +37,7 @@ OPCIONAL = ('<span class="pill" style="margin-left:3mm;vertical-align:middle">'
 
 def pagina_extra(t, seg):
     if seg == "private":
-        return """<span class="eyebrow">Private Banking</span>
-<h1 class="t">Estruturas e sucessão</h1>
+        return """<h1 class="t">Estruturas e sucessão</h1>
 <p class="lead">Acompanhamento das estruturas patrimoniais e do plano sucessório definidos com a família. A exposição internacional está na seção anterior.</p>
 <h2>Estruturas e veículos</h2>
 %(tab)s
@@ -62,8 +61,7 @@ def pagina_extra(t, seg):
                        sm=True, widths=[26, 14, 16, 26, 18]))
 
     # assessoria
-    return """<span class="eyebrow">Assessoria</span>
-<h1 class="t">Transparência de remuneração</h1>
+    return """<h1 class="t">Transparência de remuneração</h1>
 <p class="lead">Você não paga taxa de assessoria. A casa é remunerada pela distribuição dos produtos que estão na sua carteira, e o quadro abaixo mostra quanto isso representou no período.</p>
 <h2>Remuneração recebida pela casa no período</h2>
 %(tab)s
@@ -107,8 +105,7 @@ def build(t, seg):
         secoes.append((sec, titulo_sumario, corpo))
 
     # ------------------------------------------------------- resumo da carteira
-    add("Resumo da carteira", "Resumo da carteira", """<span class="eyebrow">Visão geral</span>
-<h1 class="t">Resumo da carteira</h1>
+    add("Resumo da carteira", "Resumo da carteira", """<h1 class="t">Resumo da carteira</h1>
 <p class="lead">Posição consolidada em %(dtpos)s, considerando todas as contas e instituições sob acompanhamento.</p>
 %(kpis)s
 <div class="gap"></div>
@@ -137,8 +134,7 @@ def build(t, seg):
                  "line", "min-height:46mm")))
 
     # ------------------------------------------------------ tabela do portfólio
-    add("Carteira", "Carteira consolidada", """<span class="eyebrow">Posições</span>
-<h1 class="t">Carteira consolidada</h1>
+    add("Carteira", "Carteira consolidada", """<h1 class="t">Carteira consolidada</h1>
 <p class="lead">Todas as posições em %(dt)s, com a instituição em que estão custodiadas.</p>
 %(tab)s""" % dict(
         dt=ph("data_posicao"),
@@ -151,8 +147,7 @@ def build(t, seg):
                   caption="Repita as linhas conforme o número de posições. Ativos zerados no período aparecem na seção de movimentações.")))
 
     # --------------------------------------------------- alocação por estratégia
-    add("Alocação por estratégia", "Alocação por estratégia", """<span class="eyebrow">Distribuição</span>
-<h1 class="t">Alocação por estratégia</h1>
+    add("Alocação por estratégia", "Alocação por estratégia", """<h1 class="t">Alocação por estratégia</h1>
 <p class="lead">Comparação entre a carteira meta do perfil %(perf)s e a posição efetiva na data de referência.</p>
 %(tab)s
 <div class="gap"></div>
@@ -174,8 +169,7 @@ def build(t, seg):
                   series=["Renda fixa", "Multimercado", "Renda variável BR", "Internacional", "FIIs", "Alternativos"])))
 
     # ------------------------------------------------ movimentações e proventos
-    add("Movimentações e proventos", "Movimentações e proventos", """<span class="eyebrow">Período</span>
-<h1 class="t">Movimentações e proventos</h1>
+    add("Movimentações e proventos", "Movimentações e proventos", """<h1 class="t">Movimentações e proventos</h1>
 <p class="lead">Todas as operações executadas entre %(ini)s e %(fim)s, com o motivo de cada decisão.</p>
 <h2>Operações executadas</h2>
 %(tab)s
@@ -198,8 +192,7 @@ def build(t, seg):
         ch=chart("Proventos por mês", "Barras com os proventos recebidos nos últimos 12 meses, empilhadas por origem (dividendos, JCP, aluguel, cupom).", "bars", "min-height:48mm")))
 
     # -------------------------------------------------------------- renda fixa
-    add("Renda fixa", "Renda fixa: indexadores e liquidez", """<span class="eyebrow">Renda fixa</span>
-<h1 class="t">Indexadores e liquidez projetada</h1>
+    add("Renda fixa", "Renda fixa: indexadores e liquidez", """<h1 class="t">Indexadores e liquidez projetada</h1>
 <p class="lead">Como a renda fixa está distribuída entre indexadores e quando ela vira caixa.</p>
 <h2>Posições por indexador</h2>
 <div class="cols2u">
@@ -226,8 +219,7 @@ def build(t, seg):
                    nums=[1, 2, 3, 4], xs=True,
                    caption="Liquidez projetada considera carência, vencimento e liquidez de mercado do papel.")))
 
-    add("Renda fixa", "Renda fixa: emissores", """<span class="eyebrow">Renda fixa</span>
-<h1 class="t">Controle por emissor</h1>
+    add("Renda fixa", "Renda fixa: emissores", """<h1 class="t">Controle por emissor</h1>
 <p class="lead">A quem você está emprestando, quanto, com qual risco de crédito e até onde vai a cobertura do FGC.</p>
 %(tab)s
 <div class="gap"></div>
@@ -241,8 +233,7 @@ def build(t, seg):
         nota=ph("texto_limite_emissor")))
 
     # ----------------------------------------------------------- ações e FIIs
-    add("Ações e FIIs", "Ações e fundos imobiliários", """<span class="eyebrow">Renda variável</span>
-<h1 class="t">Ações e fundos imobiliários</h1>
+    add("Ações e FIIs", "Ações e fundos imobiliários", """<h1 class="t">Ações e fundos imobiliários</h1>
 <p class="lead">Distribuição por setor e por segmento, e a lista completa das posições em bolsa.</p>
 <div class="cols2">
   %(ch)s
@@ -269,8 +260,7 @@ def build(t, seg):
                    widths=[14, 28, 12, 15, 16, 15])))
 
     # ----------------------------------------------------------- internacional
-    add("Internacional", "Internacional", """<span class="eyebrow">Internacional %(op)s</span>
-<h1 class="t">Carteira internacional</h1>
+    add("Internacional", "Internacional", """<h1 class="t">Carteira internacional %(op)s</h1>
 <p class="lead">Posições denominadas em moeda estrangeira, convertidas pela PTAX de %(ptax)s. A página mostra a posição no exterior; o resultado da carteira está no resumo. Esta seção só entra quando houver posição no exterior.</p>
 %(kpis)s
 <div class="gap"></div>
@@ -298,8 +288,7 @@ def build(t, seg):
         add(EXTRA_TITULO[seg], EXTRA_TITULO[seg], pagina_extra(t, seg))
 
     # ------------------------------------------------------------------ notas
-    add("Notas e avisos", "Notas metodológicas e avisos", """<span class="eyebrow">Transparência</span>
-<h1 class="t">Notas metodológicas e avisos</h1>
+    add("Notas e avisos", "Notas metodológicas e avisos", """<h1 class="t">Notas metodológicas e avisos</h1>
 <h2>Avisos legais</h2>
 <p class="legal">%(disc)s</p>
 <p class="legal">Rentabilidade passada não representa garantia de rentabilidade futura. Os investimentos apresentados podem não ser adequados a todos os investidores e não contam, salvo quando expressamente indicado, com garantia do Fundo Garantidor de Créditos (FGC) nem de qualquer mecanismo de seguro. Antes de investir, leia atentamente os documentos de cada produto, incluindo regulamento, lâmina, prospecto e formulário de informações complementares.</p>

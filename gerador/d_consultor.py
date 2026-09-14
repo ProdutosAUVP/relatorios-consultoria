@@ -209,7 +209,7 @@ FOLHA = """<section class="page longa" data-sec="Apresentação do consultor">
       </div>
     </div>
     <div class="lg-assina">
-      <span class="marca">%(marca)s%(data)s</span>
+      %(data)s
       %(logo)s
     </div>
   </footer>
@@ -453,7 +453,9 @@ def folha(t, variante, c=None, foto=None, primeiro=None, data=True):
         canais_lead=CANAIS_LEAD, primeiro=primeiro,
         contatos=(_contato(c, "whatsapp", "WhatsApp", _whatsapp)
                   + _contato(c, "email", "E-mail", lambda e: _link("mailto:" + e, e))),
-        data=('<span class="data">%s</span>' % ph("data_apresentacao")) if data else "",
+        # Só a data, e do outro lado a marca — a logo. Escrever "AUVP Capital"
+        # ao lado dela era dizer duas vezes a mesma coisa.
+        data=('<span class="data">%s</span>' % ph("data_apresentacao")) if data else "<span></span>",
         logo=logo_svg(t, 8.0),
         **CANAIS)
 

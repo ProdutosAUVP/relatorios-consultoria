@@ -894,6 +894,6 @@ CSS_LONGA = """
 .lg-pe .legal{color:rgba(255,255,255,.5)}
 .lg-assina{margin-top:12mm;padding-top:6mm;border-top:1px solid rgba(255,255,255,.3);
   display:flex;align-items:center;justify-content:space-between;gap:10mm}
-.lg-assina .marca{font-size:8pt;letter-spacing:.14em;text-transform:uppercase;
+.lg-assina .data{font-size:8pt;letter-spacing:.14em;text-transform:uppercase;
   color:rgba(255,255,255,.72)}
 """ % dict(h=ALTURA_LONGA)

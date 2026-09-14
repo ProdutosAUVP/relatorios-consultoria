@@ -118,8 +118,8 @@ FOLHA = """<section class="page longa" data-sec="Apresentação do consultor">
         <span class="lg-plano">%(plano)s</span>
         <h1>%(nome)s</h1>
         <p class="papel">%(papel)s na %(marca)s</p>
+        <p class="lg-frase">%(frase)s</p>
       </div>
-      <p class="lg-frase">%(frase)s</p>
     </div>
     <div class="lg-cred" style="--n:%(nc)d">%(cred)s</div>
   </header>

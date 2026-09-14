@@ -861,12 +861,15 @@ CSS_LONGA = """
 .lg-corpo{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
 
 /* o alto: retrato à esquerda, identificação à direita, declaração cruzando as
-   duas colunas sob um fio — a mesma composição da abertura que existia antes */
+   duas colunas sob um fio — a mesma composição da abertura que existia antes.
+   O plano, o nome e o cargo se centram pelo eixo do retrato, e não pelo pé
+   dele: são dois blocos de altura diferente lado a lado, e alinhar pela base
+   deixava o nome caído num canto da foto. */
 .lg-topo{padding-top:20mm;padding-bottom:18mm}
 .lg-topo .grain{position:absolute;inset:0;z-index:1}
 .lg-topo>*{position:relative;z-index:2}
-.lg-id{display:grid;grid-template-columns:44mm 1fr;gap:0 10mm;align-items:end}
-.lg-id .rt-img,.lg-id .rt-vaga{margin:0;align-self:end;border-radius:4mm 0 0 0}
+.lg-id{display:grid;grid-template-columns:44mm 1fr;gap:0 10mm;align-items:center}
+.lg-id .rt-img,.lg-id .rt-vaga{margin:0;border-radius:4mm 0 0 0}
 .lg-id .rt-vaga{border-color:rgba(255,255,255,.35);
   background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.05) 6px 12px)}
 .lg-id .rt-vaga .cl{color:rgba(255,255,255,.72)}

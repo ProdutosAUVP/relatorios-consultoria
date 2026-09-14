@@ -98,7 +98,8 @@
         <h2 id="titulo-preencher">Preencher</h2>
         <p>O documento à direita atualiza a cada tecla. O que ficar em branco continua aparecendo
            como <code>{{campo}}</code> no arquivo exportado, então dá para preencher em várias sessões —
-           o que você digita fica salvo neste navegador.</p>
+           o que você digita fica salvo neste navegador. O seu nome, os seus contatos e os textos da
+           casa já vêm preenchidos com o que você usou da última vez, e as datas vêm com a de hoje.</p>
       </div>
       <div class="oficina">
         <div class="painel">
@@ -164,6 +165,12 @@
             <button type="button" class="btn neutro" id="baixar-dados">Baixar</button>
             <button type="button" class="btn neutro" id="carregar-dados">Carregar</button>
             <input type="file" id="arquivo-dados" accept="application/json" hidden>
+          </div>
+          <h3 style="margin-top:22px">Memória deste navegador</h3>
+          <p>O seu nome, os seus contatos e os textos da casa ficam guardados aqui e preenchem
+             sozinhos o próximo documento. Nada do cliente é guardado.</p>
+          <div class="acoes" style="display:flex;gap:8px;flex-wrap:wrap">
+            <button type="button" class="btn neutro" id="esquecer">Esquecer</button>
           </div>
         </div>
       </div>

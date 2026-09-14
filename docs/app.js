@@ -56,6 +56,111 @@ function baixar(conteudo, nome, tipo) {
 
 const chaveArmazem = () => `${ARMAZEM}:${estado.documento.chave}:${estado.variante.sufixo}`;
 
+/* A memória deste computador: o que não muda de um documento para outro. Quem
+ * emite vai preencher o próprio nome, o registro, o CNPJ da casa, o disclaimer
+ * do compliance e — na apresentação do consultor — a própria biografia em todo
+ * documento que abrir. Guardar isso uma vez e oferecer nos próximos poupa a
+ * maior parte do trabalho.
+ *
+ * O que é do cliente ou do período fica de fora, e essa é a parte que importa:
+ * se `nome_cliente` fosse lembrado, o relatório do cliente seguinte abriria com
+ * o nome do anterior, e alguém exportaria sem reparar. Por isso a lista é de
+ * inclusão, e não de exclusão — campo novo não entra na memória por descuido. */
+const MEMORIA = `${ARMAZEM}:memoria`;
+
+const LEMBRAR = [
+  // quem emite o documento
+  /^nome_responsavel$/, /^registro_cvm_ou_ancord$/, /^papel_consultor$/,
+  // a pessoa, na apresentação do consultor: escrita uma vez, usada sempre
+  /^(nome|frase)_consultor$/,
+  /^(formacao|especializacao|certificacao|qualificacoes|proposito|trajetoria|fora_do_escritorio|interesse)_\d+$/,
+  /^marco_\d+_(quando|texto)$/,
+  // contato e identificação da casa
+  /^(email|whatsapp|telefone)_(contato|consultor)$/, /^instagram_consultor$/,
+  /^(site|razao_social|cnpj|canal_ouvidoria|canal_atendimento|link_agendamento)$/,
+  /^canal_(email|whats|tel|portal)_(endereco|horario|para)$/,
+  /^time_\w+_(nome|papel|contato)$/,
+  // texto que o compliance aprova uma vez e vale para o segmento inteiro
+  /^(disclaimer_regulatorio|notas_de_rodape|texto_ouvidoria|nota_taxas)$/,
+];
+
+const lembrado = (campo) => LEMBRAR.some((re) => re.test(campo));
+
+function lembrar() {
+  try {
+    const m = JSON.parse(localStorage.getItem(MEMORIA) || '{}');
+    for (const [campo, valor] of Object.entries(estado.valores)) {
+      if (lembrado(campo) && valor && valor.trim()) m[campo] = valor;
+    }
+    localStorage.setItem(MEMORIA, JSON.stringify(m));
+  } catch (e) { /* sem espaço ou sem localStorage: o documento atual não perde nada */ }
+}
+
+function recordar() {
+  try {
+    return JSON.parse(localStorage.getItem(MEMORIA) || '{}');
+  } catch (e) { return {}; }
+}
+
+function esquecer() {
+  try { localStorage.removeItem(MEMORIA); } catch (e) { /* nada a esquecer */ }
+}
+
+/* A data de hoje, onde ela é a resposta certa na maioria das vezes.
+ *
+ * A tabela é explícita porque `_mes` e `_ano` no fim do nome quase nunca são
+ * data: `rent_mes` é rentabilidade e `mk_spx_ano` é variação no ano. Um padrão
+ * pelo sufixo preencheria percentual com data. Fica de fora também a data do
+ * que ainda vai acontecer — hoje não é palpite para a próxima reunião — e a de
+ * cada linha de tabela, que é de um evento e não do documento. */
+const MESES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+               'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+const HOJE = {
+  data_apresentacao: 'mes', data_carta: 'mes', mes_referencia: 'mes',
+  mes_seguinte: 'mes+1',
+  data_posicao: 'dia', data_corte: 'dia', data_ptax: 'dia',
+  data_diagnostico: 'dia', data_emissao: 'dia', data_fechamento: 'dia',
+  data_primeira_reuniao: 'dia',
+  data_inicio_periodo: 'primeiro', data_fim_periodo: 'ultimo',
+  ano_vigencia: 'ano', ano_corrente: 'ano', ano_seguinte: 'ano+1',
+};
+
+function dataDeHoje(forma, hoje = new Date()) {
+  const dd = (d) => `${String(d.getDate()).padStart(2, '0')}/`
+    + `${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+  switch (forma) {
+    case 'dia': return dd(hoje);
+    case 'mes': return `${MESES[hoje.getMonth()]} de ${hoje.getFullYear()}`;
+    case 'mes+1': {
+      const m = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 1);
+      return `${MESES[m.getMonth()]} de ${m.getFullYear()}`;
+    }
+    case 'ano': return String(hoje.getFullYear());
+    case 'ano+1': return String(hoje.getFullYear() + 1);
+    case 'primeiro': return dd(new Date(hoje.getFullYear(), hoje.getMonth(), 1));
+    case 'ultimo': return dd(new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0));
+    default: return '';
+  }
+}
+
+/* O que o documento já sabe antes de alguém digitar: a memória deste
+ * computador e a data de hoje. Só entra em campo vazio — rascunho salvo nunca
+ * é sobrescrito, e a data de ontem continua sendo a de ontem se alguém a
+ * escreveu. Só entra também em campo que este documento tem. */
+function sugerir() {
+  const memoria = recordar();
+  let n = 0;
+  for (const campo of Object.keys(estado.estrutura.campos)) {
+    if (estado.valores[campo] && estado.valores[campo].trim()) continue;
+    const v = memoria[campo] || (HOJE[campo] && dataDeHoje(HOJE[campo]));
+    if (!v) continue;
+    estado.valores[campo] = v;
+    n += 1;
+  }
+  return n;
+}
+
 let bd = null;
 
 function abrirBanco() {
@@ -96,6 +201,7 @@ function salvar() {
     localStorage.setItem(chaveArmazem(), JSON.stringify({
       valores: estado.valores, fora: [...estado.fora],
     }));
+    lembrar();
     anunciarSalvo();
   } catch (e) {
     anunciarSalvo('Este navegador não está guardando o rascunho');
@@ -226,7 +332,14 @@ async function escolherVariante(v) {
     estado.fora = new Set();
     estado.pagina = 1;
     await carregar();
+    // Depois do rascunho, nunca antes: o que já foi digitado manda.
+    const sugeridos = sugerir();
+    if (sugeridos) salvar();
     telaPreencher();
+    if (sugeridos) {
+      anunciarSalvo(`${sugeridos} campo${sugeridos > 1 ? 's' : ''} `
+        + 'preenchido com o que este navegador já sabia');
+    }
     mostrar('preencher');
   } catch (e) {
     $('#carregando').textContent = 'Não foi possível carregar o modelo.';
@@ -689,6 +802,16 @@ function ligar() {
   $('#exportar-html').onclick = () =>
     baixar(montar('exportar'), nomeArquivo('html'), 'text/html;charset=utf-8');
   $('#exportar-pdf').onclick = exportarPdf;
+  // Quem empresta o computador, ou troca de escritório, precisa de um jeito de
+  // limpar o que ficou guardado.
+  $('#esquecer').onclick = () => {
+    if (!confirm('Apagar o nome, o contato e os textos que este navegador guardou '
+                 + 'para preencher documentos futuros?\n\n'
+                 + 'O documento aberto não muda.')) return;
+    esquecer();
+    anunciarSalvo('Este navegador esqueceu os dados guardados');
+  };
+
   $('#baixar-dados').onclick = () => baixar(JSON.stringify({
     documento: estado.documento.chave, variante: estado.variante.sufixo,
     valores: estado.valores, imagens: estado.imagens,

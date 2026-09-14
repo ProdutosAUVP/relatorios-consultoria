@@ -49,6 +49,15 @@ const POR_NOME = {
   time_backup_contato: 'nome@auvpcapital.com.br',
   time_mesa_contato: 'mesa@auvpcapital.com.br',
   time_ops_contato: 'operacoes@auvpcapital.com.br',
+  // As datas cujo nome termina em coisa que a varredura casa antes: `posicao`
+  // dava um ticker, `diagnostico` dava um achado e `primeira_reuniao` dava um
+  // tipo de encontro. A ferramenta já preenche estas com a data de hoje, mas o
+  // exemplo continua valendo para quem apaga e escreve outra.
+  data_posicao: '31/08/2026',
+  data_diagnostico: '31/08/2026',
+  data_primeira_reuniao: '31/08/2026',
+  data_proxima_reuniao: '15/10/2026',
+  data_proximo_copom: '05/11/2026',
   momento_do_cliente: 'Venda da participação na empresa, com liquidez recente.',
   frase_de_abertura: 'Uma frase sobre o que orienta o nosso trabalho.',
   subtitulo_carta: 'O que conversamos e o que vem a seguir',

@@ -3,7 +3,8 @@
 
     python3 scripts/fotos.py
 
-Lê os originais de `consultores resolve ai/` e escreve `assets/consultores/`.
+Lê os originais de `assets/consultores/originais/` e escreve o recorte ao lado,
+em `assets/consultores/`.
 As fotos chegam em enquadramentos e proporções que não combinam. Este script
 resolve só isso: detecta o rosto e recorta em 3:4 com o rosto sempre no mesmo
 ponto e no mesmo tamanho relativo. Quando o recorte ideal não cabe na imagem,
@@ -24,19 +25,13 @@ import cv2
 from PIL import Image
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ORIGEM = os.path.join(RAIZ, "consultores resolve ai")
 DESTINO = os.path.join(RAIZ, "assets", "consultores")
+ORIGEM = os.path.join(DESTINO, "originais")
 
-# nome do arquivo de origem -> slug usado no gerador
-SLUGS = {
-    "Alan": "alan-santanna",
-    "André": "andre-arruda",
-    "Bolivar": "bolivar-oliveira",
-    "Danilo": "danilo-barbosa",
-    "Erika": "erika-barreto",
-    "Nasser": "nasser-tanure",
-    "Yuri": "yuri-machado",
-}
+# O original tem o nome do slug, como o recorte: `bolivar-oliveira.png` vira
+# `bolivar-oliveira.jpg`. Antes era o primeiro nome da pessoa, com uma tabela
+# aqui para traduzir — tabela que só existia porque os arquivos vieram assim,
+# e que saía de dia com qualquer consultor novo.
 
 PROPORCAO = 3 / 4          # retrato 3:4
 ROSTO_LARGURA = 0.42       # largura do rosto como fração da largura do recorte
@@ -73,12 +68,14 @@ def recorte(w, h, rosto):
 
 def main():
     os.makedirs(DESTINO, exist_ok=True)
+    originais = sorted(f for f in os.listdir(ORIGEM) if f.lower().endswith(".png"))
+    if not originais:
+        print("Nenhum original em %s" % os.path.relpath(ORIGEM, RAIZ), file=sys.stderr)
+        return 1
     faltando = []
-    for nome, slug in sorted(SLUGS.items()):
-        caminho = os.path.join(ORIGEM, nome + ".png")
-        if not os.path.exists(caminho):
-            faltando.append(nome)
-            continue
+    for arquivo in originais:
+        nome = slug = os.path.splitext(arquivo)[0]
+        caminho = os.path.join(ORIGEM, arquivo)
         bgr = cv2.imread(caminho)
         h, w = bgr.shape[:2]
         rosto = acha_rosto(bgr)
@@ -95,7 +92,7 @@ def main():
     if faltando:
         print("sem saída: %s" % ", ".join(faltando), file=sys.stderr)
         return 1
-    print("%d retrato(s) em assets/consultores/" % len(SLUGS))
+    print("%d retrato(s) em assets/consultores/" % len(originais))
     return 0
 
 

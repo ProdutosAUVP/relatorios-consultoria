@@ -389,10 +389,12 @@ scripts/render.mjs              HTML -> PDF via Playwright
 scripts/check.mjs               verificação de estouro de página
 scripts/variaveis.mjs           gera o VARIAVEIS.md a partir dos modelos
 gerador/                        fonte dos modelos (Python, só biblioteca padrão)
-gerador/consultores.py          texto de apresentação dos sete consultores
+documentos/consultores/         apresentações nominais prontas (fora do pipeline)
+documentos/consultores/consultores.py  texto de apresentação dos sete consultores
+documentos/consultores/gerar.py        remonta as apresentações nominais
 scripts/fotos.py                prepara os retratos (passo de uma vez só)
-assets/consultores/             retratos prontos
-consultores resolve ai/         fotos originais
+assets/consultores/             retratos prontos, recortados em 3:4
+assets/consultores/originais/   fotos originais, como vieram
 assets/fonts/                   Anek Latin (woff2)
 assets relatórios/              logos, grafismos e referências originais (fonte de verdade)
 MODELO SLIDES AUVP CAPITAL.pdf  deck institucional de referência

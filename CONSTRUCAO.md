@@ -52,9 +52,9 @@ autossuficientes na entrega, fonte única na manutenção.
 | `gerador/d_*.py` | um módulo por tipo de documento; contém o conteúdo e a ordem das seções |
 | `gerador/d_consultor_simples.py` | a apresentação de uma página, com chrome próprio; reaproveita os dados e os auxiliares de `d_consultor` |
 | `scripts/fotos.py` | prepara os retratos para envio pela ferramenta: recorta pelo rosto, sem tocar em cor ou brilho |
+| `assets/consultores/originais/` | fotos originais, como vieram |
 | `assets/consultores/` | retratos prontos, saída do `scripts/fotos.py` |
-| `documentos/` | documentos prontos, fora do pipeline: o `npm run all` não os toca |
-| `consultores resolve ai/` | fotos originais, como vieram |
+| `documentos/consultores/` | apresentações nominais prontas, fora do pipeline: o `npm run all` não as toca |
 | `gerador/build.py` | entrada: percorre documentos × segmentos e escreve `modelos/` |
 | `scripts/render.mjs` | HTML → PDF, numa subpasta por produto; apaga o que não é mais gerado |
 | `scripts/documentos.mjs` | a tabela de produtos e documentos, partilhada pelo render e pelo catálogo |
@@ -440,18 +440,21 @@ O formato é `"a4"` ou `"slide"`; é o que escolhe entre `CSS_A4` e `CSS_SLIDE`.
 ### Um documento cujas variantes não são segmentos
 
 Na maioria dos documentos a variante é o segmento e o tema sai dela. Quando não for o
-caso — a apresentação do consultor tem uma variante por pessoa —, declare `tema` fixo e
-a lista de `variantes`, com `(sufixo do arquivo, rótulo do título)`:
+caso — a apresentação do consultor tem uma variante por plano da consultoria —, declare
+a lista de `variantes`, com `(sufixo do arquivo, rótulo do título, chave do tema)`:
 
 ```python
 dict(chave="apresentacao-consultor", formato="a4",
-     titulo="%s — AUVP Capital · Me Diz o Que Fazer", builder=d_consultor.build,
-     tema="consultoria",
-     variantes=[(c["slug"], c["nome"]) for c in consultores.CONSULTORES]),
+     titulo="Apresentação do consultor — %s", builder=d_consultor.build,
+     variantes=d_consultor.variantes(THEMES, SEGMENTOS)),
 ```
 
-O `builder` recebe `(tema, sufixo)` em vez de `(tema, segmento)`. Acrescentar um
-consultor é somar uma entrada em `gerador/consultores.py`.
+A lista mora no próprio módulo do documento, e não aqui: acrescentar um plano em
+`PLANOS`, dentro de `d_consultor.py`, já o coloca no build.
+
+O consultor não é variante de nada — ele é campo, como o nome do cliente. As
+apresentações nominais que já existem ficam em `documentos/consultores/`, fora do
+pipeline, e se remontam com o `gerar.py` daquela pasta.
 
 O `scripts/variaveis.mjs` reconhece o documento pelo prefixo do nome do arquivo, então
 uma chave nova precisa entrar no `TITULOS` dele — os prefixos são ordenados do mais

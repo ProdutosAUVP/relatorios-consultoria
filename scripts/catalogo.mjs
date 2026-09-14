@@ -54,10 +54,14 @@ function estrutura(html) {
   const imagens = [];
   for (const pag of paginas(html)) {
     const nomes = [];
-    const re = /<span class="ph"(?: title="([^"]*)")?>\{\{([a-z0-9_]+)\}\}<\/span>/g;
+    // Os atributos vêm em número e ordem variáveis — `title` quando há dica,
+    // `data-link` quando o campo é endereço de alguma coisa —, então o
+    // casamento é pelo bloco e a dica sai de dentro dele.
+    const re = /<span class="ph"([^>]*)>\{\{([a-z0-9_]+)\}\}<\/span>/g;
     let m;
     while ((m = re.exec(pag.corpo))) {
-      const [, dica, nome] = m;
+      const [, attrs, nome] = m;
+      const dica = attrs.match(/ title="([^"]*)"/)?.[1];
       if (!campos[nome]) {
         campos[nome] = { rotulo: rotuloCampo(nome), pagina: pag.numero, exemplo: exemplo(nome) };
         if (dica) campos[nome].dica = dica;

@@ -126,6 +126,22 @@ Acrescentar um consultor é somar uma entrada em `consultores.py`, pôr a foto o
 `assets/consultores/originais/<slug>.jpg` (ou `.png`), rodar `python3 scripts/fotos.py` e
 depois isso. A pasta dele nasce sozinha.
 
+### Contatos clicáveis
+
+Os três canais da casa — Instagram, YouTube e o podcast no Spotify — já saem como link no
+modelo, porque o endereço deles é conhecido. Os contatos que alguém preenche não podiam:
+`{{email_contato}}` não é endereço de nada.
+
+Então o gerador marca esses campos com `data-link`, e a ferramenta monta o link na hora de
+preencher, com o valor na mão. E-mail vira `mailto:`, WhatsApp vira `wa.me`, Instagram vira
+o perfil, site vira `https://`, telefone vira `tel:`. O Chromium leva a âncora para o PDF,
+então o documento exportado é clicável nos dois formatos.
+
+Alguns campos mudam de natureza conforme a casa — a ouvidoria de uma é 0800 e a de outra é
+um e-mail —, e esses vão marcados como `auto`: quem decide é o valor. Valor que não é
+endereço de nada continua sendo só texto. A tabela dos campos está em `LINKS`, em
+`gerador/common.py`.
+
 ## Ferramenta de preenchimento
 
 Quem vai emitir um documento não precisa mexer no repositório. A ferramenta em

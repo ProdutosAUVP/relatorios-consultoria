@@ -367,6 +367,43 @@ function atualizarContagens() {
 
 /* ------------------------------------------------------------------- montagem */
 
+/** O que se abre ao clicar num campo de contato.
+ *  O tipo vem do modelo, do `data-link` que o gerador põe nos campos que são
+ *  endereço de alguma coisa. `auto` deixa o valor decidir, porque a ouvidoria
+ *  de uma casa é 0800 e a de outra é um e-mail. Devolve vazio quando não há o
+ *  que abrir — e aí o valor fica sendo só texto, como era. */
+function endereco(tipo, valor) {
+  if (!tipo) return '';
+  const digitos = valor.replace(/\D/g, '');
+  // Quem digita "(62) 3095-8115" não põe o país, e sem ele o wa.me não abre.
+  // Dez ou onze dígitos é telefone brasileiro; daí para cima o país já veio.
+  // Número de serviço — 0800, 0300 — não leva país nenhum: ele já é nacional,
+  // e "+55 0800…" não completa a ligação.
+  const servico = digitos.startsWith('0');
+  const e164 = servico || digitos.length >= 12 ? digitos : `55${digitos}`;
+  switch (tipo === 'auto' ? adivinha(valor) : tipo) {
+    case 'mailto': return `mailto:${valor}`;
+    case 'whatsapp': return digitos.length >= 8 ? `https://wa.me/${e164}` : '';
+    case 'tel': return digitos.length >= 8 ? `tel:${servico ? e164 : '+' + e164}` : '';
+    case 'instagram': return `https://instagram.com/${valor.replace(/^@/, '')}`;
+    case 'url':
+      if (/^https?:\/\//i.test(valor)) return valor;
+      return /^[\w-]+(\.[\w-]+)+/.test(valor) ? `https://${valor}` : '';
+    default: return '';
+  }
+}
+
+/** O tipo de endereço deduzido do próprio valor, para os campos que mudam de
+ *  natureza conforme a casa. */
+function adivinha(v) {
+  if (/^https?:\/\//i.test(v)) return 'url';
+  if (/^@/.test(v)) return 'instagram';
+  if (/^\S+@\S+\.\S+$/.test(v)) return 'mailto';
+  if (/^[\d\s()+.-]{8,}$/.test(v)) return 'tel';
+  if (/^[\w-]+(\.[\w-]+)+(\/\S*)?$/.test(v)) return 'url';
+  return '';
+}
+
 /** O modelo com os valores no lugar.
  *  `modo` é 'previa' (realce do que já foi preenchido), 'exportar' (documento
  *  limpo) ou 'imprimir' (limpo, e chama a impressão sozinho ao abrir).
@@ -391,6 +428,16 @@ function montar(modo) {
     if (!v || !v.trim()) continue;
     span.textContent = v;
     span.classList.add('feito');
+    // Campo de contato vira link: o Chromium leva a âncora para o PDF, e no
+    // HTML exportado ela é um endereço que se clica. Sem isto o e-mail do
+    // consultor sai como texto morto num documento que o cliente lê na tela.
+    const href = endereco(span.dataset.link, v.trim());
+    if (href) {
+      const a = doc.createElement('a');
+      a.href = href;
+      span.replaceWith(a);
+      a.appendChild(span);
+    }
   }
 
   for (const [id, dado] of Object.entries(estado.imagens)) {

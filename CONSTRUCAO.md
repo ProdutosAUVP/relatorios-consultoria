@@ -194,8 +194,9 @@ de número de páginas fixo, que usa a escala `.perfil`.
 documento para outro — a trajetória de um consultor tem três marcos, a de outro tem
 quatro. Empurrar o rodapé para a borda com `margin-top:auto` resolve o encaixe mas abre
 um vão enorme numa junta só. A classe `.esp` faz o contrário: é um respiro `flex:1 1 0`
-entre duas faixas de conteúdo, com piso e teto (`4mm` a `11mm`, ou `17mm` na variante
-`.esp.lg`). O excedente é dividido igualmente entre os respiros da página, cada um cresce
+entre duas faixas de conteúdo, com piso e teto — `4mm` a `11mm` no A4, e `10mm` a `60mm`
+na folha longa, que é alta e tem mais sobra a repartir. O excedente é dividido igualmente
+entre os respiros da página, cada um cresce
 até o seu teto, e o que sobrar fica na margem inferior. No documento mais denso todos
 encostam no piso; no mais curto, no teto. Em ambos a página mantém o mesmo ritmo.
 

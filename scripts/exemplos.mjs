@@ -30,6 +30,34 @@ const POR_NOME = {
   historia_auvp: 'Dois ou três parágrafos sobre a origem da casa.',
   modelo_remuneracao: 'Fee based, percentual sobre o patrimônio orientado.',
   link_agendamento: 'auvpcapital.com.br/agenda',
+  // Os campos de contato. O nome deles termina em `contato` ou `endereco`, que
+  // a varredura de trás para frente casa antes de chegar em `email` ou em
+  // `whatsapp` — e o exemplo saía telefone para um campo de e-mail. Como o
+  // valor agora também vira link no documento exportado, o formato do exemplo
+  // passou a valer: telefone com o código do país é o que faz o wa.me abrir.
+  email_contato: 'nome@auvpcapital.com.br',
+  email_consultor: 'nome@auvpcapital.com.br',
+  canal_email_endereco: 'atendimento@auvpcapital.com.br',
+  whatsapp_contato: '+55 (48) 99999-0000',
+  whatsapp_consultor: '+55 (48) 99999-0000',
+  canal_whats_endereco: '+55 (48) 99999-0000',
+  telefone_contato: '+55 (48) 3333-0000',
+  canal_tel_endereco: '+55 (48) 3333-0000',
+  canal_portal_endereco: 'auvpcapital.com.br/portal',
+  instagram_consultor: '@usuario',
+  time_principal_contato: 'nome@auvpcapital.com.br',
+  time_backup_contato: 'nome@auvpcapital.com.br',
+  time_mesa_contato: 'mesa@auvpcapital.com.br',
+  time_ops_contato: 'operacoes@auvpcapital.com.br',
+  // As datas cujo nome termina em coisa que a varredura casa antes: `posicao`
+  // dava um ticker, `diagnostico` dava um achado e `primeira_reuniao` dava um
+  // tipo de encontro. A ferramenta já preenche estas com a data de hoje, mas o
+  // exemplo continua valendo para quem apaga e escreve outra.
+  data_posicao: '31/08/2026',
+  data_diagnostico: '31/08/2026',
+  data_primeira_reuniao: '31/08/2026',
+  data_proxima_reuniao: '15/10/2026',
+  data_proximo_copom: '05/11/2026',
   momento_do_cliente: 'Venda da participação na empresa, com liquidez recente.',
   frase_de_abertura: 'Uma frase sobre o que orienta o nosso trabalho.',
   subtitulo_carta: 'O que conversamos e o que vem a seguir',

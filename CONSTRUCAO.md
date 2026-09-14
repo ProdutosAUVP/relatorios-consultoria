@@ -59,6 +59,7 @@ autossuficientes na entrega, fonte única na manutenção.
 | `scripts/render.mjs` | HTML → PDF, numa subpasta por produto; apaga o que não é mais gerado |
 | `scripts/documentos.mjs` | a tabela de produtos e documentos, partilhada pelo render e pelo catálogo |
 | `scripts/exemplos.mjs` | o exemplo de preenchimento de cada campo, derivado do nome |
+| `LINKS`, em `common.py` | que campos são endereço de alguma coisa; a ferramenta monta o link com o valor |
 | `scripts/check.mjs` | valida estouro de página em modo de impressão |
 | `scripts/altura.mjs` | mede o conteúdo das folhas longas, para acertar a altura da página |
 | `scripts/variaveis.mjs` | gera o `VARIAVEIS.md` a partir dos modelos |

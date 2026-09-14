@@ -105,10 +105,41 @@ def com_rotulo(t, texto, sep=" &middot; "):
     return texto + sep + t["rotulo"] if t["rotulo"] else texto
 
 
+# Campos que são endereço de alguma coisa, e o que se faz com o valor deles. A
+# tabela mora aqui, e não em cada documento, porque o mesmo `email_contato`
+# aparece em vinte e quatro modelos e não pode sair clicável num e morto noutro.
+#
+# O modelo em branco não vira link: `{{email_contato}}` não é endereço de nada.
+# O que ele leva é a marca `data-link`, e quem monta o link é a ferramenta, com
+# o valor na mão — é lá que se sabe se o telefone veio com o código do país.
+LINKS = {
+    "email_contato": "mailto",
+    "email_consultor": "mailto",
+    "canal_email_endereco": "mailto",
+    "whatsapp_contato": "whatsapp",
+    "whatsapp_consultor": "whatsapp",
+    "canal_whats_endereco": "whatsapp",
+    "telefone_contato": "tel",
+    "canal_tel_endereco": "tel",
+    "instagram_consultor": "instagram",
+    "site": "url",
+    "link_agendamento": "url",
+    "canal_portal_endereco": "url",
+    # Estes chegam como telefone numa casa e como e-mail ou portal noutra.
+    # Quem decide é o valor, na hora de preencher.
+    "canal_ouvidoria": "auto",
+    "time_principal_contato": "auto",
+    "time_backup_contato": "auto",
+    "time_mesa_contato": "auto",
+    "time_ops_contato": "auto",
+}
+
+
 def ph(name, hint=""):
     """Placeholder token. Rendered highlighted so it is obvious what must be filled."""
     title = ' title="%s"' % hint if hint else ""
-    return '<span class="ph"%s>{{%s}}</span>' % (title, name)
+    link = ' data-link="%s"' % LINKS[name] if name in LINKS else ""
+    return '<span class="ph"%s%s>{{%s}}</span>' % (title, link, name)
 
 
 def head(title, css):

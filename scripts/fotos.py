@@ -28,10 +28,10 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DESTINO = os.path.join(RAIZ, "assets", "consultores")
 ORIGEM = os.path.join(DESTINO, "originais")
 
-# O original tem o nome do slug, como o recorte: `bolivar-oliveira.png` vira
-# `bolivar-oliveira.jpg`. Antes era o primeiro nome da pessoa, com uma tabela
-# aqui para traduzir — tabela que só existia porque os arquivos vieram assim,
-# e que saía de dia com qualquer consultor novo.
+# O original tem o nome do slug, e a extensão é a que o arquivo veio: as fotos
+# antigas chegaram em PNG, as novas em JPEG, e não há por que converter só para
+# alimentar este script. A saída é sempre JPEG, com o mesmo nome.
+ORIGINAIS = (".png", ".jpg", ".jpeg")
 
 PROPORCAO = 3 / 4          # retrato 3:4
 ROSTO_LARGURA = 0.42       # largura do rosto como fração da largura do recorte
@@ -68,7 +68,19 @@ def recorte(w, h, rosto):
 
 def main():
     os.makedirs(DESTINO, exist_ok=True)
-    originais = sorted(f for f in os.listdir(ORIGEM) if f.lower().endswith(".png"))
+    originais = sorted(f for f in os.listdir(ORIGEM)
+                       if f.lower().endswith(ORIGINAIS))
+    # Dois originais com o mesmo slug produziriam a mesma saída, e qual deles
+    # venceria dependeria da ordem do diretório. Melhor parar e dizer.
+    slugs = {}
+    for f in originais:
+        slugs.setdefault(os.path.splitext(f)[0], []).append(f)
+    repetidos = {k: v for k, v in slugs.items() if len(v) > 1}
+    if repetidos:
+        for slug, arquivos in sorted(repetidos.items()):
+            print("%s tem mais de um original: %s" % (slug, ", ".join(arquivos)),
+                  file=sys.stderr)
+        return 1
     if not originais:
         print("Nenhum original em %s" % os.path.relpath(ORIGEM, RAIZ), file=sys.stderr)
         return 1

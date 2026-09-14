@@ -6,7 +6,8 @@
  *   npm run pdf -- relatorio-mensal   # só os que casam com o filtro
  *
  * Com `--dir` e `--out` renderiza outra pasta, lado a lado com o HTML e sem a
- * separação por produto. É assim que saem os PDFs dos documentos nominais:
+ * separação por produto. Aí ele desce nas subpastas e espelha a estrutura na
+ * saída — os documentos nominais têm uma pasta por consultor:
  *
  *   npm run pdf -- --dir=documentos/consultores --out=documentos/consultores
  *
@@ -17,6 +18,7 @@
  */
 import { chromium } from 'playwright';
 import { readdirSync, mkdirSync, existsSync, statSync, rmSync } from 'node:fs';
+import { sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join, relative, resolve } from 'node:path';
 
@@ -60,11 +62,25 @@ async function launch() {
   }
 }
 
+/** Os HTML de uma pasta. Em `modelos/` é uma lista rasa; fora dela pode haver
+ *  uma pasta por assunto — uma por consultor, nos documentos nominais —, e o
+ *  caminho devolvido é relativo à raiz da busca. */
+function html(dir, prefixo = '') {
+  const achados = [];
+  for (const nome of readdirSync(dir).sort()) {
+    const cheio = join(dir, nome);
+    if (statSync(cheio).isDirectory()) {
+      if (!porProduto) achados.push(...html(cheio, join(prefixo, nome)));
+    } else if (nome.endsWith('.html')) {
+      achados.push(join(prefixo, nome));
+    }
+  }
+  return achados;
+}
+
 const filters = process.argv.slice(2).filter((a) => !a.startsWith('--'));
-const files = readdirSync(srcDir)
-  .filter((f) => f.endsWith('.html'))
-  .filter((f) => filters.length === 0 || filters.some((q) => f.includes(q)))
-  .sort();
+const files = html(srcDir)
+  .filter((f) => filters.length === 0 || filters.some((q) => f.includes(q)));
 
 if (files.length === 0) {
   console.error(`Nenhum modelo encontrado em modelos/${filters.length ? ` para: ${filters.join(', ')}` : ''}`);
@@ -89,7 +105,8 @@ const page = await browser.newPage();
 let produtoAtual = null;
 
 for (const file of emOrdem) {
-  let pasta = outDir;
+  // Fora de `modelos/` o PDF sai ao lado do HTML, na mesma subpasta.
+  let pasta = join(outDir, dirname(file) === '.' ? '' : dirname(file));
   if (porProduto) {
     const achado = classifica(file);
     if (!achado) {
@@ -106,7 +123,7 @@ for (const file of emOrdem) {
 
   await page.goto(pathToFileURL(join(srcDir, file)).href, { waitUntil: 'load' });
   await page.evaluate(() => document.fonts.ready);
-  const nome = file.replace(/\.html$/, '.pdf');
+  const nome = file.split(sep).pop().replace(/\.html$/, '.pdf');
   const out = join(pasta, nome);
   await page.pdf({ path: out, printBackground: true, preferCSSPageSize: true });
   const kb = (statSync(out).size / 1024).toFixed(0);

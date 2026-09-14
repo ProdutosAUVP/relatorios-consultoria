@@ -44,26 +44,32 @@ Estes se repetem na maior parte dos modelos. Vale manter um arquivo único com e
 
 Arquivos: `modelos/apresentacao-consultor-alta-renda-sem-data.html`, `modelos/apresentacao-consultor-alta-renda.html`, `modelos/apresentacao-consultor-assessoria-sem-data.html`, `modelos/apresentacao-consultor-assessoria.html`, `modelos/apresentacao-consultor-me-diz-o-que-fazer.html`, `modelos/apresentacao-consultor-private-sem-data.html`, `modelos/apresentacao-consultor-private.html`, `modelos/apresentacao-consultor-resolve-ai.html`, `modelos/apresentacao-consultor-se-vira-ai.html`, `modelos/apresentacao-consultor-simples-alta-renda.html`, `modelos/apresentacao-consultor-simples-assessoria.html`, `modelos/apresentacao-consultor-simples-consultoria.html`, `modelos/apresentacao-consultor-simples-private.html`
 
-Variantes: alta-renda-sem-data, alta-renda, assessoria-sem-data, assessoria, me-diz-o-que-fazer, private-sem-data, private, resolve-ai, se-vira-ai, simples-alta-renda, simples-assessoria, simples-consultoria, simples-private &middot; 44 variáveis
+Variantes: alta-renda-sem-data, alta-renda, assessoria-sem-data, assessoria, me-diz-o-que-fazer, private-sem-data, private, resolve-ai, se-vira-ai, simples-alta-renda, simples-assessoria, simples-consultoria, simples-private &middot; 62 variáveis
 
-<details><summary>Ver as 44 variáveis específicas deste documento</summary>
+<details><summary>Ver as 62 variáveis específicas deste documento</summary>
 
 ```
 nome_plano                        nome_consultor                    papel_consultor
 frase_consultor                   formacao_1                        formacao_2
 especializacao_1                  especializacao_2                  certificacao_1
-certificacao_2                    certificacao_3                    marco_1_quando
+certificacao_2                    certificacao_3                    proposito_1
+proposito_2                       proposito_3                       proposito_4
+qualificacoes_1                   qualificacoes_2                   trajetoria_1
+trajetoria_2                      trajetoria_3                      marco_1_quando
 marco_1_texto                     marco_2_quando                    marco_2_texto
-marco_3_quando                    marco_3_texto                     proposito_1
-proposito_2                       interesse_1                       interesse_2
-interesse_3                       interesse_4                       whatsapp_consultor
-email_consultor                   fora_do_escritorio                plano_resumo
+marco_3_quando                    marco_3_texto                     fora_do_escritorio_1
+fora_do_escritorio_2              fora_do_escritorio_3              interesse_1
+interesse_2                       interesse_3                       interesse_4
+interesse_5                       interesse_6                       plano_resumo
 funciona_1                        funciona_2                        funciona_3
+pode_pedir_1                      pode_pedir_2                      pode_pedir_3
+pode_pedir_4                      pode_pedir_5                      pode_pedir_6
 incluido_1                        incluido_2                        incluido_3
 incluido_4                        incluido_5                        incluido_6
-incluido_7                        nao_incluido_1                    nao_incluido_2
-nao_incluido_3                    nao_incluido_4                    taxa_mensal
-taxa_anual                        notas_de_rodape
+incluido_7                        incluido_8                        nao_incluido_1
+nao_incluido_2                    nao_incluido_3                    nao_incluido_4
+notas_de_rodape                   taxa_mensal                       taxa_anual
+whatsapp_consultor                email_consultor
 ```
 </details>
 

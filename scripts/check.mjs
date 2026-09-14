@@ -3,6 +3,7 @@
  *
  *   npm run check
  *   npm run check -- relatorio-mensal
+ *   npm run check -- --dir=documentos/consultores   # outra pasta
  *
  * Roda em media print, que é o modo usado na exportação para PDF. Grafismos são
  * ignorados: eles sangram de propósito e ficam recortados por overflow:hidden.
@@ -13,7 +14,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const srcDir = join(root, 'modelos');
+const dirArg = process.argv.slice(2).find((a) => a.startsWith('--dir='));
+const srcDir = dirArg ? resolve(root, dirArg.slice(6)) : join(root, 'modelos');
 
 function findChromium() {
   const base = process.env.PLAYWRIGHT_BROWSERS_PATH;
@@ -35,7 +37,7 @@ async function launch() {
   }
 }
 
-const filters = process.argv.slice(2);
+const filters = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 const files = readdirSync(srcDir)
   .filter((f) => f.endsWith('.html'))
   .filter((f) => filters.length === 0 || filters.some((q) => f.includes(q)))

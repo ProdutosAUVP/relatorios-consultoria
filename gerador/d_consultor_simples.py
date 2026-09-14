@@ -63,11 +63,40 @@ def aneis(f=FOLHA):
         d=r1 * 2, x=f["centro_x"] - r1, y=f["centro_y"] - r1, w=r1 * 2, c=circulos)
 
 
+# Quanto de texto cabe na folha. A conta é em caracteres, mais um pedágio por
+# parágrafo: o vão entre parágrafos custa altura como custaria texto, e um
+# consultor de cinco parágrafos curtos estoura a folha que um de dois longos
+# preenche. Os dois números saíram de encher a folha até o limite com cada um
+# dos consultores, e recuar uma margem.
+COUBE = 1400
+PEDAGIO = 60
+
+
 def _bio(c):
     """O texto corrido: o propósito de quem escreveu, e o fecho sobre a vida
-    fora do trabalho. São os mesmos campos da apresentação completa — quem
-    mantém `consultores.py` não escreve duas vezes."""
-    return "".join("<p>%s</p>" % p for p in c["proposito"]) + "<p>%s</p>" % c["fora"]
+    fora do trabalho.
+
+    São os mesmos campos da apresentação completa — quem preenche um preenche o
+    outro —, mas aqui entra só a abertura. A apresentação completa espalha sete
+    parágrafos por três páginas; esta folha tem uma página só, num corpo bem
+    maior, e leva os primeiros do propósito mais um da vida fora do trabalho.
+
+    Quantos parágrafos cabem depende de quanto cada um escreveu, e por isso a
+    conta é por tamanho e não por posição: dois parágrafos de quem escreve
+    curto cabem, dois de quem escreve longo estouram a folha. O fecho sobre a
+    vida fora do trabalho é reservado antes, porque é ele que fecha a página —
+    sem ele a folha vira só currículo.
+    """
+    fecho = c["fora_paras"][0]
+    custo = lambda p: len(p) + PEDAGIO
+    sobra = COUBE - custo(fecho)
+    escolhidos = []
+    for par in c["proposito"]:
+        if escolhidos and custo(par) > sobra:
+            break
+        escolhidos.append(par)
+        sobra -= custo(par)
+    return "".join("<p>%s</p>" % p for p in escolhidos + [fecho])
 
 
 # Ícones de contato: traço fino, dentro de um círculo, como no original.
@@ -129,18 +158,25 @@ def variantes(temas, segmentos):
     return [(seg, temas[seg]["nome_full"], seg) for seg in segmentos]
 
 
-def build(t, variante):
-    c = _consultor_vazio()
+def build(t, variante, c=None, foto=None):
+    """`c` e `foto` escritos produzem a folha nominal; sem eles, o modelo.
 
-    contatos = [
-        _contato("email", _link("mailto:" + c["email"], c["email"]) if c.get("email")
-                 else ph("email_consultor")),
-        _contato("telefone", _whatsapp(c["whatsapp"]) if c.get("whatsapp")
-                 else ph("whatsapp_consultor")),
-        _contato("instagram", ph("instagram_consultor", "@usuario")),
-    ]
+    Os documentos nominais de `documentos/consultores/` passam os dois; o
+    gerador não passa nenhum e continua sem saber o nome de ninguém.
+    """
+    c = c or _consultor_vazio()
+
+    # Só entra a linha do canal que a pessoa tem. No modelo em branco todas
+    # entram, como campo: ali vazio quer dizer "preencha", e não "não tem".
+    linhas = [("email", "email", lambda e: _link("mailto:" + e, e)),
+              ("telefone", "whatsapp", _whatsapp),
+              ("instagram", "instagram", lambda u: u)]
+    contatos = [_contato(icone, escreve(c[chave])) if c.get(chave)
+                else _contato(icone, ph("%s_consultor" % chave))
+                for icone, chave, escreve in linhas
+                if c.get(chave) or c.get("modelo")]
 
     return [FOLHA_HTML % dict(
-        aneis=aneis(), foto=_retrato(), nome=c["nome"], papel=c["papel"],
+        aneis=aneis(), foto=foto or _retrato(), nome=c["nome"], papel=c["papel"],
         bio=_bio(c), contatos="".join(contatos),
         logo=logo_svg(t, 9.0, cls="fl-logo"))]

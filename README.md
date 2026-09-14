@@ -26,7 +26,7 @@ da consultoria e por segmento, e a versão em branco sai também sem a data no c
 | Relatório mensal em apresentação | 16:9 | 11 | ✓ | ✓ | ✓ | ✓ |
 | Carta de apresentação | 16:9 | 13 | ✓ | ✓ | ✓ | ✓ |
 | Cronograma de reuniões | A4 retrato | 6 | ✓ | ✓ | ✓ | ✓ |
-| Apresentação do consultor | A4 retrato | 3 | 3 planos | ✓ | ✓ | ✓ |
+| Apresentação do consultor | A4 retrato | 8 | 3 planos | ✓ | ✓ | ✓ |
 | Apresentação do consultor (uma página) | A4 retrato | 1 | ✓ | ✓ | ✓ | ✓ |
 
 A apresentação de cada consultor existe duas vezes: com e sem a data no cabeçalho, esta
@@ -58,16 +58,36 @@ usava: fundo no negativo, retrato em círculo cercado de anéis concêntricos no
 esquerda, nome ao lado, texto corrido justificado e os contatos com ícone. Sem cabeçalho
 corrido, sem o plano e sem data — é o cartão que se manda antes de uma primeira conversa.
 
-As três páginas se distinguem pela inversão, não por ornamento: as duas primeiras são
-abertas e claras, e a última roda no negativo. Mesma grelha, mesma tipografia, mesmos
-fios — só o fundo troca.
+São oito páginas, e a maior parte delas é texto para ler do começo ao fim, não folheto:
+abertura com retrato, declaração e credenciais; o propósito; formação e trajetória, com a
+linha do tempo ao lado; fora do escritório; o plano, com o que se pode pedir ao consultor;
+o que vem incluído e o que não faz parte; como a casa pensa investimento; e o fecho com
+remuneração, canais e contato. O ritmo se quebra de página em página — o retrato e as
+credenciais, a linha do tempo, as etiquetas, as duas colunas de listas, a grade de
+princípios — para a leitura não virar bloco.
+
+Só a última página roda no negativo, e a distinção é a inversão, não o ornamento: mesma
+grelha, mesma tipografia, mesmos fios — só o fundo troca.
 
 ### Documentos prontos
 
-`documentos/consultores/` guarda as apresentações nominais já feitas — HTML e PDF de cada
-consultor. São documentos, não modelos: o `npm run all` não os toca, e mudança de
-diagramação no gerador não chega até eles. Para refazer um com o desenho novo, preencha o
-modelo em branco na ferramenta.
+`documentos/consultores/` guarda as apresentações nominais dos consultores do plano Me Diz
+o Que Fazer — HTML e PDF de cada um, nas três formas: a de oito páginas com data, a mesma
+sem data e a de uma página. São documentos, não modelos, e ficam fora do pipeline: o
+`npm run all` não os toca.
+
+O texto de cada consultor está em `documentos/consultores/consultores.py`, na íntegra e do
+jeito que a pessoa escreveu. O gerador continua sem saber o nome de ninguém — quem sabe é
+esta pasta. Para refazer os documentos com a diagramação corrente:
+
+```bash
+python3 documentos/consultores/gerar.py
+npm run check -- --dir=documentos/consultores
+npm run pdf -- --dir=documentos/consultores --out=documentos/consultores
+```
+
+Acrescentar um consultor é somar uma entrada em `consultores.py`, pôr o retrato em
+`assets/consultores/<slug>.jpg` e rodar isso.
 
 ## Ferramenta de preenchimento
 

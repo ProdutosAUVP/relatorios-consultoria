@@ -499,10 +499,13 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 /* a declaração fica na mesma coluna do nome, e não atravessando a folha: ela
    é sobre a pessoa, e lida ao lado do retrato diz de quem é. Em corpo pequeno,
    na escala das credenciais — é legenda do nome, não manchete. */
+/* Sem teto de medida: o fio que abre a declaração termina onde termina a
+   coluna, que é onde termina o fio da faixa de credenciais logo abaixo. Dois
+   fios empilhados que parassem em pontos diferentes leriam como desalinho. */
 .lg-frase{margin:5mm 0 0;padding-top:4mm;
   border-top:1px solid rgba(255,255,255,.3);
   font-size:9pt;line-height:1.6;font-weight:300;
-  color:rgba(255,255,255,.88);max-width:112mm}
+  color:rgba(255,255,255,.88)}
 
 /* a faixa de credenciais encosta no alto escuro, como legenda dele */
 .lg-cred{margin-top:9mm;display:grid;grid-template-columns:repeat(var(--n,3),1fr);

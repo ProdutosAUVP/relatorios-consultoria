@@ -20,9 +20,15 @@ O desenho, porém, é o mesmo: as páginas saem de `gerador/d_consultor.py` e de
 Quando a diagramação mudar lá, rode isto de novo e os documentos prontos
 acompanham.
 
-Depois de rodar, gere os PDFs com:
+Depois de rodar, acerte a altura das folhas e gere os PDFs:
 
+    npm run altura -- --dir=documentos/consultores --ajustar
     npm run pdf -- --dir=documentos/consultores --out=documentos/consultores
+
+O passo da altura é o que dá a cada folha o tamanho do texto que ela tem: quem
+escreveu mais leva uma folha mais alta, e quem escreveu menos não leva meio
+metro de vão no pé. Sem ele todas saem na altura de partida, calibrada pelo
+consultor mais falante.
 """
 import datetime
 import os

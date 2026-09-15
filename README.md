@@ -26,7 +26,7 @@ da consultoria e por segmento, e a versão em branco sai também sem a data no c
 | Relatório mensal em apresentação | 16:9 | 11 | ✓ | ✓ | ✓ | ✓ |
 | Carta de apresentação | 16:9 | 13 | ✓ | ✓ | ✓ | ✓ |
 | Cronograma de reuniões | A4 retrato | 6 | ✓ | ✓ | ✓ | ✓ |
-| Apresentação do consultor | folha 210 × 1420 mm | 1 | 3 planos | ✓ | ✓ | ✓ |
+| Apresentação do consultor | folha 210 mm × altura do texto | 1 | 3 planos | ✓ | ✓ | ✓ |
 | Apresentação do consultor (uma página) | A4 retrato | 1 | ✓ | ✓ | ✓ | ✓ |
 
 A apresentação de cada consultor existe duas vezes: com e sem a data no pé, esta
@@ -60,8 +60,9 @@ corrido, sem o plano e sem data — é o cartão que se manda antes de uma prime
 
 #### Uma folha só, alta
 
-O documento inteiro cabe numa página de 210 por 1420 mm. Não é A4, e nem tenta ser: ele se
-lê de uma vez, do começo ao fim, e a quebra de página só atrapalhava. Em oito páginas A4
+O documento inteiro cabe numa página só, de 210 mm de largura e a altura que o texto pedir
+— entre 1,1 e 1,4 metro, conforme o consultor. Não é A4, e nem tenta ser: ele se lê de uma
+vez, do começo ao fim, e a quebra de página só atrapalhava. Em oito páginas A4
 eram oito quebras, oito cabeçalhos repetidos e um vão no pé de cada uma, porque o texto de
 cada pessoa tem um tamanho diferente e nenhum deles fecha a página exatamente.
 
@@ -74,26 +75,41 @@ com os canais e o contato.
 Também não há eyebrow sobre os títulos: sem cabeçalho corrido e sem numeração, o título de
 cada seção já diz onde se está.
 
-A altura é fixa porque o `@page` não aceita altura automática, e é o `@page` que a
-ferramenta usa ao imprimir pelo navegador. Ela vive em `ALTURA_LONGA`, em
-`gerador/common.py`, e a diferença entre um consultor que escreve muito e um que escreve
-pouco — uns 20 cm — é repartida pelos respiros elásticos entre as seções. Para conferir o
-número depois de mexer no conteúdo:
+#### A altura sai do conteúdo
+
+A altura tem de estar escrita no CSS: o `@page` não aceita altura automática, e é o `@page`
+que o navegador usa ao imprimir. Mas escrita não quer dizer igual para todo mundo. O
+gerador põe um valor de partida (`ALTURA_LONGA`, em `gerador/common.py`) e logo depois o
+`npm run altura -- --ajustar` abre cada folha, mede quanto o conteúdo ocupa de fato e
+reescreve o número naquele arquivo. Cada documento sai com a altura do que tem dentro:
 
 ```bash
-npm run altura                                  # os modelos
-npm run altura -- --dir=documentos/consultores  # os documentos prontos
+npm run altura                                            # só mede e relata
+npm run altura -- --ajustar                               # mede e grava, nos modelos
+npm run altura -- --dir=documentos/consultores --ajustar  # nos documentos prontos
 ```
 
-O script mede quanto o conteúdo de cada folha ocupa de fato. A altura declarada tem de ser
-maior que a maior das medidas — senão aperta o desenho — e não muito maior, senão sobra
-vão. Quem diz se estourou de verdade continua sendo o `npm run check`.
+O ajuste já entra no `npm run all`, entre o build e o check — é o `check` quem confirma que,
+na altura nova, nada estourou. Na prática a folha da Erika sai com 1145 mm e a do Yuri com
+1375 mm, em vez de as duas saírem com os 1420 mm do mais falante e uma delas carregar 27 cm
+de vão no pé. A medida é arredondada para cima com alguns milímetros de folga, e é essa
+folga que os respiros elásticos repartem entre as seções.
+
+A ferramenta de preenchimento faz a mesma conta no navegador: antes de exportar ela mede a
+folha já preenchida e escreve a altura medida no arquivo que sai. Quem escreve textos mais
+curtos nos campos leva uma folha mais curta.
 
 ### Documentos prontos
 
 `documentos/consultores/` guarda as apresentações nominais dos consultores do plano Me Diz
 o Que Fazer. São documentos, não modelos, e ficam fora do pipeline: o `npm run all` não os
-toca.
+toca. Quem os monta é o `gerar.py` da pasta, e depois dele vêm o ajuste de altura e os PDFs:
+
+```bash
+python3 documentos/consultores/gerar.py
+npm run altura -- --dir=documentos/consultores --ajustar
+npm run pdf -- --dir=documentos/consultores --out=documentos/consultores
+```
 
 Cada consultor tem a sua pasta, com os três documentos dele em HTML e PDF — a folha longa
 com data, a mesma sem data e o cartão de uma página A4:
@@ -454,7 +470,7 @@ trimestral no private e semestral com contatos da mesa na assessoria.
 modelos/                        37 modelos HTML independentes
 pdf/<produto>/                  um PDF de cada modelo, versionado (saída do npm run pdf)
 scripts/render.mjs              HTML -> PDF via Playwright
-scripts/altura.mjs              mede o conteúdo das folhas longas
+scripts/altura.mjs              mede o conteúdo das folhas longas e ajusta a altura
 scripts/check.mjs               verificação de estouro de página
 scripts/variaveis.mjs           gera o VARIAVEIS.md a partir dos modelos
 gerador/                        fonte dos modelos (Python, só biblioteca padrão)

@@ -25,8 +25,9 @@ npm run build   # gerador/ -> modelos/    (Python 3, só biblioteca padrão)
 npm run vars    # modelos/ -> VARIAVEIS.md
 npm run check   # valida modelos/         (falha se algo estoura a página)
 npm run pdf     # modelos/ -> pdf/<produto>/  (Chromium via Playwright)
+npm run altura -- --ajustar   # dá a cada folha longa a altura do seu conteúdo
 
-npm run all     # os quatro em sequência
+npm run all     # os cinco em sequência
 ```
 
 `modelos/`, `pdf/` e `VARIAVEIS.md` são **saída**. Nada ali deve ser editado à mão:
@@ -61,7 +62,7 @@ autossuficientes na entrega, fonte única na manutenção.
 | `scripts/exemplos.mjs` | o exemplo de preenchimento de cada campo, derivado do nome |
 | `LINKS`, em `common.py` | que campos são endereço de alguma coisa; a ferramenta monta o link com o valor |
 | `scripts/check.mjs` | valida estouro de página em modo de impressão |
-| `scripts/altura.mjs` | mede o conteúdo das folhas longas, para acertar a altura da página |
+| `scripts/altura.mjs` | mede o conteúdo das folhas longas e, com `--ajustar`, escreve essa altura no arquivo |
 | `scripts/variaveis.mjs` | gera o `VARIAVEIS.md` a partir dos modelos |
 | `scripts/catalogo.mjs` | monta `docs/`: copia os modelos e escreve o índice da ferramenta |
 | `docs/` | a ferramenta de preenchimento, publicada no GitHub Pages |
@@ -199,6 +200,11 @@ na folha longa, que é alta e tem mais sobra a repartir. O excedente é dividido
 entre os respiros da página, cada um cresce
 até o seu teto, e o que sobrar fica na margem inferior. No documento mais denso todos
 encostam no piso; no mais curto, no teto. Em ambos a página mantém o mesmo ritmo.
+
+Na folha longa o respiro passou a ter outro papel, menor. Como a altura da folha agora sai
+do conteúdo (`npm run altura -- --ajustar`), a sobra a repartir são os poucos milímetros do
+arredondamento, e não os 20 ou 30 cm que separavam o consultor mais falante do mais breve.
+O piso de `10mm` continua valendo: é ele que separa as faixas.
 
 Para auditar depois de mexer:
 
@@ -385,10 +391,26 @@ do fim para o começo — `pos_7_valor` casa em `valor`, `mes_referencia` em `me
 exemplo é o `placeholder` do campo, some ao digitar e nunca entra no documento. Os poucos
 campos institucionais que fogem ao vocabulário vêm escritos um a um.
 
+**O campo em branco sai em branco.** Na tela ele continua sendo `{{campo}}` destacado — é
+ali que se preenche, e a lacuna tem de saltar aos olhos. No arquivo que sai, não: o
+documento vai para o cliente, e `{{nome_cliente}}` impresso numa apresentação é pior do que
+a linha vazia. Quem avisa é a tela de exportar, que antes de gerar o arquivo lista o que
+ficou faltando, com rótulo e página de cada campo, e pergunta se é para seguir assim. Campo
+de página desmarcada não entra na lista: essa página não vai sair.
+
+**A folha longa é medida antes de sair.** O `@page` não aceita altura automática, então a
+altura tem de ser um número — e o número certo depende de quanto foi digitado.
+`alturaDaFolha()` monta o documento preenchido num quadro escondido, solta a altura da
+folha, lê o que o conteúdo ocupa e escreve a medida por cima da que veio do modelo. É a
+mesma conta do `scripts/altura.mjs`, com o mesmo arredondamento; a diferença é que lá ela
+vale para o texto do gerador e aqui para o que a pessoa acabou de escrever. Na prévia não
+precisa de conta nenhuma: `.page.longa{height:auto}` e o navegador mede sozinho.
+
 O PDF sai pela impressão do navegador, não por uma biblioteca: o `@page` dos modelos já
 tem o tamanho certo e `print-color-adjust:exact` garante os fundos, então o resultado é o
 mesmo do `npm run pdf`, que também é o Chromium imprimindo. A janela aberta pela
-ferramenta chama a impressão sozinha.
+ferramenta chama a impressão sozinha — e, como a medida da folha leva um instante, ela
+abre já dizendo que está preparando o documento, em vez de ficar em branco.
 
 Documento novo em `gerador/build.py` aparece na ferramenta sem mexer em `docs/` — só
 precisa de uma entrada em `DOCUMENTOS`, no `scripts/catalogo.mjs`, com o nome e a

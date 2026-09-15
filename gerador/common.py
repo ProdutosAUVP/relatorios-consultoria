@@ -754,13 +754,16 @@ CSS_A4 += """
 # tamanho diferente. Numa folha só, alta, o texto corre e as faixas é que dão o
 # ritmo — claro, escuro, claro — no lugar da quebra de página.
 #
-# A altura é fixa porque `@page` não aceita altura automática, e é ela que a
-# ferramenta usa ao imprimir pelo navegador. Foi acertada no consultor de texto
-# mais longo; quem escreveu menos tem a sobra distribuída pelos respiros
-# elásticos entre as seções.
+# A altura tem de estar escrita: `@page` não aceita altura automática, e é o
+# `@page` que a ferramenta usa ao imprimir pelo navegador. O número abaixo é só
+# o ponto de partida — quem o acerta é `npm run altura -- --ajustar`, que mede
+# quanto o conteúdo de cada folha ocupa de fato e reescreve os dois números no
+# arquivo gerado. Por isso cada documento sai com a altura do texto que ele tem,
+# e não com a altura do consultor mais falante.
 ALTURA_LONGA = 1420
 
 CSS_LONGA = """
+/* altura da folha — os dois números saem de `npm run altura -- --ajustar` */
 @page{size:210mm %(h)dmm;margin:0}
 .page.longa{height:%(h)dmm;padding:0;font-size:10pt}
 @media print{.page.longa{break-after:auto}}

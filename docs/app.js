@@ -520,8 +520,12 @@ function adivinha(v) {
 /** O modelo com os valores no lugar.
  *  `modo` é 'previa' (realce do que já foi preenchido), 'exportar' (documento
  *  limpo) ou 'imprimir' (limpo, e chama a impressão sozinho ao abrir).
- *  Campo em branco continua como `{{campo}}` destacado, para o documento
- *  exportado dizer o que ainda falta. */
+ *
+ *  Na prévia o campo em branco continua sendo `{{campo}}` destacado: a tela é
+ *  onde se preenche, e ali a lacuna tem de saltar aos olhos. No arquivo que sai
+ *  daqui ele some — o documento vai para o cliente, e `{{nome_cliente}}` escrito
+ *  numa apresentação é pior do que a linha vazia. Quem avisa o que ficou
+ *  faltando é a tela de exportar, antes de gerar o arquivo. */
 function montar(modo) {
   const doc = estado.modelo.cloneNode(true);
 
@@ -538,7 +542,10 @@ function montar(modo) {
     const m = span.textContent.match(/^\{\{([a-z0-9_]+)\}\}$/);
     if (!m) continue;
     const v = estado.valores[m[1]];
-    if (!v || !v.trim()) continue;
+    if (!v || !v.trim()) {
+      if (modo !== 'previa') span.remove();
+      continue;
+    }
     span.textContent = v;
     span.classList.add('feito');
     // Campo de contato vira link: o Chromium leva a âncora para o PDF, e no
@@ -576,6 +583,11 @@ function montar(modo) {
     + '.imgcheia img{width:100%;height:100%;object-fit:cover;display:block}'
     + (modo === 'previa'
       ? '.ph.feito{background:hsl(155 93% 11% / .10);color:inherit}'
+        // Na prévia a folha longa acompanha o conteúdo sozinha, sem número
+        // nenhum: é o navegador que mede. O arquivo exportado não pode contar
+        // com isso — `@page` exige altura escrita —, e ali entra a medida de
+        // `montarFinal`. As duas dão na mesma folha.
+        + '.page.longa{height:auto}'
       : '.ph.feito{background:none;color:inherit;padding:0;font-weight:inherit}');
   doc.head.appendChild(estilo);
 
@@ -585,6 +597,68 @@ function montar(modo) {
     doc.body.appendChild(s);
   }
   return '<!doctype html>\n' + doc.documentElement.outerHTML;
+}
+
+const PX_MM = 96 / 25.4;
+
+/** A altura, em milímetros, que a folha longa precisa para caber o que foi
+ *  escrito — ou `null` se o documento não tiver folha longa, que é o caso da
+ *  maioria: A4 e slide têm tamanho de papel, e neles é o conteúdo que se ajusta
+ *  à página, não o contrário.
+ *
+ *  A apresentação do consultor é a exceção: uma folha só, de mais de um metro,
+ *  cuja altura depende de quanto foi escrito. Medir exige renderizar, então isto
+ *  monta o documento num quadro escondido, solta a altura da folha para ler o
+ *  que o conteúdo ocupa e devolve a caixa ao que era. É a mesma conta do
+ *  `scripts/altura.mjs`, que acerta os arquivos gerados; aqui ela vale para o
+ *  que a pessoa acabou de digitar. */
+async function alturaDaFolha(html) {
+  if (!html.includes('page longa')) return null;
+  const quadro = document.createElement('iframe');
+  quadro.setAttribute('aria-hidden', 'true');
+  quadro.style.cssText = 'position:fixed;left:-20000px;top:0;width:1200px;height:800px;'
+                       + 'border:0;visibility:hidden';
+  document.body.appendChild(quadro);
+  try {
+    const doc = quadro.contentDocument;
+    doc.open();
+    doc.write(html);
+    doc.close();
+    // A fonte e o retrato vêm embutidos no próprio arquivo, mas assentar leva um
+    // quadro: medir antes disso dá a altura da fonte de reserva, que é outra.
+    if (doc.fonts) { try { await doc.fonts.ready; } catch (e) { /* sem a API */ } }
+    await new Promise((pronto) => requestAnimationFrame(pronto));
+    const altos = [...doc.querySelectorAll('.page.longa')].map((folha) => {
+      const antes = folha.style.height;
+      folha.style.height = 'auto';
+      const px = folha.getBoundingClientRect().height;
+      folha.style.height = antes;
+      return px / PX_MM;
+    });
+    if (!altos.length) return null;
+    // Arredonda para cima, ao múltiplo de 5 mm seguinte e com pelo menos 2 mm de
+    // folga: os poucos milímetros de sobra são o que os respiros elásticos
+    // repartem entre as seções, e absorvem a diferença entre o que este
+    // navegador mede e o que o mecanismo de impressão desenha. O piso é o A4.
+    // `@page` tem um tamanho só para o arquivo inteiro, então com mais de uma
+    // folha vale a maior: sobra vão nas outras, mas nenhuma sai cortada.
+    return Math.max(297, Math.ceil((Math.max(...altos) + 2) / 5) * 5);
+  } finally {
+    quadro.remove();
+  }
+}
+
+/** O arquivo pronto para sair: o modelo preenchido e, quando é folha longa, a
+ *  altura medida escrita por cima da que veio do gerador. */
+async function montarFinal(modo) {
+  const html = montar(modo);
+  // Mede sobre a versão sem o script de impressão: o quadro de medida é um
+  // documento como outro qualquer, e o script mandaria o navegador abrir a
+  // caixa de imprimir a partir dele.
+  const alto = await alturaDaFolha(modo === 'imprimir' ? montar('exportar') : html);
+  if (!alto) return html;
+  const regras = `@page{size:210mm ${alto}mm;margin:0}.page.longa{height:${alto}mm}`;
+  return html.replace('</head>', () => `<style>${regras}</style></head>`);
 }
 
 function renderizar() {
@@ -663,19 +737,76 @@ function telaExportar() {
 
   $('#pendencias').innerHTML = faltam
     ? `<div class="aviso"><strong>${faltam} campo${faltam === 1 ? '' : 's'} em branco.</strong>
-       No arquivo exportado ${faltam === 1 ? 'ele aparece' : 'eles aparecem'} como
-       <code>{{campo}}</code>, destacado, para não passar despercebido.</div>`
+       Ao exportar, a ferramenta mostra ${faltam === 1 ? 'qual é' : 'quais são'}. Se você
+       exportar assim mesmo, ${faltam === 1 ? 'ele sai' : 'eles saem'} em branco no
+       documento — sem <code>{{campo}}</code> no lugar.</div>`
     : '';
 }
 
-function exportarPdf() {
+/** Os campos que ficaram em branco, com rótulo e página, na ordem do documento.
+ *  Campo de página desmarcada não entra: ela não vai sair no arquivo, e cobrar
+ *  o preenchimento de uma página que foi tirada é ruído. */
+function emBranco() {
+  const { grupos, campos } = estado.estrutura;
+  const achados = [];
+  for (const g of [...grupos].sort((a, b) => a.pagina - b.pagina)) {
+    if (!dentro(g.pagina)) continue;
+    for (const n of g.campos) {
+      if ((estado.valores[n] || '').trim()) continue;
+      achados.push({ nome: n, rotulo: (campos[n] || {}).rotulo || n, pagina: g.pagina, secao: g.secao });
+    }
+  }
+  return achados;
+}
+
+/** O aviso antes de exportar. Diz quantos campos ficaram em branco e quais são,
+ *  porque "faltam 7" sem a lista obriga a caçar os 7 de volta pelo formulário.
+ *  Quem confirma leva o documento com as lacunas vazias — é uma escolha
+ *  legítima, há campo que não se aplica a todo cliente —, e quem cancela volta
+ *  para o formulário com os nomes em mãos. */
+const MOSTRA = 12;
+
+function confirmaBrancos() {
+  const faltam = emBranco();
+  const semImagem = estado.estrutura.imagens
+    .filter((im) => dentro(im.pagina) && !estado.imagens[im.id]);
+  if (!faltam.length && !semImagem.length) return true;
+
+  const linhas = [];
+  if (faltam.length) {
+    linhas.push(`${faltam.length} campo${faltam.length === 1 ? '' : 's'} em branco:`, '');
+    for (const c of faltam.slice(0, MOSTRA)) {
+      linhas.push(`• ${c.rotulo} — pág. ${String(c.pagina).padStart(2, '0')}, ${c.secao}`);
+    }
+    if (faltam.length > MOSTRA) linhas.push(`• e mais ${faltam.length - MOSTRA}.`);
+    linhas.push('');
+  }
+  if (semImagem.length) {
+    linhas.push(`${semImagem.length} imagem${semImagem.length === 1 ? '' : 'ns'} sem arquivo: `
+                + `${semImagem.slice(0, MOSTRA).map((im) => im.rotulo).join(', ')}.`,
+                'O espaço reservado sai como moldura vazia.', '');
+  }
+  linhas.push(faltam.length
+    ? 'Exportar assim mesmo? No documento essas lacunas saem em branco.'
+    : 'Exportar assim mesmo?');
+  return confirm(linhas.join('\n'));
+}
+
+async function exportarPdf() {
+  if (!confirmaBrancos()) return;
   const janela = window.open('', '_blank');
   if (!janela) {
     alert('O navegador bloqueou a janela. Libere as janelas pop-up para este site e tente de novo.');
     return;
   }
+  // A folha longa é medida antes de sair, e medir leva um instante: a janela
+  // abre já dizendo o que está fazendo, em vez de ficar em branco.
+  janela.document.write('<!doctype html><meta charset="utf-8"><title>Preparando…</title>'
+    + '<body style="margin:0;font:15px/1.6 system-ui,sans-serif;color:#555;padding:40px">'
+    + 'Preparando o documento…');
+  const html = await montarFinal('imprimir');
   janela.document.open();
-  janela.document.write(montar('imprimir'));
+  janela.document.write(html);
   janela.document.close();
 }
 
@@ -799,8 +930,10 @@ function ligar() {
 
   $('#pag-anterior').onclick = () => irPara(estado.pagina - 1);
   $('#pag-proxima').onclick = () => irPara(estado.pagina + 1);
-  $('#exportar-html').onclick = () =>
-    baixar(montar('exportar'), nomeArquivo('html'), 'text/html;charset=utf-8');
+  $('#exportar-html').onclick = async () => {
+    if (!confirmaBrancos()) return;
+    baixar(await montarFinal('exportar'), nomeArquivo('html'), 'text/html;charset=utf-8');
+  };
   $('#exportar-pdf').onclick = exportarPdf;
   // Quem empresta o computador, ou troca de escritório, precisa de um jeito de
   // limpar o que ficou guardado.

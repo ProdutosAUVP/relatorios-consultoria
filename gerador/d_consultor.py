@@ -54,11 +54,10 @@ def _nota_fora(texto, marca):
     de cima às custas do que ele acabou de contratar.
 
     Fora das colunas, a nota deixa de ser exclusão e vira o fecho da faixa. Mas
-    à largura das duas colunas a linha fica longa demais para ler, então o
-    primeiro parágrafo abre a caixa, sozinho e em corpo maior, e o resto corre
-    em duas colunas. Corre, e não se reparte: são um parágrafo longo e um curto,
-    e pô-los um em cada coluna deixaria metade da caixa vazia. O texto flui de
-    uma coluna para a outra e o navegador equilibra as duas.
+    à largura das duas colunas a linha passaria de noventa caracteres, então a
+    caixa se divide por dentro: o primeiro parágrafo fica à esquerda, em corpo
+    maior — é ele que situa o plano —, e o resto desce à direita. A divisão cai
+    na mesma grelha das duas colunas de cima, e nenhuma frase é cortada no meio.
 
     Só o plano do meio tem esta nota; nos outros a chave não existe e a faixa
     termina nas colunas.
@@ -67,9 +66,8 @@ def _nota_fora(texto, marca):
     if not paras:
         return ""
     abre, resto = paras[0], paras[1:]
-    return '<div class="lg-posicao"><p class="abre">%s</p>%s</div>' % (
-        abre,
-        '<div class="corre">%s</div>' % "".join("<p>%s</p>" % r for r in resto) if resto else "")
+    return '<div class="lg-posicao"><p class="abre">%s</p><div>%s</div></div>' % (
+        abre, "".join("<p>%s</p>" % r for r in resto))
 
 
 def _marcos(itens):

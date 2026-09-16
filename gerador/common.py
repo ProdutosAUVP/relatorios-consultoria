@@ -840,19 +840,19 @@ CSS_LONGA = """
    faixa, com o fio da marca à esquerda — é a mesma ideia do `.note` do resto do
    sistema, que aqui não serve porque o fundo dele é justamente o da faixa.
 
-   O primeiro parágrafo abre sozinho, em corpo maior: é ele que situa o plano, e
-   os outros só desdobram. O resto corre em duas colunas, porque à largura da
-   caixa inteira a linha passaria de noventa caracteres. Colunas de fluxo, e não
-   a grelha `.cols2`: o texto que sobra é um parágrafo longo e um curto, e um em
-   cada célula deixaria a metade direita vazia. Assim o navegador reparte e
-   equilibra as duas alturas. */
+   Por dentro a caixa se divide, porque à largura inteira a linha passaria de
+   noventa caracteres: o parágrafo que situa o plano fica à esquerda, em corpo
+   maior, e o que desdobra desce à direita — a mesma grelha das duas colunas de
+   cima. Dividir por parágrafo, e não deixar o texto correr de uma coluna para a
+   outra: correndo, as alturas fecham iguais, mas a frase quebra no meio do
+   caminho e se lê pela metade antes de recomeçar do outro lado. */
 .lg-posicao{margin-top:10mm;padding:8mm 9mm;background:var(--paper);
-  border:1px solid var(--line);border-left:1.33px solid var(--brand)}
+  border:1px solid var(--line);border-left:1.33px solid var(--brand);
+  display:grid;grid-template-columns:1fr 1fr;gap:0 12mm}
+.lg-posicao>*{min-width:0}
 .lg-posicao p{margin:0;font-size:8.8pt;line-height:1.66;color:var(--ink-2)}
-.lg-posicao .abre{margin-bottom:6mm;font-size:10.2pt;line-height:1.55;color:var(--ink)}
-.lg-posicao .corre{columns:2;column-gap:12mm}
-.lg-posicao .corre p{margin-bottom:3mm}
-.lg-posicao .corre p:last-child{margin-bottom:0}
+.lg-posicao p+p{margin-top:4mm}
+.lg-posicao .abre{font-size:10.2pt;line-height:1.55;color:var(--ink)}
 
 /* o respiro entre seções cresce com a sobra, entre um piso e um teto: é o que
    acomoda a diferença de tamanho entre um consultor e outro sem abrir um

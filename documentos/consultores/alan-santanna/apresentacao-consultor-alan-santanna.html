@@ -382,8 +382,8 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 
 
 /* altura da folha — os dois números saem de `npm run altura -- --ajustar` */
-@page{size:210mm 1305mm;margin:0}
-.page.longa{height:1305mm;padding:0;font-size:10pt}
+@page{size:210mm 1340mm;margin:0}
+.page.longa{height:1340mm;padding:0;font-size:10pt}
 @media print{.page.longa{break-after:auto}}
 
 /* as faixas: a folha alterna fundo para marcar onde uma parte acaba e outra
@@ -453,13 +453,24 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .longa .principios p{font-size:9.2pt;line-height:1.62}
 .longa .lead{font-size:11.5pt;line-height:1.55;max-width:none;margin-bottom:0}
 
-/* a nota de posição, que fecha a coluna do que não faz parte do plano. Vem
-   depois da lista e separada por um fio: é comentário sobre a lista, não mais
-   um item dela. Corpo menor que o do texto corrido, como o da chamada que abre
-   a mesma coluna, para não competir com o que está listado acima. */
-.lg-posicao{margin-top:7mm;padding-top:5mm;border-top:1px solid var(--line)}
-.lg-posicao p{margin:0;font-size:8.6pt;line-height:1.62;color:var(--ink-2)}
-.lg-posicao p+p{margin-top:3mm}
+/* a nota de posição: onde este plano fica entre os três, fechando a faixa sob
+   as duas colunas do que ele entrega. Caixa de papel sobre o fundo suave da
+   faixa, com o fio da marca à esquerda — é a mesma ideia do `.note` do resto do
+   sistema, que aqui não serve porque o fundo dele é justamente o da faixa.
+
+   O primeiro parágrafo abre sozinho, em corpo maior: é ele que situa o plano, e
+   os outros só desdobram. O resto corre em duas colunas, porque à largura da
+   caixa inteira a linha passaria de noventa caracteres. Colunas de fluxo, e não
+   a grelha `.cols2`: o texto que sobra é um parágrafo longo e um curto, e um em
+   cada célula deixaria a metade direita vazia. Assim o navegador reparte e
+   equilibra as duas alturas. */
+.lg-posicao{margin-top:10mm;padding:8mm 9mm;background:var(--paper);
+  border:1px solid var(--line);border-left:1.33px solid var(--brand)}
+.lg-posicao p{margin:0;font-size:8.8pt;line-height:1.66;color:var(--ink-2)}
+.lg-posicao .abre{margin-bottom:6mm;font-size:10.2pt;line-height:1.55;color:var(--ink)}
+.lg-posicao .corre{columns:2;column-gap:12mm}
+.lg-posicao .corre p{margin-bottom:3mm}
+.lg-posicao .corre p:last-child{margin-bottom:0}
 
 /* o respiro entre seções cresce com a sobra, entre um piso e um teto: é o que
    acomoda a diferença de tamanho entre um consultor e outro sem abrir um
@@ -551,9 +562,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
         <div>
           <h2>O que não faz parte deste&nbsp;plano</h2>
           <p class="small mut">Algumas coisas não estão incluídas aqui, e é melhor deixar isso combinado desde o&nbsp;começo.</p>
-          <ul class="lista mut"><li>O consultor não acompanha a sua carteira todo dia para agir sozinho quando o mercado se mexe. Ele responde quando você&nbsp;chama.</li><li>Nenhuma ordem é executada por nós. A compra e a venda são sempre&nbsp;suas.</li><li>O atendimento é por escrito. Ligações e reuniões periódicas não fazem parte do&nbsp;plano.</li></ul><div class="lg-posicao"><p>Você está no Me Diz o Que Fazer, o plano intermediário da AUVP Capital, entre o Se Vira Aí, o nosso plano de autoatendimento, e o Resolve Aí, o nosso plano de acompanhamento mais&nbsp;personalizado.</p><p>No Me Diz o Que Fazer, você conta com o suporte da nossa equipe para cuidar dos seus investimentos dentro da proposta do plano. Caso busque uma estratégia de alocação mais personalizada para o seu caso, com um consultor dedicado e reuniões periódicas para acompanhamento da sua carteira e do cenário macroeconômico, esse acompanhamento faz parte do Resolve&nbsp;Aí.</p><p>O Resolve Aí é exclusivo para clientes com patrimônio a partir de R$&nbsp;300&nbsp;mil.</p></div>
+          <ul class="lista mut"><li>O consultor não acompanha a sua carteira todo dia para agir sozinho quando o mercado se mexe. Ele responde quando você&nbsp;chama.</li><li>Nenhuma ordem é executada por nós. A compra e a venda são sempre&nbsp;suas.</li><li>O atendimento é por escrito. Ligações e reuniões periódicas não fazem parte do&nbsp;plano.</li></ul>
         </div>
-      </div>
+      </div><div class="lg-posicao"><p class="abre">Você está no Me Diz o Que Fazer, o plano intermediário da AUVP Capital, entre o Se Vira Aí, o nosso plano de autoatendimento, e o Resolve Aí, o nosso plano de acompanhamento mais&nbsp;personalizado.</p><div class="corre"><p>No Me Diz o Que Fazer, você conta com o suporte da nossa equipe para cuidar dos seus investimentos dentro da proposta do plano. Caso busque uma estratégia de alocação mais personalizada para o seu caso, com um consultor dedicado e reuniões periódicas para acompanhamento da sua carteira e do cenário macroeconômico, esse acompanhamento faz parte do Resolve&nbsp;Aí.</p><p>O Resolve Aí é exclusivo para clientes com patrimônio a partir de R$&nbsp;300&nbsp;mil.</p></div></div>
       <p class="legal" style="margin-top:8mm">¹ Referente às operações de renda variável na conta nacional. &nbsp; ² Sujeitos a análise de crédito. &nbsp; ³ Conforme disponibilidade. As condições devem ser&nbsp;consultadas.</p>
     </div>
   </div>

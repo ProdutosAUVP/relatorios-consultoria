@@ -44,21 +44,32 @@ def _lista(itens, cls="lista"):
 
 
 def _nota_fora(texto, marca):
-    """Onde este plano fica, no fim da coluna do que não faz parte dele.
+    """Onde este plano fica, numa caixa sob as duas colunas do que ele entrega.
 
-    A lista acima diz o que não entra. Isto diz para onde ir quando o cliente
-    quer justamente o que não entra — e diz no afirmativo. A peça antiga
-    fechava a coluna com "você não tem uma estratégia montada só para o seu
-    caso", que é a última coisa que o cliente lê antes de virar a página: uma
-    frase que vende o plano de cima às custas do plano que ele acabou de
-    contratar. Só o plano do meio tem esta nota; nos outros a chave não existe
-    e a coluna termina na lista.
+    As colunas acima dizem o que entra e o que não entra. Isto não é nem uma
+    coisa nem outra: é o lugar deste plano entre os três, e para onde ir quando
+    se quer justamente o que não entra. A peça antiga dizia o mesmo como último
+    item da lista de exclusões — "você não tem uma estratégia montada só para o
+    seu caso" —, que era a última coisa que o cliente lia ali e vendia o plano
+    de cima às custas do que ele acabou de contratar.
+
+    Fora das colunas, a nota deixa de ser exclusão e vira o fecho da faixa. Mas
+    à largura das duas colunas a linha fica longa demais para ler, então o
+    primeiro parágrafo abre a caixa, sozinho e em corpo maior, e o resto corre
+    em duas colunas. Corre, e não se reparte: são um parágrafo longo e um curto,
+    e pô-los um em cada coluna deixaria metade da caixa vazia. O texto flui de
+    uma coluna para a outra e o navegador equilibra as duas.
+
+    Só o plano do meio tem esta nota; nos outros a chave não existe e a faixa
+    termina nas colunas.
     """
-    paras = texto.get("fora_nota")
+    paras = [p % dict(marca=marca) for p in texto.get("fora_nota") or []]
     if not paras:
         return ""
-    return '<div class="lg-posicao">%s</div>' % "".join(
-        "<p>%s</p>" % (p % dict(marca=marca)) for p in paras)
+    abre, resto = paras[0], paras[1:]
+    return '<div class="lg-posicao"><p class="abre">%s</p>%s</div>' % (
+        abre,
+        '<div class="corre">%s</div>' % "".join("<p>%s</p>" % r for r in resto) if resto else "")
 
 
 def _marcos(itens):
@@ -240,9 +251,9 @@ FOLHA = """<section class="page longa" data-sec="Apresentação do consultor">
         <div>
           <h2>O que não faz parte deste plano</h2>
           <p class="small mut">%(fora_lead)s</p>
-          %(nao_incluido)s%(fora_nota)s
+          %(nao_incluido)s
         </div>
-      </div>
+      </div>%(fora_nota)s
       <p class="legal" style="margin-top:8mm">%(notas)s</p>
     </div>
   </div>

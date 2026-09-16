@@ -442,8 +442,7 @@ CONSULTORES = [
         formacao_paras=[
             "<strong>Graduação:</strong> Administração de Empresas pela Universidade Veiga de "
             "Almeida.",
-            "<strong>Certificação:</strong> CEA — Especialista em Investimentos, certificação da "
-            "ANBIMA.",
+            "<strong>Certificações:</strong> CPA, C-Pro I e C-Pro R, certificações da ANBIMA.",
         ],
         trajetoria=[
             "Minha trajetória profissional foi construída no ambiente corporativo, onde "
@@ -486,7 +485,7 @@ CONSULTORES = [
                       "e relacionamento com pessoas."),
             ("Há três anos", "Certificação e entrada no mercado, como planejador financeiro."),
             ("Depois", "Aprovado em grandes instituições — e a escolha foi a AUVP Capital."),
-            ("Hoje", "Consultor de investimentos na AUVP Capital, há quase dois anos."),
+            ("Hoje", "Consultor de investimentos na AUVP Capital, há dois anos."),
         ],
         interesses=["Disciplina e constância", "Musculação", "Rotina equilibrada", "Viagens",
                     "Novas culturas", "Amigos e família"],

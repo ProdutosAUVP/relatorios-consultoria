@@ -835,13 +835,24 @@ CSS_LONGA = """
 .longa .principios p{font-size:9.2pt;line-height:1.62}
 .longa .lead{font-size:11.5pt;line-height:1.55;max-width:none;margin-bottom:0}
 
-/* a nota de posição, que fecha a coluna do que não faz parte do plano. Vem
-   depois da lista e separada por um fio: é comentário sobre a lista, não mais
-   um item dela. Corpo menor que o do texto corrido, como o da chamada que abre
-   a mesma coluna, para não competir com o que está listado acima. */
-.lg-posicao{margin-top:7mm;padding-top:5mm;border-top:1px solid var(--line)}
-.lg-posicao p{margin:0;font-size:8.6pt;line-height:1.62;color:var(--ink-2)}
-.lg-posicao p+p{margin-top:3mm}
+/* a nota de posição: onde este plano fica entre os três, fechando a faixa sob
+   as duas colunas do que ele entrega. Caixa de papel sobre o fundo suave da
+   faixa, com o fio da marca à esquerda — é a mesma ideia do `.note` do resto do
+   sistema, que aqui não serve porque o fundo dele é justamente o da faixa.
+
+   O primeiro parágrafo abre sozinho, em corpo maior: é ele que situa o plano, e
+   os outros só desdobram. O resto corre em duas colunas, porque à largura da
+   caixa inteira a linha passaria de noventa caracteres. Colunas de fluxo, e não
+   a grelha `.cols2`: o texto que sobra é um parágrafo longo e um curto, e um em
+   cada célula deixaria a metade direita vazia. Assim o navegador reparte e
+   equilibra as duas alturas. */
+.lg-posicao{margin-top:10mm;padding:8mm 9mm;background:var(--paper);
+  border:1px solid var(--line);border-left:1.33px solid var(--brand)}
+.lg-posicao p{margin:0;font-size:8.8pt;line-height:1.66;color:var(--ink-2)}
+.lg-posicao .abre{margin-bottom:6mm;font-size:10.2pt;line-height:1.55;color:var(--ink)}
+.lg-posicao .corre{columns:2;column-gap:12mm}
+.lg-posicao .corre p{margin-bottom:3mm}
+.lg-posicao .corre p:last-child{margin-bottom:0}
 
 /* o respiro entre seções cresce com a sobra, entre um piso e um teto: é o que
    acomoda a diferença de tamanho entre um consultor e outro sem abrir um

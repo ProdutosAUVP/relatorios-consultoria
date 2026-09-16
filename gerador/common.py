@@ -835,6 +835,14 @@ CSS_LONGA = """
 .longa .principios p{font-size:9.2pt;line-height:1.62}
 .longa .lead{font-size:11.5pt;line-height:1.55;max-width:none;margin-bottom:0}
 
+/* a nota de posição, que fecha a coluna do que não faz parte do plano. Vem
+   depois da lista e separada por um fio: é comentário sobre a lista, não mais
+   um item dela. Corpo menor que o do texto corrido, como o da chamada que abre
+   a mesma coluna, para não competir com o que está listado acima. */
+.lg-posicao{margin-top:7mm;padding-top:5mm;border-top:1px solid var(--line)}
+.lg-posicao p{margin:0;font-size:8.6pt;line-height:1.62;color:var(--ink-2)}
+.lg-posicao p+p{margin-top:3mm}
+
 /* o respiro entre seções cresce com a sobra, entre um piso e um teto: é o que
    acomoda a diferença de tamanho entre um consultor e outro sem abrir um
    buraco único no meio da folha. O teto é alto porque a folha é alta: entre o

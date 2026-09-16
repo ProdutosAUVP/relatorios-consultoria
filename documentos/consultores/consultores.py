@@ -156,7 +156,7 @@ CONSULTORES = [
         pos=["Investimentos Finanças e Banking"],
         certificacoes=["CPA", "C-Pro I", "C-Pro R"],
         marcos=[
-            ("No começo", "Diagramador na gráfica do meu avô."),
+            ("No começo", "Diagramador."),
             ("Pandemia", "Decidi deixar o mercado da comunicação para aprender sobre economia e "
                          "investimentos."),
             ("2022", "Primeira certificação no mercado, a antiga CEA, e o início como consultor "
@@ -185,7 +185,8 @@ CONSULTORES = [
             "Desenvolvi experiência prática com educação financeira, análise e compreensão de "
             "diferentes produtos e estratégias de investimento, relacionamento com investidores e "
             "tradução de conceitos complexos em decisões mais claras e conscientes. Essa "
-            "vivência, somada à minha formação pela AUVP Escola e às certificações ANBIMA, "
+            "vivência, somada à minha experiência trabalhando na AUVP e às certificações "
+            "ANBIMA, "
             "consolidou minha paixão pelo mercado e meu propósito de atuar diretamente na "
             "construção e orientação patrimonial dos investidores.",
             "Acredito que educação financeira não se resume a ensinar alguém a investir, mas a "
@@ -216,12 +217,12 @@ CONSULTORES = [
             "oportunidade de gerar valor para as pessoas ao meu redor.",
         ],
         graduacao=["Experiências acadêmicas em Marketing e Direito"],
-        pos=["Aluno da AUVP Escola"],
-        certificacoes=["CPA", "C-Pro R"],
+        pos=["Investimentos Avançados &amp; Análise de Ativos"],
+        certificacoes=["CPA", "C-Pro I", "C-Pro R"],
         marcos=[
             ("Antes do mercado", "Cerca de um ano e meio com atendimento ao público."),
             ("Por mais de dois anos", "Instrutor de inglês em diferentes escolas."),
-            ("2023", "Início da trajetória no mercado financeiro, como investidor e estudante."),
+            ("2023", "Início da trajetória no mercado financeiro."),
             ("Hoje", "Consultor de investimentos na AUVP Capital."),
         ],
         interesses=["Família", "Amigos", "Curiosidade", "Aprendizado constante",
@@ -441,8 +442,7 @@ CONSULTORES = [
         formacao_paras=[
             "<strong>Graduação:</strong> Administração de Empresas pela Universidade Veiga de "
             "Almeida.",
-            "<strong>Certificação:</strong> CEA — Especialista em Investimentos, certificação da "
-            "ANBIMA.",
+            "<strong>Certificações:</strong> CPA, C-Pro I e C-Pro R, certificações da ANBIMA.",
         ],
         trajetoria=[
             "Minha trajetória profissional foi construída no ambiente corporativo, onde "
@@ -453,9 +453,9 @@ CONSULTORES = [
             "financeiro pode fazer diferença na vida das pessoas. Foi então que decidi direcionar "
             "minha carreira para a área de investimentos.",
             "Há três anos, tirei a certificação necessária e fui para o mercado de trabalho. "
-            "Comecei atuando como planejador financeiro na W1. Mais tarde, passei no processo "
-            "seletivo para vagas em grandes instituições, como Bradesco, Itaú e AUVP. A minha "
-            "escolha foi, sem dúvidas, a AUVP Capital, onde já atuo há quase dois anos. Essa "
+            "Comecei atuando como planejador financeiro. Mais tarde, passei no processo "
+            "seletivo para vagas em grandes instituições, uma delas a AUVP. A minha "
+            "escolha foi, sem dúvidas, a AUVP Capital, onde já atuo há dois anos. Essa "
             "escolha representa não apenas um objetivo profissional, mas também algo que está "
             "diretamente ligado aos meus interesses e à forma como enxergo o futuro: ajudar "
             "pessoas a tomarem decisões e a construírem seus próprios caminhos financeiros em "
@@ -479,14 +479,13 @@ CONSULTORES = [
         ],
         graduacao=["Administração de Empresas — Universidade Veiga de Almeida"],
         pos=[],
-        certificacoes=["CEA"],
+        certificacoes=["CPA", "C-Pro I", "C-Pro R"],
         marcos=[
             ("Antes", "Trajetória no ambiente corporativo, em organização, análise, planejamento "
                       "e relacionamento com pessoas."),
-            ("Há três anos", "Certificação e entrada no mercado, como planejador financeiro na "
-                             "W1."),
-            ("Depois", "Aprovado em Bradesco, Itaú e AUVP — e a escolha foi a AUVP Capital."),
-            ("Hoje", "Consultor de investimentos na AUVP Capital, há quase dois anos."),
+            ("Há três anos", "Certificação e entrada no mercado, como planejador financeiro."),
+            ("Depois", "Aprovado em grandes instituições — e a escolha foi a AUVP Capital."),
+            ("Hoje", "Consultor de investimentos na AUVP Capital, há dois anos."),
         ],
         interesses=["Disciplina e constância", "Musculação", "Rotina equilibrada", "Viagens",
                     "Novas culturas", "Amigos e família"],

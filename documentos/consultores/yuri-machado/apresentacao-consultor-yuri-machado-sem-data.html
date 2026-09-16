@@ -382,8 +382,8 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 
 
 /* altura da folha — os dois números saem de `npm run altura -- --ajustar` */
-@page{size:210mm 1375mm;margin:0}
-.page.longa{height:1375mm;padding:0;font-size:10pt}
+@page{size:210mm 1410mm;margin:0}
+.page.longa{height:1410mm;padding:0;font-size:10pt}
 @media print{.page.longa{break-after:auto}}
 
 /* as faixas: a folha alterna fundo para marcar onde uma parte acaba e outra
@@ -453,6 +453,14 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .longa .principios p{font-size:9.2pt;line-height:1.62}
 .longa .lead{font-size:11.5pt;line-height:1.55;max-width:none;margin-bottom:0}
 
+/* a nota de posição, que fecha a coluna do que não faz parte do plano. Vem
+   depois da lista e separada por um fio: é comentário sobre a lista, não mais
+   um item dela. Corpo menor que o do texto corrido, como o da chamada que abre
+   a mesma coluna, para não competir com o que está listado acima. */
+.lg-posicao{margin-top:7mm;padding-top:5mm;border-top:1px solid var(--line)}
+.lg-posicao p{margin:0;font-size:8.6pt;line-height:1.62;color:var(--ink-2)}
+.lg-posicao p+p{margin-top:3mm}
+
 /* o respiro entre seções cresce com a sobra, entre um piso e um teto: é o que
    acomoda a diferença de tamanho entre um consultor e outro sem abrir um
    buraco único no meio da folha. O teto é alto porque a folha é alta: entre o
@@ -489,7 +497,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
         <p class="lg-frase">Acredito que uma boa relação profissional é construída com confiança, transparência e proximidade. Por isso, busco sempre entender as necessidades de cada pessoa antes de pensar em qualquer estratégia ou&nbsp;solução.</p>
       </div>
     </div>
-    <div class="lg-cred" style="--n:2"><div><h3>Formação</h3><ul class="lista"><li>Administração de Empresas — Universidade Veiga de&nbsp;Almeida</li></ul></div><div><h3>Certificações</h3><div class="chips"><span class="pill">CEA</span></div></div></div>
+    <div class="lg-cred" style="--n:2"><div><h3>Formação</h3><ul class="lista"><li>Administração de Empresas — Universidade Veiga de&nbsp;Almeida</li></ul></div><div><h3>Certificações</h3><div class="chips"><span class="pill">CPA</span><span class="pill">C-Pro&nbsp;I</span><span class="pill">C-Pro&nbsp;R</span></div></div></div>
   </header>
 
   <div class="lg-corpo">
@@ -500,14 +508,14 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
     <div class="esp"></div>
     <div class="lg-sec">
       <h2>Formação acadêmica e&nbsp;qualificações</h2>
-      <div class="corrido"><p><strong>Graduação:</strong> Administração de Empresas pela Universidade Veiga de&nbsp;Almeida.</p><p><strong>Certificação:</strong> CEA — Especialista em Investimentos, certificação da&nbsp;ANBIMA.</p></div>
+      <div class="corrido"><p><strong>Graduação:</strong> Administração de Empresas pela Universidade Veiga de&nbsp;Almeida.</p><p><strong>Certificações:</strong> CPA, C-Pro I e C-Pro R, certificações da&nbsp;ANBIMA.</p></div>
     </div>
     <div class="esp"></div>
     <div class="lg-sec">
       <h2>A minha trajetória no mercado&nbsp;financeiro</h2>
       <div class="cols2u" style="align-items:start">
-        <div class="corrido"><p>Minha trajetória profissional foi construída no ambiente corporativo, onde desenvolvi experiências importantes relacionadas à organização, análise, planejamento e relacionamento com&nbsp;pessoas.</p><p>Ao longo desse caminho, meu interesse pelo mercado financeiro se tornou cada vez maior. Comecei a estudar investimentos e a entender, na prática, como o conhecimento financeiro pode fazer diferença na vida das pessoas. Foi então que decidi direcionar minha carreira para a área de&nbsp;investimentos.</p><p>Há três anos, tirei a certificação necessária e fui para o mercado de trabalho. Comecei atuando como planejador financeiro na W1. Mais tarde, passei no processo seletivo para vagas em grandes instituições, como Bradesco, Itaú e AUVP. A minha escolha foi, sem dúvidas, a AUVP Capital, onde já atuo há quase dois anos. Essa escolha representa não apenas um objetivo profissional, mas também algo que está diretamente ligado aos meus interesses e à forma como enxergo o futuro: ajudar pessoas a tomarem decisões e a construírem seus próprios caminhos financeiros em busca da&nbsp;liberdade.</p></div>
-        <div class="side"><h3 style="margin-top:0">Em&nbsp;marcos</h3><ol class="marcos"><li><span class="q">Antes</span><p>Trajetória no ambiente corporativo, em organização, análise, planejamento e relacionamento com&nbsp;pessoas.</p></li><li><span class="q">Há três&nbsp;anos</span><p>Certificação e entrada no mercado, como planejador financeiro na&nbsp;W1.</p></li><li><span class="q">Depois</span><p>Aprovado em Bradesco, Itaú e AUVP — e a escolha foi a AUVP&nbsp;Capital.</p></li><li><span class="q">Hoje</span><p>Consultor de investimentos na AUVP Capital, há quase dois&nbsp;anos.</p></li></ol></div>
+        <div class="corrido"><p>Minha trajetória profissional foi construída no ambiente corporativo, onde desenvolvi experiências importantes relacionadas à organização, análise, planejamento e relacionamento com&nbsp;pessoas.</p><p>Ao longo desse caminho, meu interesse pelo mercado financeiro se tornou cada vez maior. Comecei a estudar investimentos e a entender, na prática, como o conhecimento financeiro pode fazer diferença na vida das pessoas. Foi então que decidi direcionar minha carreira para a área de&nbsp;investimentos.</p><p>Há três anos, tirei a certificação necessária e fui para o mercado de trabalho. Comecei atuando como planejador financeiro. Mais tarde, passei no processo seletivo para vagas em grandes instituições, uma delas a AUVP. A minha escolha foi, sem dúvidas, a AUVP Capital, onde já atuo há dois anos. Essa escolha representa não apenas um objetivo profissional, mas também algo que está diretamente ligado aos meus interesses e à forma como enxergo o futuro: ajudar pessoas a tomarem decisões e a construírem seus próprios caminhos financeiros em busca da&nbsp;liberdade.</p></div>
+        <div class="side"><h3 style="margin-top:0">Em&nbsp;marcos</h3><ol class="marcos"><li><span class="q">Antes</span><p>Trajetória no ambiente corporativo, em organização, análise, planejamento e relacionamento com&nbsp;pessoas.</p></li><li><span class="q">Há três&nbsp;anos</span><p>Certificação e entrada no mercado, como planejador&nbsp;financeiro.</p></li><li><span class="q">Depois</span><p>Aprovado em grandes instituições — e a escolha foi a AUVP&nbsp;Capital.</p></li><li><span class="q">Hoje</span><p>Consultor de investimentos na AUVP Capital, há dois&nbsp;anos.</p></li></ol></div>
       </div>
     </div>
     <div class="esp"></div>
@@ -543,7 +551,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
         <div>
           <h2>O que não faz parte deste&nbsp;plano</h2>
           <p class="small mut">Algumas coisas não estão incluídas aqui, e é melhor deixar isso combinado desde o&nbsp;começo.</p>
-          <ul class="lista mut"><li>O consultor não acompanha a sua carteira todo dia para agir sozinho quando o mercado se mexe. Ele responde quando você&nbsp;chama.</li><li>Nenhuma ordem é executada por nós. A compra e a venda são sempre&nbsp;suas.</li><li>O atendimento é por escrito. Ligações e reuniões periódicas não fazem parte do&nbsp;plano.</li><li>Você não tem uma estratégia de alocação montada só para o seu caso, com ajustes conforme o cenário muda. Esse acompanhamento é o do Resolve Aí, o plano de consultoria completa para quem tem R$ 300 mil ou mais, com consultor dedicado e reuniões&nbsp;bimestrais.</li></ul>
+          <ul class="lista mut"><li>O consultor não acompanha a sua carteira todo dia para agir sozinho quando o mercado se mexe. Ele responde quando você&nbsp;chama.</li><li>Nenhuma ordem é executada por nós. A compra e a venda são sempre&nbsp;suas.</li><li>O atendimento é por escrito. Ligações e reuniões periódicas não fazem parte do&nbsp;plano.</li></ul><div class="lg-posicao"><p>Você está no Me Diz o Que Fazer, o plano intermediário da AUVP Capital, entre o Se Vira Aí, o nosso plano de autoatendimento, e o Resolve Aí, o nosso plano de acompanhamento mais&nbsp;personalizado.</p><p>No Me Diz o Que Fazer, você conta com o suporte da nossa equipe para cuidar dos seus investimentos dentro da proposta do plano. Caso busque uma estratégia de alocação mais personalizada para o seu caso, com um consultor dedicado e reuniões periódicas para acompanhamento da sua carteira e do cenário macroeconômico, esse acompanhamento faz parte do Resolve&nbsp;Aí.</p><p>O Resolve Aí é exclusivo para clientes com patrimônio a partir de R$&nbsp;300&nbsp;mil.</p></div>
         </div>
       </div>
       <p class="legal" style="margin-top:8mm">¹ Referente às operações de renda variável na conta nacional. &nbsp; ² Sujeitos a análise de crédito. &nbsp; ³ Conforme disponibilidade. As condições devem ser&nbsp;consultadas.</p>
@@ -559,7 +567,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
     <div class="esp"></div>
     <div class="lg-sec">
       <h2>Como somos&nbsp;remunerados</h2>
-      <div class="corrido"><p>A AUVP Capital trabalha no modelo <em>fee&nbsp;based</em>. Neste plano, a consultoria cobra uma taxa sobre o patrimônio orientado, de <strong>0,075% ao&nbsp;mês</strong>, o que dá <strong>0,9% ao&nbsp;ano</strong>.</p><p>No modelo comissionado, que é o mais comum no mercado, quem indica o investimento é pago pelo produto que vende. Quanto maior a comissão daquele produto, maior o incentivo para oferecer justamente ele, e para sugerir troca na carteira com mais frequência do que seria necessário. O interesse de quem recomenda acaba ficando diferente do interesse de quem&nbsp;investe.</p><p>No <em>fee&nbsp;based</em> esse conflito não aparece. A nossa remuneração é a mesma seja qual for o investimento recomendado, então a escolha é feita só pelo que serve para você. A comissão que a indicação geraria volta para a sua conta em forma de&nbsp;cashback.</p><p>E como a taxa é um percentual do que você tem investido, a consultoria só ganha mais quando o seu patrimônio&nbsp;cresce.</p></div>
+      <div class="corrido"><p>A AUVP Capital trabalha no modelo <em>fee&nbsp;based</em>. Neste plano, a consultoria cobra uma taxa sobre o patrimônio orientado, de <strong>0,075% ao&nbsp;mês</strong>, o que dá <strong>0,9% ao&nbsp;ano</strong>.</p><p>No modelo comissionado, que é o mais comum no mercado, quem indica o investimento é pago pelo produto que vende. Quanto maior a comissão daquele produto, maior o incentivo para oferecer justamente ele, e para sugerir troca na carteira com mais frequência do que seria necessário. O interesse de quem recomenda acaba ficando diferente do interesse de quem&nbsp;investe.</p><p>No <em>fee&nbsp;based</em> (modelo que praticamos) esse conflito não aparece. A nossa remuneração é a mesma seja qual for o investimento recomendado, então a escolha é feita só pelo que serve para você. A comissão que a indicação geraria volta para a sua conta em forma de&nbsp;cashback.</p><p>E como a taxa é um percentual do que você tem investido, a consultoria só ganha mais quando o seu patrimônio&nbsp;cresce.</p></div>
     </div>
   </div>
 

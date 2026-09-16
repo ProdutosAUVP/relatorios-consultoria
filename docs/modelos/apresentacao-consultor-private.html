@@ -453,6 +453,14 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .longa .principios p{font-size:9.2pt;line-height:1.62}
 .longa .lead{font-size:11.5pt;line-height:1.55;max-width:none;margin-bottom:0}
 
+/* a nota de posição, que fecha a coluna do que não faz parte do plano. Vem
+   depois da lista e separada por um fio: é comentário sobre a lista, não mais
+   um item dela. Corpo menor que o do texto corrido, como o da chamada que abre
+   a mesma coluna, para não competir com o que está listado acima. */
+.lg-posicao{margin-top:7mm;padding-top:5mm;border-top:1px solid var(--line)}
+.lg-posicao p{margin:0;font-size:8.6pt;line-height:1.62;color:var(--ink-2)}
+.lg-posicao p+p{margin-top:3mm}
+
 /* o respiro entre seções cresce com a sobra, entre um piso e um teto: é o que
    acomoda a diferença de tamanho entre um consultor e outro sem abrir um
    buraco único no meio da folha. O teto é alto porque a folha é alta: entre o
@@ -559,7 +567,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
     <div class="esp"></div>
     <div class="lg-sec">
       <h2>Como somos&nbsp;remunerados</h2>
-      <div class="corrido"><p>A AUVP Private Banking trabalha no modelo <em>fee&nbsp;based</em>. Neste plano, a consultoria cobra uma taxa sobre o patrimônio orientado, de <strong><span class="ph" title="Ex.: 0,075%">{{taxa_mensal}}</span> ao&nbsp;mês</strong>, o que dá <strong><span class="ph" title="Ex.: 0,9%">{{taxa_anual}}</span> ao&nbsp;ano</strong>.</p><p>No modelo comissionado, que é o mais comum no mercado, quem indica o investimento é pago pelo produto que vende. Quanto maior a comissão daquele produto, maior o incentivo para oferecer justamente ele, e para sugerir troca na carteira com mais frequência do que seria necessário. O interesse de quem recomenda acaba ficando diferente do interesse de quem&nbsp;investe.</p><p>No <em>fee&nbsp;based</em> esse conflito não aparece. A nossa remuneração é a mesma seja qual for o investimento recomendado, então a escolha é feita só pelo que serve para você. A comissão que a indicação geraria volta para a sua conta em forma de&nbsp;cashback.</p><p>E como a taxa é um percentual do que você tem investido, a consultoria só ganha mais quando o seu patrimônio&nbsp;cresce.</p></div>
+      <div class="corrido"><p>A AUVP Private Banking trabalha no modelo <em>fee&nbsp;based</em>. Neste plano, a consultoria cobra uma taxa sobre o patrimônio orientado, de <strong><span class="ph" title="Ex.: 0,075%">{{taxa_mensal}}</span> ao&nbsp;mês</strong>, o que dá <strong><span class="ph" title="Ex.: 0,9%">{{taxa_anual}}</span> ao&nbsp;ano</strong>.</p><p>No modelo comissionado, que é o mais comum no mercado, quem indica o investimento é pago pelo produto que vende. Quanto maior a comissão daquele produto, maior o incentivo para oferecer justamente ele, e para sugerir troca na carteira com mais frequência do que seria necessário. O interesse de quem recomenda acaba ficando diferente do interesse de quem&nbsp;investe.</p><p>No <em>fee&nbsp;based</em> (modelo que praticamos) esse conflito não aparece. A nossa remuneração é a mesma seja qual for o investimento recomendado, então a escolha é feita só pelo que serve para você. A comissão que a indicação geraria volta para a sua conta em forma de&nbsp;cashback.</p><p>E como a taxa é um percentual do que você tem investido, a consultoria só ganha mais quando o seu patrimônio&nbsp;cresce.</p></div>
     </div>
   </div>
 

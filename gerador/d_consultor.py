@@ -43,6 +43,24 @@ def _lista(itens, cls="lista"):
     return '<ul class="%s">%s</ul>' % (cls, "".join("<li>%s</li>" % i for i in itens))
 
 
+def _nota_fora(texto, marca):
+    """Onde este plano fica, no fim da coluna do que não faz parte dele.
+
+    A lista acima diz o que não entra. Isto diz para onde ir quando o cliente
+    quer justamente o que não entra — e diz no afirmativo. A peça antiga
+    fechava a coluna com "você não tem uma estratégia montada só para o seu
+    caso", que é a última coisa que o cliente lê antes de virar a página: uma
+    frase que vende o plano de cima às custas do plano que ele acabou de
+    contratar. Só o plano do meio tem esta nota; nos outros a chave não existe
+    e a coluna termina na lista.
+    """
+    paras = texto.get("fora_nota")
+    if not paras:
+        return ""
+    return '<div class="lg-posicao">%s</div>' % "".join(
+        "<p>%s</p>" % (p % dict(marca=marca)) for p in paras)
+
+
 def _marcos(itens):
     return '<ol class="marcos">%s</ol>' % "".join(
         '<li><span class="q">%s</span><p>%s</p></li>' % (q, t) for q, t in itens)
@@ -222,7 +240,7 @@ FOLHA = """<section class="page longa" data-sec="Apresentação do consultor">
         <div>
           <h2>O que não faz parte deste plano</h2>
           <p class="small mut">%(fora_lead)s</p>
-          %(nao_incluido)s
+          %(nao_incluido)s%(fora_nota)s
         </div>
       </div>
       <p class="legal" style="margin-top:8mm">%(notas)s</p>
@@ -315,7 +333,7 @@ FORA_LEAD = ("Algumas coisas não estão incluídas aqui, e é melhor deixar iss
 REMUNERACAO = [
     "A %(marca)s trabalha no modelo <em>fee based</em>. Neste plano, a consultoria cobra uma taxa sobre o patrimônio orientado, de <strong>%(mes)s ao mês</strong>, o que dá <strong>%(ano)s ao ano</strong>.",
     "No modelo comissionado, que é o mais comum no mercado, quem indica o investimento é pago pelo produto que vende. Quanto maior a comissão daquele produto, maior o incentivo para oferecer justamente ele, e para sugerir troca na carteira com mais frequência do que seria necessário. O interesse de quem recomenda acaba ficando diferente do interesse de quem investe.",
-    "No <em>fee based</em> esse conflito não aparece. A nossa remuneração é a mesma seja qual for o investimento recomendado, então a escolha é feita só pelo que serve para você. A comissão que a indicação geraria volta para a sua conta em forma de cashback.",
+    "No <em>fee based</em> (modelo que praticamos) esse conflito não aparece. A nossa remuneração é a mesma seja qual for o investimento recomendado, então a escolha é feita só pelo que serve para você. A comissão que a indicação geraria volta para a sua conta em forma de cashback.",
     "E como a taxa é um percentual do que você tem investido, a consultoria só ganha mais quando o seu patrimônio cresce.",
 ]
 
@@ -388,7 +406,11 @@ PLANOS = {
             "O consultor não acompanha a sua carteira todo dia para agir sozinho quando o mercado se mexe. Ele responde quando você chama.",
             "Nenhuma ordem é executada por nós. A compra e a venda são sempre suas.",
             "O atendimento é por escrito. Ligações e reuniões periódicas não fazem parte do plano.",
-            "Você não tem uma estratégia de alocação montada só para o seu caso, com ajustes conforme o cenário muda. Esse acompanhamento é o do Resolve Aí, o plano de consultoria completa para quem tem R$ 300 mil ou mais, com consultor dedicado e reuniões bimestrais.",
+        ],
+        fora_nota=[
+            "Você está no Me Diz o Que Fazer, o plano intermediário da %(marca)s, entre o Se Vira Aí, o nosso plano de autoatendimento, e o Resolve Aí, o nosso plano de acompanhamento mais personalizado.",
+            "No Me Diz o Que Fazer, você conta com o suporte da nossa equipe para cuidar dos seus investimentos dentro da proposta do plano. Caso busque uma estratégia de alocação mais personalizada para o seu caso, com um consultor dedicado e reuniões periódicas para acompanhamento da sua carteira e do cenário macroeconômico, esse acompanhamento faz parte do Resolve Aí.",
+            "O Resolve Aí é exclusivo para clientes com patrimônio a partir de R$&nbsp;300 mil.",
         ],
         mes="0,075%", ano="0,9%", notas=NOTAS,
     ),
@@ -488,7 +510,8 @@ def folha(t, variante, c=None, foto=None, primeiro=None, data=True):
         resumo=texto["resumo"], funciona=_paras(texto["funciona"]),
         pedir=(BLOCO_PEDIR % dict(itens=_lista(texto["pedir"]))) if texto.get("pedir") else "",
         incluido=_lista(texto["incluido"]), fora_lead=FORA_LEAD,
-        nao_incluido=_lista(texto["fora"], cls="lista mut"), notas=texto["notas"],
+        nao_incluido=_lista(texto["fora"], cls="lista mut"),
+        fora_nota=_nota_fora(texto, t["marca"]), notas=texto["notas"],
         # a casa
         metodo=METODO,
         remuneracao=_paras([par % dict(marca=t["marca"], mes=texto["mes"], ano=texto["ano"])

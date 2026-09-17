@@ -337,32 +337,32 @@
      "rotulo": "Consultoria",
      "arquivo": "relatorio-mensal-consultoria.html",
      "paginas": 11,
-     "campos": 467,
-     "imagens": 6
+     "campos": 381,
+     "imagens": 5
     },
     {
      "sufixo": "alta-renda",
      "rotulo": "Alta Renda",
      "arquivo": "relatorio-mensal-alta-renda.html",
      "paginas": 11,
-     "campos": 467,
-     "imagens": 6
+     "campos": 381,
+     "imagens": 5
     },
     {
      "sufixo": "private",
      "rotulo": "Private Banking",
      "arquivo": "relatorio-mensal-private.html",
-     "paginas": 12,
-     "campos": 503,
-     "imagens": 6
+     "paginas": 11,
+     "campos": 381,
+     "imagens": 5
     },
     {
      "sufixo": "assessoria",
      "rotulo": "Assessoria",
      "arquivo": "relatorio-mensal-assessoria.html",
      "paginas": 12,
-     "campos": 502,
-     "imagens": 6
+     "campos": 416,
+     "imagens": 5
     }
    ]
   },

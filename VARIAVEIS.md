@@ -172,18 +172,14 @@ plano_3_taxa
 
 Arquivos: `modelos/carta-apresentacao-alta-renda.html`
 
-Variantes: — &middot; 25 variáveis
+Variantes: — &middot; 13 variáveis
 
-<details><summary>Ver as 19 variáveis específicas deste documento</summary>
+<details><summary>Ver as 7 variáveis específicas deste documento</summary>
 
 ```
 subtitulo_carta                   data_carta                        data_primeira_reuniao
 momento_do_cliente                objetivo_principal                frase_de_abertura
-taxa_anual                        banda_rf_min                      banda_rf_max
-banda_irf_min                     banda_irf_max                     banda_irv_min
-banda_irv_max                     banda_acoes_min                   banda_acoes_max
-banda_fii_min                     banda_fii_max                     banda_alt_min
-banda_alt_max
+taxa_anual
 ```
 </details>
 
@@ -191,18 +187,14 @@ banda_alt_max
 
 Arquivos: `modelos/carta-apresentacao-assessoria.html`
 
-Variantes: — &middot; 25 variáveis
+Variantes: — &middot; 13 variáveis
 
-<details><summary>Ver as 19 variáveis específicas deste documento</summary>
+<details><summary>Ver as 7 variáveis específicas deste documento</summary>
 
 ```
 subtitulo_carta                   data_carta                        data_primeira_reuniao
 momento_do_cliente                objetivo_principal                frase_de_abertura
-nota_remuneracao                  banda_rf_min                      banda_rf_max
-banda_irf_min                     banda_irf_max                     banda_irv_min
-banda_irv_max                     banda_acoes_min                   banda_acoes_max
-banda_fii_min                     banda_fii_max                     banda_alt_min
-banda_alt_max
+nota_remuneracao
 ```
 </details>
 
@@ -210,18 +202,14 @@ banda_alt_max
 
 Arquivos: `modelos/carta-apresentacao-consultoria.html`
 
-Variantes: — &middot; 25 variáveis
+Variantes: — &middot; 13 variáveis
 
-<details><summary>Ver as 19 variáveis específicas deste documento</summary>
+<details><summary>Ver as 7 variáveis específicas deste documento</summary>
 
 ```
 subtitulo_carta                   data_carta                        data_primeira_reuniao
 momento_do_cliente                objetivo_principal                frase_de_abertura
-taxa_anual                        banda_rf_min                      banda_rf_max
-banda_irf_min                     banda_irf_max                     banda_irv_min
-banda_irv_max                     banda_acoes_min                   banda_acoes_max
-banda_fii_min                     banda_fii_max                     banda_alt_min
-banda_alt_max
+taxa_anual
 ```
 </details>
 
@@ -229,18 +217,14 @@ banda_alt_max
 
 Arquivos: `modelos/carta-apresentacao-private.html`
 
-Variantes: — &middot; 25 variáveis
+Variantes: — &middot; 13 variáveis
 
-<details><summary>Ver as 19 variáveis específicas deste documento</summary>
+<details><summary>Ver as 7 variáveis específicas deste documento</summary>
 
 ```
 subtitulo_carta                   data_carta                        data_primeira_reuniao
 momento_do_cliente                objetivo_principal                frase_de_abertura
-taxa_anual                        banda_rf_min                      banda_rf_max
-banda_irf_min                     banda_irf_max                     banda_irv_min
-banda_irv_max                     banda_acoes_min                   banda_acoes_max
-banda_fii_min                     banda_fii_max                     banda_alt_min
-banda_alt_max
+taxa_anual
 ```
 </details>
 

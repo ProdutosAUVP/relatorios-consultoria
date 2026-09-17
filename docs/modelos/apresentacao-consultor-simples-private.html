@@ -37,6 +37,11 @@ ul{margin:0 0 3mm;padding-left:4mm}
 li{margin:0 0 1mm}
 strong{font-weight:700}
 .ph{background:var(--ph);border-radius:.6mm;padding:0 1mm;font-weight:600;overflow-wrap:break-word;text-transform:none;letter-spacing:0;font-size:.94em}
+/* O campo que já vem preenchido não é lacuna: lê-se como o texto que é, e o
+   realce só serviria para o consultor achar que falta algo ali. Continua sendo
+   campo — a ferramenta o oferece para edição —, mas isso é assunto da
+   ferramenta, não do papel. */
+.ph.pronto{background:none;padding:0;font-weight:inherit;font-size:inherit}
 .dark .ph{background:var(--ph-dk);color:#fff}
 /* capas e divisórias são monocromáticas: nada de dourado sobre a arte da capa */
 .cover .ph,.divider .ph{background:rgba(255,255,255,.18);color:#fff}
@@ -436,13 +441,13 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   <svg class="fl-aneis" viewBox="0 0 100 100" style="left:0.70mm;top:8.50mm;width:100.00mm;height:100.00mm"><circle cx="50" cy="50" r="31.00" stroke-opacity="0.150"/><circle cx="50" cy="50" r="33.38" stroke-opacity="0.134"/><circle cx="50" cy="50" r="35.75" stroke-opacity="0.119"/><circle cx="50" cy="50" r="38.12" stroke-opacity="0.103"/><circle cx="50" cy="50" r="40.50" stroke-opacity="0.087"/><circle cx="50" cy="50" r="42.88" stroke-opacity="0.072"/><circle cx="50" cy="50" r="45.25" stroke-opacity="0.056"/><circle cx="50" cy="50" r="47.62" stroke-opacity="0.041"/><circle cx="50" cy="50" r="50.00" stroke-opacity="0.025"/></svg>
   <div class="imgbox fl-foto" style="left:21.70mm;top:29.50mm;width:58.00mm;height:58.00mm" data-img="1"><div class="cl">Retrato</div><div class="cd">Foto vertical, recortada em&nbsp;círculo.</div></div>
   <div class="fl-nome">
-    <h1><span class="ph">{{nome_consultor}}</span></h1>
-    <p><span class="ph" title="Consultor de investimentos, especialista, planejador…">{{papel_consultor}}</span></p>
+    <h1><span class="ph" data-campo="nome_consultor">{{nome_consultor}}</span></h1>
+    <p><span class="ph" data-campo="papel_consultor" title="Consultor de investimentos, especialista, planejador…">{{papel_consultor}}</span></p>
   </div>
   <div class="fl-corpo">
-    <div class="fl-bio"><p><span class="ph">{{proposito_1}}</span></p><p><span class="ph">{{proposito_2}}</span></p><p><span class="ph">{{proposito_3}}</span></p><p><span class="ph">{{proposito_4}}</span></p><p><span class="ph">{{fora_do_escritorio_1}}</span></p></div>
+    <div class="fl-bio"><p><span class="ph" data-campo="proposito_1">{{proposito_1}}</span></p><p><span class="ph" data-campo="proposito_2">{{proposito_2}}</span></p><p><span class="ph" data-campo="proposito_3">{{proposito_3}}</span></p><p><span class="ph" data-campo="proposito_4">{{proposito_4}}</span></p><p><span class="ph" data-campo="fora_do_escritorio_1">{{fora_do_escritorio_1}}</span></p></div>
     <div class="fl-vao"></div>
-    <div class="fl-contatos"><div class="fl-ct"><span class="ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="6.5" width="15" height="11" rx="1.5"/><path d="M4.5 8.5 12 13.5 19.5 8.5"/></svg></span><span><span class="ph" data-link="mailto">{{email_consultor}}</span></span></div><div class="fl-ct"><span class="ic"><svg viewBox="0 0 24 24"><path d="M8.2 4.8c.6 0 1 .3 1.2.9l1 2.4c.2.5.1 1-.3 1.3l-1 .9c1 2 2.6 3.6 4.6 4.6l.9-1c.3-.4.8-.5 1.3-.3l2.4 1c.6.2.9.6.9 1.2v2.1c0 .8-.6 1.4-1.4 1.4C11.6 19.3 4.7 12.4 4.7 6.2c0-.8.6-1.4 1.4-1.4z"/></svg></span><span><span class="ph" data-link="whatsapp">{{whatsapp_consultor}}</span></span></div><div class="fl-ct"><span class="ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="4.5"/><circle cx="12" cy="12" r="3.7"/><circle cx="16.7" cy="7.3" r=".9"/></svg></span><span><span class="ph" data-link="instagram">{{instagram_consultor}}</span></span></div></div>
+    <div class="fl-contatos"><div class="fl-ct"><span class="ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="6.5" width="15" height="11" rx="1.5"/><path d="M4.5 8.5 12 13.5 19.5 8.5"/></svg></span><span><span class="ph" data-campo="email_consultor" data-link="mailto">{{email_consultor}}</span></span></div><div class="fl-ct"><span class="ic"><svg viewBox="0 0 24 24"><path d="M8.2 4.8c.6 0 1 .3 1.2.9l1 2.4c.2.5.1 1-.3 1.3l-1 .9c1 2 2.6 3.6 4.6 4.6l.9-1c.3-.4.8-.5 1.3-.3l2.4 1c.6.2.9.6.9 1.2v2.1c0 .8-.6 1.4-1.4 1.4C11.6 19.3 4.7 12.4 4.7 6.2c0-.8.6-1.4 1.4-1.4z"/></svg></span><span><span class="ph" data-campo="whatsapp_consultor" data-link="whatsapp">{{whatsapp_consultor}}</span></span></div><div class="fl-ct"><span class="ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="4.5"/><circle cx="12" cy="12" r="3.7"/><circle cx="16.7" cy="7.3" r=".9"/></svg></span><span><span class="ph" data-campo="instagram_consultor" data-link="instagram">{{instagram_consultor}}</span></span></div></div>
   </div>
   <div class="fl-pe"><span class="rule"></span><div class="logo fl-logo" style="width:58.6mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>

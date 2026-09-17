@@ -37,6 +37,11 @@ ul{margin:0 0 3mm;padding-left:4mm}
 li{margin:0 0 1mm}
 strong{font-weight:700}
 .ph{background:var(--ph);border-radius:.6mm;padding:0 1mm;font-weight:600;overflow-wrap:break-word;text-transform:none;letter-spacing:0;font-size:.94em}
+/* O campo que já vem preenchido não é lacuna: lê-se como o texto que é, e o
+   realce só serviria para o consultor achar que falta algo ali. Continua sendo
+   campo — a ferramenta o oferece para edição —, mas isso é assunto da
+   ferramenta, não do papel. */
+.ph.pronto{background:none;padding:0;font-weight:inherit;font-size:inherit}
 .dark .ph{background:var(--ph-dk);color:#fff}
 /* capas e divisórias são monocromáticas: nada de dourado sobre a arte da capa */
 .cover .ph,.divider .ph{background:rgba(255,255,255,.18);color:#fff}
@@ -500,9 +505,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="cv-block">
     <div class="rule"></div>
     <h1 class="cv-t"><span class="lt">AUVP </span>Alta&nbsp;Renda</h1>
-    <div class="cv-sub"><span class="ph" title="Ex.: proposta de atendimento">{{subtitulo_apresentacao}}</span></div>
+    <div class="cv-sub"><span class="ph" data-campo="subtitulo_apresentacao" title="Ex.: proposta de atendimento">{{subtitulo_apresentacao}}</span></div>
   </div>
-  <div class="cv-foot"><div class="cf">DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</div><div class="id"><div><span class="ph">{{nome_cliente}}</span></div><div><span class="ph">{{nome_responsavel}}</span></div><div><span class="ph">{{data_apresentacao}}</span></div></div></div>
+  <div class="cv-foot"><div class="cf">DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</div><div class="id"><div><span class="ph" data-campo="nome_cliente">{{nome_cliente}}</span></div><div><span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span></div><div><span class="ph" data-campo="data_apresentacao">{{data_apresentacao}}</span></div></div></div>
 </section>
 <section class="slide dark divider">
   <div class="grain"></div>
@@ -662,7 +667,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Quem&nbsp;somos</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_apresentacao}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_apresentacao">{{data_apresentacao}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -875,7 +880,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Como&nbsp;trabalhamos</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_apresentacao}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_apresentacao">{{data_apresentacao}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -916,8 +921,8 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     <div class="pg-body">
 <span class="eyebrow">Método</span>
 <h1 class="t">Do primeiro papo à carteira&nbsp;rodando</h1>
-<div class="center"><ol class="flow" style="--n:5"><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_1_prazo}}</span></span><h4>Alinhamento&nbsp;Consultoria</h4><p><span class="ph">{{metodo_1_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_2_prazo}}</span></span><h4>KYC /&nbsp;Suitability</h4><p><span class="ph">{{metodo_2_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_3_prazo}}</span></span><h4>Apresentação de&nbsp;Relatório</h4><p><span class="ph">{{metodo_3_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_4_prazo}}</span></span><h4>Acompanhamento de&nbsp;Estratégia</h4><p><span class="ph">{{metodo_4_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_5_prazo}}</span></span><h4>Planejamento Patrimonial e&nbsp;Sucessório</h4><p><span class="ph">{{metodo_5_detalhe}}</span></p></li></ol></div>
-<div class="note"><p><strong>Prazo típico do ciclo&nbsp;completo.</strong> <span class="ph">{{prazo_implantacao}}</span></p></div>
+<div class="center"><ol class="flow" style="--n:5"><li><span class="node"></span><span class="tag"><span class="ph" data-campo="metodo_1_prazo">{{metodo_1_prazo}}</span></span><h4>Alinhamento&nbsp;Consultoria</h4><p><span class="ph" data-campo="metodo_1_detalhe">{{metodo_1_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph" data-campo="metodo_2_prazo">{{metodo_2_prazo}}</span></span><h4>KYC /&nbsp;Suitability</h4><p><span class="ph" data-campo="metodo_2_detalhe">{{metodo_2_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph" data-campo="metodo_3_prazo">{{metodo_3_prazo}}</span></span><h4>Apresentação de&nbsp;Relatório</h4><p><span class="ph" data-campo="metodo_3_detalhe">{{metodo_3_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph" data-campo="metodo_4_prazo">{{metodo_4_prazo}}</span></span><h4>Acompanhamento de&nbsp;Estratégia</h4><p><span class="ph" data-campo="metodo_4_detalhe">{{metodo_4_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph" data-campo="metodo_5_prazo">{{metodo_5_prazo}}</span></span><h4>Planejamento Patrimonial e&nbsp;Sucessório</h4><p><span class="ph" data-campo="metodo_5_detalhe">{{metodo_5_detalhe}}</span></p></li></ol></div>
+<div class="note"><p><strong>Prazo típico do ciclo&nbsp;completo.</strong> <span class="ph" data-campo="prazo_implantacao">{{prazo_implantacao}}</span></p></div>
     </div>
     <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
@@ -927,7 +932,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Como&nbsp;trabalhamos</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_apresentacao}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_apresentacao">{{data_apresentacao}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -968,7 +973,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     <div class="pg-body">
 <span class="eyebrow">AUVP Capital · Alta&nbsp;Renda</span>
 <h1 class="t">Cronograma de&nbsp;reuniões</h1>
-<table class="crono"><thead><tr><th></th><th>Reuniões</th><th>Pauta</th><th>Prazo</th><th style="text-align:right">Data&nbsp;sugerida</th></tr></thead><tbody><tr><td class="fase" rowspan="3"><span>Estruturação</span></td><td class="qual">1ª&nbsp;Reunião</td><td class="pauta">Alinhamento&nbsp;Consultoria</td><td class="prazo">Início da&nbsp;consultoria</td><td class="quando"><span><span class="ph">{{reuniao_1_data}}</span></span></td></tr><tr><td class="qual">2ª&nbsp;Reunião</td><td class="pauta">KYC /&nbsp;Suitability</td><td class="prazo">Até 5 dias após o&nbsp;Alinhamento</td><td class="quando"><span><span class="ph">{{reuniao_2_data}}</span></span></td></tr><tr><td class="qual">3ª&nbsp;Reunião</td><td class="pauta">Apresentação de&nbsp;Relatório</td><td class="prazo">Até 10 dias após o&nbsp;KYC/Suitability</td><td class="quando"><span><span class="ph">{{reuniao_3_data}}</span></span></td></tr><tr><td class="fase" rowspan="2"><span>Acompanhamento</span></td><td class="qual">4ª&nbsp;Reunião</td><td class="pauta">Acompanhamento de&nbsp;Estratégia</td><td class="prazo">Até 60 dias após a Apresentação de&nbsp;Relatório</td><td class="quando"><span><span class="ph">{{reuniao_4_data}}</span></span></td></tr><tr><td class="qual">5ª&nbsp;Reunião</td><td class="pauta">Planejamento Patrimonial e&nbsp;Sucessório</td><td class="prazo">Até 2 semanas após os&nbsp;Resultados</td><td class="quando"><span><span class="ph">{{reuniao_5_data}}</span></span></td></tr><tr><td class="fase" rowspan="1"><span>Fechamento</span></td><td class="qual">6ª&nbsp;Reunião</td><td class="pauta">Revisão de&nbsp;Portfólio</td><td class="prazo">Até 60 dias após a Proteção&nbsp;Patrimonial</td><td class="quando"><span><span class="ph">{{reuniao_6_data}}</span></span></td></tr></tbody></table>
+<table class="crono"><thead><tr><th></th><th>Reuniões</th><th>Pauta</th><th>Prazo</th><th style="text-align:right">Data&nbsp;sugerida</th></tr></thead><tbody><tr><td class="fase" rowspan="3"><span>Estruturação</span></td><td class="qual">1ª&nbsp;Reunião</td><td class="pauta">Alinhamento&nbsp;Consultoria</td><td class="prazo">Início da&nbsp;consultoria</td><td class="quando"><span><span class="ph" data-campo="reuniao_1_data">{{reuniao_1_data}}</span></span></td></tr><tr><td class="qual">2ª&nbsp;Reunião</td><td class="pauta">KYC /&nbsp;Suitability</td><td class="prazo">Até 5 dias após o&nbsp;Alinhamento</td><td class="quando"><span><span class="ph" data-campo="reuniao_2_data">{{reuniao_2_data}}</span></span></td></tr><tr><td class="qual">3ª&nbsp;Reunião</td><td class="pauta">Apresentação de&nbsp;Relatório</td><td class="prazo">Até 10 dias após o&nbsp;KYC/Suitability</td><td class="quando"><span><span class="ph" data-campo="reuniao_3_data">{{reuniao_3_data}}</span></span></td></tr><tr><td class="fase" rowspan="2"><span>Acompanhamento</span></td><td class="qual">4ª&nbsp;Reunião</td><td class="pauta">Acompanhamento de&nbsp;Estratégia</td><td class="prazo">Até 60 dias após a Apresentação de&nbsp;Relatório</td><td class="quando"><span><span class="ph" data-campo="reuniao_4_data">{{reuniao_4_data}}</span></span></td></tr><tr><td class="qual">5ª&nbsp;Reunião</td><td class="pauta">Planejamento Patrimonial e&nbsp;Sucessório</td><td class="prazo">Até 2 semanas após os&nbsp;Resultados</td><td class="quando"><span><span class="ph" data-campo="reuniao_5_data">{{reuniao_5_data}}</span></span></td></tr><tr><td class="fase" rowspan="1"><span>Fechamento</span></td><td class="qual">6ª&nbsp;Reunião</td><td class="pauta">Revisão de&nbsp;Portfólio</td><td class="prazo">Até 60 dias após a Proteção&nbsp;Patrimonial</td><td class="quando"><span><span class="ph" data-campo="reuniao_6_data">{{reuniao_6_data}}</span></span></td></tr></tbody></table>
 <p class="legal" style="margin-top:4mm">Plano do primeiro ciclo. As datas são sugeridas e se ajustam à sua agenda; a pauta e o prazo de cada encontro são os mesmos para todo&nbsp;cliente.</p>
     </div>
     <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
@@ -979,7 +984,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Como&nbsp;trabalhamos</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_apresentacao}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_apresentacao">{{data_apresentacao}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -1021,7 +1026,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 <h1 class="t">Por que Alta&nbsp;Renda</h1>
 <div class="cards" style="--n:3;margin-bottom:8mm"><div class="card"><h4>Acesso a ofertas&nbsp;restritas</h4><p>Emissões, fundos e estruturas com ticket mínimo elevado, distribuídas com o mesmo racional de adequação ao&nbsp;perfil.</p></div><div class="card"><h4>Eficiência&nbsp;tributária</h4><p>Escolha de veículos e prazos considerando come-cotas, isenções e compensação de&nbsp;prejuízo.</p></div><div class="card"><h4>Time por trás do&nbsp;consultor</h4><p>Mesa de renda fixa, análise e operações apoiando cada decisão da sua&nbsp;carteira.</p></div></div>
 <h2>O que você recebe todo&nbsp;mês</h2>
-<table class="tb sm"><thead><tr><th>Entrega</th><th>Frequência</th><th>Como&nbsp;chega</th><th>Para&nbsp;quê</th></tr></thead><tbody><tr><td>Relatório mensal da&nbsp;carteira</td><td>Mensal</td><td>E-mail e&nbsp;WhatsApp</td><td>Onde o patrimônio está, o que rendeu e o que mudou no&nbsp;mês.</td></tr><tr><td>Relatório&nbsp;macroeconômico</td><td>Mensal</td><td>E-mail e&nbsp;WhatsApp</td><td>O cenário do período e o que ele muda — ou não — na sua&nbsp;estratégia.</td></tr><tr><td>Carteiras&nbsp;recomendadas</td><td>Quando houver&nbsp;revisão</td><td>Portal e&nbsp;WhatsApp</td><td>A alocação sugerida para cada perfil, com o racional de cada&nbsp;classe.</td></tr><tr><td>Recomendações de renda&nbsp;fixa</td><td>Semanal</td><td>WhatsApp</td><td>O que passou pelo filtro de emissor, prazo e taxa na&nbsp;semana.</td></tr><tr><td>Acesso ao seu&nbsp;consultor</td><td>Quando&nbsp;precisar</td><td>WhatsApp</td><td>Dúvida de mercado, aporte que entrou, decisão para&nbsp;tomar.</td></tr></tbody></table><div class="note" style="margin-top:4mm"><p><strong>Para o seu&nbsp;caso.</strong> <span class="ph" title="O que este cliente recebe além do padrão">{{entregas_detalhe}}</span></p></div>
+<table class="tb sm"><thead><tr><th>Entrega</th><th>Frequência</th><th>Como&nbsp;chega</th><th>Para&nbsp;quê</th></tr></thead><tbody><tr><td>Relatório mensal da&nbsp;carteira</td><td>Mensal</td><td>E-mail e&nbsp;WhatsApp</td><td>Onde o patrimônio está, o que rendeu e o que mudou no&nbsp;mês.</td></tr><tr><td>Relatório&nbsp;macroeconômico</td><td>Mensal</td><td>E-mail e&nbsp;WhatsApp</td><td>O cenário do período e o que ele muda — ou não — na sua&nbsp;estratégia.</td></tr><tr><td>Carteiras&nbsp;recomendadas</td><td>Quando houver&nbsp;revisão</td><td>Portal e&nbsp;WhatsApp</td><td>A alocação sugerida para cada perfil, com o racional de cada&nbsp;classe.</td></tr><tr><td>Recomendações de renda&nbsp;fixa</td><td>Semanal</td><td>WhatsApp</td><td>O que passou pelo filtro de emissor, prazo e taxa na&nbsp;semana.</td></tr><tr><td>Acesso ao seu&nbsp;consultor</td><td>Quando&nbsp;precisar</td><td>WhatsApp</td><td>Dúvida de mercado, aporte que entrou, decisão para&nbsp;tomar.</td></tr></tbody></table><div class="note" style="margin-top:4mm"><p><strong>Para o seu&nbsp;caso.</strong> <span class="ph" data-campo="entregas_detalhe" title="O que este cliente recebe além do padrão">{{entregas_detalhe}}</span></p></div>
     </div>
     <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
@@ -1184,7 +1189,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Condições</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_apresentacao}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_apresentacao">{{data_apresentacao}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -1229,23 +1234,23 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div style="display:flex;flex-direction:column;gap:4mm">
     <div class="imgbox" style="flex:0 0 auto;height:52mm"><div class="cl">Foto</div><div class="cd">Retrato 1,&nbsp;1:1</div></div>
     <div>
-      <h3 style="margin-top:0"><span class="ph">{{pessoa_1_nome}}</span></h3>
-      <div class="small mut"><span class="ph">{{pessoa_1_cargo}}</span></div>
-      <p class="small" style="margin-top:2mm"><span class="ph">{{pessoa_1_bio}}</span></p>
+      <h3 style="margin-top:0"><span class="ph" data-campo="pessoa_1_nome">{{pessoa_1_nome}}</span></h3>
+      <div class="small mut"><span class="ph" data-campo="pessoa_1_cargo">{{pessoa_1_cargo}}</span></div>
+      <p class="small" style="margin-top:2mm"><span class="ph" data-campo="pessoa_1_bio">{{pessoa_1_bio}}</span></p>
     </div>
   </div><div style="display:flex;flex-direction:column;gap:4mm">
     <div class="imgbox" style="flex:0 0 auto;height:52mm"><div class="cl">Foto</div><div class="cd">Retrato 2,&nbsp;1:1</div></div>
     <div>
-      <h3 style="margin-top:0"><span class="ph">{{pessoa_2_nome}}</span></h3>
-      <div class="small mut"><span class="ph">{{pessoa_2_cargo}}</span></div>
-      <p class="small" style="margin-top:2mm"><span class="ph">{{pessoa_2_bio}}</span></p>
+      <h3 style="margin-top:0"><span class="ph" data-campo="pessoa_2_nome">{{pessoa_2_nome}}</span></h3>
+      <div class="small mut"><span class="ph" data-campo="pessoa_2_cargo">{{pessoa_2_cargo}}</span></div>
+      <p class="small" style="margin-top:2mm"><span class="ph" data-campo="pessoa_2_bio">{{pessoa_2_bio}}</span></p>
     </div>
   </div><div style="display:flex;flex-direction:column;gap:4mm">
     <div class="imgbox" style="flex:0 0 auto;height:52mm"><div class="cl">Foto</div><div class="cd">Retrato 3,&nbsp;1:1</div></div>
     <div>
-      <h3 style="margin-top:0"><span class="ph">{{pessoa_3_nome}}</span></h3>
-      <div class="small mut"><span class="ph">{{pessoa_3_cargo}}</span></div>
-      <p class="small" style="margin-top:2mm"><span class="ph">{{pessoa_3_bio}}</span></p>
+      <h3 style="margin-top:0"><span class="ph" data-campo="pessoa_3_nome">{{pessoa_3_nome}}</span></h3>
+      <div class="small mut"><span class="ph" data-campo="pessoa_3_cargo">{{pessoa_3_cargo}}</span></div>
+      <p class="small" style="margin-top:2mm"><span class="ph" data-campo="pessoa_3_bio">{{pessoa_3_bio}}</span></p>
     </div>
   </div>
 </div>
@@ -1258,7 +1263,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Próximos&nbsp;passos</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_apresentacao}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_apresentacao">{{data_apresentacao}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -1298,10 +1303,10 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     </header>
     <div class="pg-body">
 <h1 class="t">Como damos o primeiro&nbsp;passo</h1>
-<div class="center"><ol class="flow" style="--n:4"><li><span class="node"></span><span class="tag"><span class="ph">{{passo_1_prazo}}</span></span><h4>Conversa&nbsp;inicial</h4><p><span class="ph">{{passo_1_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{passo_2_prazo}}</span></span><h4>Diagnóstico</h4><p><span class="ph">{{passo_2_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{passo_3_prazo}}</span></span><h4>Proposta</h4><p><span class="ph">{{passo_3_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{passo_4_prazo}}</span></span><h4>Abertura e&nbsp;transferência</h4><p><span class="ph">{{passo_4_detalhe}}</span></p></li></ol>
+<div class="center"><ol class="flow" style="--n:4"><li><span class="node"></span><span class="tag"><span class="ph" data-campo="passo_1_prazo">{{passo_1_prazo}}</span></span><h4>Conversa&nbsp;inicial</h4><p><span class="ph" data-campo="passo_1_detalhe">{{passo_1_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph" data-campo="passo_2_prazo">{{passo_2_prazo}}</span></span><h4>Diagnóstico</h4><p><span class="ph" data-campo="passo_2_detalhe">{{passo_2_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph" data-campo="passo_3_prazo">{{passo_3_prazo}}</span></span><h4>Proposta</h4><p><span class="ph" data-campo="passo_3_detalhe">{{passo_3_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph" data-campo="passo_4_prazo">{{passo_4_prazo}}</span></span><h4>Abertura e&nbsp;transferência</h4><p><span class="ph" data-campo="passo_4_detalhe">{{passo_4_detalhe}}</span></p></li></ol>
 <div class="note" style="margin:6mm 0"><p><strong>Nada começa antes da&nbsp;assinatura.</strong> A consultoria começa a correr com o contrato assinado. Até lá, tudo o que acontece é conversa e diagnóstico — nenhuma recomendação é emitida, nenhuma conta é aberta e nada é&nbsp;cobrado.</p></div>
 <div><h2 style="margin-top:0">O que precisamos de&nbsp;você</h2>
-<div class="cols3"><div class="card"><h4>Documentos e&nbsp;cadastro</h4><p><span class="ph">{{requisito_cadastro}}</span></p></div><div class="card"><h4>Extratos das suas&nbsp;contas</h4><p><span class="ph">{{requisito_extratos}}</span></p></div><div class="card"><h4>Extrato&nbsp;internacional</h4><p><span class="ph">{{requisito_extrato_intl}}</span></p></div><div class="card"><h4>Apólices de&nbsp;seguro</h4><p><span class="ph">{{requisito_apolices}}</span></p></div><div class="card"><h4>Dívidas e&nbsp;compromissos</h4><p><span class="ph">{{requisito_compromissos}}</span></p></div><div class="card"><h4>Objetivos e&nbsp;prazos</h4><p><span class="ph">{{requisito_objetivos}}</span></p></div></div></div></div>
+<div class="cols3"><div class="card"><h4>Documentos e&nbsp;cadastro</h4><p><span class="ph" data-campo="requisito_cadastro">{{requisito_cadastro}}</span></p></div><div class="card"><h4>Extratos das suas&nbsp;contas</h4><p><span class="ph" data-campo="requisito_extratos">{{requisito_extratos}}</span></p></div><div class="card"><h4>Extrato&nbsp;internacional</h4><p><span class="ph" data-campo="requisito_extrato_intl">{{requisito_extrato_intl}}</span></p></div><div class="card"><h4>Apólices de&nbsp;seguro</h4><p><span class="ph" data-campo="requisito_apolices">{{requisito_apolices}}</span></p></div><div class="card"><h4>Dívidas e&nbsp;compromissos</h4><p><span class="ph" data-campo="requisito_compromissos">{{requisito_compromissos}}</span></p></div><div class="card"><h4>Objetivos e&nbsp;prazos</h4><p><span class="ph" data-campo="requisito_objetivos">{{requisito_objetivos}}</span></p></div></div></div></div>
     </div>
     <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
@@ -1311,7 +1316,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Contato</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_apresentacao}}</span></div><div class="logo" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_apresentacao">{{data_apresentacao}}</span></div><div class="logo" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -1353,18 +1358,18 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 <div style="display:flex;gap:16mm;flex:1 1 auto;align-items:center">
   <div style="flex:1 1 auto">
     <span class="eyebrow">Vamos&nbsp;conversar</span>
-    <h1 class="t"><span class="ph" title="Ex.: Agende seu diagnóstico gratuito">{{chamada_final}}</span></h1>
+    <h1 class="t"><span class="ph" data-campo="chamada_final" title="Ex.: Agende seu diagnóstico gratuito">{{chamada_final}}</span></h1>
     <div class="dl" style="margin-top:6mm">
-      <dt>Consultor</dt><dd><span class="ph">{{nome_responsavel}}</span></dd>
-      <dt>WhatsApp</dt><dd><span class="ph" data-link="whatsapp">{{whatsapp_contato}}</span></dd>
-      <dt>E-mail</dt><dd><span class="ph" data-link="mailto">{{email_contato}}</span></dd>
-      <dt>Site</dt><dd><span class="ph" data-link="url">{{site}}</span></dd>
-      <dt>Endereço</dt><dd><span class="ph">{{endereco_escritorio}}</span></dd>
+      <dt>Consultor</dt><dd><span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span></dd>
+      <dt>WhatsApp</dt><dd><span class="ph" data-campo="whatsapp_contato" data-link="whatsapp">{{whatsapp_contato}}</span></dd>
+      <dt>E-mail</dt><dd><span class="ph" data-campo="email_contato" data-link="mailto">{{email_contato}}</span></dd>
+      <dt>Site</dt><dd><span class="ph" data-campo="site" data-link="url">{{site}}</span></dd>
+      <dt>Endereço</dt><dd><span class="ph" data-campo="endereco_escritorio">{{endereco_escritorio}}</span></dd>
     </div>
   </div>
   <div style="display:flex;flex-direction:column;align-items:center;gap:4mm">
     <div class="qr">QR code<br>agendamento</div>
-    <div class="small mut" style="text-align:center;max-width:52mm"><span class="ph" data-link="url">{{link_agendamento}}</span></div>
+    <div class="small mut" style="text-align:center;max-width:52mm"><span class="ph" data-campo="link_agendamento" data-link="url">{{link_agendamento}}</span></div>
   </div>
 </div>
     </div>
@@ -1376,7 +1381,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Avisos</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_apresentacao}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_apresentacao">{{data_apresentacao}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -1418,12 +1423,12 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 <h1 class="t">Avisos&nbsp;importantes</h1>
 <div class="center"><div class="cols2">
   <div>
-    <p class="legal"><span class="ph" title="Texto aprovado pelo compliance para este segmento">{{disclaimer_regulatorio}}</span></p>
+    <p class="legal"><span class="ph" data-campo="disclaimer_regulatorio" title="Texto aprovado pelo compliance para este segmento">{{disclaimer_regulatorio}}</span></p>
     <p class="legal">Este material tem caráter informativo e publicitário e não constitui oferta, recomendação individualizada ou proposta de investimento. Números, taxas e condições apresentados referem-se à data de elaboração e podem ser alterados sem aviso&nbsp;prévio.</p>
   </div>
   <div>
     <p class="legal">Rentabilidade passada não representa garantia de rentabilidade futura. Investimentos envolvem risco de perda, inclusive do capital principal, e podem não contar com garantia do Fundo Garantidor de Créditos (FGC). Antes de investir, avalie a adequação do produto ao seu perfil e leia os documentos oficiais de cada&nbsp;investimento.</p>
-    <p class="legal"><span class="ph">{{razao_social}}</span> &middot; CNPJ <span class="ph">{{cnpj}}</span> &middot; <span class="ph">{{registro_cvm_empresa}}</span>. Ouvidoria: <span class="ph" data-link="auto">{{canal_ouvidoria}}</span>. É proibida a reprodução ou o compartilhamento total ou parcial deste material sem autorização prévia e por&nbsp;escrito.</p>
+    <p class="legal"><span class="ph" data-campo="razao_social">{{razao_social}}</span> &middot; CNPJ <span class="ph" data-campo="cnpj">{{cnpj}}</span> &middot; <span class="ph" data-campo="registro_cvm_empresa">{{registro_cvm_empresa}}</span>. Ouvidoria: <span class="ph" data-campo="canal_ouvidoria" data-link="auto">{{canal_ouvidoria}}</span>. É proibida a reprodução ou o compartilhamento total ou parcial deste material sem autorização prévia e por&nbsp;escrito.</p>
   </div>
 </div></div>
     </div>

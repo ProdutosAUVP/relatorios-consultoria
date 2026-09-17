@@ -177,7 +177,7 @@
      "rotulo": "Consultoria",
      "arquivo": "carta-apresentacao-consultoria.html",
      "paginas": 13,
-     "campos": 25,
+     "campos": 34,
      "imagens": 0
     },
     {
@@ -185,7 +185,7 @@
      "rotulo": "Alta Renda",
      "arquivo": "carta-apresentacao-alta-renda.html",
      "paginas": 13,
-     "campos": 25,
+     "campos": 34,
      "imagens": 0
     },
     {
@@ -193,7 +193,7 @@
      "rotulo": "Private Banking",
      "arquivo": "carta-apresentacao-private.html",
      "paginas": 13,
-     "campos": 25,
+     "campos": 34,
      "imagens": 0
     },
     {
@@ -201,7 +201,7 @@
      "rotulo": "Assessoria",
      "arquivo": "carta-apresentacao-assessoria.html",
      "paginas": 13,
-     "campos": 25,
+     "campos": 34,
      "imagens": 0
     }
    ]

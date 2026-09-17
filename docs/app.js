@@ -152,9 +152,12 @@ function dataDeHoje(forma, hoje = new Date()) {
 function sugerir() {
   const memoria = recordar();
   let n = 0;
-  for (const campo of Object.keys(estado.estrutura.campos)) {
-    if (estado.valores[campo] && estado.valores[campo].trim()) continue;
-    const v = memoria[campo] || (HOJE[campo] && dataDeHoje(HOJE[campo]));
+  for (const [campo, meta] of Object.entries(estado.estrutura.campos)) {
+    // Um campo esvaziado de propósito guarda a string vazia, e `undefined` só
+    // acontece na primeira abertura: é a diferença entre "ainda não preenchi"
+    // e "apaguei porque não se aplica". O padrão só entra no primeiro caso.
+    if (estado.valores[campo] !== undefined) continue;
+    const v = memoria[campo] || (HOJE[campo] && dataDeHoje(HOJE[campo])) || meta.padrao;
     if (!v) continue;
     estado.valores[campo] = v;
     n += 1;
@@ -593,10 +596,13 @@ function montar(modo) {
 
   const esvaziados = new Set();
   for (const span of doc.querySelectorAll('span.ph')) {
-    const m = span.textContent.match(/^\{\{([a-z0-9_]+)\}\}$/);
-    if (!m) continue;
-    const v = estado.valores[m[1]];
+    const nome = span.dataset.campo;
+    if (!nome) continue;
+    const v = estado.valores[nome];
     if (!v || !v.trim()) {
+      // O campo que já vem preenchido não some quando o consultor não mexe
+      // nele: o que está escrito ali é o texto padrão, e não uma lacuna.
+      if (span.classList.contains('pronto')) continue;
       if (modo !== 'previa') {
         // O item de lista que era só o campo fica sendo um traço solto na
         // margem: some o texto e o marcador continua lá, anunciando uma linha

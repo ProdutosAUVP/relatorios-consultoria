@@ -135,11 +135,28 @@ LINKS = {
 }
 
 
-def ph(name, hint=""):
-    """Placeholder token. Rendered highlighted so it is obvious what must be filled."""
+def ph(name, hint="", padrao=None):
+    """Um campo do documento.
+
+    Sem `padrao`, sai como `{{nome}}` destacado: é o pedido de preenchimento, e
+    ele tem de saltar aos olhos no modelo.
+
+    Com `padrao`, sai já preenchido com o texto padrão, e continua sendo campo —
+    a ferramenta o oferece com esse texto dentro, para o consultor corrigir o
+    que for do caso e deixar o resto como está. É o que serve para o conteúdo
+    que é quase sempre o mesmo mas envelhece: as bandas da estrutura meta, o
+    racional de cada camada da renda fixa. Travar obrigava a mexer no gerador a
+    cada revisão; deixar em branco obrigava a redigitar tudo toda vez.
+
+    O nome vai no `data-campo` em vez de ficar só dentro das chaves, porque com
+    padrão não há chaves — o que está escrito ali é o texto, e o nome do campo
+    precisa de um lugar próprio.
+    """
     title = ' title="%s"' % hint if hint else ""
     link = ' data-link="%s"' % LINKS[name] if name in LINKS else ""
-    return '<span class="ph"%s%s>{{%s}}</span>' % (title, link, name)
+    if padrao is None:
+        return '<span class="ph" data-campo="%s"%s%s>{{%s}}</span>' % (name, title, link, name)
+    return '<span class="ph pronto" data-campo="%s"%s%s>%s</span>' % (name, title, link, padrao)
 
 
 def head(title, css):
@@ -173,6 +190,11 @@ ul{margin:0 0 3mm;padding-left:4mm}
 li{margin:0 0 1mm}
 strong{font-weight:700}
 .ph{background:var(--ph);border-radius:.6mm;padding:0 1mm;font-weight:600;overflow-wrap:break-word;text-transform:none;letter-spacing:0;font-size:.94em}
+/* O campo que já vem preenchido não é lacuna: lê-se como o texto que é, e o
+   realce só serviria para o consultor achar que falta algo ali. Continua sendo
+   campo — a ferramenta o oferece para edição —, mas isso é assunto da
+   ferramenta, não do papel. */
+.ph.pronto{background:none;padding:0;font-weight:inherit;font-size:inherit}
 .dark .ph{background:var(--ph-dk);color:#fff}
 /* capas e divisórias são monocromáticas: nada de dourado sobre a arte da capa */
 .cover .ph,.divider .ph{background:rgba(255,255,255,.18);color:#fff}

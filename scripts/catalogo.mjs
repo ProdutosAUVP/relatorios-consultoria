@@ -57,14 +57,18 @@ function estrutura(html) {
     // Os atributos vêm em número e ordem variáveis — `title` quando há dica,
     // `data-link` quando o campo é endereço de alguma coisa —, então o
     // casamento é pelo bloco e a dica sai de dentro dele.
-    const re = /<span class="ph"([^>]*)>\{\{([a-z0-9_]+)\}\}<\/span>/g;
+    // O nome sai do `data-campo`, e não das chaves: o campo que já vem
+    // preenchido não tem chaves — o que está escrito ali é o texto padrão, e é
+    // ele que a ferramenta oferece para editar.
+    const re = /<span class="ph( pronto)?" data-campo="([a-z0-9_]+)"([^>]*)>([\s\S]*?)<\/span>/g;
     let m;
     while ((m = re.exec(pag.corpo))) {
-      const [, attrs, nome] = m;
+      const [, pronto, nome, attrs, conteudo] = m;
       const dica = attrs.match(/ title="([^"]*)"/)?.[1];
       if (!campos[nome]) {
         campos[nome] = { rotulo: rotuloCampo(nome), pagina: pag.numero, exemplo: exemplo(nome) };
         if (dica) campos[nome].dica = dica;
+        if (pronto) campos[nome].padrao = conteudo.replace(/&nbsp;/g, ' ').trim();
         nomes.push(nome);
       }
     }

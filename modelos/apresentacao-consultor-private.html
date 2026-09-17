@@ -37,6 +37,11 @@ ul{margin:0 0 3mm;padding-left:4mm}
 li{margin:0 0 1mm}
 strong{font-weight:700}
 .ph{background:var(--ph);border-radius:.6mm;padding:0 1mm;font-weight:600;overflow-wrap:break-word;text-transform:none;letter-spacing:0;font-size:.94em}
+/* O campo que já vem preenchido não é lacuna: lê-se como o texto que é, e o
+   realce só serviria para o consultor achar que falta algo ali. Continua sendo
+   campo — a ferramenta o oferece para edição —, mas isso é assunto da
+   ferramenta, não do papel. */
+.ph.pronto{background:none;padding:0;font-weight:inherit;font-size:inherit}
 .dark .ph{background:var(--ph-dk);color:#fff}
 /* capas e divisórias são monocromáticas: nada de dourado sobre a arte da capa */
 .cover .ph,.divider .ph{background:rgba(255,255,255,.18);color:#fff}
@@ -554,69 +559,69 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
     <div class="lg-id">
       <div class="imgbox rt-vaga" data-img="1"><div class="cl">Retrato</div><div class="cd">Foto vertical do consultor. Recorte 3:4, mínimo 900&nbsp;px de&nbsp;largura.</div></div>
       <div>
-        <h1><span class="ph">{{nome_consultor}}</span></h1>
-        <p class="papel"><span class="ph" title="Consultor de investimentos, especialista, planejador…">{{papel_consultor}}</span> na AUVP Private&nbsp;Banking</p>
-        <p class="lg-frase"><span class="ph" title="Uma frase em primeira pessoa sobre como você trabalha.">{{frase_consultor}}</span></p>
+        <h1><span class="ph" data-campo="nome_consultor">{{nome_consultor}}</span></h1>
+        <p class="papel"><span class="ph" data-campo="papel_consultor" title="Consultor de investimentos, especialista, planejador…">{{papel_consultor}}</span> na AUVP Private&nbsp;Banking</p>
+        <p class="lg-frase"><span class="ph" data-campo="frase_consultor" title="Uma frase em primeira pessoa sobre como você trabalha.">{{frase_consultor}}</span></p>
       </div>
     </div>
-    <div class="lg-cred" style="--n:3"><div><h3>Formação</h3><ul class="lista"><li><span class="ph">{{formacao_1}}</span></li><li><span class="ph">{{formacao_2}}</span></li><li><span class="ph">{{formacao_3}}</span></li><li><span class="ph">{{formacao_4}}</span></li><li><span class="ph">{{formacao_5}}</span></li></ul></div><div><h3>Especialização</h3><ul class="lista"><li><span class="ph">{{especializacao_1}}</span></li><li><span class="ph">{{especializacao_2}}</span></li><li><span class="ph">{{especializacao_3}}</span></li><li><span class="ph">{{especializacao_4}}</span></li><li><span class="ph">{{especializacao_5}}</span></li></ul></div><div><h3>Certificações</h3><div class="chips"><span class="pill"><span class="ph">{{certificacao_1}}</span></span><span class="pill"><span class="ph">{{certificacao_2}}</span></span><span class="pill"><span class="ph">{{certificacao_3}}</span></span><span class="pill"><span class="ph">{{certificacao_4}}</span></span><span class="pill"><span class="ph">{{certificacao_5}}</span></span></div></div></div>
+    <div class="lg-cred" style="--n:3"><div><h3>Formação</h3><ul class="lista"><li><span class="ph" data-campo="formacao_1">{{formacao_1}}</span></li><li><span class="ph" data-campo="formacao_2">{{formacao_2}}</span></li><li><span class="ph" data-campo="formacao_3">{{formacao_3}}</span></li><li><span class="ph" data-campo="formacao_4">{{formacao_4}}</span></li><li><span class="ph" data-campo="formacao_5">{{formacao_5}}</span></li></ul></div><div><h3>Especialização</h3><ul class="lista"><li><span class="ph" data-campo="especializacao_1">{{especializacao_1}}</span></li><li><span class="ph" data-campo="especializacao_2">{{especializacao_2}}</span></li><li><span class="ph" data-campo="especializacao_3">{{especializacao_3}}</span></li><li><span class="ph" data-campo="especializacao_4">{{especializacao_4}}</span></li><li><span class="ph" data-campo="especializacao_5">{{especializacao_5}}</span></li></ul></div><div><h3>Certificações</h3><div class="chips"><span class="pill"><span class="ph" data-campo="certificacao_1">{{certificacao_1}}</span></span><span class="pill"><span class="ph" data-campo="certificacao_2">{{certificacao_2}}</span></span><span class="pill"><span class="ph" data-campo="certificacao_3">{{certificacao_3}}</span></span><span class="pill"><span class="ph" data-campo="certificacao_4">{{certificacao_4}}</span></span><span class="pill"><span class="ph" data-campo="certificacao_5">{{certificacao_5}}</span></span></div></div></div>
   </header>
 
   <div class="lg-corpo">
     <div class="lg-sec">
       <h2>O meu&nbsp;propósito</h2>
-      <div class="corrido"><p><span class="ph">{{proposito_1}}</span></p><p><span class="ph">{{proposito_2}}</span></p><p><span class="ph">{{proposito_3}}</span></p><p><span class="ph">{{proposito_4}}</span></p></div>
+      <div class="corrido"><p><span class="ph" data-campo="proposito_1">{{proposito_1}}</span></p><p><span class="ph" data-campo="proposito_2">{{proposito_2}}</span></p><p><span class="ph" data-campo="proposito_3">{{proposito_3}}</span></p><p><span class="ph" data-campo="proposito_4">{{proposito_4}}</span></p></div>
     </div>
     <div class="esp"></div>
     <div class="lg-sec">
       <h2>Formação acadêmica e&nbsp;qualificações</h2>
-      <div class="corrido"><p><span class="ph">{{qualificacoes_1}}</span></p><p><span class="ph">{{qualificacoes_2}}</span></p></div>
+      <div class="corrido"><p><span class="ph" data-campo="qualificacoes_1">{{qualificacoes_1}}</span></p><p><span class="ph" data-campo="qualificacoes_2">{{qualificacoes_2}}</span></p></div>
     </div>
     <div class="esp"></div>
     <div class="lg-sec">
       <h2>A minha trajetória no mercado&nbsp;financeiro</h2>
       <div class="cols2u" style="align-items:start">
-        <div class="corrido"><p><span class="ph">{{trajetoria_1}}</span></p><p><span class="ph">{{trajetoria_2}}</span></p><p><span class="ph">{{trajetoria_3}}</span></p></div>
-        <div class="side"><h3 style="margin-top:0">Em&nbsp;marcos</h3><ol class="marcos"><li><span class="q"><span class="ph" title="2016, Depois, Hoje…">{{marco_1_quando}}</span></span><p><span class="ph">{{marco_1_texto}}</span></p></li><li><span class="q"><span class="ph" title="2016, Depois, Hoje…">{{marco_2_quando}}</span></span><p><span class="ph">{{marco_2_texto}}</span></p></li><li><span class="q"><span class="ph" title="2016, Depois, Hoje…">{{marco_3_quando}}</span></span><p><span class="ph">{{marco_3_texto}}</span></p></li></ol></div>
+        <div class="corrido"><p><span class="ph" data-campo="trajetoria_1">{{trajetoria_1}}</span></p><p><span class="ph" data-campo="trajetoria_2">{{trajetoria_2}}</span></p><p><span class="ph" data-campo="trajetoria_3">{{trajetoria_3}}</span></p></div>
+        <div class="side"><h3 style="margin-top:0">Em&nbsp;marcos</h3><ol class="marcos"><li><span class="q"><span class="ph" data-campo="marco_1_quando" title="2016, Depois, Hoje…">{{marco_1_quando}}</span></span><p><span class="ph" data-campo="marco_1_texto">{{marco_1_texto}}</span></p></li><li><span class="q"><span class="ph" data-campo="marco_2_quando" title="2016, Depois, Hoje…">{{marco_2_quando}}</span></span><p><span class="ph" data-campo="marco_2_texto">{{marco_2_texto}}</span></p></li><li><span class="q"><span class="ph" data-campo="marco_3_quando" title="2016, Depois, Hoje…">{{marco_3_quando}}</span></span><p><span class="ph" data-campo="marco_3_texto">{{marco_3_texto}}</span></p></li></ol></div>
       </div>
     </div>
     <div class="esp"></div>
     <div class="lg-sec">
       <h2>Além dos&nbsp;investimentos</h2>
-      <div class="corrido"><p><span class="ph">{{fora_do_escritorio_1}}</span></p><p><span class="ph">{{fora_do_escritorio_2}}</span></p><p><span class="ph">{{fora_do_escritorio_3}}</span></p></div>
-      <div style="margin-top:7mm"><div class="tags"><span><span class="ph">{{interesse_1}}</span></span><span><span class="ph">{{interesse_2}}</span></span><span><span class="ph">{{interesse_3}}</span></span><span><span class="ph">{{interesse_4}}</span></span><span><span class="ph">{{interesse_5}}</span></span><span><span class="ph">{{interesse_6}}</span></span></div></div>
+      <div class="corrido"><p><span class="ph" data-campo="fora_do_escritorio_1">{{fora_do_escritorio_1}}</span></p><p><span class="ph" data-campo="fora_do_escritorio_2">{{fora_do_escritorio_2}}</span></p><p><span class="ph" data-campo="fora_do_escritorio_3">{{fora_do_escritorio_3}}</span></p></div>
+      <div style="margin-top:7mm"><div class="tags"><span><span class="ph" data-campo="interesse_1">{{interesse_1}}</span></span><span><span class="ph" data-campo="interesse_2">{{interesse_2}}</span></span><span><span class="ph" data-campo="interesse_3">{{interesse_3}}</span></span><span><span class="ph" data-campo="interesse_4">{{interesse_4}}</span></span><span><span class="ph" data-campo="interesse_5">{{interesse_5}}</span></span><span><span class="ph" data-campo="interesse_6">{{interesse_6}}</span></span></div></div>
     </div>
   </div>
 
   <div class="lg-faixa">
     <div class="lg-sec">
-      <h2><span class="ph" title="O nome comercial do plano.">{{nome_plano}}</span></h2>
-      <p class="lead"><span class="ph" title="Duas ou três frases sobre o que o cliente contrata.">{{plano_resumo}}</span></p>
+      <h2><span class="ph" data-campo="nome_plano" title="O nome comercial do plano.">{{nome_plano}}</span></h2>
+      <p class="lead"><span class="ph" data-campo="plano_resumo" title="Duas ou três frases sobre o que o cliente contrata.">{{plano_resumo}}</span></p>
     </div>
     <div class="esp"></div>
     <div class="lg-sec">
       <h2>Como funciona no dia a&nbsp;dia</h2>
-      <div class="corrido"><p><span class="ph" title="Um parágrafo sobre como o plano funciona.">{{funciona_1}}</span></p><p><span class="ph" title="Um parágrafo sobre como o plano funciona.">{{funciona_2}}</span></p><p><span class="ph" title="Um parágrafo sobre como o plano funciona.">{{funciona_3}}</span></p></div>
+      <div class="corrido"><p><span class="ph" data-campo="funciona_1" title="Um parágrafo sobre como o plano funciona.">{{funciona_1}}</span></p><p><span class="ph" data-campo="funciona_2" title="Um parágrafo sobre como o plano funciona.">{{funciona_2}}</span></p><p><span class="ph" data-campo="funciona_3" title="Um parágrafo sobre como o plano funciona.">{{funciona_3}}</span></p></div>
     </div>
     <div class="esp"></div>
     <div class="lg-sec">
       <h2>O que você pode pedir ao seu&nbsp;consultor</h2>
-      <ul class="lista"><li><span class="ph">{{pode_pedir_1}}</span></li><li><span class="ph">{{pode_pedir_2}}</span></li><li><span class="ph">{{pode_pedir_3}}</span></li><li><span class="ph">{{pode_pedir_4}}</span></li><li><span class="ph">{{pode_pedir_5}}</span></li><li><span class="ph">{{pode_pedir_6}}</span></li></ul>
+      <ul class="lista"><li><span class="ph" data-campo="pode_pedir_1">{{pode_pedir_1}}</span></li><li><span class="ph" data-campo="pode_pedir_2">{{pode_pedir_2}}</span></li><li><span class="ph" data-campo="pode_pedir_3">{{pode_pedir_3}}</span></li><li><span class="ph" data-campo="pode_pedir_4">{{pode_pedir_4}}</span></li><li><span class="ph" data-campo="pode_pedir_5">{{pode_pedir_5}}</span></li><li><span class="ph" data-campo="pode_pedir_6">{{pode_pedir_6}}</span></li></ul>
     </div>
     <div class="esp"></div>
     <div class="lg-sec">
       <div class="cols2">
         <div>
           <h2>O que já vem&nbsp;incluído</h2>
-          <ul class="lista"><li><span class="ph">{{incluido_1}}</span></li><li><span class="ph">{{incluido_2}}</span></li><li><span class="ph">{{incluido_3}}</span></li><li><span class="ph">{{incluido_4}}</span></li><li><span class="ph">{{incluido_5}}</span></li><li><span class="ph">{{incluido_6}}</span></li><li><span class="ph">{{incluido_7}}</span></li><li><span class="ph">{{incluido_8}}</span></li></ul>
+          <ul class="lista"><li><span class="ph" data-campo="incluido_1">{{incluido_1}}</span></li><li><span class="ph" data-campo="incluido_2">{{incluido_2}}</span></li><li><span class="ph" data-campo="incluido_3">{{incluido_3}}</span></li><li><span class="ph" data-campo="incluido_4">{{incluido_4}}</span></li><li><span class="ph" data-campo="incluido_5">{{incluido_5}}</span></li><li><span class="ph" data-campo="incluido_6">{{incluido_6}}</span></li><li><span class="ph" data-campo="incluido_7">{{incluido_7}}</span></li><li><span class="ph" data-campo="incluido_8">{{incluido_8}}</span></li></ul>
         </div>
         <div>
           <h2>O que não faz parte deste&nbsp;plano</h2>
           <p class="small mut">Algumas coisas não estão incluídas aqui, e é melhor deixar isso combinado desde o&nbsp;começo.</p>
-          <ul class="lista mut"><li><span class="ph">{{nao_incluido_1}}</span></li><li><span class="ph">{{nao_incluido_2}}</span></li><li><span class="ph">{{nao_incluido_3}}</span></li><li><span class="ph">{{nao_incluido_4}}</span></li></ul>
+          <ul class="lista mut"><li><span class="ph" data-campo="nao_incluido_1">{{nao_incluido_1}}</span></li><li><span class="ph" data-campo="nao_incluido_2">{{nao_incluido_2}}</span></li><li><span class="ph" data-campo="nao_incluido_3">{{nao_incluido_3}}</span></li><li><span class="ph" data-campo="nao_incluido_4">{{nao_incluido_4}}</span></li></ul>
         </div>
       </div>
-      <p class="legal" style="margin-top:8mm"><span class="ph" title="As ressalvas numeradas que os itens acima referenciam.">{{notas_de_rodape}}</span></p>
+      <p class="legal" style="margin-top:8mm"><span class="ph" data-campo="notas_de_rodape" title="As ressalvas numeradas que os itens acima referenciam.">{{notas_de_rodape}}</span></p>
     </div>
   </div>
 
@@ -647,12 +652,12 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
       </div>
       <div>
         <h2>Falar com o seu&nbsp;consultor</h2>
-        <div class="dl"><dt>WhatsApp</dt><dd><span class="ph" data-link="whatsapp">{{whatsapp_consultor}}</span></dd><dt>E-mail</dt><dd><span class="ph" data-link="mailto">{{email_consultor}}</span></dd></div>
+        <div class="dl"><dt>WhatsApp</dt><dd><span class="ph" data-campo="whatsapp_consultor" data-link="whatsapp">{{whatsapp_consultor}}</span></dd><dt>E-mail</dt><dd><span class="ph" data-campo="email_consultor" data-link="mailto">{{email_consultor}}</span></dd></div>
         <p class="small mut" style="margin:5mm 0 0">Sempre que precisar, é só mandar mensagem para o seu&nbsp;consultor.</p>
       </div>
     </div>
     <div class="lg-assina">
-      <span class="data"><span class="ph">{{data_apresentacao}}</span></span>
+      <span class="data"><span class="ph" data-campo="data_apresentacao">{{data_apresentacao}}</span></span>
       <div class="logo" style="width:52.1mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>

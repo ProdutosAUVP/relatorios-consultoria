@@ -138,7 +138,10 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .crono tbody tr:nth-child(even) td{background:var(--soft)}
 .crono .qual{font-weight:700;color:var(--brand);white-space:nowrap}
 .crono .pauta{font-weight:600}
-.crono .prazo{color:var(--ink-2)}
+.crono .prazo{color:var(--ink-2);white-space:nowrap}
+/* o objetivo estratégico é a coluna larga do plano do private: leva a frase
+   inteira, e as outras três só o que precisam */
+.crono .obj{color:var(--ink-2);width:100%}
 .crono .quando{text-align:right;white-space:nowrap}
 .crono .quando span{display:inline-block;padding:1.2mm 3.5mm;border:1px solid var(--line);
   border-radius:9mm;background:var(--paper);font-weight:700;font-size:8.2pt}
@@ -167,6 +170,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3mm;text-align:center;padding:6mm}
 .slide.dark .chart{background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.045) 6px 12px)}
 .chart .cl{font-size:7.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.chart.feito{border:0;background:none;padding:0;gap:2mm}
 .slide.dark .chart .cl{color:#fff}
 .chart .cd{font-size:9pt;color:var(--ink-2);max-width:150mm;line-height:1.45}
 .slide.dark .chart .cd{color:rgba(255,255,255,.75)}
@@ -268,6 +272,22 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .flow p{font-size:9pt;color:var(--ink-2);margin:0;line-height:1.45}
 
 /* ---------- legenda de série, com a paleta do segmento ---------- */
+/* ---------- gráfico desenhado a partir do dado ----------
+   Entra no lugar da moldura vazia quando o consultor preenche a tabelinha na
+   ferramenta. É SVG: sai vetor no PDF, na tipografia da casa e nas cores do
+   segmento — `--c1`..`--c6`, as mesmas da legenda. */
+.g-svg{width:100%;height:auto;max-height:100%;display:block;flex:1 1 auto;min-height:0}
+.g-guia{stroke:var(--line);stroke-width:1}
+.g-eixo{fill:var(--ink-2);font-size:10px}
+.g-mini{fill:var(--ink-2);font-size:10px;text-anchor:middle;letter-spacing:.04em}
+.g-linha{fill:none;stroke:var(--c1);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}
+.g-area{fill:var(--c1);opacity:.10}
+.g-ponto{fill:var(--paper);stroke:var(--c1);stroke-width:2}
+.g-nota{font-size:7pt;color:var(--ink-2);text-align:center}
+.slide.dark .g-eixo,.slide.dark .g-mini{fill:rgba(255,255,255,.75)}
+.slide.dark .g-guia{stroke:rgba(255,255,255,.22)}
+
+
 .legend{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5mm 6mm;
   margin:4mm 0 0;padding:0;font-size:8pt;color:var(--ink-2)}
 .legend li{display:flex;align-items:center;gap:1.5mm}
@@ -896,7 +916,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     <div class="pg-body">
 <span class="eyebrow">Método</span>
 <h1 class="t">Do primeiro papo à carteira&nbsp;rodando</h1>
-<div class="center"><ol class="flow" style="--n:6"><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_1_prazo}}</span></span><h4>Alinhamento&nbsp;Consultoria</h4><p><span class="ph">{{metodo_1_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_2_prazo}}</span></span><h4>KYC /&nbsp;Suitability</h4><p><span class="ph">{{metodo_2_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_3_prazo}}</span></span><h4>Apresentação de&nbsp;Relatório</h4><p><span class="ph">{{metodo_3_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_4_prazo}}</span></span><h4>Acompanhamento de&nbsp;Estratégia</h4><p><span class="ph">{{metodo_4_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_5_prazo}}</span></span><h4>Planejamento Patrimonial e&nbsp;Sucessório</h4><p><span class="ph">{{metodo_5_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_6_prazo}}</span></span><h4>Revisão de&nbsp;Portfólio</h4><p><span class="ph">{{metodo_6_detalhe}}</span></p></li></ol></div>
+<div class="center"><ol class="flow" style="--n:5"><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_1_prazo}}</span></span><h4>Alinhamento&nbsp;Consultoria</h4><p><span class="ph">{{metodo_1_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_2_prazo}}</span></span><h4>KYC /&nbsp;Suitability</h4><p><span class="ph">{{metodo_2_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_3_prazo}}</span></span><h4>Apresentação de&nbsp;Relatório</h4><p><span class="ph">{{metodo_3_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_4_prazo}}</span></span><h4>Acompanhamento de&nbsp;Estratégia</h4><p><span class="ph">{{metodo_4_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{metodo_5_prazo}}</span></span><h4>Planejamento Patrimonial e&nbsp;Sucessório</h4><p><span class="ph">{{metodo_5_detalhe}}</span></p></li></ol></div>
 <div class="note"><p><strong>Prazo típico do ciclo&nbsp;completo.</strong> <span class="ph">{{prazo_implantacao}}</span></p></div>
     </div>
     <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>

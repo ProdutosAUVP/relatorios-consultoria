@@ -289,7 +289,10 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .crono tbody tr:nth-child(even) td{background:var(--soft)}
 .crono .qual{font-weight:700;color:var(--brand);white-space:nowrap}
 .crono .pauta{font-weight:600}
-.crono .prazo{color:var(--ink-2)}
+.crono .prazo{color:var(--ink-2);white-space:nowrap}
+/* o objetivo estratégico é a coluna larga do plano do private: leva a frase
+   inteira, e as outras três só o que precisam */
+.crono .obj{color:var(--ink-2);width:100%}
 .crono .quando{text-align:right;white-space:nowrap}
 .crono .quando span{display:inline-block;padding:1.2mm 3.5mm;border:1px solid var(--line);
   border-radius:9mm;background:var(--paper);font-weight:700;font-size:8.2pt}
@@ -322,6 +325,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2mm;text-align:center;padding:5mm}
 .chart .cl{font-size:6.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
 .chart .cd{font-size:7.6pt;color:var(--ink-2);max-width:105mm;line-height:1.45}
+/* Com o gráfico desenhado dentro, a moldura deixa de ser um pedido de
+   preenchimento: some o tracejado e a hachura, e fica só o desenho. */
+.chart.feito{border:0;background:none;padding:0;gap:1.5mm}
 .sk-bars{display:flex;align-items:flex-end;gap:2mm;height:16mm;width:70%;opacity:.28}
 .sk-bars i{flex:1;background:var(--brand);border-radius:.4mm .4mm 0 0}
 .sk-donut{width:22mm;height:22mm;border-radius:50%;opacity:.5;
@@ -441,7 +447,10 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .crono tbody tr:nth-child(even) td{background:var(--soft)}
 .crono .qual{font-weight:700;color:var(--brand);white-space:nowrap}
 .crono .pauta{font-weight:600}
-.crono .prazo{color:var(--ink-2)}
+.crono .prazo{color:var(--ink-2);white-space:nowrap}
+/* o objetivo estratégico é a coluna larga do plano do private: leva a frase
+   inteira, e as outras três só o que precisam */
+.crono .obj{color:var(--ink-2);width:100%}
 .crono .quando{text-align:right;white-space:nowrap}
 .crono .quando span{display:inline-block;padding:1.2mm 3.5mm;border:1px solid var(--line);
   border-radius:9mm;background:var(--paper);font-weight:700;font-size:8.2pt}
@@ -470,6 +479,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3mm;text-align:center;padding:6mm}
 .slide.dark .chart{background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.045) 6px 12px)}
 .chart .cl{font-size:7.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.chart.feito{border:0;background:none;padding:0;gap:2mm}
 .slide.dark .chart .cl{color:#fff}
 .chart .cd{font-size:9pt;color:var(--ink-2);max-width:150mm;line-height:1.45}
 .slide.dark .chart .cd{color:rgba(255,255,255,.75)}
@@ -586,6 +596,22 @@ CSS_A4 += """
 .flow p{font-size:8pt;color:var(--ink-2);margin:0;line-height:1.45}
 
 /* ---------- legenda de série, com a paleta do segmento ---------- */
+/* ---------- gráfico desenhado a partir do dado ----------
+   Entra no lugar da moldura vazia quando o consultor preenche a tabelinha na
+   ferramenta. É SVG: sai vetor no PDF, na tipografia da casa e nas cores do
+   segmento — `--c1`..`--c6`, as mesmas da legenda. */
+.g-svg{width:100%;height:auto;max-height:100%;display:block;flex:1 1 auto;min-height:0}
+.g-guia{stroke:var(--line);stroke-width:1}
+.g-eixo{fill:var(--ink-2);font-size:9px}
+.g-mini{fill:var(--ink-2);font-size:9px;text-anchor:middle;letter-spacing:.04em}
+.g-linha{fill:none;stroke:var(--c1);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}
+.g-area{fill:var(--c1);opacity:.10}
+.g-ponto{fill:var(--paper);stroke:var(--c1);stroke-width:2}
+.g-nota{font-size:7pt;color:var(--ink-2);text-align:center}
+.slide.dark .g-eixo,.slide.dark .g-mini{fill:rgba(255,255,255,.75)}
+.slide.dark .g-guia{stroke:rgba(255,255,255,.22)}
+
+
 .legend{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5mm 4mm;
   margin:3mm 0 0;padding:0;font-size:6.6pt;color:var(--ink-2)}
 .legend li{display:flex;align-items:center;gap:1.5mm}
@@ -622,6 +648,22 @@ CSS_SLIDE += """
 .flow p{font-size:9pt;color:var(--ink-2);margin:0;line-height:1.45}
 
 /* ---------- legenda de série, com a paleta do segmento ---------- */
+/* ---------- gráfico desenhado a partir do dado ----------
+   Entra no lugar da moldura vazia quando o consultor preenche a tabelinha na
+   ferramenta. É SVG: sai vetor no PDF, na tipografia da casa e nas cores do
+   segmento — `--c1`..`--c6`, as mesmas da legenda. */
+.g-svg{width:100%;height:auto;max-height:100%;display:block;flex:1 1 auto;min-height:0}
+.g-guia{stroke:var(--line);stroke-width:1}
+.g-eixo{fill:var(--ink-2);font-size:10px}
+.g-mini{fill:var(--ink-2);font-size:10px;text-anchor:middle;letter-spacing:.04em}
+.g-linha{fill:none;stroke:var(--c1);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}
+.g-area{fill:var(--c1);opacity:.10}
+.g-ponto{fill:var(--paper);stroke:var(--c1);stroke-width:2}
+.g-nota{font-size:7pt;color:var(--ink-2);text-align:center}
+.slide.dark .g-eixo,.slide.dark .g-mini{fill:rgba(255,255,255,.75)}
+.slide.dark .g-guia{stroke:rgba(255,255,255,.22)}
+
+
 .legend{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5mm 6mm;
   margin:4mm 0 0;padding:0;font-size:8pt;color:var(--ink-2)}
 .legend li{display:flex;align-items:center;gap:1.5mm}

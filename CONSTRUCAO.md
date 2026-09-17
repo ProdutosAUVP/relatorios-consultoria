@@ -376,6 +376,29 @@ para mostrar cinco cartões.
 robusto que substituir texto — um campo que aparece dentro de um atributo, ou um bloco de
 imagem com marcação aninhada, não quebra a montagem.
 
+**O gráfico se desenha a partir do dado, não de uma imagem.** Um espaço de
+gráfico era um espaço de imagem: o consultor montava a rosca em outro lugar,
+exportava um PNG e subia. O PNG chegava numa resolução qualquer, com a fonte de
+outro sistema e as cores de outro tema, e corrigir um número queria dizer
+refazer tudo — quando não vinha a captura de tela de uma planilha.
+
+Agora `chart()` anuncia na moldura o formato (`data-grafico`) e os rótulos
+sugeridos (`data-series`), a ferramenta oferece uma tabelinha de rótulo e valor,
+e `docs/graficos.js` desenha o SVG no arquivo exportado. Vetor no PDF, na
+tipografia da casa, nas cores do segmento — `--c1`..`--c6`, as mesmas da legenda
+— e editável até o último minuto.
+
+São quatro formatos, e cada um existe porque um documento pede: `donut` para a
+divisão de um todo, `anel` para as duas roscas concêntricas da carteira atual
+contra a meta, `bars` para uma série no tempo e `line` para a evolução do
+patrimônio. O envio de imagem continua ali, para o gráfico que não couber em
+nenhum deles, e o dado tem precedência sobre ele.
+
+Sem biblioteca: o SVG é montado à mão, o arquivo exportado abre sozinho por
+`file://` e o Chromium imprime o vetor sem rasterizar. E `graficos.js` vive
+dentro de uma função — os dois arquivos são scripts clássicos e dividem um
+escopo global só, então o único nome que sai é `window.Graficos`.
+
 **Os espaços de imagem são numerados no gerador.** `imgbox()` e `chart()` marcam cada
 espaço com `data-img`, e é por esse número que a foto enviada encontra o lugar dela. Sem
 isso a ferramenta dependeria da ordem dos elementos na página, que muda a cada edição de

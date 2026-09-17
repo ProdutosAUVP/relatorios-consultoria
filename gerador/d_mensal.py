@@ -112,9 +112,9 @@ def build(t, seg):
                    ["Ibovespa", ph("ibov_mes"), ph("ibov_ano"), ph("ibov_12m"), ph("ibov_24m"), ph("ibov_inicio")]],
                   caption="Rentabilidades líquidas de custos e brutas de impostos, salvo indicação em contrário. Rentabilidade passada não é garantia de rentabilidade futura.",
                   nums=[1, 2, 3, 4, 5]),
-        ch=chart("Carteira x IPCA + 5% a.a.",
-                 "Linha da carteira acumulada contra o benchmark, e barras de aportes e resgates no eixo secundário.",
-                 "line", "min-height:46mm")))
+        ch=chart("Evolução do patrimônio",
+                 "Linha do patrimônio mês a mês, ao longo dos últimos doze meses.",
+                 "line", "min-height:46mm", eixo="Patrimônio (R$)")))
 
     # ------------------------------------------------------ tabela do portfólio
     # A página era a lista de todas as posições, ativo a ativo. Quem recebe o
@@ -165,7 +165,7 @@ def build(t, seg):
                   nums=[1, 2, 3, 4],
                   caption="Meta conforme o diagrama do cerrado / carteira recomendada vigente para o perfil. Desvios acima da banda de tolerância acionam rebalanceamento."),
         ch=chart("Carteira atual x meta", "Duas roscas concêntricas: a interna com a meta, a externa com a posição atual.",
-                  "donut", "flex:1 1 auto;min-height:52mm",
+                  "anel", "flex:1 1 auto;min-height:52mm",
                   series=["Renda fixa", "Multimercado", "Renda variável BR", "Internacional", "FIIs", "Alternativos"])))
 
     # ------------------------------------------------ movimentações e proventos
@@ -189,7 +189,7 @@ def build(t, seg):
                     for i in (1, 2, 3, 4)],
                    foot=["<strong>Total</strong>", "", "", ph("prov_total_bruto"), ph("prov_total_ir"), ph("total_proventos")],
                    nums=[3, 4, 5], sm=True),
-        ch=chart("Proventos por mês", "Barras com os proventos recebidos nos últimos 12 meses, empilhadas por origem (dividendos, JCP, aluguel, cupom).", "bars", "min-height:48mm")))
+        ch=chart("Proventos por mês", "Barras com os proventos recebidos nos últimos 12 meses.", "bars", "min-height:48mm", eixo="Proventos (R$)")))
 
     # -------------------------------------------------------------- renda fixa
     # Os indexadores saíram: a divisão entre pós, pré e inflação é decisão de
@@ -252,7 +252,8 @@ def build(t, seg):
 <div class="gap"></div>
 <h2>Por setor e por segmento</h2>
 %(tab)s""" % dict(
-        ch=chart("Ações por setor", "Rosca com a distribuição setorial das ações, na curadoria de setor da AUVP.", "donut", "min-height:40mm"),
+        ch=chart("Ações por setor", "Rosca com a distribuição setorial das ações, na curadoria de setor da AUVP.", "donut", "min-height:40mm",
+                 series=["Financeiro", "Energia", "Consumo", "Indústria", "Saúde", "Outros"]),
         ch2=chart("FIIs por segmento", "Rosca com a distribuição por segmento.",
                    "donut", "min-height:40mm", series=["Tijolo", "Papel", "Híbrido", "Fundo de fundos"]),
         tab=table(["Bloco", "Recorte", "Posição", "% da bolsa", "% da carteira", "Resultado no mês"],

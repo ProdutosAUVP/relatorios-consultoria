@@ -150,7 +150,10 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .crono tbody tr:nth-child(even) td{background:var(--soft)}
 .crono .qual{font-weight:700;color:var(--brand);white-space:nowrap}
 .crono .pauta{font-weight:600}
-.crono .prazo{color:var(--ink-2)}
+.crono .prazo{color:var(--ink-2);white-space:nowrap}
+/* o objetivo estratégico é a coluna larga do plano do private: leva a frase
+   inteira, e as outras três só o que precisam */
+.crono .obj{color:var(--ink-2);width:100%}
 .crono .quando{text-align:right;white-space:nowrap}
 .crono .quando span{display:inline-block;padding:1.2mm 3.5mm;border:1px solid var(--line);
   border-radius:9mm;background:var(--paper);font-weight:700;font-size:8.2pt}
@@ -183,6 +186,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2mm;text-align:center;padding:5mm}
 .chart .cl{font-size:6.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
 .chart .cd{font-size:7.6pt;color:var(--ink-2);max-width:105mm;line-height:1.45}
+/* Com o gráfico desenhado dentro, a moldura deixa de ser um pedido de
+   preenchimento: some o tracejado e a hachura, e fica só o desenho. */
+.chart.feito{border:0;background:none;padding:0;gap:1.5mm}
 .sk-bars{display:flex;align-items:flex-end;gap:2mm;height:16mm;width:70%;opacity:.28}
 .sk-bars i{flex:1;background:var(--brand);border-radius:.4mm .4mm 0 0}
 .sk-donut{width:22mm;height:22mm;border-radius:50%;opacity:.5;
@@ -239,6 +245,22 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .flow p{font-size:8pt;color:var(--ink-2);margin:0;line-height:1.45}
 
 /* ---------- legenda de série, com a paleta do segmento ---------- */
+/* ---------- gráfico desenhado a partir do dado ----------
+   Entra no lugar da moldura vazia quando o consultor preenche a tabelinha na
+   ferramenta. É SVG: sai vetor no PDF, na tipografia da casa e nas cores do
+   segmento — `--c1`..`--c6`, as mesmas da legenda. */
+.g-svg{width:100%;height:auto;max-height:100%;display:block;flex:1 1 auto;min-height:0}
+.g-guia{stroke:var(--line);stroke-width:1}
+.g-eixo{fill:var(--ink-2);font-size:9px}
+.g-mini{fill:var(--ink-2);font-size:9px;text-anchor:middle;letter-spacing:.04em}
+.g-linha{fill:none;stroke:var(--c1);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}
+.g-area{fill:var(--c1);opacity:.10}
+.g-ponto{fill:var(--paper);stroke:var(--c1);stroke-width:2}
+.g-nota{font-size:7pt;color:var(--ink-2);text-align:center}
+.slide.dark .g-eixo,.slide.dark .g-mini{fill:rgba(255,255,255,.75)}
+.slide.dark .g-guia{stroke:rgba(255,255,255,.22)}
+
+
 .legend{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5mm 4mm;
   margin:3mm 0 0;padding:0;font-size:6.6pt;color:var(--ink-2)}
 .legend li{display:flex;align-items:center;gap:1.5mm}
@@ -662,7 +684,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <p class="lead">O que seguimos de perto lá fora, e como cada leitura se compara ao dado anterior e ao&nbsp;consenso.</p>
 <table class="tb"><thead><tr><th>Indicador</th><th class="num">Último&nbsp;dado</th><th class="num">Anterior</th><th class="num">Consenso</th><th>Leitura</th></tr></thead><tbody><tr><td>Fed&nbsp;funds</td><td class="num"><span class="ph">{{gi_fed_atual}}</span></td><td class="num"><span class="ph">{{gi_fed_ant}}</span></td><td class="num"><span class="ph">{{gi_fed_cons}}</span></td><td><span class="ph">{{gi_fed_leitura}}</span></td></tr><tr><td>CPI EUA&nbsp;(a/a)</td><td class="num"><span class="ph">{{gi_cpi_atual}}</span></td><td class="num"><span class="ph">{{gi_cpi_ant}}</span></td><td class="num"><span class="ph">{{gi_cpi_cons}}</span></td><td><span class="ph">{{gi_cpi_leitura}}</span></td></tr><tr><td>Payroll</td><td class="num"><span class="ph">{{gi_payroll_atual}}</span></td><td class="num"><span class="ph">{{gi_payroll_ant}}</span></td><td class="num"><span class="ph">{{gi_payroll_cons}}</span></td><td><span class="ph">{{gi_payroll_leitura}}</span></td></tr><tr><td>Treasury 10&nbsp;anos</td><td class="num"><span class="ph">{{gi_ust10_atual}}</span></td><td class="num"><span class="ph">{{gi_ust10_ant}}</span></td><td class="num"><span class="ph">{{gi_ust10_cons}}</span></td><td><span class="ph">{{gi_ust10_leitura}}</span></td></tr><tr><td>BCE &mdash; taxa de&nbsp;depósito</td><td class="num"><span class="ph">{{gi_bce_atual}}</span></td><td class="num"><span class="ph">{{gi_bce_ant}}</span></td><td class="num"><span class="ph">{{gi_bce_cons}}</span></td><td><span class="ph">{{gi_bce_leitura}}</span></td></tr><tr><td>PIB China&nbsp;(a/a)</td><td class="num"><span class="ph">{{gi_pibchina_atual}}</span></td><td class="num"><span class="ph">{{gi_pibchina_ant}}</span></td><td class="num"><span class="ph">{{gi_pibchina_cons}}</span></td><td><span class="ph">{{gi_pibchina_leitura}}</span></td></tr><tr><td>Petróleo&nbsp;Brent</td><td class="num"><span class="ph">{{gi_brent_atual}}</span></td><td class="num"><span class="ph">{{gi_brent_ant}}</span></td><td class="num"><span class="ph">{{gi_brent_cons}}</span></td><td><span class="ph">{{gi_brent_leitura}}</span></td></tr><tr><td>Índice&nbsp;DXY</td><td class="num"><span class="ph">{{gi_dxy_atual}}</span></td><td class="num"><span class="ph">{{gi_dxy_ant}}</span></td><td class="num"><span class="ph">{{gi_dxy_cons}}</span></td><td><span class="ph">{{gi_dxy_leitura}}</span></td></tr></tbody></table>
 <div class="gap"></div>
-<div class="chart" data-img="1" style="flex:1 1 auto;min-height:40mm"><div class="sk-line"></div><div class="cl">Juros longos e&nbsp;dólar</div><div class="cd">Treasury de 10 anos e índice DXY nos últimos 12&nbsp;meses.</div></div>
+<div class="chart" data-img="1" data-grafico="line" style="flex:1 1 auto;min-height:40mm"><div class="sk-line"></div><div class="cl">Juros longos e&nbsp;dólar</div><div class="cd">Treasury de 10 anos e índice DXY nos últimos 12&nbsp;meses.</div></div>
   </div>
   <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
@@ -720,7 +742,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <p class="small"><span class="ph">{{analise_inflacao}}</span></p>
 <table class="tb"><thead><tr><th>Indicador</th><th class="num">No&nbsp;mês</th><th class="num">12&nbsp;meses</th><th class="num">Projeção fim do&nbsp;ano</th><th>Meta /&nbsp;referência</th></tr></thead><tbody><tr><td>IPCA</td><td class="num"><span class="ph">{{bi_ipca_mes}}</span></td><td class="num"><span class="ph">{{bi_ipca_12m}}</span></td><td class="num"><span class="ph">{{bi_ipca_proj}}</span></td><td><span class="ph">{{bi_ipca_meta}}</span></td></tr><tr><td>IPCA&nbsp;núcleo</td><td class="num"><span class="ph">{{bi_nucleo_mes}}</span></td><td class="num"><span class="ph">{{bi_nucleo_12m}}</span></td><td class="num"><span class="ph">{{bi_nucleo_proj}}</span></td><td><span class="ph">{{bi_nucleo_meta}}</span></td></tr><tr><td>IGP-M</td><td class="num"><span class="ph">{{bi_igpm_mes}}</span></td><td class="num"><span class="ph">{{bi_igpm_12m}}</span></td><td class="num"><span class="ph">{{bi_igpm_proj}}</span></td><td><span class="ph">{{bi_igpm_meta}}</span></td></tr><tr><td>PIB</td><td class="num"><span class="ph">{{bi_pib_mes}}</span></td><td class="num"><span class="ph">{{bi_pib_12m}}</span></td><td class="num"><span class="ph">{{bi_pib_proj}}</span></td><td><span class="ph">{{bi_pib_meta}}</span></td></tr><tr><td>Desemprego&nbsp;(PNAD)</td><td class="num"><span class="ph">{{bi_desemp_mes}}</span></td><td class="num"><span class="ph">{{bi_desemp_12m}}</span></td><td class="num"><span class="ph">{{bi_desemp_proj}}</span></td><td><span class="ph">{{bi_desemp_meta}}</span></td></tr><tr><td>Massa salarial&nbsp;real</td><td class="num"><span class="ph">{{bi_massa_mes}}</span></td><td class="num"><span class="ph">{{bi_massa_12m}}</span></td><td class="num"><span class="ph">{{bi_massa_proj}}</span></td><td><span class="ph">{{bi_massa_meta}}</span></td></tr></tbody></table>
 <div class="gap"></div>
-<div class="chart" data-img="2" style="flex:1 1 auto;min-height:38mm"><div class="sk-line"></div><div class="cl">IPCA cheio e&nbsp;núcleos</div><div class="cd">IPCA acumulado em 12 meses contra a banda da meta e a média dos&nbsp;núcleos.</div></div>
+<div class="chart" data-img="2" data-grafico="line" style="flex:1 1 auto;min-height:38mm"><div class="sk-line"></div><div class="cl">IPCA cheio e&nbsp;núcleos</div><div class="cd">IPCA acumulado em 12 meses contra a banda da meta e a média dos&nbsp;núcleos.</div></div>
   </div>
   <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
@@ -788,7 +810,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <h2>Câmbio e contas&nbsp;externas</h2>
 <p class="small"><span class="ph">{{analise_cambio}}</span></p>
 <div class="gap"></div>
-<div class="chart" data-img="3" style="flex:1 1 auto;min-height:36mm"><div class="sk-line"></div><div class="cl">Curva de juros&nbsp;DI</div><div class="cd">Curva atual contra a de um mês atrás e a de um ano&nbsp;atrás.</div></div>
+<div class="chart" data-img="3" data-grafico="line" style="flex:1 1 auto;min-height:36mm"><div class="sk-line"></div><div class="cl">Curva de juros&nbsp;DI</div><div class="cd">Curva atual contra a de um mês atrás e a de um ano&nbsp;atrás.</div></div>
   </div>
   <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>

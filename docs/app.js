@@ -22,6 +22,7 @@ const estado = {
   modelo: null,      // Document do modelo, já parseado
   valores: {},       // campo -> texto
   imagens: {},       // espaço de imagem -> data URL
+  graficos: {},      // espaço de gráfico -> [{r: rótulo, v: valor, m: meta}]
   fora: new Set(),   // páginas tiradas do documento
   pagina: 1,
   tela: 'produto',
@@ -198,8 +199,11 @@ function anunciarSalvo(texto = 'Salvo neste navegador') {
 
 function salvar() {
   try {
+    // Os dados de gráfico vão no localStorage junto com o texto: são dezenas
+    // de números, não megabytes de foto, e perder a tabela de um gráfico é tão
+    // ruim quanto perder um parágrafo.
     localStorage.setItem(chaveArmazem(), JSON.stringify({
-      valores: estado.valores, fora: [...estado.fora],
+      valores: estado.valores, graficos: estado.graficos, fora: [...estado.fora],
     }));
     lembrar();
     anunciarSalvo();
@@ -217,6 +221,7 @@ async function carregar() {
   try {
     const d = JSON.parse(localStorage.getItem(chaveArmazem()) || 'null');
     estado.valores = (d && d.valores) || {};
+    estado.graficos = (d && d.graficos) || {};
     estado.fora = new Set((d && d.fora) || []);
     // Rascunho salvo antes de as imagens irem para o IndexedDB.
     if (d && d.imagens) estado.imagens = d.imagens;
@@ -439,7 +444,52 @@ function campoTexto(nome, meta) {
     <label for="c-${nome}">${escapa(meta.rotulo)}</label>${entrada}${dica}</div>`;
 }
 
+/** Quantas linhas a tabelinha oferece de saída. Os formatos com série nomeada
+ *  já vêm com os nomes; os de eixo temporal abrem com doze, que é o ano. */
+const LINHAS_GRAFICO = { donut: 6, anel: 6, bars: 12, line: 12 };
+
+function linhasDe(im) {
+  const guardado = estado.graficos[im.id];
+  if (guardado && guardado.length) return guardado;
+  const n = im.series ? im.series.length : (LINHAS_GRAFICO[im.grafico] || 6);
+  return Array.from({ length: n }, (_, i) => ({ r: (im.series || [])[i] || '', v: '', m: '' }));
+}
+
+/** O gráfico como tabelinha: uma linha por fatia, rótulo e valor.
+ *
+ *  É o que substituiu o campo de imagem. Antes o consultor montava a rosca em
+ *  outro lugar e subia um PNG; agora ele digita os números e o desenho sai no
+ *  documento, em SVG, nas cores do segmento. O envio de imagem continua ali
+ *  embaixo para quem tiver um gráfico pronto que não cabe neste formato — e o
+ *  dado tem precedência sobre ela. */
+function campoGrafico(im) {
+  const linhas = linhasDe(im);
+  const duplo = im.grafico === 'anel';
+  const rotuloV = im.eixo || (duplo ? 'Atual' : 'Valor');
+  const dado = estado.imagens[im.id];
+  const preenchido = linhas.some((l) => (l.v || '').trim() || (l.m || '').trim());
+  return `<div class="grafico${preenchido ? ' cheio' : ''}" data-grafico="${escapa(im.id)}">
+    <div class="nome">${escapa(im.rotulo)}</div>
+    <div class="desc">${escapa(im.descricao)}</div>
+    <table class="dados">
+      <thead><tr><th>Rótulo</th><th>${escapa(rotuloV)}</th>${duplo ? '<th>Meta</th>' : ''}</tr></thead>
+      <tbody>${linhas.map((l, i) => `<tr>
+        <td><input type="text" data-gr="${escapa(im.id)}" data-i="${i}" data-c="r" value="${escapa(l.r)}"></td>
+        <td><input type="text" inputmode="decimal" data-gr="${escapa(im.id)}" data-i="${i}" data-c="v" value="${escapa(l.v)}"></td>
+        ${duplo ? `<td><input type="text" inputmode="decimal" data-gr="${escapa(im.id)}" data-i="${i}" data-c="m" value="${escapa(l.m)}"></td>` : ''}
+      </tr>`).join('')}</tbody>
+    </table>
+    <div class="acoes">
+      <button type="button" class="btn neutro pequeno" data-mais="${escapa(im.id)}">Mais uma linha</button>
+      <label class="btn neutro pequeno">${dado ? 'Trocar imagem' : 'Usar imagem em vez disso'}
+        <input type="file" accept="image/*" data-arquivo="${escapa(im.id)}"></label>
+      ${dado ? `<button type="button" class="btn neutro pequeno" data-tirar="${escapa(im.id)}">Remover imagem</button>` : ''}
+    </div>
+  </div>`;
+}
+
 function campoImagem(im) {
+  if (im.grafico) return campoGrafico(im);
   const dado = estado.imagens[im.id];
   return `<div class="imagem${dado ? ' cheia' : ''}" data-imagem="${escapa(im.id)}">
     <span class="miniatura"${dado ? ` style="background-image:url('${dado}')"` : ''}>${dado ? '' : escapa(im.tipo)}</span>
@@ -468,7 +518,10 @@ function atualizarContagens() {
     if (!conta.has(im.pagina)) conta.set(im.pagina, { total: 0, feitos: 0 });
     const c = conta.get(im.pagina);
     c.total += 1;
-    if (estado.imagens[im.id]) c.feitos += 1;
+    if (estado.imagens[im.id]
+        || (estado.graficos[im.id] && window.Graficos.temDados(estado.graficos[im.id]))) {
+      c.feitos += 1;
+    }
   }
   for (const [pag, c] of conta) {
     const el = $(`[data-contagem="${pag}"]`);
@@ -583,7 +636,22 @@ function montar(modo) {
     item.remove();
   }
 
+  // O gráfico desenhado tem precedência sobre a imagem enviada: quem digitou os
+  // números quis o desenho, e o PNG que estiver guardado no espaço é o de uma
+  // tentativa anterior. A moldura vira o SVG e mantém a caixa — a mesma altura
+  // mínima, o mesmo lugar na grelha —, só perde o tracejado e o texto de
+  // instrução, que eram o pedido de preenchimento.
+  for (const [id, linhas] of Object.entries(estado.graficos)) {
+    const bloco = doc.querySelector(`[data-grafico][data-img="${CSS.escape(String(id))}"]`);
+    if (!bloco || !window.Graficos.temDados(linhas)) continue;
+    const html = window.Graficos.desenha(bloco.dataset.grafico, linhas);
+    if (!html) continue;
+    bloco.innerHTML = html;
+    bloco.classList.add('feito');
+  }
+
   for (const [id, dado] of Object.entries(estado.imagens)) {
+    if (estado.graficos[id] && window.Graficos.temDados(estado.graficos[id])) continue;
     const bloco = doc.querySelector(`[data-img="${CSS.escape(String(id))}"]`);
     if (!bloco) continue;
     // A imagem herda o encaixe do bloco que substitui — o estilo e os
@@ -791,8 +859,9 @@ const MOSTRA = 12;
 
 function confirmaBrancos() {
   const faltam = emBranco();
-  const semImagem = estado.estrutura.imagens
-    .filter((im) => dentro(im.pagina) && !estado.imagens[im.id]);
+  const semImagem = estado.estrutura.imagens.filter((im) => dentro(im.pagina)
+    && !estado.imagens[im.id]
+    && !(estado.graficos[im.id] && window.Graficos.temDados(estado.graficos[im.id])));
   if (!faltam.length && !semImagem.length) return true;
 
   const linhas = [];
@@ -843,6 +912,7 @@ function carregarDados(arquivo) {
     if (d.documento !== estado.documento.chave
         && !confirm(`Este rascunho é de "${d.documento}". Carregar mesmo assim?`)) return;
     estado.valores = d.valores || {};
+    estado.graficos = d.graficos || {};
     estado.imagens = d.imagens || {};
     salvar();
     salvarImagens();
@@ -886,6 +956,16 @@ function ligar() {
   const form = $('#formulario');
 
   form.addEventListener('input', (e) => {
+    const gr = e.target.dataset.gr;
+    if (gr) {
+      const i = Number(e.target.dataset.i);
+      const linhas = estado.graficos[gr] || (estado.graficos[gr] = []);
+      while (linhas.length <= i) linhas.push({ r: '', v: '', m: '' });
+      linhas[i][e.target.dataset.c] = e.target.value;
+      clearTimeout(temporizador);
+      temporizador = setTimeout(() => { salvar(); atualizarContagens(); renderizar(); }, 250);
+      return;
+    }
     const nome = e.target.dataset.campo;
     if (!nome) return;
     estado.valores[nome] = e.target.value;
@@ -907,6 +987,14 @@ function ligar() {
   });
 
   form.addEventListener('click', (e) => {
+    const mais = e.target.dataset.mais;
+    if (mais) {
+      const im = estado.estrutura.imagens.find((x) => String(x.id) === mais);
+      estado.graficos[mais] = linhasDe(im).concat([{ r: '', v: '', m: '' }]);
+      salvar();
+      telaPreencher();
+      return;
+    }
     const id = e.target.dataset.tirar;
     if (!id) return;
     delete estado.imagens[id];
@@ -970,7 +1058,7 @@ function ligar() {
 
   $('#baixar-dados').onclick = () => baixar(JSON.stringify({
     documento: estado.documento.chave, variante: estado.variante.sufixo,
-    valores: estado.valores, imagens: estado.imagens,
+    valores: estado.valores, graficos: estado.graficos, imagens: estado.imagens,
   }, null, 1), nomeArquivo('json'), 'application/json');
   $('#carregar-dados').onclick = () => $('#arquivo-dados').click();
   $('#arquivo-dados').onchange = (e) => e.target.files[0] && carregarDados(e.target.files[0]);

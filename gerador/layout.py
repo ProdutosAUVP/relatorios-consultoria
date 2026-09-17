@@ -194,18 +194,43 @@ def slide(t, sec, no, body, dark=False, date_ph=None):
 
 # ---------------------------------------------------------------- blocos
 
-def chart(label, desc, skeleton="bars", style="", series=None):
+def chart(label, desc, skeleton="bars", style="", series=None, eixo=None):
+    """O lugar de um gráfico na página.
+
+    Sai como moldura vazia com um esqueleto do formato dentro — é o que o
+    consultor vê no modelo. Na ferramenta de preenchimento, o que ele preenche
+    não é uma imagem: é uma tabelinha de rótulo e valor, e o gráfico se desenha
+    a partir dela, em SVG, no arquivo exportado.
+
+    Por isso a moldura carrega o formato (`data-grafico`) e os rótulos sugeridos
+    (`data-series`): são eles que dizem à ferramenta quantas linhas oferecer e
+    com que nome vêm preenchidas. `anel` é o par de roscas concêntricas — a
+    externa com a posição atual, a interna com a meta —, e é o único formato que
+    pede dois valores por linha.
+
+    `eixo` nomeia a unidade do eixo vertical nos formatos que têm eixo, e entra
+    na tabelinha como cabeçalho da coluna de valor.
+
+    O `data-img` continua: quem preferir mandar a imagem pronta de um gráfico
+    feito em outro lugar continua podendo, e o dado tem precedência sobre ela.
+    """
     sk = {"bars": '<div class="sk-bars">%s</div>' % "".join(
               '<i style="height:%d%%"></i>' % h for h in (42, 68, 55, 88, 72, 96)),
           "donut": '<div class="sk-donut"></div>',
+          "anel": '<div class="sk-donut"></div>',
           "line": '<div class="sk-line"></div>',
           "none": ""}[skeleton]
     # `flex` só tem efeito dentro de .pg-body (flex column); em grelha é ignorado.
     lg = legend(series) if series else ""
     _IMG[0] += 1
-    return ('<div class="chart" data-img="%d" style="flex:1 1 auto;%s">%s'
+    dados = ' data-grafico="%s"' % skeleton if skeleton != "none" else ""
+    if series:
+        dados += ' data-series="%s"' % "|".join(series)
+    if eixo:
+        dados += ' data-eixo="%s"' % eixo
+    return ('<div class="chart" data-img="%d"%s style="flex:1 1 auto;%s">%s'
             '<div class="cl">%s</div>'
-            '<div class="cd">%s</div>%s</div>') % (_IMG[0], style, sk, label, desc, lg)
+            '<div class="cd">%s</div>%s</div>') % (_IMG[0], dados, style, sk, label, desc, lg)
 
 
 def foto_vaga(desc="Foto vertical do consultor. Recorte 3:4, mínimo 900&nbsp;px de largura."):
@@ -228,29 +253,43 @@ def imgbox(desc, style=""):
             '<div class="cd">%s</div></div>') % (_IMG[0], style, desc)
 
 
-def cronograma(fases):
-    """A sequência de reuniões do ciclo, com as fases numa trilha à esquerda.
+def cronograma(blocos, colunas, chip_final=False):
+    """O plano de trabalho do ciclo, em tabela.
 
-    `fases` é uma lista de `(nome da fase, [(qual, pauta, prazo, quando), ...])`.
-    Qual, pauta e prazo são o processo da casa e vêm escritos; `quando` é a data
-    sugerida daquele cliente, e é o único campo da tabela.
+    `blocos` é uma lista de `(fase, [linha, ...])`, e cada linha é uma tupla de
+    células na ordem de `colunas`. A fase vira uma trilha deitada à esquerda,
+    com `rowspan`, e existe uma vez por bloco — é o que faz "Estruturação"
+    cobrir três reuniões e "Fechamento" cobrir uma. Fase `None` não desenha
+    trilha nenhuma.
 
-    A trilha usa `rowspan`, então a fase existe uma vez por bloco de reuniões e
-    não uma vez por linha: é o que faz "Estruturação" cobrir as três primeiras e
-    "Fechamento" cobrir só a última.
+    `chip_final` põe a última célula dentro de uma cápsula. Serve para a data
+    sugerida: ela é a única coisa que muda de cliente para cliente, e a cápsula
+    diz isso sem precisar de legenda — o resto da linha é processo da casa.
+
+    Dois documentos usam isto com formas diferentes. A consultoria tem seis
+    reuniões agrupadas em três fases, com data sugerida em cada uma. O private
+    tem nove etapas corridas, sem data: o prazo dele é relativo ("1º mês", "até
+    10 dias"), porque o ciclo é mais longo e a agenda se combina na reunião.
     """
     linhas = []
-    for fase, encontros in fases:
-        for i, (qual, pauta, prazo, quando) in enumerate(encontros):
+    for fase, itens in blocos:
+        for i, celulas in enumerate(itens):
             trilha = ('<td class="fase" rowspan="%d"><span>%s</span></td>'
-                      % (len(encontros), fase)) if i == 0 else ""
-            linhas.append(
-                "<tr>%s<td class=\"qual\">%s</td><td class=\"pauta\">%s</td>"
-                "<td class=\"prazo\">%s</td><td class=\"quando\"><span>%s</span></td></tr>"
-                % (trilha, qual, pauta, prazo, quando))
-    return ('<table class="crono"><thead><tr><th></th><th>Reuniões</th><th>Pauta</th>'
-            '<th>Prazo</th><th style="text-align:right">Data sugerida</th></tr></thead>'
-            "<tbody>%s</tbody></table>" % "".join(linhas))
+                      % (len(itens), fase)) if fase and i == 0 else ""
+            corpo = []
+            for k, c in enumerate(celulas):
+                cls = ["qual", "pauta", "prazo"][k] if k < 3 else "obj"
+                if chip_final and k == len(celulas) - 1:
+                    corpo.append('<td class="quando"><span>%s</span></td>' % c)
+                else:
+                    corpo.append('<td class="%s">%s</td>' % (cls, c))
+            linhas.append("<tr>%s%s</tr>" % (trilha, "".join(corpo)))
+    trilha_cab = "<th></th>" if any(f for f, _ in blocos) else ""
+    cab = "".join('<th%s>%s</th>' % (' style="text-align:right"'
+                                     if chip_final and k == len(colunas) - 1 else "", c)
+                  for k, c in enumerate(colunas))
+    return ('<table class="crono"><thead><tr>%s%s</tr></thead><tbody>%s</tbody></table>'
+            % (trilha_cab, cab, "".join(linhas)))
 
 
 def table(headers, rows, foot=None, caption=None, nums=None, widths=None, sm=False, xs=False):

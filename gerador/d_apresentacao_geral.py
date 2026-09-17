@@ -33,30 +33,83 @@ PITCH = {
 }
 
 
-# As seis reuniões do primeiro ciclo, na ordem em que acontecem, agrupadas pelas
-# três fases. É o planejador da consultoria patrimonial: o que o membro faz do
-# alinhamento ao fechamento do semestre.
+# O plano de trabalho do primeiro ciclo, por segmento.
 #
-# Cada entrada é (número da reunião, (como se chama, pauta, prazo)). O número vira
-# o nome do campo da data, então mexer na ordem aqui renomeia campos — se uma
-# reunião sair ou entrar no meio, convém renumerar de uma vez e avisar quem tem
-# rascunho salvo.
-ENCONTROS = [
-    ("Estruturação", [
-        (1, ("1ª Reunião", "Alinhamento Consultoria", "Início da consultoria")),
-        (2, ("2ª Reunião", "KYC / Suitability", "Até 5 dias após o Alinhamento")),
-        (3, ("3ª Reunião", "Apresentação de Relatório", "Até 10 dias após o KYC/Suitability")),
-    ]),
-    ("Acompanhamento", [
-        (4, ("4ª Reunião", "Acompanhamento de Estratégia",
-             "Até 60 dias após a Apresentação de Relatório")),
-        (5, ("5ª Reunião", "Planejamento Patrimonial e Sucessório",
-             "Até 2 semanas após os Resultados")),
-    ]),
-    ("Fechamento", [
-        (6, ("6ª Reunião", "Revisão de Portfólio", "Até 60 dias após a Proteção Patrimonial")),
-    ]),
-]
+# A consultoria patrimonial tem seis reuniões, agrupadas em três fases, e uma
+# data sugerida em cada. É o planejador que o membro percorre do alinhamento ao
+# fechamento do semestre; o número da reunião vira o nome do campo da data, e
+# por isso mexer na ordem aqui renomeia campos.
+#
+# O private tem outra forma: nove etapas corridas, sem fase e sem data. O prazo
+# é relativo — "Dia 1", "1º mês", "até 10 dias" —, porque o ciclo é anual e a
+# agenda se combina na reunião. E a coluna que importa ali não é a pauta, é o
+# objetivo estratégico de cada etapa: quem contrata um private quer ler por que
+# cada conversa existe, não em que ordem elas acontecem.
+PLANO_CICLO = {
+    "consultoria": dict(
+        colunas=["Reuniões", "Pauta", "Prazo", "Data sugerida"],
+        chip_final=True,
+        rodape=("Plano do primeiro ciclo. As datas são sugeridas e se ajustam à sua agenda; "
+                "a pauta e o prazo de cada encontro são os mesmos para todo cliente."),
+        blocos=[
+            ("Estruturação", [
+                (1, "1ª Reunião", "Alinhamento Consultoria", "Início da consultoria"),
+                (2, "2ª Reunião", "KYC / Suitability", "Até 5 dias após o Alinhamento"),
+                (3, "3ª Reunião", "Apresentação de Relatório",
+                 "Até 10 dias após o KYC/Suitability"),
+            ]),
+            ("Acompanhamento", [
+                (4, "4ª Reunião", "Acompanhamento de Estratégia",
+                 "Até 60 dias após a Apresentação de Relatório"),
+                (5, "5ª Reunião", "Planejamento Patrimonial e Sucessório",
+                 "Até 2 semanas após os Resultados"),
+            ]),
+            ("Fechamento", [
+                (6, "6ª Reunião", "Revisão de Portfólio",
+                 "Até 60 dias após a Proteção Patrimonial"),
+            ]),
+        ],
+    ),
+    "private": dict(
+        colunas=["Etapa", "Prazo", "Objetivo estratégico"],
+        chip_final=False,
+        rodape=("Plano do primeiro ciclo. Os prazos correm a partir do início da consultoria e "
+                "as datas de cada encontro se combinam conforme a sua agenda."),
+        blocos=[(None, [
+            (None, "KYC/Suitability e Diagnóstico", "Dia 1",
+             "Coleta de informações objetivas e subjetivas: perfil de risco, objetivos de vida, "
+             "horizonte de investimento, liquidez necessária, estrutura familiar e histórico "
+             "patrimonial."),
+            (None, "Seguros e Proteção Patrimonial", "1º mês (recorrente)",
+             "Avaliação de necessidades de proteção: seguro de vida, seguro sucessório, "
+             "responsabilidade civil e coberturas relevantes ao patrimônio familiar."),
+            (None, "Entrega da Proposta Estratégica", "Até 10 dias",
+             "Apresentação do diagnóstico e proposta inicial de alocação, com avaliação técnica, "
+             "contemplando o racional completo da carteira, projeções e próximos passos."),
+            (None, "Alinhamento Operacional", "1º mês (mensal)",
+             "Revisão dos primeiros movimentos da carteira, cronograma de execução e validação "
+             "da alocação prática frente à proposta aprovada."),
+            (None, "Wealth Planning / Tributário e Sucessório", "2º mês",
+             "Reunião com advogado tributarista para mapear estruturas: holding, doação, "
+             "testamento, previdência, governança familiar e eficiência tributária."),
+            (None, "Revisão de Carteira e aderência à estratégia", "Mensal + trimestral",
+             "Acompanhamento da carteira implementada, avaliando aderência à estratégia e "
+             "eventuais ajustes."),
+            (None, "Crédito, Liquidez e Eficiência de Caixa", "3º mês",
+             "Avaliação de linhas de crédito, financiamento patrimonial, gestão de caixa e uso "
+             "eficiente do balanço pessoal/familiar."),
+            (None, "Governança Familiar e Consolidação Patrimonial", "4º mês",
+             "Visão integrada do patrimônio: bancos, empresas, imóveis, sucessores, "
+             "responsabilidades familiares e processo decisório."),
+            (None, "Revisão Anual e Planejamento do Próximo Ciclo", "12º mês",
+             "Fechamento do ciclo: performance anual, revisão de metas, planejamento tributário "
+             "de fim de ano e agenda estratégica do próximo período."),
+        ])],
+    ),
+}
+# Alta renda e assessoria seguem o ciclo da consultoria patrimonial.
+PLANO_CICLO["alta-renda"] = PLANO_CICLO["consultoria"]
+PLANO_CICLO["assessoria"] = PLANO_CICLO["consultoria"]
 
 
 # Os fatos da casa. Não são campos: não mudam de um cliente para o outro, e
@@ -66,7 +119,6 @@ ENCONTROS = [
 # O registro na CVM saiu da lista. Ele não é o que o cliente pergunta nesta
 # página, e a habilitação de quem assina o relatório continua onde precisa
 # estar: no pé dos documentos que a exigem.
-#
 CASA = dict(
     historia=("A AUVP Capital nasceu da metodologia da AUVP Escola. É a mesma leitura de "
               "investimento que ensinou milhares de pessoas a cuidar do próprio dinheiro, "
@@ -78,8 +130,8 @@ CASA = dict(
     # A foto da sede, e não um espaço de imagem. É a mesma casa em toda
     # apresentação, então não há o que escolher — e o que se escolhia, na
     # prática, era entre mandar sem foto e mandar com a que estivesse à mão.
-    # O arquivo sai de `scripts/institucional.py`, que recorta o original da
-    # landing page institucional.
+    # O arquivo sai de `scripts/institucional.py`, que só reduz o original da
+    # landing page institucional: a proporção é a que o fotógrafo enquadrou.
     foto="assets/institucional/sede.jpg",
 )
 
@@ -102,6 +154,7 @@ ENTREGAS = [
 def build(t, seg):
     set_date_ph("data_apresentacao")
     S = []
+    plano = PLANO_CICLO[seg]
     titulo, sub, pilares = PITCH[seg]
     papel = PAPEL[seg]
 
@@ -137,8 +190,9 @@ def build(t, seg):
         # Os nomes vêm de ENCONTROS, e não de uma lista à parte: o método e o
         # cronograma descrevem a mesma coisa, e nomeá-la de dois jeitos fazia o
         # cliente procurar na tabela uma "Transição" que lá se chama outra coisa.
-        flow=flow([(ph("metodo_%d_prazo" % n), pauta, ph("metodo_%d_detalhe" % n))
-                   for _, encontros in ENCONTROS for n, (_, pauta, _) in encontros]),
+        flow=flow([(ph("metodo_%d_prazo" % i), etapa, ph("metodo_%d_detalhe" % i))
+                   for i, etapa in enumerate(
+                       [l[2] for _, itens in plano["blocos"] for l in itens][:5], start=1)]),
         prazo=ph("prazo_implantacao"))))
 
     # O cronograma vinha num documento à parte, e quem ouvia a proposta saía com
@@ -152,11 +206,14 @@ def build(t, seg):
     S.append(slide(t, "Como trabalhamos", 7, """<span class="eyebrow">%(seg)s</span>
 <h1 class="t">Cronograma de reuniões</h1>
 %(crono)s
-<p class="legal" style="margin-top:4mm">Plano do primeiro ciclo. As datas são sugeridas e se ajustam à sua agenda; a pauta e o prazo de cada encontro são os mesmos para todo cliente.</p>""" % dict(
-        seg=t["nome_full"],
-        crono=cronograma([(fase, [(qual, pauta, prazo, ph("reuniao_%d_data" % n))
-                                  for n, (qual, pauta, prazo) in encontros])
-                          for fase, encontros in ENCONTROS]))))
+<p class="legal" style="margin-top:4mm">%(rodape)s</p>""" % dict(
+        seg=t["nome_full"], rodape=plano["rodape"],
+        crono=cronograma(
+            [(fase, [tuple(c for c in linha[1:]) + ((ph("reuniao_%d_data" % linha[0]),)
+                                                    if plano["chip_final"] else ())
+                     for linha in itens])
+             for fase, itens in plano["blocos"]],
+            plano["colunas"], chip_final=plano["chip_final"]))))
 
     S.append(slide(t, "Como trabalhamos", 8, """<h1 class="t">Por que %(nome)s</h1>
 <div class="cards" style="--n:3;margin-bottom:8mm">%(pil)s</div>

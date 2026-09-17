@@ -138,7 +138,10 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .crono tbody tr:nth-child(even) td{background:var(--soft)}
 .crono .qual{font-weight:700;color:var(--brand);white-space:nowrap}
 .crono .pauta{font-weight:600}
-.crono .prazo{color:var(--ink-2)}
+.crono .prazo{color:var(--ink-2);white-space:nowrap}
+/* o objetivo estratégico é a coluna larga do plano do private: leva a frase
+   inteira, e as outras três só o que precisam */
+.crono .obj{color:var(--ink-2);width:100%}
 .crono .quando{text-align:right;white-space:nowrap}
 .crono .quando span{display:inline-block;padding:1.2mm 3.5mm;border:1px solid var(--line);
   border-radius:9mm;background:var(--paper);font-weight:700;font-size:8.2pt}
@@ -167,6 +170,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3mm;text-align:center;padding:6mm}
 .slide.dark .chart{background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.045) 6px 12px)}
 .chart .cl{font-size:7.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.chart.feito{border:0;background:none;padding:0;gap:2mm}
 .slide.dark .chart .cl{color:#fff}
 .chart .cd{font-size:9pt;color:var(--ink-2);max-width:150mm;line-height:1.45}
 .slide.dark .chart .cd{color:rgba(255,255,255,.75)}
@@ -268,6 +272,22 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .flow p{font-size:9pt;color:var(--ink-2);margin:0;line-height:1.45}
 
 /* ---------- legenda de série, com a paleta do segmento ---------- */
+/* ---------- gráfico desenhado a partir do dado ----------
+   Entra no lugar da moldura vazia quando o consultor preenche a tabelinha na
+   ferramenta. É SVG: sai vetor no PDF, na tipografia da casa e nas cores do
+   segmento — `--c1`..`--c6`, as mesmas da legenda. */
+.g-svg{width:100%;height:auto;max-height:100%;display:block;flex:1 1 auto;min-height:0}
+.g-guia{stroke:var(--line);stroke-width:1}
+.g-eixo{fill:var(--ink-2);font-size:10px}
+.g-mini{fill:var(--ink-2);font-size:10px;text-anchor:middle;letter-spacing:.04em}
+.g-linha{fill:none;stroke:var(--c1);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}
+.g-area{fill:var(--c1);opacity:.10}
+.g-ponto{fill:var(--paper);stroke:var(--c1);stroke-width:2}
+.g-nota{font-size:7pt;color:var(--ink-2);text-align:center}
+.slide.dark .g-eixo,.slide.dark .g-mini{fill:rgba(255,255,255,.75)}
+.slide.dark .g-guia{stroke:rgba(255,255,255,.22)}
+
+
 .legend{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5mm 6mm;
   margin:4mm 0 0;padding:0;font-size:8pt;color:var(--ink-2)}
 .legend li{display:flex;align-items:center;gap:1.5mm}
@@ -573,7 +593,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 <div class="kpis" style="--n:4"><div class="kpi"><div class="k">Patrimônio&nbsp;total</div><div class="v"><span class="ph">{{patrimonio_total}}</span></div><div class="s">Em <span class="ph">{{data_posicao}}</span></div></div><div class="kpi"><div class="k">No&nbsp;mês</div><div class="v"><span class="ph">{{rent_mes}}</span></div><div class="s">No ano: <span class="ph">{{rent_ano}}</span></div></div><div class="kpi"><div class="k">Em 12&nbsp;meses</div><div class="v"><span class="ph">{{rent_12m}}</span></div><div class="s">24 meses: <span class="ph">{{rent_24m}}</span></div></div><div class="kpi"><div class="k">Aportes&nbsp;líquidos</div><div class="v"><span class="ph">{{aporte_liquido_mes}}</span></div><div class="s">Resgates: <span class="ph">{{resgates_mes}}</span></div></div></div>
 <div class="gap"></div>
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch">
-  <div class="chart" data-img="1" style="flex:1 1 auto;min-height:52mm"><div class="sk-line"></div><div class="cl">Patrimônio nos últimos 12&nbsp;meses</div><div class="cd">Linha de patrimônio com barras de aportes e&nbsp;resgates.</div></div>
+  <div class="chart" data-img="1" data-grafico="line" style="flex:1 1 auto;min-height:52mm"><div class="sk-line"></div><div class="cl">Patrimônio nos últimos 12&nbsp;meses</div><div class="cd">Linha de patrimônio com barras de aportes e&nbsp;resgates.</div></div>
   <div>
     <h2>Em uma&nbsp;frase</h2>
     <p><span class="ph">{{resumo_do_mes}}</span></p>
@@ -625,7 +645,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 <h1 class="t">Sua carteira x&nbsp;referências</h1>
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch">
   <div><table class="tb"><thead><tr><th>Indicador</th><th class="num">Mês</th><th class="num">Ano</th><th class="num">12m</th><th class="num">24m</th></tr></thead><tbody><tr><td><strong>Sua&nbsp;carteira</strong></td><td class="num"><span class="ph">{{rent_mes}}</span></td><td class="num"><span class="ph">{{rent_ano}}</span></td><td class="num"><span class="ph">{{rent_12m}}</span></td><td class="num"><span class="ph">{{rent_24m}}</span></td></tr><tr><td>IPCA +&nbsp;5%</td><td class="num"><span class="ph">{{ipca5_mes}}</span></td><td class="num"><span class="ph">{{ipca5_ano}}</span></td><td class="num"><span class="ph">{{ipca5_12m}}</span></td><td class="num"><span class="ph">{{ipca5_24m}}</span></td></tr><tr><td>Ibovespa</td><td class="num"><span class="ph">{{ibov_mes}}</span></td><td class="num"><span class="ph">{{ibov_ano}}</span></td><td class="num"><span class="ph">{{ibov_12m}}</span></td><td class="num"><span class="ph">{{ibov_24m}}</span></td></tr></tbody></table></div>
-  <div class="chart" data-img="2" style="flex:1 1 auto;min-height:60mm"><div class="sk-line"></div><div class="cl">Carteira x IPCA + 5% a.a.&nbsp;acumulado</div><div class="cd">Duas linhas acumuladas desde o início do&nbsp;relacionamento.</div></div>
+  <div class="chart" data-img="2" data-grafico="line" style="flex:1 1 auto;min-height:60mm"><div class="sk-line"></div><div class="cl">Carteira x IPCA + 5% a.a.&nbsp;acumulado</div><div class="cd">Duas linhas acumuladas desde o início do&nbsp;relacionamento.</div></div>
 </div>
 <p class="legal" style="margin-top:4mm">Rentabilidades líquidas de custos e brutas de impostos, salvo indicação em contrário. Rentabilidade passada não é garantia de rentabilidade&nbsp;futura.</p>
     </div>
@@ -674,7 +694,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch">
   <div><table class="tb sm"><thead><tr><th>Classe</th><th class="num">Alvo</th><th class="num">Atual</th><th class="num">Desvio</th></tr></thead><tbody><tr><td>Renda fixa&nbsp;pós</td><td class="num"><span class="ph">{{alvo_rf_pos}}</span></td><td class="num"><span class="ph">{{atual_rf_pos}}</span></td><td class="num"><span class="ph">{{desvio_rf_pos}}</span></td></tr><tr><td>Renda fixa&nbsp;inflação</td><td class="num"><span class="ph">{{alvo_rf_ipca}}</span></td><td class="num"><span class="ph">{{atual_rf_ipca}}</span></td><td class="num"><span class="ph">{{desvio_rf_ipca}}</span></td></tr><tr><td>Renda fixa&nbsp;prefixada</td><td class="num"><span class="ph">{{alvo_rf_pre}}</span></td><td class="num"><span class="ph">{{atual_rf_pre}}</span></td><td class="num"><span class="ph">{{desvio_rf_pre}}</span></td></tr><tr><td>Multimercado</td><td class="num"><span class="ph">{{alvo_multi}}</span></td><td class="num"><span class="ph">{{atual_multi}}</span></td><td class="num"><span class="ph">{{desvio_multi}}</span></td></tr><tr><td>Renda variável&nbsp;BR</td><td class="num"><span class="ph">{{alvo_rv_br}}</span></td><td class="num"><span class="ph">{{atual_rv_br}}</span></td><td class="num"><span class="ph">{{desvio_rv_br}}</span></td></tr><tr><td>Internacional</td><td class="num"><span class="ph">{{alvo_intl}}</span></td><td class="num"><span class="ph">{{atual_intl}}</span></td><td class="num"><span class="ph">{{desvio_intl}}</span></td></tr><tr><td>Fundos&nbsp;imobiliários</td><td class="num"><span class="ph">{{alvo_fii}}</span></td><td class="num"><span class="ph">{{atual_fii}}</span></td><td class="num"><span class="ph">{{desvio_fii}}</span></td></tr><tr><td>Alternativos</td><td class="num"><span class="ph">{{alvo_alt}}</span></td><td class="num"><span class="ph">{{atual_alt}}</span></td><td class="num"><span class="ph">{{desvio_alt}}</span></td></tr><tr><td>Caixa</td><td class="num"><span class="ph">{{alvo_caixa}}</span></td><td class="num"><span class="ph">{{atual_caixa}}</span></td><td class="num"><span class="ph">{{desvio_caixa}}</span></td></tr></tbody><tfoot><tr><td><strong>Total</strong></td><td class="num">100,0%</td><td class="num">100,0%</td><td class="num">&mdash;</td></tr></tfoot></table></div>
   <div style="display:flex;flex-direction:column;gap:5mm">
-    <div class="chart" data-img="3" style="flex:1 1 auto;min-height:46mm"><div class="sk-donut"></div><div class="cl">Composição&nbsp;atual</div><div class="cd">Rosca com o peso de cada&nbsp;classe.</div></div>
+    <div class="chart" data-img="3" data-grafico="donut" style="flex:1 1 auto;min-height:46mm"><div class="sk-donut"></div><div class="cl">Composição&nbsp;atual</div><div class="cd">Rosca com o peso de cada&nbsp;classe.</div></div>
     <div class="note"><p><strong>Rebalanceamento.</strong> <span class="ph">{{texto_rebalanceamento}}</span></p></div>
   </div>
 </div>
@@ -771,7 +791,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 <p class="lead">Exposição por moeda e por&nbsp;jurisdição.</p>
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch">
   <div><table class="tb"><thead><tr><th>Item</th><th>Detalhe</th><th class="num">Valor</th><th class="num">%</th><th>Observação</th></tr></thead><tbody><tr><td><span class="ph">{{seg_1_item}}</span></td><td><span class="ph">{{seg_1_detalhe}}</span></td><td class="num"><span class="ph">{{seg_1_valor}}</span></td><td class="num"><span class="ph">{{seg_1_perc}}</span></td><td><span class="ph">{{seg_1_obs}}</span></td></tr><tr><td><span class="ph">{{seg_2_item}}</span></td><td><span class="ph">{{seg_2_detalhe}}</span></td><td class="num"><span class="ph">{{seg_2_valor}}</span></td><td class="num"><span class="ph">{{seg_2_perc}}</span></td><td><span class="ph">{{seg_2_obs}}</span></td></tr><tr><td><span class="ph">{{seg_3_item}}</span></td><td><span class="ph">{{seg_3_detalhe}}</span></td><td class="num"><span class="ph">{{seg_3_valor}}</span></td><td class="num"><span class="ph">{{seg_3_perc}}</span></td><td><span class="ph">{{seg_3_obs}}</span></td></tr><tr><td><span class="ph">{{seg_4_item}}</span></td><td><span class="ph">{{seg_4_detalhe}}</span></td><td class="num"><span class="ph">{{seg_4_valor}}</span></td><td class="num"><span class="ph">{{seg_4_perc}}</span></td><td><span class="ph">{{seg_4_obs}}</span></td></tr><tr><td><span class="ph">{{seg_5_item}}</span></td><td><span class="ph">{{seg_5_detalhe}}</span></td><td class="num"><span class="ph">{{seg_5_valor}}</span></td><td class="num"><span class="ph">{{seg_5_perc}}</span></td><td><span class="ph">{{seg_5_obs}}</span></td></tr></tbody></table></div>
-  <div class="chart" data-img="4" style="flex:1 1 auto;min-height:50mm"><div class="sk-donut"></div><div class="cl">Visão do&nbsp;segmento</div><div class="cd">Patrimônio por moeda e por&nbsp;jurisdição.</div></div>
+  <div class="chart" data-img="4" data-grafico="donut" style="flex:1 1 auto;min-height:50mm"><div class="sk-donut"></div><div class="cl">Visão do&nbsp;segmento</div><div class="cd">Patrimônio por moeda e por&nbsp;jurisdição.</div></div>
 </div>
     </div>
     <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>

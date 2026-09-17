@@ -80,16 +80,24 @@ function estrutura(html) {
     // A classe pode trazer modificadores e os atributos vêm em qualquer ordem,
     // então o casamento é pelo nome do bloco e pelo `data-img`, não pela forma
     // exata da tag.
-    const ri = /<div class="[^"]*\b(chart|imgbox)\b[^"]*"[^>]*\bdata-img="(\d+)"[^>]*>([\s\S]*?)<div class="cd">([\s\S]*?)<\/div>/g;
+    const ri = /<div class="[^"]*\b(chart|imgbox)\b[^"]*"([^>]*)\bdata-img="(\d+)"([^>]*)>([\s\S]*?)<div class="cd">([\s\S]*?)<\/div>/g;
     while ((m = ri.exec(pag.corpo))) {
+      // O bloco de gráfico anuncia o formato e os rótulos sugeridos. É o que
+      // permite à ferramenta oferecer a tabelinha certa — quantas linhas, com
+      // que nome, e se pede um valor ou dois — em vez de um campo de imagem.
+      const attrs = m[2] + m[4];
+      const limpa = (x) => x.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim();
+      const serie = attrs.match(/data-series="([^"]*)"/)?.[1];
       imagens.push({
-        id: Number(m[2]),
+        id: Number(m[3]),
         tipo: m[1] === 'chart' ? 'gráfico' : 'imagem',
+        grafico: attrs.match(/data-grafico="([^"]*)"/)?.[1] || null,
+        series: serie ? serie.split('|') : null,
+        eixo: attrs.match(/data-eixo="([^"]*)"/)?.[1] || null,
         pagina: pag.numero,
         secao: pag.secao,
-        rotulo: (m[3].match(/<div class="cl">([\s\S]*?)<\/div>/)?.[1] || 'Imagem')
-          .replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim(),
-        descricao: m[4].replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim(),
+        rotulo: limpa(m[5].match(/<div class="cl">([\s\S]*?)<\/div>/)?.[1] || 'Imagem'),
+        descricao: limpa(m[6]),
       });
     }
   }

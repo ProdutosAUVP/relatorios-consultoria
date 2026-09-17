@@ -127,27 +127,27 @@ instagram_consultor
 
 Arquivos: `modelos/apresentacao-geral-alta-renda.html`, `modelos/apresentacao-geral-assessoria.html`, `modelos/apresentacao-geral-consultoria.html`, `modelos/apresentacao-geral-private.html`
 
-Variantes: alta-renda, assessoria, consultoria, private &middot; 58 variáveis
+Variantes: alta-renda, assessoria, consultoria, private &middot; 56 variáveis
 
-<details><summary>Ver as 48 variáveis específicas deste documento</summary>
+<details><summary>Ver as 46 variáveis específicas deste documento</summary>
 
 ```
 subtitulo_apresentacao            data_apresentacao                 metodo_1_prazo
 metodo_1_detalhe                  metodo_2_prazo                    metodo_2_detalhe
 metodo_3_prazo                    metodo_3_detalhe                  metodo_4_prazo
 metodo_4_detalhe                  metodo_5_prazo                    metodo_5_detalhe
-metodo_6_prazo                    metodo_6_detalhe                  prazo_implantacao
-reuniao_1_data                    reuniao_2_data                    reuniao_3_data
-reuniao_4_data                    reuniao_5_data                    reuniao_6_data
-entregas_detalhe                  pessoa_1_nome                     pessoa_1_cargo
-pessoa_1_bio                      pessoa_2_nome                     pessoa_2_cargo
-pessoa_2_bio                      pessoa_3_nome                     pessoa_3_cargo
-pessoa_3_bio                      passo_1_prazo                     passo_1_detalhe
-passo_2_prazo                     passo_2_detalhe                   passo_3_prazo
-passo_3_detalhe                   passo_4_prazo                     passo_4_detalhe
-requisito_cadastro                requisito_extratos                requisito_extrato_intl
-requisito_apolices                requisito_compromissos            requisito_objetivos
-chamada_final                     site                              endereco_escritorio
+prazo_implantacao                 reuniao_1_data                    reuniao_2_data
+reuniao_3_data                    reuniao_4_data                    reuniao_5_data
+reuniao_6_data                    entregas_detalhe                  pessoa_1_nome
+pessoa_1_cargo                    pessoa_1_bio                      pessoa_2_nome
+pessoa_2_cargo                    pessoa_2_bio                      pessoa_3_nome
+pessoa_3_cargo                    pessoa_3_bio                      passo_1_prazo
+passo_1_detalhe                   passo_2_prazo                     passo_2_detalhe
+passo_3_prazo                     passo_3_detalhe                   passo_4_prazo
+passo_4_detalhe                   requisito_cadastro                requisito_extratos
+requisito_extrato_intl            requisito_apolices                requisito_compromissos
+requisito_objetivos               chamada_final                     site
+endereco_escritorio
 ```
 </details>
 

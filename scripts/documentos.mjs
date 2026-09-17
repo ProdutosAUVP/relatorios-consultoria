@@ -18,9 +18,13 @@ export const PRODUTOS = [
 export const DOCUMENTOS = [
   { chave: 'relatorio-mensal', nome: 'Relatório mensal', formato: 'a4',
     descricao: 'Fechamento do mês: patrimônio, rentabilidade, alocação e movimentações.' },
-  { chave: 'diagnostico-carteira', nome: 'Diagnóstico de carteira', formato: 'a4',
+  // `blocos` marca os documentos em que a ferramenta deixa montar páginas
+  // novas. São os dois que não cabem num molde fixo: o diagnóstico muda de
+  // forma conforme a carteira que se lê, e o macro precisa abrir espaço quando
+  // o mês traz um evento que ninguém previu.
+  { chave: 'diagnostico-carteira', nome: 'Diagnóstico de carteira', formato: 'a4', blocos: true,
     descricao: 'Leitura da carteira atual, riscos encontrados e plano de ajuste.' },
-  { chave: 'relatorio-macroeconomico', nome: 'Relatório macroeconômico', formato: 'a4',
+  { chave: 'relatorio-macroeconomico', nome: 'Relatório macroeconômico', formato: 'a4', blocos: true,
     descricao: 'Cenário do mês no Brasil e no exterior e o que ele muda na estratégia.' },
   { chave: 'apresentacao-geral', nome: 'Apresentação geral', formato: 'slide',
     descricao: 'Deck de apresentação do serviço, para reunião de proposta.' },

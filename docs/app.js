@@ -23,6 +23,8 @@ const estado = {
   valores: {},       // campo -> texto
   imagens: {},       // espaço de imagem -> data URL
   graficos: {},      // espaço de gráfico -> [{r: rótulo, v: valor, m: meta}]
+  paginas: [],       // páginas montadas por quem preenche: [{id, depois, secao, blocos}]
+  proximoBloco: 1,   // numera as instâncias de bloco, para os campos não colidirem
   fora: new Set(),   // páginas tiradas do documento
   pagina: 1,
   tela: 'produto',
@@ -207,6 +209,7 @@ function salvar() {
     // ruim quanto perder um parágrafo.
     localStorage.setItem(chaveArmazem(), JSON.stringify({
       valores: estado.valores, graficos: estado.graficos, fora: [...estado.fora],
+      paginas: estado.paginas, proximoBloco: estado.proximoBloco,
     }));
     lembrar();
     anunciarSalvo();
@@ -225,6 +228,8 @@ async function carregar() {
     const d = JSON.parse(localStorage.getItem(chaveArmazem()) || 'null');
     estado.valores = (d && d.valores) || {};
     estado.graficos = (d && d.graficos) || {};
+    estado.paginas = (d && d.paginas) || [];
+    estado.proximoBloco = (d && d.proximoBloco) || 1;
     estado.fora = new Set((d && d.fora) || []);
     // Rascunho salvo antes de as imagens irem para o IndexedDB.
     if (d && d.imagens) estado.imagens = d.imagens;
@@ -337,8 +342,12 @@ async function escolherVariante(v) {
     estado.modelo = new DOMParser().parseFromString(texto, 'text/html');
     estado.valores = {};
     estado.imagens = {};
+    estado.graficos = {};
+    estado.paginas = [];
+    estado.proximoBloco = 1;
     estado.fora = new Set();
     estado.pagina = 1;
+    if (v.doc ? v.doc.blocos : estado.documento.blocos) await carregarBlocos();
     await carregar();
     // Depois do rascunho, nunca antes: o que já foi digitado manda.
     const sugeridos = sugerir();
@@ -372,6 +381,137 @@ function alternarPagina(n) {
   if (!incluidas().length) estado.fora.delete(n);
   salvar();
   telaPreencher();
+}
+
+/* ------------------------------------------------- páginas montadas na mão
+
+   O diagnóstico e o macroeconômico não cabem num molde fixo: o diagnóstico muda
+   de forma conforme a carteira que se lê, e o macro precisa abrir espaço quando
+   o mês traz um evento que ninguém previu. Para esses dois, a ferramenta deixa
+   montar páginas novas a partir de blocos prontos.
+
+   Não é um editor livre. Cada bloco já vem diagramado em `gerador/blocos.py`,
+   no mesmo desenho do resto, e o que se escolhe é qual bloco e o que escrever
+   dentro dele — é o que evita que a página nova pareça de outro documento.
+
+   A casca da página não vem de lugar nenhum: clona-se uma página do modelo
+   aberto e esvazia-se o corpo. Assim o cabeçalho, a logo, a data e o rodapé são
+   exatamente os daquele documento e daquele segmento. */
+
+let BIBLIOTECA = null;
+
+async function carregarBlocos() {
+  if (BIBLIOTECA) return BIBLIOTECA;
+  try {
+    BIBLIOTECA = await fetch('blocos.json').then((r) => r.json());
+  } catch (e) {
+    BIBLIOTECA = { marca: '@I@', blocos: [] };
+  }
+  return BIBLIOTECA;
+}
+
+const blocoDe = (chave) => (BIBLIOTECA?.blocos || []).find((b) => b.chave === chave);
+
+/** O HTML de uma instância de bloco, com o número trocado onde for preciso. */
+function blocoHtml(inst) {
+  const b = blocoDe(inst.chave);
+  if (!b) return '';
+  return b.html.split(BIBLIOTECA.marca).join(String(inst.id));
+}
+
+/** Os campos de uma instância, já com o número no nome. */
+function blocoCampos(inst) {
+  const b = blocoDe(inst.chave);
+  if (!b) return {};
+  const fora = {};
+  for (const [nome, meta] of Object.entries(b.campos)) {
+    fora[nome.split(BIBLIOTECA.marca).join(String(inst.id))] = meta;
+  }
+  return fora;
+}
+
+const podeBlocos = () => !!(estado.documento && estado.documento.blocos && BIBLIOTECA);
+
+function novaPagina() {
+  const idx = estado.estrutura.indice || [];
+  estado.paginas.push({
+    id: 'p' + estado.proximoBloco++,
+    // Entra no fim por padrão, mas antes da última: a última costuma ser a de
+    // avisos, e nada deve ficar depois dela.
+    depois: Math.max(1, idx.length - 1),
+    secao: '',
+    blocos: [],
+  });
+  salvar();
+  telaPreencher();
+}
+
+function editorDePaginas() {
+  if (!podeBlocos()) return '';
+  const idx = estado.estrutura.indice || [];
+  const opcoes = (sel) => idx.map((p) =>
+    `<option value="${p.numero}"${p.numero === sel ? ' selected' : ''}>`
+    + `depois da ${String(p.numero).padStart(2, '0')} — ${escapa(p.secao)}</option>`).join('');
+  const nomes = (BIBLIOTECA.blocos || []).map((b) =>
+    `<option value="${b.chave}">${escapa(b.nome)} — ${escapa(b.descricao)}</option>`).join('');
+
+  return `<details class="secao montagem"${estado.paginas.length ? ' open' : ''}>
+    <summary>
+      <span class="pg">+</span>
+      <span>Páginas que você monta</span>
+      <span class="contagem">${estado.paginas.length}</span>
+    </summary>
+    <div class="campos">
+      <p class="dica" style="margin:0 0 3mm">Este documento aceita páginas novas, montadas
+        com blocos prontos. Use quando o mês ou a carteira pedirem um assunto que não cabe
+        nas páginas que já existem.</p>
+      ${estado.paginas.map((pg) => `<div class="pag-nova" data-pag="${pg.id}">
+        <div class="cabeca">
+          <input type="text" class="secao-nome" data-pag-secao="${pg.id}"
+                 placeholder="Nome da seção, no alto da página" value="${escapa(pg.secao)}">
+          <select data-pag-onde="${pg.id}">${opcoes(pg.depois)}</select>
+          <button type="button" class="btn neutro pequeno" data-pag-fora="${pg.id}">Remover página</button>
+        </div>
+        ${pg.blocos.length ? pg.blocos.map((bl, i) => `<div class="bloco" data-bloco="${bl.id}">
+          <div class="cabeca">
+            <strong>${escapa(blocoDe(bl.chave)?.nome || bl.chave)}</strong>
+            <span class="acoes">
+              <button type="button" class="btn neutro pequeno" data-bl-sobe="${bl.id}"${i === 0 ? ' disabled' : ''}>↑</button>
+              <button type="button" class="btn neutro pequeno" data-bl-desce="${bl.id}"${i === pg.blocos.length - 1 ? ' disabled' : ''}>↓</button>
+              <button type="button" class="btn neutro pequeno" data-bl-fora="${bl.id}">Remover</button>
+            </span>
+          </div>
+          <div class="campos">${Object.entries(blocoCampos(bl))
+            .map(([nome, meta]) => campoTexto(nome, meta)).join('')}
+            ${/grafico_/.test(bl.chave) ? campoGrafico({
+              id: 'bl' + bl.id, rotulo: 'Dados do gráfico', descricao: '',
+              grafico: bl.chave.replace('grafico_', ''), series: null, eixo: null,
+            }) : ''}
+            ${bl.chave === 'imagem' ? campoImagemSimples('bl' + bl.id) : ''}
+          </div>
+        </div>`).join('') : '<p class="dica" style="margin:0 0 3mm">Nenhum bloco ainda.</p>'}
+        <div class="acoes">
+          <select data-bl-novo="${pg.id}"><option value="">Acrescentar bloco…</option>${nomes}</select>
+        </div>
+      </div>`).join('')}
+      <button type="button" class="btn neutro" id="nova-pagina">Nova página</button>
+    </div>
+  </details>`;
+}
+
+function campoImagemSimples(id) {
+  const dado = estado.imagens[id];
+  return `<div class="imagem${dado ? ' cheia' : ''}">
+    <span class="miniatura"${dado ? ` style="background-image:url('${dado}')"` : ''}>${dado ? '' : 'imagem'}</span>
+    <div>
+      <div class="nome">Imagem do bloco</div>
+      <div class="acoes">
+        <label class="btn neutro pequeno">${dado ? 'Trocar' : 'Enviar imagem'}
+          <input type="file" accept="image/*" data-arquivo="${escapa(id)}"></label>
+        ${dado ? `<button type="button" class="btn neutro pequeno" data-tirar="${escapa(id)}">Remover</button>` : ''}
+      </div>
+    </div>
+  </div>`;
 }
 
 function listaDePaginas() {
@@ -415,7 +555,7 @@ function telaPreencher() {
   }
   const secoes = [...porPagina.values()].sort((a, b) => a.pagina - b.pagina);
 
-  $('#formulario').innerHTML = listaDePaginas() + (secoes.length ? secoes.map((s, i) => `
+  $('#formulario').innerHTML = listaDePaginas() + editorDePaginas() + (secoes.length ? secoes.map((s, i) => `
     <details class="secao${dentro(s.pagina) ? '' : ' fora'}" data-pagina="${s.pagina}"${i === 0 && dentro(s.pagina) ? ' open' : ''}>
       <summary>
         <span class="pg">${String(s.pagina).padStart(2, '0')}</span>
@@ -588,6 +728,10 @@ function montar(modo) {
   // As páginas desmarcadas saem, e as que ficam são renumeradas: o rodapé tem
   // de contar o documento que existe, não o que existia antes do corte.
   const paginas = [...doc.querySelectorAll('.page, .slide')];
+  // As páginas montadas entram antes de tirar as desmarcadas, porque a posição
+  // delas é dada pelo número original da página — "depois da 07" quer dizer
+  // depois da sétima do modelo, e não da sétima do que sobrou.
+  inserirMontadas(doc, paginas);
   paginas.forEach((p, i) => { if (!dentro(i + 1)) p.remove(); });
   [...doc.querySelectorAll('.page, .slide')].forEach((p, i) => {
     const no = p.querySelector('.pg-foot .no');
@@ -694,6 +838,33 @@ function montar(modo) {
     doc.body.appendChild(s);
   }
   return '<!doctype html>\n' + doc.documentElement.outerHTML;
+}
+
+/** Põe no documento as páginas que o consultor montou.
+ *
+ *  A casca sai de uma página do próprio modelo: clona-se a primeira que tenha
+ *  corpo e cabeçalho, esvazia-se o corpo e põem-se os blocos. Assim o
+ *  cabeçalho, a logo, a data e o rodapé são exatamente os daquele documento e
+ *  daquele segmento — nada aqui redesenha nada.
+ *
+ *  Página sem bloco nenhum não entra: é uma página em branco, e ninguém a quis. */
+function inserirMontadas(doc, originais) {
+  if (!estado.paginas.length || !BIBLIOTECA) return;
+  const molde = originais.find((p) => p.querySelector('.pg-body') && p.querySelector('.pg-head'));
+  if (!molde) return;
+  // De trás para a frente: inserir a de trás primeiro não mexe no índice das
+  // que ainda faltam.
+  const pedidos = [...estado.paginas].filter((pg) => pg.blocos.length)
+    .sort((a, b) => b.depois - a.depois);
+  for (const pg of pedidos) {
+    const nova = molde.cloneNode(true);
+    const sec = nova.querySelector('.pg-head .sec');
+    if (sec) sec.textContent = pg.secao || 'Análise';
+    const corpo = nova.querySelector('.pg-body');
+    corpo.innerHTML = pg.blocos.map(blocoHtml).join('\n');
+    const depois = originais[Math.min(pg.depois, originais.length) - 1] || originais[originais.length - 1];
+    depois.after(nova);
+  }
 }
 
 const PX_MM = 96 / 25.4;
@@ -962,6 +1133,14 @@ function ligar() {
   const form = $('#formulario');
 
   form.addEventListener('input', (e) => {
+    const secao = e.target.dataset.pagSecao;
+    if (secao) {
+      const pg = estado.paginas.find((p) => p.id === secao);
+      if (pg) pg.secao = e.target.value;
+      clearTimeout(temporizador);
+      temporizador = setTimeout(() => { salvar(); renderizar(); }, 250);
+      return;
+    }
     const gr = e.target.dataset.gr;
     if (gr) {
       const i = Number(e.target.dataset.i);
@@ -990,9 +1169,57 @@ function ligar() {
 
   form.addEventListener('change', (e) => {
     if (e.target.dataset.pagina) alternarPagina(Number(e.target.dataset.pagina));
+
+    const novo = e.target.dataset.blNovo;
+    if (novo && e.target.value) {
+      const pg = estado.paginas.find((p) => p.id === novo);
+      if (pg) pg.blocos.push({ id: estado.proximoBloco++, chave: e.target.value });
+      salvar();
+      telaPreencher();
+      return;
+    }
+    const onde = e.target.dataset.pagOnde;
+    if (onde) {
+      const pg = estado.paginas.find((p) => p.id === onde);
+      if (pg) pg.depois = Number(e.target.value);
+      salvar();
+      renderizar();
+    }
   });
 
   form.addEventListener('click', (e) => {
+    if (e.target.id === 'nova-pagina') { novaPagina(); return; }
+
+    const pgFora = e.target.dataset.pagFora;
+    if (pgFora) {
+      if (!confirm('Remover esta página e tudo o que você escreveu nela?')) return;
+      estado.paginas = estado.paginas.filter((p) => p.id !== pgFora);
+      salvar();
+      telaPreencher();
+      return;
+    }
+
+    // Subir, descer e remover bloco. O bloco não sabe de que página é, então a
+    // busca é pela página que o contém — são poucas, e é o que dispensa guardar
+    // o vínculo em dois lugares e mantê-los de acordo.
+    const sobe = e.target.dataset.blSobe;
+    const desce = e.target.dataset.blDesce;
+    const blFora = e.target.dataset.blFora;
+    const alvo = sobe || desce || blFora;
+    if (alvo) {
+      const pg = estado.paginas.find((p) => p.blocos.some((b) => b.id === Number(alvo)));
+      if (!pg) return;
+      const i = pg.blocos.findIndex((b) => b.id === Number(alvo));
+      if (blFora) pg.blocos.splice(i, 1);
+      else {
+        const j = sobe ? i - 1 : i + 1;
+        [pg.blocos[i], pg.blocos[j]] = [pg.blocos[j], pg.blocos[i]];
+      }
+      salvar();
+      telaPreencher();
+      return;
+    }
+
     const mais = e.target.dataset.mais;
     if (mais) {
       const im = estado.estrutura.imagens.find((x) => String(x.id) === mais);

@@ -54,6 +54,8 @@ autossuficientes na entrega, fonte única na manutenção.
 | `gerador/d_consultor_simples.py` | a apresentação de uma página, com chrome próprio; reaproveita os dados e os auxiliares de `d_consultor` |
 | `scripts/fotos.py` | prepara os retratos para envio pela ferramenta: recorta pelo rosto, sem tocar em cor ou brilho |
 | `scripts/institucional.py` | prepara as fotos da casa, que vêm embutidas no modelo e não são campo de imagem |
+| `gerador/blocos.py` | os blocos com que a ferramenta monta uma página nova, no desenho do resto |
+| `scripts/blocos.py` | publica os blocos em `docs/blocos.json` |
 | `assets/institucional/` | as fotos da casa, saída do `institucional.py`; os originais vêm da landing page institucional |
 | `assets/consultores/originais/` | fotos originais, como vieram |
 | `assets/consultores/` | retratos prontos, saída do `scripts/fotos.py` |
@@ -375,6 +377,32 @@ para mostrar cinco cartões.
 `DOMParser`; cada tecla clona o documento, escreve nos `span.ph` e serializa. É mais
 robusto que substituir texto — um campo que aparece dentro de um atributo, ou um bloco de
 imagem com marcação aninhada, não quebra a montagem.
+
+**Dois documentos aceitam páginas montadas na ferramenta.** O diagnóstico e o
+macroeconômico não cabem num molde fixo: o diagnóstico muda de forma conforme a
+carteira que se lê, e o macro precisa abrir espaço quando o mês traz um evento
+que ninguém previu. Antes, quem precisava de uma página a mais tinha duas saídas
+ruins — espremer o assunto numa página existente ou pedir alteração no gerador e
+esperar.
+
+Eles são marcados com `blocos: true` em `scripts/documentos.mjs`, e na ferramenta
+ganham um editor: nova página, escolha do lugar dela no documento, e blocos
+prontos para pôr dentro.
+
+Não é um editor livre. Os doze blocos vivem em `gerador/blocos.py`, escritos com
+os mesmos componentes do resto — `table()`, `kpis()`, `chart()`, as mesmas
+classes —, e o que se escolhe é qual bloco e o que escrever nele. É o que evita
+que a página montada pareça de outro documento. `scripts/blocos.py` os publica em
+`docs/blocos.json`, com o número da instância trocado por uma marca que a
+ferramenta substitui: é isso que faz os campos do terceiro bloco de texto se
+chamarem `bl3_titulo` e não colidirem com os do primeiro.
+
+A casca da página não vem de lugar nenhum: a ferramenta clona uma página do
+modelo aberto e esvazia o corpo. Assim o cabeçalho, a logo, a data e o rodapé são
+exatamente os daquele documento e daquele segmento. A posição é dada pelo número
+da página original — "depois da 07" quer dizer depois da sétima do modelo, e não
+da sétima do que sobrou —, então a inserção acontece antes de tirar as páginas
+desmarcadas.
 
 **O gráfico se desenha a partir do dado, não de uma imagem.** Um espaço de
 gráfico era um espaço de imagem: o consultor montava a rosca em outro lugar,

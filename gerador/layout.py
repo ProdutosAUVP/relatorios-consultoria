@@ -194,7 +194,7 @@ def slide(t, sec, no, body, dark=False, date_ph=None):
 
 # ---------------------------------------------------------------- blocos
 
-def chart(label, desc, skeleton="bars", style="", series=None, eixo=None):
+def chart(label, desc, skeleton="bars", style="", series=None, eixo=None, ident=None):
     """O lugar de um gráfico na página.
 
     Sai como moldura vazia com um esqueleto do formato dentro — é o que o
@@ -222,15 +222,17 @@ def chart(label, desc, skeleton="bars", style="", series=None, eixo=None):
           "none": ""}[skeleton]
     # `flex` só tem efeito dentro de .pg-body (flex column); em grelha é ignorado.
     lg = legend(series) if series else ""
-    _IMG[0] += 1
+    if ident is None:
+        _IMG[0] += 1
+        ident = _IMG[0]
     dados = ' data-grafico="%s"' % skeleton if skeleton != "none" else ""
     if series:
         dados += ' data-series="%s"' % "|".join(series)
     if eixo:
         dados += ' data-eixo="%s"' % eixo
-    return ('<div class="chart" data-img="%d"%s style="flex:1 1 auto;%s">%s'
+    return ('<div class="chart" data-img="%s"%s style="flex:1 1 auto;%s">%s'
             '<div class="cl">%s</div>'
-            '<div class="cd">%s</div>%s</div>') % (_IMG[0], dados, style, sk, label, desc, lg)
+            '<div class="cd">%s</div>%s</div>') % (ident, dados, style, sk, label, desc, lg)
 
 
 def foto_vaga(desc="Foto vertical do consultor. Recorte 3:4, mínimo 900&nbsp;px de largura."):
@@ -246,11 +248,19 @@ def foto_vaga(desc="Foto vertical do consultor. Recorte 3:4, mínimo 900&nbsp;px
             '<div class="cd">%s</div></div>') % (_IMG[0], desc)
 
 
-def imgbox(desc, style=""):
-    _IMG[0] += 1
-    return ('<div class="imgbox" data-img="%d" style="flex:1 1 auto;%s">'
+def imgbox(desc, style="", ident=None):
+    """`ident` nomeia o espaço em vez de numerá-lo.
+
+    Serve para os blocos que a ferramenta insere: o número corrido só faz
+    sentido num documento montado de uma vez pelo gerador, e um bloco que entra
+    depois precisa de um nome que não dispute com os que já existem.
+    """
+    if ident is None:
+        _IMG[0] += 1
+        ident = _IMG[0]
+    return ('<div class="imgbox" data-img="%s" style="flex:1 1 auto;%s">'
             '<div class="cl">Imagem</div>'
-            '<div class="cd">%s</div></div>') % (_IMG[0], style, desc)
+            '<div class="cd">%s</div></div>') % (ident, style, desc)
 
 
 def cronograma(blocos, colunas, chip_final=False):

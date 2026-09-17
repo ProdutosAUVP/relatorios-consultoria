@@ -250,6 +250,7 @@
    "chave": "diagnostico-carteira",
    "nome": "Diagnóstico de carteira",
    "formato": "a4",
+   "blocos": true,
    "descricao": "Leitura da carteira atual, riscos encontrados e plano de ajuste.",
    "variantes": [
     {
@@ -290,6 +291,7 @@
    "chave": "relatorio-macroeconomico",
    "nome": "Relatório macroeconômico",
    "formato": "a4",
+   "blocos": true,
    "descricao": "Cenário do mês no Brasil e no exterior e o que ele muda na estratégia.",
    "variantes": [
     {

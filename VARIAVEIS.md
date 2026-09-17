@@ -49,21 +49,21 @@ Variantes: alta-renda-sem-data, alta-renda, assessoria-sem-data, assessoria, me-
 <details><summary>Ver as 68 variáveis específicas deste documento</summary>
 
 ```
-nome_plano                        nome_consultor                    papel_consultor
-frase_consultor                   formacao_1                        formacao_2
-formacao_3                        formacao_4                        formacao_5
-especializacao_1                  especializacao_2                  especializacao_3
-especializacao_4                  especializacao_5                  certificacao_1
-certificacao_2                    certificacao_3                    certificacao_4
-certificacao_5                    proposito_1                       proposito_2
-proposito_3                       proposito_4                       qualificacoes_1
-qualificacoes_2                   trajetoria_1                      trajetoria_2
-trajetoria_3                      marco_1_quando                    marco_1_texto
-marco_2_quando                    marco_2_texto                     marco_3_quando
-marco_3_texto                     fora_do_escritorio_1              fora_do_escritorio_2
-fora_do_escritorio_3              interesse_1                       interesse_2
-interesse_3                       interesse_4                       interesse_5
-interesse_6                       plano_resumo                      funciona_1
+nome_consultor                    papel_consultor                   frase_consultor
+formacao_1                        formacao_2                        formacao_3
+formacao_4                        formacao_5                        especializacao_1
+especializacao_2                  especializacao_3                  especializacao_4
+especializacao_5                  certificacao_1                    certificacao_2
+certificacao_3                    certificacao_4                    certificacao_5
+proposito_1                       proposito_2                       proposito_3
+proposito_4                       qualificacoes_1                   qualificacoes_2
+trajetoria_1                      trajetoria_2                      trajetoria_3
+marco_1_quando                    marco_1_texto                     marco_2_quando
+marco_2_texto                     marco_3_quando                    marco_3_texto
+fora_do_escritorio_1              fora_do_escritorio_2              fora_do_escritorio_3
+interesse_1                       interesse_2                       interesse_3
+interesse_4                       interesse_5                       interesse_6
+nome_plano                        plano_resumo                      funciona_1
 funciona_2                        funciona_3                        pode_pedir_1
 pode_pedir_2                      pode_pedir_3                      pode_pedir_4
 pode_pedir_5                      pode_pedir_6                      incluido_1
@@ -127,74 +127,63 @@ instagram_consultor
 
 Arquivos: `modelos/apresentacao-geral-alta-renda.html`, `modelos/apresentacao-geral-assessoria.html`, `modelos/apresentacao-geral-consultoria.html`, `modelos/apresentacao-geral-private.html`
 
-Variantes: alta-renda, assessoria, consultoria, private &middot; 141 variáveis
+Variantes: alta-renda, assessoria, consultoria, private &middot; 58 variáveis
 
-<details><summary>Ver as 131 variáveis específicas deste documento</summary>
+<details><summary>Ver as 48 variáveis específicas deste documento</summary>
 
 ```
-subtitulo_apresentacao            data_apresentacao                 historia_auvp
-ano_fundacao                      modelo_remuneracao                custodiante
-numero_1                          numero_1_legenda                  numero_2
-numero_2_legenda                  numero_3                          numero_3_legenda
-numero_4                          numero_4_legenda                  numero_5
-numero_5_legenda                  numero_6                          numero_6_legenda
-nota_fonte_numeros                metodo_1_prazo                    metodo_1_detalhe
-metodo_2_prazo                    metodo_2_detalhe                  metodo_3_prazo
-metodo_3_detalhe                  metodo_4_prazo                    metodo_4_detalhe
-metodo_5_prazo                    metodo_5_detalhe                  prazo_implantacao
-entrega_1_nome                    entrega_1_freq                    entrega_1_canal
-entrega_1_para                    entrega_2_nome                    entrega_2_freq
-entrega_2_canal                   entrega_2_para                    entrega_3_nome
-entrega_3_freq                    entrega_3_canal                   entrega_3_para
-entrega_4_nome                    entrega_4_freq                    entrega_4_canal
-entrega_4_para                    entrega_5_nome                    entrega_5_freq
-entrega_5_canal                   entrega_5_para                    alcada_1_decisao
-alcada_1_propoe                   alcada_1_aprova                   alcada_2_decisao
-alcada_2_propoe                   alcada_2_aprova                   alcada_3_decisao
-alcada_3_propoe                   alcada_3_aprova                   alcada_4_decisao
-alcada_4_propoe                   alcada_4_aprova                   cadencia_1_encontro
-cadencia_1_freq                   cadencia_2_encontro               cadencia_2_freq
-cadencia_3_encontro               cadencia_3_freq                   cadencia_4_encontro
-cadencia_4_freq                   texto_sobre_responsavel           plano_1_tag
-plano_1_nome                      plano_1_taxa                      plano_1_base_calculo
-plano_1_item_1                    plano_1_item_2                    plano_1_item_3
-plano_1_item_4                    plano_1_item_5                    plano_1_item_6
-plano_1_para_quem                 plano_2_tag                       plano_2_nome
-plano_2_taxa                      plano_2_base_calculo              plano_2_item_1
-plano_2_item_2                    plano_2_item_3                    plano_2_item_4
-plano_2_item_5                    plano_2_item_6                    plano_2_para_quem
-plano_3_tag                       plano_3_nome                      plano_3_taxa
-plano_3_base_calculo              plano_3_item_1                    plano_3_item_2
-plano_3_item_3                    plano_3_item_4                    plano_3_item_5
-plano_3_item_6                    plano_3_para_quem                 nota_taxas
-pessoa_1_nome                     pessoa_1_cargo                    pessoa_1_bio
-pessoa_2_nome                     pessoa_2_cargo                    pessoa_2_bio
-pessoa_3_nome                     pessoa_3_cargo                    pessoa_3_bio
-passo_1_prazo                     passo_1_detalhe                   passo_2_prazo
-passo_2_detalhe                   passo_3_prazo                     passo_3_detalhe
-passo_4_prazo                     passo_4_detalhe                   requisito_1_titulo
-requisito_1_detalhe               requisito_2_titulo                requisito_2_detalhe
-requisito_3_titulo                requisito_3_detalhe               chamada_final
-site                              endereco_escritorio
+subtitulo_apresentacao            data_apresentacao                 metodo_1_prazo
+metodo_1_detalhe                  metodo_2_prazo                    metodo_2_detalhe
+metodo_3_prazo                    metodo_3_detalhe                  metodo_4_prazo
+metodo_4_detalhe                  metodo_5_prazo                    metodo_5_detalhe
+metodo_6_prazo                    metodo_6_detalhe                  prazo_implantacao
+reuniao_1_data                    reuniao_2_data                    reuniao_3_data
+reuniao_4_data                    reuniao_5_data                    reuniao_6_data
+entregas_detalhe                  pessoa_1_nome                     pessoa_1_cargo
+pessoa_1_bio                      pessoa_2_nome                     pessoa_2_cargo
+pessoa_2_bio                      pessoa_3_nome                     pessoa_3_cargo
+pessoa_3_bio                      passo_1_prazo                     passo_1_detalhe
+passo_2_prazo                     passo_2_detalhe                   passo_3_prazo
+passo_3_detalhe                   passo_4_prazo                     passo_4_detalhe
+requisito_cadastro                requisito_extratos                requisito_extrato_intl
+requisito_apolices                requisito_compromissos            requisito_objetivos
+chamada_final                     site                              endereco_escritorio
 ```
 </details>
+
+Campos exclusivos da variante **consultoria** (34):
+
+```
+nota_taxas                        plano_1_base_calculo              plano_1_item_1
+plano_1_item_2                    plano_1_item_3                    plano_1_item_4
+plano_1_item_5                    plano_1_item_6                    plano_1_nome
+plano_1_para_quem                 plano_1_tag                       plano_1_taxa
+plano_2_base_calculo              plano_2_item_1                    plano_2_item_2
+plano_2_item_3                    plano_2_item_4                    plano_2_item_5
+plano_2_item_6                    plano_2_nome                      plano_2_para_quem
+plano_2_tag                       plano_2_taxa                      plano_3_base_calculo
+plano_3_item_1                    plano_3_item_2                    plano_3_item_3
+plano_3_item_4                    plano_3_item_5                    plano_3_item_6
+plano_3_nome                      plano_3_para_quem                 plano_3_tag
+plano_3_taxa
+```
 
 ## undefined
 
 Arquivos: `modelos/carta-apresentacao-alta-renda.html`
 
-Variantes: — &middot; 26 variáveis
+Variantes: — &middot; 25 variáveis
 
-<details><summary>Ver as 20 variáveis específicas deste documento</summary>
+<details><summary>Ver as 19 variáveis específicas deste documento</summary>
 
 ```
 subtitulo_carta                   data_carta                        data_primeira_reuniao
 momento_do_cliente                objetivo_principal                frase_de_abertura
-taxa_anual                        nota_taxas                        banda_rf_min
-banda_rf_max                      banda_irf_min                     banda_irf_max
-banda_irv_min                     banda_irv_max                     banda_acoes_min
-banda_acoes_max                   banda_fii_min                     banda_fii_max
-banda_alt_min                     banda_alt_max
+taxa_anual                        banda_rf_min                      banda_rf_max
+banda_irf_min                     banda_irf_max                     banda_irv_min
+banda_irv_max                     banda_acoes_min                   banda_acoes_max
+banda_fii_min                     banda_fii_max                     banda_alt_min
+banda_alt_max
 ```
 </details>
 
@@ -221,18 +210,18 @@ banda_alt_max
 
 Arquivos: `modelos/carta-apresentacao-consultoria.html`
 
-Variantes: — &middot; 26 variáveis
+Variantes: — &middot; 25 variáveis
 
-<details><summary>Ver as 20 variáveis específicas deste documento</summary>
+<details><summary>Ver as 19 variáveis específicas deste documento</summary>
 
 ```
 subtitulo_carta                   data_carta                        data_primeira_reuniao
 momento_do_cliente                objetivo_principal                frase_de_abertura
-taxa_anual                        nota_taxas                        banda_rf_min
-banda_rf_max                      banda_irf_min                     banda_irf_max
-banda_irv_min                     banda_irv_max                     banda_acoes_min
-banda_acoes_max                   banda_fii_min                     banda_fii_max
-banda_alt_min                     banda_alt_max
+taxa_anual                        banda_rf_min                      banda_rf_max
+banda_irf_min                     banda_irf_max                     banda_irv_min
+banda_irv_max                     banda_acoes_min                   banda_acoes_max
+banda_fii_min                     banda_fii_max                     banda_alt_min
+banda_alt_max
 ```
 </details>
 
@@ -240,18 +229,18 @@ banda_alt_min                     banda_alt_max
 
 Arquivos: `modelos/carta-apresentacao-private.html`
 
-Variantes: — &middot; 26 variáveis
+Variantes: — &middot; 25 variáveis
 
-<details><summary>Ver as 20 variáveis específicas deste documento</summary>
+<details><summary>Ver as 19 variáveis específicas deste documento</summary>
 
 ```
 subtitulo_carta                   data_carta                        data_primeira_reuniao
 momento_do_cliente                objetivo_principal                frase_de_abertura
-taxa_anual                        nota_taxas                        banda_rf_min
-banda_rf_max                      banda_irf_min                     banda_irf_max
-banda_irv_min                     banda_irv_max                     banda_acoes_min
-banda_acoes_max                   banda_fii_min                     banda_fii_max
-banda_alt_min                     banda_alt_max
+taxa_anual                        banda_rf_min                      banda_rf_max
+banda_irf_min                     banda_irf_max                     banda_irv_min
+banda_irv_max                     banda_acoes_min                   banda_acoes_max
+banda_fii_min                     banda_fii_max                     banda_alt_min
+banda_alt_max
 ```
 </details>
 

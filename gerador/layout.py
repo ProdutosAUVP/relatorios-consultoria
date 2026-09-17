@@ -228,6 +228,31 @@ def imgbox(desc, style=""):
             '<div class="cd">%s</div></div>') % (_IMG[0], style, desc)
 
 
+def cronograma(fases):
+    """A sequência de reuniões do ciclo, com as fases numa trilha à esquerda.
+
+    `fases` é uma lista de `(nome da fase, [(qual, pauta, prazo, quando), ...])`.
+    Qual, pauta e prazo são o processo da casa e vêm escritos; `quando` é a data
+    sugerida daquele cliente, e é o único campo da tabela.
+
+    A trilha usa `rowspan`, então a fase existe uma vez por bloco de reuniões e
+    não uma vez por linha: é o que faz "Estruturação" cobrir as três primeiras e
+    "Fechamento" cobrir só a última.
+    """
+    linhas = []
+    for fase, encontros in fases:
+        for i, (qual, pauta, prazo, quando) in enumerate(encontros):
+            trilha = ('<td class="fase" rowspan="%d"><span>%s</span></td>'
+                      % (len(encontros), fase)) if i == 0 else ""
+            linhas.append(
+                "<tr>%s<td class=\"qual\">%s</td><td class=\"pauta\">%s</td>"
+                "<td class=\"prazo\">%s</td><td class=\"quando\"><span>%s</span></td></tr>"
+                % (trilha, qual, pauta, prazo, quando))
+    return ('<table class="crono"><thead><tr><th></th><th>Reuniões</th><th>Pauta</th>'
+            '<th>Prazo</th><th style="text-align:right">Data sugerida</th></tr></thead>'
+            "<tbody>%s</tbody></table>" % "".join(linhas))
+
+
 def table(headers, rows, foot=None, caption=None, nums=None, widths=None, sm=False, xs=False):
     nums = nums or []
     th = "".join('<th class="num">%s</th>' % h if i in nums else "<th>%s</th>" % h

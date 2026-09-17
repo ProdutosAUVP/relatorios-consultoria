@@ -133,6 +133,31 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   padding:2mm 2mm;font-size:6.6pt;letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
 .tb td{padding:3mm;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
 .tb tbody tr:nth-child(even) td{background:var(--soft)}
+
+/* ---------- cronograma de reuniões ----------
+   A sequência do primeiro ciclo, com as fases numa trilha à esquerda. A trilha
+   é uma célula só por fase, com `rowspan`, e o rótulo deitado: são três
+   palavras longas — Estruturação, Acompanhamento, Fechamento — e em pé elas
+   roubariam uma coluna inteira da tabela para dizer o que é só a divisão.
+
+   As datas são as únicas células que mudam de cliente para cliente, e por isso
+   vêm dentro de uma cápsula: quem preenche vê onde escrever, e quem lê vê o que
+   é combinado e o que é processo da casa. */
+.crono{width:100%;border-collapse:collapse;font-size:8.4pt}
+.crono thead th{background:var(--brand);color:#fff;text-align:left;font-weight:600;
+  font-size:7pt;letter-spacing:.08em;text-transform:uppercase;padding:2.6mm 4mm}
+.crono td{padding:2mm 4mm;border-bottom:1px solid var(--line);vertical-align:middle}
+.crono tbody tr:nth-child(even) td{background:var(--soft)}
+.crono .qual{font-weight:700;color:var(--brand);white-space:nowrap}
+.crono .pauta{font-weight:600}
+.crono .prazo{color:var(--ink-2)}
+.crono .quando{text-align:right;white-space:nowrap}
+.crono .quando span{display:inline-block;padding:1.2mm 3.5mm;border:1px solid var(--line);
+  border-radius:9mm;background:var(--paper);font-weight:700;font-size:8.2pt}
+.crono td.fase{background:var(--brand);padding:0;width:9mm;border-bottom:1px solid var(--paper)}
+.crono td.fase span{display:block;writing-mode:vertical-rl;transform:rotate(180deg);
+  margin:0 auto;padding:4mm 0;color:var(--accent);font-size:6.8pt;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
 .tb .num,.tb th.num{text-align:right}
 .tb tfoot td{font-weight:700;border-top:1.33px solid var(--ink);background:#fff}
 .tb caption{caption-side:bottom;text-align:left;font-size:6.8pt;color:var(--ink-2);padding-top:2mm}
@@ -521,7 +546,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <h2>Neste&nbsp;relatório</h2>
 <ol class="toc"><li><span class="n">01</span><span>Cenário&nbsp;internacional</span><span class="d"></span><span class="p">03</span></li><li><span class="n">02</span><span>Indicadores&nbsp;globais</span><span class="d"></span><span class="p">04</span></li><li><span class="n">03</span><span>Brasil: atividade e&nbsp;inflação</span><span class="d"></span><span class="p">05</span></li><li><span class="n">04</span><span>Brasil: juros, fiscal e&nbsp;câmbio</span><span class="d"></span><span class="p">06</span></li><li><span class="n">05</span><span>Mercados no&nbsp;período</span><span class="d"></span><span class="p">07</span></li><li><span class="n">06</span><span>Projeções</span><span class="d"></span><span class="p">08</span></li><li><span class="n">07</span><span>Implicações para a&nbsp;carteira</span><span class="d"></span><span class="p">09</span></li><li><span class="n">08</span><span>Agenda do próximo&nbsp;mês</span><span class="d"></span><span class="p">10</span></li><li><span class="n">09</span><span>Notas e&nbsp;avisos</span><span class="d"></span><span class="p">11</span></li></ol>
   </div>
-  <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">01</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -569,7 +594,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <h2>China e&nbsp;Ásia</h2>
 <p class="small"><span class="ph">{{analise_china}}</span></p>
   </div>
-  <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -615,7 +640,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <div class="gap"></div>
 <div class="chart" data-img="1" style="flex:1 1 auto;min-height:40mm"><div class="sk-line"></div><div class="cl">Juros longos e&nbsp;dólar</div><div class="cd">Treasury de 10 anos e índice DXY nos últimos 12&nbsp;meses.</div></div>
   </div>
-  <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -667,7 +692,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <div class="gap"></div>
 <div class="chart" data-img="2" style="flex:1 1 auto;min-height:38mm"><div class="sk-line"></div><div class="cl">IPCA cheio e&nbsp;núcleos</div><div class="cd">IPCA acumulado em 12 meses contra a banda da meta e a média dos&nbsp;núcleos.</div></div>
   </div>
-  <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -729,7 +754,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <div class="gap"></div>
 <div class="chart" data-img="3" style="flex:1 1 auto;min-height:36mm"><div class="sk-line"></div><div class="cl">Curva de juros&nbsp;DI</div><div class="cd">Curva atual contra a de um mês atrás e a de um ano&nbsp;atrás.</div></div>
   </div>
-  <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -777,7 +802,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   <div><h2>Destaques&nbsp;negativos</h2><p class="small mut"><span class="ph">{{destaques_negativos}}</span></p></div>
 </div>
   </div>
-  <footer class="pg-foot"><span class="no">07</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -825,7 +850,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <h2>Onde divergimos do&nbsp;consenso</h2>
 <div class="cards" style="--n:3"><div class="card"><h4><span class="ph">{{divergencia_1_titulo}}</span></h4><p><span class="ph">{{divergencia_1_racional}}</span></p></div><div class="card"><h4><span class="ph">{{divergencia_2_titulo}}</span></h4><p><span class="ph">{{divergencia_2_racional}}</span></p></div><div class="card"><h4><span class="ph">{{divergencia_3_titulo}}</span></h4><p><span class="ph">{{divergencia_3_racional}}</span></p></div></div>
   </div>
-  <footer class="pg-foot"><span class="no">08</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">07</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -874,7 +899,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <div class="gap"></div>
 <div class="note"><p><strong>Em uma&nbsp;frase.</strong> <span class="ph">{{sintese_posicionamento}}</span></p></div>
   </div>
-  <footer class="pg-foot"><span class="no">09</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">08</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -920,7 +945,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <h2>O que estaremos&nbsp;observando</h2>
 <div class="cards" style="--n:3"><div class="card"><h4><span class="ph">{{observar_1_titulo}}</span></h4><p><span class="ph">{{observar_1_detalhe}}</span></p></div><div class="card"><h4><span class="ph">{{observar_2_titulo}}</span></h4><p><span class="ph">{{observar_2_detalhe}}</span></p></div><div class="card"><h4><span class="ph">{{observar_3_titulo}}</span></h4><p><span class="ph">{{observar_3_detalhe}}</span></p></div></div>
   </div>
-  <footer class="pg-foot"><span class="no">10</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">09</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -981,7 +1006,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   <dt>Razão&nbsp;social</dt><dd><span class="ph">{{razao_social}}</span> &middot; CNPJ <span class="ph">{{cnpj}}</span></dd>
 </div>
   </div>
-  <footer class="pg-foot"><span class="no">11</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">10</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 </body>
 </html>

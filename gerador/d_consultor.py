@@ -195,10 +195,14 @@ def _contato(c, chave, rotulo, escreve):
 FOLHA = """<section class="page longa" data-sec="Apresentação do consultor">
   <header class="lg-topo">
     <div class="grain"></div>
+    <!-- O nome do plano saía por cima do nome da pessoa. É a apresentação do
+         consultor: quem abre o documento quer saber quem é ele, e o plano se
+         explica sozinho nas faixas de baixo. Fora que a folha vai para cliente
+         que já contratou e para cliente que ainda não, e anunciar um plano no
+         alto do retrato dava ao documento cara de peça de venda. -->
     <div class="lg-id">
       %(foto)s
       <div>
-        <span class="lg-plano">%(plano)s</span>
         <h1>%(nome)s</h1>
         <p class="papel">%(papel)s na %(marca)s</p>
         <p class="lg-frase">%(frase)s</p>
@@ -474,6 +478,9 @@ PLANOS = {
 
 def _em_branco():
     return dict(
+        # O nome do plano saiu do alto da folha, mas a faixa que descreve o
+        # plano continua abrindo com ele: ali é o título da seção, não um selo
+        # sobre o retrato de quem assina.
         plano=ph("nome_plano", "O nome comercial do plano."),
         resumo=ph("plano_resumo", "Duas ou três frases sobre o que o cliente contrata."),
         funciona=_numerados("funciona", 3, "Um parágrafo sobre como o plano funciona."),
@@ -523,7 +530,7 @@ def folha(t, variante, c=None, foto=None, primeiro=None, data=True):
 
     return FOLHA % dict(
         # o alto
-        foto=foto, plano=texto["plano"], nome=c["nome"], papel=c["papel"],
+        foto=foto, nome=c["nome"], papel=c["papel"], plano=texto["plano"],
         marca=t["marca"], frase=c["frase"], nc=ncred, cred=cred,
         # a pessoa
         proposito=_paras(c["proposito"]),

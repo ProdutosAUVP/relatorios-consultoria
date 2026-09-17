@@ -222,7 +222,11 @@ def _remuneracao(t, seg):
                 ("Alinhamento de interesses",
                  "Se o melhor produto para você paga menos à casa, ele entra do mesmo jeito.")],
                 n=1),
-            nota=ph("nota_taxas", "Base de cálculo, cobrança, impostos e condições"))
+            # Havia aqui uma "nota de taxas" livre, para base de cálculo,
+            # cobrança e impostos. Ninguém sabia o que escrever nela: os três
+            # cartões acima já dizem como a cobrança funciona, e o que sobrava
+            # era um campo em branco no meio da página mais sensível da carta.
+            nota="")
 
     return """<h1 class="t">Você não paga taxa de assessoria</h1>
 <div class="center"><div class="cols2u" style="align-items:center">
@@ -456,8 +460,10 @@ fundamento: nenhuma posição entra por movimento de preço.</p>
       <dt>E-mail</dt><dd>%(email)s</dd>
     </div>
   </div>
+  <!-- Saiu o QR code de agendamento. A carta chega por e-mail ou WhatsApp e se
+       lê na tela, onde ninguém aponta a câmera para o próprio monitor; o link
+       clicável ao lado fazia o trabalho inteiro sozinho. -->
   <div style="display:flex;flex-direction:column;align-items:center;gap:4mm">
-    <div class="qr">QR code<br>agendamento</div>
     <div class="small mut" style="text-align:center;max-width:52mm">%(link)s</div>
   </div>
 </div>""" % dict(

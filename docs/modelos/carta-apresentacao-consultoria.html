@@ -121,6 +121,31 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .tb.fix{table-layout:fixed}
 .tb td{padding:3mm 3mm;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
 .tb tbody tr:nth-child(even) td{background:var(--soft)}
+
+/* ---------- cronograma de reuniões ----------
+   A sequência do primeiro ciclo, com as fases numa trilha à esquerda. A trilha
+   é uma célula só por fase, com `rowspan`, e o rótulo deitado: são três
+   palavras longas — Estruturação, Acompanhamento, Fechamento — e em pé elas
+   roubariam uma coluna inteira da tabela para dizer o que é só a divisão.
+
+   As datas são as únicas células que mudam de cliente para cliente, e por isso
+   vêm dentro de uma cápsula: quem preenche vê onde escrever, e quem lê vê o que
+   é combinado e o que é processo da casa. */
+.crono{width:100%;border-collapse:collapse;font-size:8.4pt}
+.crono thead th{background:var(--brand);color:#fff;text-align:left;font-weight:600;
+  font-size:7pt;letter-spacing:.08em;text-transform:uppercase;padding:2.6mm 4mm}
+.crono td{padding:2mm 4mm;border-bottom:1px solid var(--line);vertical-align:middle}
+.crono tbody tr:nth-child(even) td{background:var(--soft)}
+.crono .qual{font-weight:700;color:var(--brand);white-space:nowrap}
+.crono .pauta{font-weight:600}
+.crono .prazo{color:var(--ink-2)}
+.crono .quando{text-align:right;white-space:nowrap}
+.crono .quando span{display:inline-block;padding:1.2mm 3.5mm;border:1px solid var(--line);
+  border-radius:9mm;background:var(--paper);font-weight:700;font-size:8.2pt}
+.crono td.fase{background:var(--brand);padding:0;width:9mm;border-bottom:1px solid var(--paper)}
+.crono td.fase span{display:block;writing-mode:vertical-rl;transform:rotate(180deg);
+  margin:0 auto;padding:4mm 0;color:var(--accent);font-size:6.8pt;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
 .slide.dark .tb td{border-color:rgba(255,255,255,.16)}
 .slide.dark .tb tbody tr:nth-child(even) td{background:rgba(255,255,255,.05)}
 .tb .num,.tb th.num{text-align:right}
@@ -515,7 +540,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 </div>
 <div class="note" style="margin-top:auto"><p><span class="ph" title="Ex.: patrimônio construído ao longo de uma vida deve ter caráter perpétuo.">{{frase_de_abertura}}</span></p></div>
     </div>
-    <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">01</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide dark">
@@ -570,12 +595,12 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     complexidade patrimonial. Cobrada mensalmente de forma proporcional ao patrimônio sob
     orientação e debitada na sua conta de&nbsp;investimentos.</p>
     <div class="note"><p><strong>Antes do método, o&nbsp;preço.</strong> Você precisa conhecer os
-    termos da nossa remuneração antes de avaliar qualquer benefício do modelo. <span class="ph" title="Base de cálculo, cobrança, impostos e condições">{{nota_taxas}}</span></p></div>
+    termos da nossa remuneração antes de avaliar qualquer benefício do&nbsp;modelo. </p></div>
   </div>
   <div><div class="cards" style="--n:1"><div class="card"><h4>Percentual fixo sobre o&nbsp;patrimônio</h4><p>Cobrado mensalmente, de forma proporcional ao que está sob&nbsp;orientação.</p></div><div class="card"><h4>Única forma de&nbsp;remuneração</h4><p>Sem comissão, rebate ou incentivo vinculado a produto&nbsp;financeiro.</p></div><div class="card"><h4>Alinhamento de&nbsp;interesses</h4><p>Se o melhor produto para você paga menos à casa, ele entra do mesmo&nbsp;jeito.</p></div></div></div>
 </div></div>
     </div>
-    <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -625,7 +650,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 <h1 class="t">Como o relacionamento se&nbsp;estrutura</h1>
 <div class="center"><ol class="steps" style="--n:3"><li><h4>Diagnóstico</h4><p>Mapeamento do patrimônio atual: ativos, passivos, fluxo, concentrações, exposições e aderência ao perfil de&nbsp;risco.</p></li><li><h4>Proposta</h4><p>Alocação personalizada com racional claro para cada classe, projeções e&nbsp;cenários.</p></li><li><h4>Transição</h4><p>Execução gradual, respeitando carências, vencimentos, eficiência fiscal e o momento de&nbsp;mercado.</p></li><li><h4>Acompanhamento</h4><p>Carteira acompanhada de perto, com reuniões periódicas, relatório mensal e ajustes táticos quando fizerem&nbsp;falta.</p></li><li><h4>Revisão</h4><p>Fechamento de ciclo: desempenho do período, revisão de metas e agenda do período&nbsp;seguinte.</p></li><li><h4>Prestação de&nbsp;contas</h4><p>Relatório mensal e reunião trimestral em que cada decisão da carteira é explicada e&nbsp;registrada.</p></li></ol></div>
     </div>
-    <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -678,7 +703,7 @@ consistente, que guie a decisão independentemente do momento de mercado. É ela
 disciplinados quando o mercado oscila e atentos quando a oportunidade&nbsp;aparece.</p>
 <div class="center"><div class="cards" style="--n:2"><div class="card"><h4>KYC e suitability&nbsp;aprofundados</h4><p>Vai além da tolerância a risco: objetivos de vida, estrutura familiar, horizonte de usufruto, obrigações futuras e o legado&nbsp;desejado.</p></div><div class="card"><h4>Diagnóstico do&nbsp;portfólio</h4><p>Cinco dimensões: concentração de risco, descasamento de prazo e liquidez, custos desnecessários, ineficiência tributária e desalinhamento ao&nbsp;perfil.</p></div><div class="card"><h4>Construção da estratégia&nbsp;meta</h4><p>Alocação com racional fundamentado, classe a classe. Disciplina e horizonte longo como base, sem movimento&nbsp;especulativo.</p></div><div class="card"><h4>Monitoramento e&nbsp;evolução</h4><p>Acompanhamento trimestral da carteira, revisão da estratégia meta, relatório mensal de resultado e relatório macroeconômico para contextualizar cada&nbsp;decisão.</p></div></div></div>
     </div>
-    <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -731,7 +756,7 @@ disciplinados quando o mercado oscila e atentos quando a oportunidade&nbsp;apare
 calendário do ciclo de acompanhamento, com pauta e entregável de cada encontro, está no
 cronograma de&nbsp;reuniões.</p></div>
     </div>
-    <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -793,7 +818,7 @@ cronograma de&nbsp;reuniões.</p></div>
   </div>
 </div></div>
     </div>
-    <footer class="pg-foot"><span class="no">07</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -846,7 +871,7 @@ limitar a elas quando o seu perfil e os seus objetivos pedirem outra coisa. A co
 elas é que busca o equilíbrio entre preservação, renda e&nbsp;crescimento.</p>
 <div class="center"><table class="tb sm fix"><colgroup><col style="width:18%"><col style="width:24%"><col style="width:58%"></colgroup><thead><tr><th>Classe</th><th>Função</th><th>Como&nbsp;trabalhamos</th></tr></thead><tbody><tr><td>Renda&nbsp;fixa</td><td>Proteção, renda e&nbsp;liquidez</td><td>Pós-fixados, IPCA+ e prefixados, de olho no FGC, no risco de crédito e nas oportunidades de marcação a&nbsp;mercado.</td></tr><tr><td>Ações</td><td>Crescimento no longo&nbsp;prazo</td><td>Seleção por fundamento, governança, valuation e vantagem competitiva&nbsp;durável.</td></tr><tr><td>Fundos&nbsp;imobiliários</td><td>Renda recorrente e diversificação&nbsp;real</td><td>Logística e shoppings, com inquilinos sólidos e contratos que repassam&nbsp;inflação.</td></tr><tr><td>Internacional</td><td>Diversificação global e proteção&nbsp;cambial</td><td>ETFs passivos em core-satellite, reduzindo a concentração em um único&nbsp;mercado.</td></tr><tr><td>Caixa e&nbsp;liquidez</td><td>Flexibilidade e oportunidade&nbsp;tática</td><td>Reserva calibrada pela sua necessidade de liquidez e pelo aproveitamento de&nbsp;oportunidades.</td></tr></tbody></table></div>
     </div>
-    <footer class="pg-foot"><span class="no">08</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">07</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -903,7 +928,7 @@ perfil <span class="ph">{{perfil_investidor}}</span>.</p>
 nem carteira definitiva. A alocação final depende da análise completa do seu perfil, objetivos,
 restrições e&nbsp;suitability.</p>
     </div>
-    <footer class="pg-foot"><span class="no">09</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">08</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -957,7 +982,7 @@ maiores, com análise rigorosa. Em todos os casos, o ativo só é escolhido depo
 papel daquela parcela na&nbsp;carteira.</p>
 <div class="center"><table class="tb sm fix"><colgroup><col style="width:13%"><col style="width:29%"><col style="width:29%"><col style="width:29%"></colgroup><thead><tr><th></th><th>Pós-fixado (CDI e&nbsp;Selic)</th><th>Inflação&nbsp;(IPCA+)</th><th>Prefixado</th></tr></thead><tbody><tr><td><strong>Objetivo</strong></td><td>Liquidez, previsibilidade e reserva de&nbsp;oportunidade.</td><td>Proteção do poder de compra e crescimento real no longo&nbsp;prazo.</td><td>Captura do prêmio de juros nominais, com retorno previsível até o&nbsp;vencimento.</td></tr><tr><td><strong>Horizonte</strong></td><td>Carrego até 2&nbsp;anos.</td><td>Carrego a partir de 4 anos; marcação a mercado a partir de 10&nbsp;anos.</td><td>Carrego até 3&nbsp;anos.</td></tr><tr><td><strong>Estrutura</strong></td><td>Metade em liquidez imediata (D+0 e D+1) e metade em crédito bancário e privado com vencimento em até 2&nbsp;anos.</td><td>Metade em carrego via crédito bancário e ETFs, com crédito privado limitado a um terço da parcela; o restante em Tesouro IPCA+ para&nbsp;duration.</td><td>Metade em crédito bancário, um quarto em crédito privado e ETFs e um quarto em títulos&nbsp;soberanos.</td></tr><tr><td><strong>Critérios</strong></td><td>Qualidade do emissor, liquidez D+0 ou D+1, cobertura do FGC, taxa contra o CDI e prazo compatível com o uso do&nbsp;dinheiro.</td><td>Taxa real contra o histórico, prazo compatível, qualidade do emissor e cobertura do&nbsp;FGC.</td><td>Taxa nominal contra o contexto macro, prazo, qualidade do emissor e liquidez no&nbsp;secundário.</td></tr></tbody></table></div>
     </div>
-    <footer class="pg-foot"><span class="no">10</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">09</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -1010,7 +1035,7 @@ e por isso são selecionadas por critérios diferentes. O que elas têm em comum
 fundamento: nenhuma posição entra por movimento de&nbsp;preço.</p>
 <div class="center"><table class="tb sm fix"><colgroup><col style="width:16%"><col style="width:28%"><col style="width:28%"><col style="width:28%"></colgroup><thead><tr><th></th><th>Fundos&nbsp;imobiliários</th><th>Ações</th><th>Internacional</th></tr></thead><tbody><tr><td><strong>Objetivo</strong></td><td>Renda imobiliária mensal isenta para pessoa física, com liquidez de bolsa e diversificação&nbsp;setorial.</td><td>Crescimento patrimonial de longo prazo, via participação no lucro das empresas e exposição a ativos&nbsp;reais.</td><td>Diversificação cambial, liquidez em moeda forte e eficiência no planejamento&nbsp;sucessório.</td></tr><tr><td><strong>Estratégia</strong></td><td>Prioridade para logística e shoppings, com inquilinos sólidos, contratos consistentes e capacidade de repassar&nbsp;inflação.</td><td>Seleção por fundamento, governança, valuation e vantagem competitiva durável, com aporte concentrado nos ativos mais&nbsp;descontados.</td><td>ETFs passivos em core-satellite, combinados com money market e bonds de grau&nbsp;elevado.</td></tr><tr><td><strong>Riscos&nbsp;monitorados</strong></td><td>Vacância, inadimplência, sensibilidade à taxa de juros e risco de&nbsp;gestão.</td><td>Concentração setorial, ciclicidade, endividamento e deterioração de&nbsp;fundamento.</td><td>Risco cambial, duration, risco de crédito nos bonds e tracking difference dos&nbsp;ETFs.</td></tr><tr><td><strong>Critérios</strong></td><td>Múltiplos imóveis e inquilinos, qualidade dos ativos, solidez do gestor, valuation e liquidez em&nbsp;bolsa.</td><td>Lucro recorrente, endividamento controlado, vantagem competitiva, setor perene e descorrelação&nbsp;real.</td><td>Money market com rating alto e liquidez D+1, sem high yield; ETFs com duration moderada, patrimônio suficiente e tracking difference&nbsp;baixo.</td></tr></tbody></table></div>
     </div>
-    <footer class="pg-foot"><span class="no">11</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">10</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -1074,7 +1099,7 @@ fundamento: nenhuma posição entra por movimento de&nbsp;preço.</p>
   </div>
 </div></div>
     </div>
-    <footer class="pg-foot"><span class="no">12</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">11</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide dark">
@@ -1137,13 +1162,15 @@ fundamento: nenhuma posição entra por movimento de&nbsp;preço.</p>
       <dt>E-mail</dt><dd><span class="ph" data-link="mailto">{{email_contato}}</span></dd>
     </div>
   </div>
+  <!-- Saiu o QR code de agendamento. A carta chega por e-mail ou WhatsApp e se
+       lê na tela, onde ninguém aponta a câmera para o próprio monitor; o link
+       clicável ao lado fazia o trabalho inteiro sozinho. -->
   <div style="display:flex;flex-direction:column;align-items:center;gap:4mm">
-    <div class="qr">QR code<br>agendamento</div>
     <div class="small mut" style="text-align:center;max-width:52mm"><span class="ph" data-link="url">{{link_agendamento}}</span></div>
   </div>
 </div>
     </div>
-    <footer class="pg-foot"><span class="no">13</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">12</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 </body>

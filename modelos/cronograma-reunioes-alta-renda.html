@@ -133,6 +133,31 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   padding:2mm 2mm;font-size:6.6pt;letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
 .tb td{padding:3mm;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
 .tb tbody tr:nth-child(even) td{background:var(--soft)}
+
+/* ---------- cronograma de reuniões ----------
+   A sequência do primeiro ciclo, com as fases numa trilha à esquerda. A trilha
+   é uma célula só por fase, com `rowspan`, e o rótulo deitado: são três
+   palavras longas — Estruturação, Acompanhamento, Fechamento — e em pé elas
+   roubariam uma coluna inteira da tabela para dizer o que é só a divisão.
+
+   As datas são as únicas células que mudam de cliente para cliente, e por isso
+   vêm dentro de uma cápsula: quem preenche vê onde escrever, e quem lê vê o que
+   é combinado e o que é processo da casa. */
+.crono{width:100%;border-collapse:collapse;font-size:8.4pt}
+.crono thead th{background:var(--brand);color:#fff;text-align:left;font-weight:600;
+  font-size:7pt;letter-spacing:.08em;text-transform:uppercase;padding:2.6mm 4mm}
+.crono td{padding:2mm 4mm;border-bottom:1px solid var(--line);vertical-align:middle}
+.crono tbody tr:nth-child(even) td{background:var(--soft)}
+.crono .qual{font-weight:700;color:var(--brand);white-space:nowrap}
+.crono .pauta{font-weight:600}
+.crono .prazo{color:var(--ink-2)}
+.crono .quando{text-align:right;white-space:nowrap}
+.crono .quando span{display:inline-block;padding:1.2mm 3.5mm;border:1px solid var(--line);
+  border-radius:9mm;background:var(--paper);font-weight:700;font-size:8.2pt}
+.crono td.fase{background:var(--brand);padding:0;width:9mm;border-bottom:1px solid var(--paper)}
+.crono td.fase span{display:block;writing-mode:vertical-rl;transform:rotate(180deg);
+  margin:0 auto;padding:4mm 0;color:var(--accent);font-size:6.8pt;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
 .tb .num,.tb th.num{text-align:right}
 .tb tfoot td{font-weight:700;border-top:1.33px solid var(--ink);background:#fff}
 .tb caption{caption-side:bottom;text-align:left;font-size:6.8pt;color:var(--ink-2);padding-top:2mm}
@@ -584,7 +609,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <div class="gap"></div>
 <div class="note"><p><strong>Antes de cada&nbsp;reunião.</strong> Você recebe a pauta e o material de apoio com <span class="ph">{{antecedencia_pauta}}</span> de antecedência. Depois do encontro, enviamos o resumo com as decisões e os prazos acordados em até <span class="ph">{{prazo_resumo_pos_reuniao}}</span>.</p></div>
   </div>
-  <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">01</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -636,7 +661,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <div class="gap"></div>
 <table class="tb sm"><thead><tr><th>Mês</th><th>Data&nbsp;prevista</th><th>Encontro /&nbsp;entrega</th><th>Pauta&nbsp;principal</th><th>Entregável</th><th>Status</th></tr></thead><tbody><tr><td>Janeiro</td><td><span class="ph">{{cal_01_data}}</span></td><td><span class="ph">{{cal_01_encontro}}</span></td><td><span class="ph">{{cal_01_pauta}}</span></td><td><span class="ph">{{cal_01_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_01_status}}</span></span></td></tr><tr><td>Fevereiro</td><td><span class="ph">{{cal_02_data}}</span></td><td><span class="ph">{{cal_02_encontro}}</span></td><td><span class="ph">{{cal_02_pauta}}</span></td><td><span class="ph">{{cal_02_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_02_status}}</span></span></td></tr><tr><td>Março</td><td><span class="ph">{{cal_03_data}}</span></td><td><span class="ph">{{cal_03_encontro}}</span></td><td><span class="ph">{{cal_03_pauta}}</span></td><td><span class="ph">{{cal_03_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_03_status}}</span></span></td></tr><tr><td>Abril</td><td><span class="ph">{{cal_04_data}}</span></td><td><span class="ph">{{cal_04_encontro}}</span></td><td><span class="ph">{{cal_04_pauta}}</span></td><td><span class="ph">{{cal_04_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_04_status}}</span></span></td></tr><tr><td>Maio</td><td><span class="ph">{{cal_05_data}}</span></td><td><span class="ph">{{cal_05_encontro}}</span></td><td><span class="ph">{{cal_05_pauta}}</span></td><td><span class="ph">{{cal_05_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_05_status}}</span></span></td></tr><tr><td>Junho</td><td><span class="ph">{{cal_06_data}}</span></td><td><span class="ph">{{cal_06_encontro}}</span></td><td><span class="ph">{{cal_06_pauta}}</span></td><td><span class="ph">{{cal_06_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_06_status}}</span></span></td></tr><tr><td>Julho</td><td><span class="ph">{{cal_07_data}}</span></td><td><span class="ph">{{cal_07_encontro}}</span></td><td><span class="ph">{{cal_07_pauta}}</span></td><td><span class="ph">{{cal_07_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_07_status}}</span></span></td></tr><tr><td>Agosto</td><td><span class="ph">{{cal_08_data}}</span></td><td><span class="ph">{{cal_08_encontro}}</span></td><td><span class="ph">{{cal_08_pauta}}</span></td><td><span class="ph">{{cal_08_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_08_status}}</span></span></td></tr><tr><td>Setembro</td><td><span class="ph">{{cal_09_data}}</span></td><td><span class="ph">{{cal_09_encontro}}</span></td><td><span class="ph">{{cal_09_pauta}}</span></td><td><span class="ph">{{cal_09_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_09_status}}</span></span></td></tr><tr><td>Outubro</td><td><span class="ph">{{cal_10_data}}</span></td><td><span class="ph">{{cal_10_encontro}}</span></td><td><span class="ph">{{cal_10_pauta}}</span></td><td><span class="ph">{{cal_10_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_10_status}}</span></span></td></tr><tr><td>Novembro</td><td><span class="ph">{{cal_11_data}}</span></td><td><span class="ph">{{cal_11_encontro}}</span></td><td><span class="ph">{{cal_11_pauta}}</span></td><td><span class="ph">{{cal_11_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_11_status}}</span></span></td></tr><tr><td>Dezembro</td><td><span class="ph">{{cal_12_data}}</span></td><td><span class="ph">{{cal_12_encontro}}</span></td><td><span class="ph">{{cal_12_pauta}}</span></td><td><span class="ph">{{cal_12_entregavel}}</span></td><td><span class="pill"><span class="ph">{{cal_12_status}}</span></span></td></tr></tbody></table>
   </div>
-  <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -699,7 +724,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <h2>Como se&nbsp;preparar</h2>
 <ol class="flow" style="--n:4"><li><span class="node"></span><span class="tag"><span class="ph">{{preparo_material_quando}}</span></span><h4>Leia o&nbsp;material</h4><p><span class="ph">{{preparo_material}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{preparo_duvidas_quando}}</span></span><h4>Anote as&nbsp;dúvidas</h4><p><span class="ph">{{preparo_duvidas}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{preparo_mudancas_quando}}</span></span><h4>Traga mudanças de&nbsp;vida</h4><p><span class="ph">{{preparo_mudancas}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph">{{preparo_confirmacao_quando}}</span></span><h4>Confirme&nbsp;presença</h4><p><span class="ph">{{preparo_confirmacao}}</span></p></li></ol>
   </div>
-  <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -756,7 +781,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <h2>Ouvidoria e&nbsp;reclamações</h2>
 <p class="small mut"><span class="ph">{{texto_ouvidoria}}</span></p>
   </div>
-  <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -829,7 +854,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <div class="gap"></div>
 <p class="legal">Este cronograma reflete o padrão de acompanhamento do segmento Alta Renda e pode ser ajustado de comum acordo. Datas previstas dependem de confirmação e podem mudar por indisponibilidade de qualquer das partes. Este documento não constitui recomendação de investimento. É proibida a reprodução ou o compartilhamento total ou parcial sem autorização prévia e por escrito. <span class="ph">{{razao_social}}</span> &middot; CNPJ <span class="ph">{{cnpj}}</span>.</p>
   </div>
-  <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 </body>
 </html>

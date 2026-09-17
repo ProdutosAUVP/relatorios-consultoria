@@ -81,6 +81,24 @@ def sem_viuvas(html):
     return VIUVA.sub(lambda m: "&nbsp;" + m.group(1) + m.group(2), html)
 
 
+# O número que sai no pé de cada página. Cada documento escreve o seu ao montar
+# a página, mas a partir do momento em que uma página é condicional — a grade de
+# planos só existe na consultoria — o número escrito lá deixa de valer para os
+# outros segmentos. Renumerar aqui, sobre o documento pronto, é o único lugar
+# onde se sabe quantas páginas ele ficou tendo.
+NUMERO = re.compile(r'<span class="no">\d+</span>')
+
+
+def renumera(html):
+    n = [0]
+
+    def proximo(_):
+        n[0] += 1
+        return '<span class="no">%02d</span>' % n[0]
+
+    return NUMERO.sub(proximo, html)
+
+
 def monta(doc, sufixo, rotulo, tema):
     t = THEMES[tema]
     reset_img()
@@ -89,7 +107,7 @@ def monta(doc, sufixo, rotulo, tema):
     # tipografia e os componentes inteiros, e só o `@page` e o corpo mudam.
     css = {"a4": CSS_A4, "slide": CSS_SLIDE, "longa": CSS_A4 + CSS_LONGA}[doc["formato"]]
     html = head(doc["titulo"] % rotulo, tokens(t) + "\n" + css) + \
-        sem_viuvas("\n".join(paginas)) + "\n" + FOOT
+        renumera(sem_viuvas("\n".join(paginas))) + "\n" + FOOT
     caminho = os.path.join(OUT, "%s-%s.html" % (doc["chave"], sufixo))
     with open(caminho, "w", encoding="utf-8") as f:
         f.write(html)

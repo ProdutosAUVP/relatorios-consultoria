@@ -23,52 +23,54 @@ Estes se repetem na maior parte dos modelos. Vale manter um arquivo único com e
 
 | Variável | O que é | Em quantos modelos |
 | --- | --- | --- |
-| `razao_social` | Razão social da empresa emissora | 24 de 41 |
-| `cnpj` | CNPJ da empresa emissora | 24 de 41 |
-| `registro_cvm_empresa` | Registro da empresa na CVM | 4 de 41 |
-| `canal_ouvidoria` | Telefone ou e-mail da ouvidoria | 20 de 41 |
-| `disclaimer_regulatorio` | Texto legal aprovado pelo compliance, específico do segmento | 20 de 41 |
-| `nome_cliente` | Nome do cliente destinatário | 24 de 41 |
-| `nome_responsavel` | Consultor, assessor ou banker responsável | 24 de 41 |
-| `registro_cvm_ou_ancord` | Registro do responsável (CVM 19 / Ancord) | 12 de 41 |
-| `email_contato` | E-mail de contato exibido no documento | 24 de 41 |
-| `whatsapp_contato` | WhatsApp direto do responsável | 12 de 41 |
-| `canal_atendimento` | Canal e horário de atendimento | 12 de 41 |
-| `link_agendamento` | URL de agendamento (a mesma do QR code) | 16 de 41 |
-| `mes_referencia` | Mês de referência, ex.: Agosto de 2026 | 12 de 41 |
-| `data_posicao` | Data da posição consolidada | 8 de 41 |
-| `perfil_investidor` | Perfil de suitability do cliente | 12 de 41 |
-| `patrimonio_total` | Patrimônio total sob acompanhamento | 8 de 41 |
+| `razao_social` | Razão social da empresa emissora | 24 de 39 |
+| `cnpj` | CNPJ da empresa emissora | 24 de 39 |
+| `registro_cvm_empresa` | Registro da empresa na CVM | 4 de 39 |
+| `canal_ouvidoria` | Telefone ou e-mail da ouvidoria | 20 de 39 |
+| `disclaimer_regulatorio` | Texto legal aprovado pelo compliance, específico do segmento | 20 de 39 |
+| `nome_cliente` | Nome do cliente destinatário | 24 de 39 |
+| `nome_responsavel` | Consultor, assessor ou banker responsável | 24 de 39 |
+| `registro_cvm_ou_ancord` | Registro do responsável (CVM 19 / Ancord) | 12 de 39 |
+| `email_contato` | E-mail de contato exibido no documento | 24 de 39 |
+| `whatsapp_contato` | WhatsApp direto do responsável | 12 de 39 |
+| `canal_atendimento` | Canal e horário de atendimento | 12 de 39 |
+| `link_agendamento` | URL de agendamento (a mesma do QR code) | 16 de 39 |
+| `mes_referencia` | Mês de referência, ex.: Agosto de 2026 | 12 de 39 |
+| `data_posicao` | Data da posição consolidada | 8 de 39 |
+| `perfil_investidor` | Perfil de suitability do cliente | 12 de 39 |
+| `patrimonio_total` | Patrimônio total sob acompanhamento | 8 de 39 |
 
 ## Apresentação do consultor — Me Diz o Que Fazer
 
-Arquivos: `modelos/apresentacao-consultor-alta-renda-sem-data.html`, `modelos/apresentacao-consultor-alta-renda.html`, `modelos/apresentacao-consultor-assessoria-sem-data.html`, `modelos/apresentacao-consultor-assessoria.html`, `modelos/apresentacao-consultor-me-diz-o-que-fazer.html`, `modelos/apresentacao-consultor-private-sem-data.html`, `modelos/apresentacao-consultor-private.html`, `modelos/apresentacao-consultor-resolve-ai.html`, `modelos/apresentacao-consultor-se-vira-ai.html`, `modelos/apresentacao-consultor-simples-alta-renda.html`, `modelos/apresentacao-consultor-simples-assessoria.html`, `modelos/apresentacao-consultor-simples-consultoria.html`, `modelos/apresentacao-consultor-simples-private.html`
+Arquivos: `modelos/apresentacao-consultor-alta-renda-sem-data.html`, `modelos/apresentacao-consultor-alta-renda.html`, `modelos/apresentacao-consultor-assessoria-sem-data.html`, `modelos/apresentacao-consultor-assessoria.html`, `modelos/apresentacao-consultor-me-diz-o-que-fazer.html`, `modelos/apresentacao-consultor-private-sem-data.html`, `modelos/apresentacao-consultor-private.html`, `modelos/apresentacao-consultor-simples-alta-renda.html`, `modelos/apresentacao-consultor-simples-assessoria.html`, `modelos/apresentacao-consultor-simples-consultoria.html`, `modelos/apresentacao-consultor-simples-private.html`
 
-Variantes: alta-renda-sem-data, alta-renda, assessoria-sem-data, assessoria, me-diz-o-que-fazer, private-sem-data, private, resolve-ai, se-vira-ai, simples-alta-renda, simples-assessoria, simples-consultoria, simples-private &middot; 62 variáveis
+Variantes: alta-renda-sem-data, alta-renda, assessoria-sem-data, assessoria, me-diz-o-que-fazer, private-sem-data, private, simples-alta-renda, simples-assessoria, simples-consultoria, simples-private &middot; 68 variáveis
 
-<details><summary>Ver as 62 variáveis específicas deste documento</summary>
+<details><summary>Ver as 68 variáveis específicas deste documento</summary>
 
 ```
 nome_plano                        nome_consultor                    papel_consultor
 frase_consultor                   formacao_1                        formacao_2
-especializacao_1                  especializacao_2                  certificacao_1
-certificacao_2                    certificacao_3                    proposito_1
-proposito_2                       proposito_3                       proposito_4
-qualificacoes_1                   qualificacoes_2                   trajetoria_1
-trajetoria_2                      trajetoria_3                      marco_1_quando
-marco_1_texto                     marco_2_quando                    marco_2_texto
-marco_3_quando                    marco_3_texto                     fora_do_escritorio_1
-fora_do_escritorio_2              fora_do_escritorio_3              interesse_1
-interesse_2                       interesse_3                       interesse_4
-interesse_5                       interesse_6                       plano_resumo
-funciona_1                        funciona_2                        funciona_3
-pode_pedir_1                      pode_pedir_2                      pode_pedir_3
-pode_pedir_4                      pode_pedir_5                      pode_pedir_6
-incluido_1                        incluido_2                        incluido_3
-incluido_4                        incluido_5                        incluido_6
-incluido_7                        incluido_8                        nao_incluido_1
-nao_incluido_2                    nao_incluido_3                    nao_incluido_4
-notas_de_rodape                   taxa_mensal                       taxa_anual
+formacao_3                        formacao_4                        formacao_5
+especializacao_1                  especializacao_2                  especializacao_3
+especializacao_4                  especializacao_5                  certificacao_1
+certificacao_2                    certificacao_3                    certificacao_4
+certificacao_5                    proposito_1                       proposito_2
+proposito_3                       proposito_4                       qualificacoes_1
+qualificacoes_2                   trajetoria_1                      trajetoria_2
+trajetoria_3                      marco_1_quando                    marco_1_texto
+marco_2_quando                    marco_2_texto                     marco_3_quando
+marco_3_texto                     fora_do_escritorio_1              fora_do_escritorio_2
+fora_do_escritorio_3              interesse_1                       interesse_2
+interesse_3                       interesse_4                       interesse_5
+interesse_6                       plano_resumo                      funciona_1
+funciona_2                        funciona_3                        pode_pedir_1
+pode_pedir_2                      pode_pedir_3                      pode_pedir_4
+pode_pedir_5                      pode_pedir_6                      incluido_1
+incluido_2                        incluido_3                        incluido_4
+incluido_5                        incluido_6                        incluido_7
+incluido_8                        nao_incluido_1                    nao_incluido_2
+nao_incluido_3                    nao_incluido_4                    notas_de_rodape
 whatsapp_consultor                email_consultor
 ```
 </details>
@@ -92,18 +94,6 @@ data_apresentacao
 ```
 
 Campos exclusivos da variante **private** (1):
-
-```
-data_apresentacao
-```
-
-Campos exclusivos da variante **resolve-ai** (1):
-
-```
-data_apresentacao
-```
-
-Campos exclusivos da variante **se-vira-ai** (1):
 
 ```
 data_apresentacao

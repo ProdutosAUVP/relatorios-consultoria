@@ -538,12 +538,23 @@ function montar(modo) {
     if (no) no.textContent = String(i + 1).padStart(2, '0');
   });
 
+  const esvaziados = new Set();
   for (const span of doc.querySelectorAll('span.ph')) {
     const m = span.textContent.match(/^\{\{([a-z0-9_]+)\}\}$/);
     if (!m) continue;
     const v = estado.valores[m[1]];
     if (!v || !v.trim()) {
-      if (modo !== 'previa') span.remove();
+      if (modo !== 'previa') {
+        // O item de lista que era só o campo fica sendo um traço solto na
+        // margem: some o texto e o marcador continua lá, anunciando uma linha
+        // que não existe. O mesmo vale para a pílula de certificação, que sem
+        // texto vira uma cápsula vazia. Guarda o pai para conferir depois de
+        // tirar todos os campos — antes disso não dá para saber se o que
+        // sobrou está vazio.
+        const item = span.closest('.pill, .tags > span, li, dd, dt, td, th, p');
+        if (item) esvaziados.add(item);
+        span.remove();
+      }
       continue;
     }
     span.textContent = v;
@@ -558,6 +569,18 @@ function montar(modo) {
       span.replaceWith(a);
       a.appendChild(span);
     }
+  }
+
+  // A linha que ficou sem nada dentro sai inteira, com o marcador junto. Numa
+  // lista de definição sai o par: rótulo sem valor é pior do que a ausência.
+  for (const item of esvaziados) {
+    if (item.textContent.trim() || item.querySelector('img, svg')) continue;
+    if (item.tagName === 'DD' && item.previousElementSibling?.tagName === 'DT') {
+      item.previousElementSibling.remove();
+    } else if (item.tagName === 'DT' && item.nextElementSibling?.tagName === 'DD') {
+      item.nextElementSibling.remove();
+    }
+    item.remove();
   }
 
   for (const [id, dado] of Object.entries(estado.imagens)) {

@@ -53,6 +53,8 @@ autossuficientes na entrega, fonte única na manutenção.
 | `gerador/d_*.py` | um módulo por tipo de documento; contém o conteúdo e a ordem das seções |
 | `gerador/d_consultor_simples.py` | a apresentação de uma página, com chrome próprio; reaproveita os dados e os auxiliares de `d_consultor` |
 | `scripts/fotos.py` | prepara os retratos para envio pela ferramenta: recorta pelo rosto, sem tocar em cor ou brilho |
+| `scripts/institucional.py` | prepara as fotos da casa, que vêm embutidas no modelo e não são campo de imagem |
+| `assets/institucional/` | as fotos da casa, saída do `institucional.py`; os originais vêm da landing page institucional |
 | `assets/consultores/originais/` | fotos originais, como vieram |
 | `assets/consultores/` | retratos prontos, saída do `scripts/fotos.py` |
 | `documentos/consultores/` | apresentações nominais prontas, uma pasta por consultor, fora do pipeline: o `npm run all` não as toca |

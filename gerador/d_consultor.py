@@ -76,6 +76,14 @@ def _marcos(itens):
 
 
 def _tags(itens):
+    """As etiquetas de interesse, quando há interesse a etiquetar.
+
+    Sem itens não sai nada — nem a caixa. A lista é um resumo em palavras soltas
+    do parágrafo logo acima, e há quem ache que ela repete o texto em vez de
+    acrescentar; quem pensa assim deixa `interesses` vazio e fica só com o texto.
+    """
+    if not itens:
+        return ""
     return '<div class="tags">%s</div>' % "".join("<span>%s</span>" % i for i in itens)
 
 
@@ -233,7 +241,7 @@ FOLHA = """<section class="page longa" data-sec="Apresentação do consultor">
     <div class="lg-sec">
       <h2>Além dos investimentos</h2>
       <div class="corrido">%(fora)s</div>%(fora_extra)s
-      <div style="margin-top:7mm">%(tags)s</div>
+      %(tags)s
     </div>
   </div>
 
@@ -536,7 +544,9 @@ def folha(t, variante, c=None, foto=None, primeiro=None, data=True):
         proposito=_paras(c["proposito"]),
         qualificacoes=_paras(c["formacao_paras"]),
         trajetoria=_paras(c["trajetoria"]), marcos=_marcos(c["marcos"]),
-        fora=_paras(c["fora_paras"]), tags=_tags(c["interesses"]),
+        fora=_paras(c["fora_paras"]),
+        tags=('<div style="margin-top:7mm">%s</div>' % _tags(c["interesses"])
+              if c["interesses"] else ""),
         # onde o texto termina anunciando uma lista, a lista vem depois dele,
         # como no original — e não diluída dentro do parágrafo
         fora_extra=(_lista(c["fora_lista"]) if c.get("fora_lista") else ""),

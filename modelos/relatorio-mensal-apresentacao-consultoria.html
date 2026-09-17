@@ -191,6 +191,13 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .imgbox .cl{font-size:7.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
 .slide.dark .imgbox .cl{color:#fff}
 .imgbox .cd{font-size:9pt;max-width:90mm;line-height:1.45;color:var(--ink-2)}
+
+/* A foto institucional é parte do desenho, e não escolha de quem preenche. Vai
+   na proporção em que foi tirada: a sede é um prédio largo, e recortá-la para
+   caber num retrato 3:4 cortava metade da fachada. A largura é a da coluna e a
+   altura sai sozinha, que é o que `height:auto` faz — nenhuma caixa impõe
+   formato a ela. */
+.imgfixa{display:block;width:100%;height:auto;border-radius:1mm}
 .slide.dark .imgbox .cd{color:rgba(255,255,255,.75)}
 
 /* capa e divisórias ----------

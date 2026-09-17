@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from layout import *
+from layout import _b64  # noqa: F401  (nome privado não vem no import *)
 
 PAPEL = {"consultoria": "consultor", "alta-renda": "consultor",
          "private": "banker", "assessoria": "assessor"}
@@ -66,16 +67,20 @@ ENCONTROS = [
 # página, e a habilitação de quem assina o relatório continua onde precisa
 # estar: no pé dos documentos que a exigem.
 #
-# FALTA A FUNDAÇÃO: o ano não está escrito em lugar nenhum do repositório e não
-# se inventa a data de nascimento de uma empresa. Assim que o produto confirmar,
-# acrescente ("Fundação", "20XX") no começo de `fatos`.
 CASA = dict(
     historia=("A AUVP Capital nasceu da metodologia da AUVP Escola. É a mesma leitura de "
               "investimento que ensinou milhares de pessoas a cuidar do próprio dinheiro, "
               "agora aplicada por um consultor ao lado de quem investe — com a casa remunerada "
               "pelo cliente, e não pelo produto."),
-    fatos=[("Modelo de remuneração", "Fee based, percentual sobre o patrimônio orientado"),
+    fatos=[("Fundação", "2020"),
+           ("Modelo de remuneração", "Fee based, percentual sobre o patrimônio orientado"),
            ("Custódia", "Banco BTG Pactual S.A.")],
+    # A foto da sede, e não um espaço de imagem. É a mesma casa em toda
+    # apresentação, então não há o que escolher — e o que se escolhia, na
+    # prática, era entre mandar sem foto e mandar com a que estivesse à mão.
+    # O arquivo sai de `scripts/institucional.py`, que recorta o original da
+    # landing page institucional.
+    foto="assets/institucional/sede.jpg",
 )
 
 # O que a casa manda todo mês, para todo cliente do segmento. É padrão, então
@@ -108,17 +113,19 @@ def build(t, seg):
 
     S.append(slide(t, "Quem somos", 3, """<span class="eyebrow">A casa</span>
 <h1 class="t">%(tit)s</h1>
-<div class="cols2u" style="flex:1 1 auto;align-items:stretch">
+<div class="cols2u" style="flex:1 1 auto">
   <div>
     <p class="lead" style="margin-bottom:5mm">%(sub)s</p>
     <p class="small">%(hist)s</p>
-    <div class="gap"></div>
-    <div class="dl">%(fatos)s</div>
   </div>
-  %(img)s
+  <div>
+    %(img)s
+    <div class="dl" style="margin-top:6mm">%(fatos)s</div>
+  </div>
 </div>""" % dict(tit=titulo, sub=sub, hist=CASA["historia"],
                  fatos="".join("<dt>%s</dt><dd>%s</dd>" % (r, v) for r, v in CASA["fatos"]),
-                 img=imgbox("Foto do escritório, do time ou do cliente em reunião. Formato retrato, mínimo 1200&nbsp;px de largura."))))
+                 img='<img class="imgfixa" alt="Sede da AUVP Capital" '
+                     'src="data:image/jpeg;base64,%s">' % _b64(CASA["foto"]))))
 
 
     S.append(divider_slide(t, 2, "Como trabalhamos", "Método, entregas e cadência"))

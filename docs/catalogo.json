@@ -138,7 +138,7 @@
      "arquivo": "apresentacao-geral-consultoria.html",
      "paginas": 13,
      "campos": 92,
-     "imagens": 1
+     "imagens": 0
     },
     {
      "sufixo": "alta-renda",
@@ -146,7 +146,7 @@
      "arquivo": "apresentacao-geral-alta-renda.html",
      "paginas": 12,
      "campos": 58,
-     "imagens": 1
+     "imagens": 0
     },
     {
      "sufixo": "private",
@@ -154,7 +154,7 @@
      "arquivo": "apresentacao-geral-private.html",
      "paginas": 12,
      "campos": 58,
-     "imagens": 1
+     "imagens": 0
     },
     {
      "sufixo": "assessoria",
@@ -162,7 +162,7 @@
      "arquivo": "apresentacao-geral-assessoria.html",
      "paginas": 12,
      "campos": 58,
-     "imagens": 1
+     "imagens": 0
     }
    ]
   },

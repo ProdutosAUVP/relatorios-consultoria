@@ -18,7 +18,6 @@ import d_apresentacao_geral
 import d_carta_apresentacao
 import d_consultor
 import d_consultor_simples
-import d_cronograma
 import d_diagnostico
 import d_macro
 import d_mensal
@@ -47,8 +46,6 @@ DOCUMENTOS = [
     # depois do sim.
     dict(chave="carta-apresentacao", formato="slide",
          titulo="Carta de Apresentação — %s", builder=d_carta_apresentacao.build),
-    dict(chave="cronograma-reunioes", formato="a4",
-         titulo="Cronograma de Reuniões — %s", builder=d_cronograma.build),
     # A apresentação do consultor varia por plano da consultoria e por
     # segmento, e a em branco sai também sem data. A lista é montada no próprio
     # módulo, e as variantes trazem o tema junto em vez de sair do sufixo.

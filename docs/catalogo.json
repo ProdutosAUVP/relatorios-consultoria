@@ -207,46 +207,6 @@
    ]
   },
   {
-   "chave": "cronograma-reunioes",
-   "nome": "Cronograma de reuniões",
-   "formato": "a4",
-   "descricao": "Calendário do ciclo de acompanhamento e pauta de cada encontro.",
-   "variantes": [
-    {
-     "sufixo": "consultoria",
-     "rotulo": "Consultoria",
-     "arquivo": "cronograma-reunioes-consultoria.html",
-     "paginas": 6,
-     "campos": 153,
-     "imagens": 0
-    },
-    {
-     "sufixo": "alta-renda",
-     "rotulo": "Alta Renda",
-     "arquivo": "cronograma-reunioes-alta-renda.html",
-     "paginas": 6,
-     "campos": 153,
-     "imagens": 0
-    },
-    {
-     "sufixo": "private",
-     "rotulo": "Private Banking",
-     "arquivo": "cronograma-reunioes-private.html",
-     "paginas": 6,
-     "campos": 153,
-     "imagens": 0
-    },
-    {
-     "sufixo": "assessoria",
-     "rotulo": "Assessoria",
-     "arquivo": "cronograma-reunioes-assessoria.html",
-     "paginas": 6,
-     "campos": 153,
-     "imagens": 0
-    }
-   ]
-  },
-  {
    "chave": "diagnostico-carteira",
    "nome": "Diagnóstico de carteira",
    "formato": "a4",

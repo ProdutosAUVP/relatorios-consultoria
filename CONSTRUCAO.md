@@ -504,7 +504,7 @@ Nos dois casos, `npm run build && npm run check` fecha o ciclo.
 ### Acrescentar um documento
 
 1. Crie `gerador/d_novo.py` com uma função `build(t, seg)` que devolve uma lista de
-   páginas — comece copiando `d_cronograma.py`, que é o menor.
+   páginas — comece copiando `d_diagnostico.py`, que é o mais direto.
 2. Registre em `gerador/build.py`, na lista `DOCUMENTOS`:
 
 ```python

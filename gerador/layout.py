@@ -367,11 +367,3 @@ MESES_CURTOS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
                 "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
 
 
-def year(eventos):
-    """Faixa de doze meses em dois semestres. `eventos` traz o rótulo curto de
-    cada mês; o detalhe fica na tabela abaixo."""
-    return '<ol class="year">%s</ol>' % "".join(
-        '<li class="on"><span class="mo">%02d</span><span class="nm">%s</span>'
-        '<span class="ev">%s</span></li>' % (i, MESES_CURTOS[i - 1], ev)
-        for i, ev in enumerate(eventos, start=1))
-

@@ -639,18 +639,6 @@ CSS_A4 += """
 .legend li{display:flex;align-items:center;gap:1.5mm}
 .legend i{width:4mm;height:1.33px;flex:0 0 auto}
 
-/* ---------- ano em dois semestres ---------- */
-.year{list-style:none;margin:0;padding:0;counter-reset:yr;display:grid;
-  grid-template-columns:repeat(6,1fr);gap:6mm 4mm}
-.year>li{position:relative;min-width:0;padding-top:8mm}
-.year>li::after{content:"";position:absolute;left:0;right:-4mm;top:3.2mm;height:1px;background:var(--line)}
-.year>li:nth-child(6)::after,.year>li:last-child::after{right:0}
-.year .mo{position:absolute;left:0;top:0;z-index:2;width:6.4mm;height:6.4mm;border-radius:50%;
-  border:1px solid var(--line);background:var(--paper);color:var(--ink-2);
-  display:flex;align-items:center;justify-content:center;font-size:6pt;font-weight:700}
-.year>li.on .mo{border-color:var(--brand);color:var(--brand)}
-.year .nm{display:block;font-size:7.4pt;font-weight:700;margin-bottom:1mm}
-.year .ev{display:block;font-size:6.8pt;color:var(--ink-2);line-height:1.35}
 """
 
 CSS_SLIDE += """

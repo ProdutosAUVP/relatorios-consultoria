@@ -23,22 +23,22 @@ Estes se repetem na maior parte dos modelos. Vale manter um arquivo único com e
 
 | Variável | O que é | Em quantos modelos |
 | --- | --- | --- |
-| `razao_social` | Razão social da empresa emissora | 24 de 39 |
-| `cnpj` | CNPJ da empresa emissora | 24 de 39 |
-| `registro_cvm_empresa` | Registro da empresa na CVM | 4 de 39 |
-| `canal_ouvidoria` | Telefone ou e-mail da ouvidoria | 20 de 39 |
-| `disclaimer_regulatorio` | Texto legal aprovado pelo compliance, específico do segmento | 20 de 39 |
-| `nome_cliente` | Nome do cliente destinatário | 24 de 39 |
-| `nome_responsavel` | Consultor, assessor ou banker responsável | 24 de 39 |
-| `registro_cvm_ou_ancord` | Registro do responsável (CVM 19 / Ancord) | 12 de 39 |
-| `email_contato` | E-mail de contato exibido no documento | 24 de 39 |
-| `whatsapp_contato` | WhatsApp direto do responsável | 12 de 39 |
-| `canal_atendimento` | Canal e horário de atendimento | 12 de 39 |
-| `link_agendamento` | URL de agendamento (a mesma do QR code) | 16 de 39 |
-| `mes_referencia` | Mês de referência, ex.: Agosto de 2026 | 12 de 39 |
-| `data_posicao` | Data da posição consolidada | 8 de 39 |
-| `perfil_investidor` | Perfil de suitability do cliente | 12 de 39 |
-| `patrimonio_total` | Patrimônio total sob acompanhamento | 8 de 39 |
+| `razao_social` | Razão social da empresa emissora | 20 de 35 |
+| `cnpj` | CNPJ da empresa emissora | 20 de 35 |
+| `registro_cvm_empresa` | Registro da empresa na CVM | 4 de 35 |
+| `canal_ouvidoria` | Telefone ou e-mail da ouvidoria | 20 de 35 |
+| `disclaimer_regulatorio` | Texto legal aprovado pelo compliance, específico do segmento | 20 de 35 |
+| `nome_cliente` | Nome do cliente destinatário | 20 de 35 |
+| `nome_responsavel` | Consultor, assessor ou banker responsável | 20 de 35 |
+| `registro_cvm_ou_ancord` | Registro do responsável (CVM 19 / Ancord) | 8 de 35 |
+| `email_contato` | E-mail de contato exibido no documento | 24 de 35 |
+| `whatsapp_contato` | WhatsApp direto do responsável | 12 de 35 |
+| `canal_atendimento` | Canal e horário de atendimento | 12 de 35 |
+| `link_agendamento` | URL de agendamento (a mesma do QR code) | 12 de 35 |
+| `mes_referencia` | Mês de referência, ex.: Agosto de 2026 | 12 de 35 |
+| `data_posicao` | Data da posição consolidada | 8 de 35 |
+| `perfil_investidor` | Perfil de suitability do cliente | 12 de 35 |
+| `patrimonio_total` | Patrimônio total sob acompanhamento | 8 de 35 |
 
 ## Apresentação do consultor — Me Diz o Que Fazer
 
@@ -225,67 +225,6 @@ Variantes: — &middot; 13 variáveis
 subtitulo_carta                   data_carta                        data_primeira_reuniao
 momento_do_cliente                objetivo_principal                frase_de_abertura
 taxa_anual
-```
-</details>
-
-## Cronograma de reuniões
-
-Arquivos: `modelos/cronograma-reunioes-alta-renda.html`, `modelos/cronograma-reunioes-assessoria.html`, `modelos/cronograma-reunioes-consultoria.html`, `modelos/cronograma-reunioes-private.html`
-
-Variantes: alta-renda, assessoria, consultoria, private &middot; 153 variáveis
-
-<details><summary>Ver as 147 variáveis específicas deste documento</summary>
-
-```
-ano_vigencia                      data_emissao                      dur_1
-fmt_1                             dur_2                             fmt_2
-dur_3                             fmt_3                             dur_4
-fmt_4                             time_principal_nome               time_principal_contato
-time_principal_quando             time_backup_nome                  time_backup_contato
-time_backup_quando                time_mesa_nome                    time_mesa_contato
-time_mesa_quando                  time_ops_nome                     time_ops_contato
-time_ops_quando                   antecedencia_pauta                prazo_resumo_pos_reuniao
-antecedencia_confirmacao          cal_01_tipo                       cal_02_tipo
-cal_03_tipo                       cal_04_tipo                       cal_05_tipo
-cal_06_tipo                       cal_07_tipo                       cal_08_tipo
-cal_09_tipo                       cal_10_tipo                       cal_11_tipo
-cal_12_tipo                       cal_01_data                       cal_01_encontro
-cal_01_pauta                      cal_01_entregavel                 cal_01_status
-cal_02_data                       cal_02_encontro                   cal_02_pauta
-cal_02_entregavel                 cal_02_status                     cal_03_data
-cal_03_encontro                   cal_03_pauta                      cal_03_entregavel
-cal_03_status                     cal_04_data                       cal_04_encontro
-cal_04_pauta                      cal_04_entregavel                 cal_04_status
-cal_05_data                       cal_05_encontro                   cal_05_pauta
-cal_05_entregavel                 cal_05_status                     cal_06_data
-cal_06_encontro                   cal_06_pauta                      cal_06_entregavel
-cal_06_status                     cal_07_data                       cal_07_encontro
-cal_07_pauta                      cal_07_entregavel                 cal_07_status
-cal_08_data                       cal_08_encontro                   cal_08_pauta
-cal_08_entregavel                 cal_08_status                     cal_09_data
-cal_09_encontro                   cal_09_pauta                      cal_09_entregavel
-cal_09_status                     cal_10_data                       cal_10_encontro
-cal_10_pauta                      cal_10_entregavel                 cal_10_status
-cal_11_data                       cal_11_encontro                   cal_11_pauta
-cal_11_entregavel                 cal_11_status                     cal_12_data
-cal_12_encontro                   cal_12_pauta                      cal_12_entregavel
-cal_12_status                     prazo_inclusao_pauta              pauta_1
-entrega_1                         pauta_2                           entrega_2
-pauta_3                           entrega_3                         preparo_material_quando
-preparo_material                  preparo_duvidas_quando            preparo_duvidas
-preparo_mudancas_quando           preparo_mudancas                  preparo_confirmacao_quando
-preparo_confirmacao               canal_whats_para                  canal_whats_horario
-canal_whats_endereco              canal_email_para                  canal_email_horario
-canal_email_endereco              canal_tel_para                    canal_tel_horario
-canal_tel_endereco                canal_portal_para                 canal_portal_horario
-canal_portal_endereco             sla_1_tipo                        sla_1_resposta
-sla_1_execucao                    sla_1_quem                        sla_2_tipo
-sla_2_resposta                    sla_2_execucao                    sla_2_quem
-sla_3_tipo                        sla_3_resposta                    sla_3_execucao
-sla_3_quem                        sla_4_tipo                        sla_4_resposta
-sla_4_execucao                    sla_4_quem                        procedimento_urgencia
-texto_ouvidoria                   antecedencia_remarcacao           regra_remarcacao_2
-regra_remarcacao_3                texto_registro_decisoes           texto_revisao_cronograma
 ```
 </details>
 

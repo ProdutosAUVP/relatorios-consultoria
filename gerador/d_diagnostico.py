@@ -124,7 +124,10 @@ def build(t, seg):
                   nums=[2, 3, 5, 6], sm=True),
         ch=chart("Composição atual", "Peso de cada classe no patrimônio total.",
                  "donut", "min-height:44mm", series=["Renda fixa", "Multimercado", "Renda variável BR", "Internacional", "FIIs", "Alternativos"]),
-        ch2=chart("Liquidez da carteira", "Quanto do patrimônio está disponível em D+0, até 30 dias, até 1 ano e acima disso.", "bars", "min-height:44mm"))))
+        ch2=chart("Liquidez da carteira", "Quanto do patrimônio está disponível em cada faixa de prazo.", "bars", "min-height:44mm",
+                  eixo="% do patrimônio",
+                  pontos=["D+0", "Até 30 dias", "Até 90 dias", "Até 1 ano", "1 a 3 anos",
+                          "Acima de 3 anos"]))))
 
     P.append(page_a4(t, "Diagnóstico", 5, """<h1 class="t">Pontos fortes e pontos de atenção</h1>
 <p class="lead">O que já funciona e deve ser preservado, e o que custa dinheiro ou risco desnecessário hoje.</p>

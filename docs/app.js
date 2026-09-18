@@ -26,6 +26,7 @@ const estado = {
   paginas: [],       // páginas montadas por quem preenche: [{id, depois, secao, blocos}]
   proximoBloco: 1,   // numera as instâncias de bloco, para os campos não colidirem
   fora: new Set(),   // páginas tiradas do documento
+  estouro: [],       // páginas cujo conteúdo não coube: [{no, secao, sobra}]
   pagina: 1,
   tela: 'produto',
 };
@@ -163,6 +164,14 @@ function sugerir() {
     if (!v) continue;
     estado.valores[campo] = v;
     n += 1;
+  }
+  // As tabelinhas de gráfico também abrem preenchidas, com os rótulos que o
+  // modelo sugere: os doze meses, as faixas de liquidez, as classes de ativo.
+  // Precisam entrar no estado, e não só na tela — quem digitasse os valores sem
+  // tocar nos rótulos veria o gráfico sair sem eixo horizontal.
+  for (const im of estado.estrutura.imagens) {
+    if (!im.grafico || estado.graficos[im.id] !== undefined) continue;
+    estado.graficos[im.id] = linhasDe(im);
   }
   return n;
 }
@@ -591,11 +600,33 @@ function campoTexto(nome, meta) {
  *  já vêm com os nomes; os de eixo temporal abrem com doze, que é o ano. */
 const LINHAS_GRAFICO = { donut: 6, anel: 6, bars: 12, line: 12 };
 
+/** As colunas de valor da tabelinha: uma por série.
+ *
+ *  Nem todo gráfico é de uma série só. O juro longo contra o dólar, a carteira
+ *  contra o benchmark, a curva de hoje contra a de um ano atrás: são três
+ *  gráficos do sistema em que a comparação é o assunto, e desenhá-los com uma
+ *  linha só era perder o que eles têm para dizer. */
+const colunasDe = (im) => window.Graficos.colunas(im.grafico, im.series, im.eixo);
+
 function linhasDe(im) {
   const guardado = estado.graficos[im.id];
-  if (guardado && guardado.length) return guardado;
-  const n = im.series ? im.series.length : (LINHAS_GRAFICO[im.grafico] || 6);
-  return Array.from({ length: n }, (_, i) => ({ r: (im.series || [])[i] || '', v: '', m: '' }));
+  if (guardado && guardado.length) {
+    // Rascunho salvo antes das séries guardava `{r, v, m}`.
+    return guardado.map((l) => (Array.isArray(l.v) ? l
+      : { r: l.r || '', v: [l.v, l.m].filter((x) => x !== undefined) }));
+  }
+  const cols = colunasDe(im);
+  // Nos de rosca, cada linha é uma fatia, e o nome da fatia vem de `series`.
+  // Nos de eixo, cada linha é um ponto do eixo horizontal, e o nome vem de
+  // `pontos` — os doze meses, as faixas de liquidez, os vértices da curva.
+  // Quem nomeia as colunas, ali, é `series`.
+  const fatias = (im.grafico === 'donut' || im.grafico === 'anel') && im.series;
+  const rotulos = fatias ? im.series : (im.pontos || []);
+  const n = rotulos.length || LINHAS_GRAFICO[im.grafico] || 6;
+  return Array.from({ length: n }, (_, i) => ({
+    r: rotulos[i] || '',
+    v: cols.map(() => ''),
+  }));
 }
 
 /** O gráfico como tabelinha: uma linha por fatia, rótulo e valor.
@@ -607,19 +638,19 @@ function linhasDe(im) {
  *  dado tem precedência sobre ela. */
 function campoGrafico(im) {
   const linhas = linhasDe(im);
-  const duplo = im.grafico === 'anel';
-  const rotuloV = im.eixo || (duplo ? 'Atual' : 'Valor');
+  const cols = colunasDe(im);
+  const eixoX = (im.grafico === 'line' || im.grafico === 'bars') ? 'Período' : 'Rótulo';
   const dado = estado.imagens[im.id];
-  const preenchido = linhas.some((l) => (l.v || '').trim() || (l.m || '').trim());
+  const preenchido = linhas.some((l) => l.v.some((x) => (x || '').trim()));
   return `<div class="grafico${preenchido ? ' cheio' : ''}" data-grafico="${escapa(im.id)}">
     <div class="nome">${escapa(im.rotulo)}</div>
     <div class="desc">${escapa(im.descricao)}</div>
     <table class="dados">
-      <thead><tr><th>Rótulo</th><th>${escapa(rotuloV)}</th>${duplo ? '<th>Meta</th>' : ''}</tr></thead>
+      <thead><tr><th>${eixoX}</th>${cols.map((c) => `<th>${escapa(c)}</th>`).join('')}</tr></thead>
       <tbody>${linhas.map((l, i) => `<tr>
         <td><input type="text" data-gr="${escapa(im.id)}" data-i="${i}" data-c="r" value="${escapa(l.r)}"></td>
-        <td><input type="text" inputmode="decimal" data-gr="${escapa(im.id)}" data-i="${i}" data-c="v" value="${escapa(l.v)}"></td>
-        ${duplo ? `<td><input type="text" inputmode="decimal" data-gr="${escapa(im.id)}" data-i="${i}" data-c="m" value="${escapa(l.m)}"></td>` : ''}
+        ${cols.map((c, k) => `<td><input type="text" inputmode="decimal" data-gr="${escapa(im.id)}"`
+          + ` data-i="${i}" data-c="${k}" value="${escapa(l.v[k] || '')}"></td>`).join('')}
       </tr>`).join('')}</tbody>
     </table>
     <div class="acoes">
@@ -733,10 +764,7 @@ function montar(modo) {
   // depois da sétima do modelo, e não da sétima do que sobrou.
   inserirMontadas(doc, paginas);
   paginas.forEach((p, i) => { if (!dentro(i + 1)) p.remove(); });
-  [...doc.querySelectorAll('.page, .slide')].forEach((p, i) => {
-    const no = p.querySelector('.pg-foot .no');
-    if (no) no.textContent = String(i + 1).padStart(2, '0');
-  });
+  renumerar(doc);
 
   const esvaziados = new Set();
   for (const span of doc.querySelectorAll('span.ph')) {
@@ -794,7 +822,8 @@ function montar(modo) {
   for (const [id, linhas] of Object.entries(estado.graficos)) {
     const bloco = doc.querySelector(`[data-grafico][data-img="${CSS.escape(String(id))}"]`);
     if (!bloco || !window.Graficos.temDados(linhas)) continue;
-    const html = window.Graficos.desenha(bloco.dataset.grafico, linhas);
+    const series = bloco.dataset.series ? bloco.dataset.series.split('|') : null;
+    const html = window.Graficos.desenha(bloco.dataset.grafico, linhas, series);
     if (!html) continue;
     bloco.innerHTML = html;
     bloco.classList.add('feito');
@@ -858,6 +887,10 @@ function inserirMontadas(doc, originais) {
     .sort((a, b) => b.depois - a.depois);
   for (const pg of pedidos) {
     const nova = molde.cloneNode(true);
+    // A marca é o que permite repaginá-la depois. Só as páginas montadas se
+    // dividem: as do modelo são desenho fechado, e quebrar uma tabela ao meio
+    // para caber deixaria o cabeçalho órfão numa página e os números na outra.
+    nova.classList.add('montada');
     const sec = nova.querySelector('.pg-head .sec');
     if (sec) sec.textContent = pg.secao || 'Análise';
     const corpo = nova.querySelector('.pg-body');
@@ -867,21 +900,70 @@ function inserirMontadas(doc, originais) {
   }
 }
 
+/** Renumera o rodapé na ordem em que as páginas ficaram. */
+function renumerar(doc) {
+  [...doc.querySelectorAll('.page, .slide')].forEach((pg, i) => {
+    const no = pg.querySelector('.pg-foot .no');
+    if (no) no.textContent = String(i + 1).padStart(2, '0');
+  });
+}
+
+/** Quebra em duas a página montada que não coube, e repete até caber.
+ *
+ *  Precisa de um documento já diagramado: a conta é `scrollHeight` contra
+ *  `clientHeight`, e num documento solto na memória não há nem um nem outro.
+ *  Por isso ela roda no quadro da prévia e no quadro escondido da exportação, e
+ *  não dentro de `montar()`.
+ *
+ *  O algoritmo é o do compositor: enquanto não couber, tira o último bloco e
+ *  passa para a página seguinte. Ler `scrollHeight` a cada passo força o
+ *  navegador a recalcular, então a medida acompanha a mudança.
+ *
+ *  Um bloco sozinho que não cabe não tem como ser dividido — uma tabela de
+ *  quinze linhas é uma coisa só. Esse fica, e quem avisa é `conferirEstouro()`.
+ *
+ *  A guarda de 60 voltas existe para o caso de uma página em que nada couber:
+ *  sem ela, o laço passaria o bloco adiante para sempre.
+ */
+function repaginar(doc) {
+  const fila = [...doc.querySelectorAll('.page.montada')];
+  let guarda = 0;
+  while (fila.length && guarda < 60) {
+    guarda += 1;
+    const pg = fila.shift();
+    const corpo = pg.querySelector('.pg-body');
+    if (!corpo || corpo.scrollHeight - corpo.clientHeight <= 1) continue;
+    if (corpo.children.length <= 1) continue;
+
+    const nova = pg.cloneNode(true);
+    const novoCorpo = nova.querySelector('.pg-body');
+    novoCorpo.innerHTML = '';
+    // A continuação diz que é continuação: quem lê o documento impresso vê duas
+    // páginas com o mesmo título no cabeçalho e precisa saber que é a mesma
+    // seção, e não um assunto repetido.
+    const sec = nova.querySelector('.pg-head .sec');
+    if (sec && !/ · continuação$/.test(sec.textContent)) {
+      sec.textContent = `${sec.textContent} · continuação`;
+    }
+    while (corpo.children.length > 1 && corpo.scrollHeight - corpo.clientHeight > 1) {
+      novoCorpo.prepend(corpo.lastElementChild);
+    }
+    pg.after(nova);
+    fila.unshift(nova);   // a continuação também pode não caber
+  }
+  renumerar(doc);
+}
+
 const PX_MM = 96 / 25.4;
 
-/** A altura, em milímetros, que a folha longa precisa para caber o que foi
- *  escrito — ou `null` se o documento não tiver folha longa, que é o caso da
- *  maioria: A4 e slide têm tamanho de papel, e neles é o conteúdo que se ajusta
- *  à página, não o contrário.
+/** Faz um trabalho sobre o documento diagramado, e devolve o HTML resultante.
  *
- *  A apresentação do consultor é a exceção: uma folha só, de mais de um metro,
- *  cuja altura depende de quanto foi escrito. Medir exige renderizar, então isto
- *  monta o documento num quadro escondido, solta a altura da folha para ler o
- *  que o conteúdo ocupa e devolve a caixa ao que era. É a mesma conta do
- *  `scripts/altura.mjs`, que acerta os arquivos gerados; aqui ela vale para o
- *  que a pessoa acabou de digitar. */
-async function alturaDaFolha(html) {
-  if (!html.includes('page longa')) return null;
+ *  Há coisas que não se sabem sobre um documento solto na memória: quanto uma
+ *  página ocupa, se o conteúdo dela coube, onde cortar. Tudo isso pede layout,
+ *  e layout pede um documento numa janela. O quadro escondido é essa janela —
+ *  fora da tela, sem interferir em nada, descartado ao fim.
+ */
+async function noQuadro(html, trabalho) {
   const quadro = document.createElement('iframe');
   quadro.setAttribute('aria-hidden', 'true');
   quadro.style.cssText = 'position:fixed;left:-20000px;top:0;width:1200px;height:800px;'
@@ -892,41 +974,74 @@ async function alturaDaFolha(html) {
     doc.open();
     doc.write(html);
     doc.close();
-    // A fonte e o retrato vêm embutidos no próprio arquivo, mas assentar leva um
-    // quadro: medir antes disso dá a altura da fonte de reserva, que é outra.
+    // A fonte e as imagens vêm embutidas no próprio arquivo, mas assentar leva
+    // um quadro: medir antes disso dá a altura da fonte de reserva, que é outra.
     if (doc.fonts) { try { await doc.fonts.ready; } catch (e) { /* sem a API */ } }
     await new Promise((pronto) => requestAnimationFrame(pronto));
-    const altos = [...doc.querySelectorAll('.page.longa')].map((folha) => {
-      const antes = folha.style.height;
-      folha.style.height = 'auto';
-      const px = folha.getBoundingClientRect().height;
-      folha.style.height = antes;
-      return px / PX_MM;
-    });
-    if (!altos.length) return null;
-    // Arredonda para cima, ao múltiplo de 5 mm seguinte e com pelo menos 2 mm de
-    // folga: os poucos milímetros de sobra são o que os respiros elásticos
-    // repartem entre as seções, e absorvem a diferença entre o que este
-    // navegador mede e o que o mecanismo de impressão desenha. O piso é o A4.
-    // `@page` tem um tamanho só para o arquivo inteiro, então com mais de uma
-    // folha vale a maior: sobra vão nas outras, mas nenhuma sai cortada.
-    return Math.max(297, Math.ceil((Math.max(...altos) + 2) / 5) * 5);
+    trabalho(doc);
+    return '<!doctype html>\n' + doc.documentElement.outerHTML;
   } finally {
     quadro.remove();
   }
 }
 
-/** O arquivo pronto para sair: o modelo preenchido e, quando é folha longa, a
- *  altura medida escrita por cima da que veio do gerador. */
+/** A altura, em milímetros, que a folha longa precisa para caber o que foi
+ *  escrito — ou `null` se o documento não tiver folha longa, que é o caso da
+ *  maioria: A4 e slide têm tamanho de papel, e neles é o conteúdo que se ajusta
+ *  à página, não o contrário.
+ *
+ *  A apresentação do consultor é a exceção: uma folha só, de mais de um metro,
+ *  cuja altura depende de quanto foi escrito. Solta a altura da folha, lê o que
+ *  o conteúdo ocupa e devolve a caixa ao que era. É a mesma conta do
+ *  `scripts/altura.mjs`, que acerta os arquivos gerados; aqui ela vale para o
+ *  que a pessoa acabou de digitar. */
+function alturaDaFolha(doc) {
+  const altos = [...doc.querySelectorAll('.page.longa')].map((folha) => {
+    const antes = folha.style.height;
+    folha.style.height = 'auto';
+    const px = folha.getBoundingClientRect().height;
+    folha.style.height = antes;
+    return px / PX_MM;
+  });
+  if (!altos.length) return null;
+  // Arredonda para cima, ao múltiplo de 5 mm seguinte e com pelo menos 2 mm de
+  // folga: os poucos milímetros de sobra são o que os respiros elásticos
+  // repartem entre as seções, e absorvem a diferença entre o que este navegador
+  // mede e o que o mecanismo de impressão desenha. O piso é o A4. `@page` tem um
+  // tamanho só para o arquivo inteiro, então com mais de uma folha vale a maior:
+  // sobra vão nas outras, mas nenhuma sai cortada.
+  return Math.max(297, Math.ceil((Math.max(...altos) + 2) / 5) * 5);
+}
+
+/** O arquivo pronto para sair.
+ *
+ *  Duas coisas exigem um documento diagramado, e as duas acontecem no mesmo
+ *  quadro escondido: repaginar as páginas montadas que não couberam e medir a
+ *  altura da folha longa. O quadro trabalha sempre sobre a versão sem o script
+ *  de impressão — ele é um documento como outro qualquer, e o script mandaria o
+ *  navegador abrir a caixa de imprimir a partir dele. O script entra no fim,
+ *  no texto já pronto. */
 async function montarFinal(modo) {
-  const html = montar(modo);
-  // Mede sobre a versão sem o script de impressão: o quadro de medida é um
-  // documento como outro qualquer, e o script mandaria o navegador abrir a
-  // caixa de imprimir a partir dele.
-  const alto = await alturaDaFolha(modo === 'imprimir' ? montar('exportar') : html);
-  if (!alto) return html;
-  const regras = `@page{size:210mm ${alto}mm;margin:0}.page.longa{height:${alto}mm}`;
-  return html.replace('</head>', () => `<style>${regras}</style></head>`);
+  let html = montar(modo === 'imprimir' ? 'exportar' : modo);
+  const montadas = html.includes('page montada');
+  const longa = html.includes('page longa');
+  if (montadas || longa) {
+    html = await noQuadro(html, (doc) => {
+      if (montadas) repaginar(doc);
+      if (!longa) return;
+      const alto = alturaDaFolha(doc);
+      if (!alto) return;
+      const estilo = doc.createElement('style');
+      estilo.textContent =
+        `@page{size:210mm ${alto}mm;margin:0}.page.longa{height:${alto}mm}`;
+      doc.head.appendChild(estilo);
+    });
+  }
+  if (modo === 'imprimir') {
+    html = html.replace('</body>', () =>
+      '<script>addEventListener("load",()=>setTimeout(()=>print(),300))</script></body>');
+  }
+  return html;
 }
 
 function renderizar() {
@@ -934,7 +1049,57 @@ function renderizar() {
   doc.open();
   doc.write(montar('previa'));
   doc.close();
-  setTimeout(ajustarQuadro, 50);
+  // Na mesma ordem da exportação: primeiro reparte as páginas montadas que não
+  // couberam, depois confere o que sobrou, e só então ajusta a vista. O ajuste
+  // esconde todas as páginas menos a que está à frente, e página escondida não
+  // tem altura para medir nem para repaginar.
+  setTimeout(() => {
+    repaginar(doc);
+    conferirEstouro();
+    ajustarQuadro();
+  }, 50);
+}
+
+/** Que páginas não couberam.
+ *
+ *  A página tem altura fechada e `overflow:hidden`: o que passa dela não
+ *  aparece, e não aparece calado. Quem escreveu três parágrafos onde cabia um
+ *  exportava o documento com o terceiro cortado sem nenhum sinal — e com o
+ *  construtor de páginas isso deixou de ser raro, porque empilhar oito blocos é
+ *  um clique cada.
+ *
+ *  A conta é a mesma do `npm run check`, que valida os modelos no build: o
+ *  corpo da página rola mais do que a caixa dele. A diferença é que aqui ela
+ *  roda sobre o que a pessoa acabou de escrever. */
+function conferirEstouro() {
+  const doc = $('#quadro').contentDocument;
+  if (!doc) return;
+  const antes = JSON.stringify(estado.estouro);
+  estado.estouro = [...doc.querySelectorAll('.page, .slide')].map((pg, i) => {
+    const corpo = pg.querySelector('.pg-body');
+    const sobra = corpo ? Math.round(corpo.scrollHeight - corpo.clientHeight) : 0;
+    return { no: i + 1, secao: pg.querySelector('.pg-head .sec')?.textContent || '', sobra };
+  }).filter((x) => x.sobra > 1);
+  if (JSON.stringify(estado.estouro) !== antes) mostrarEstouro();
+}
+
+/** O aviso, onde ele é útil: no alto do formulário e junto da página montada
+ *  que causou o problema. */
+function mostrarEstouro() {
+  const caixa = $('#estouro');
+  if (!caixa) return;
+  const n = estado.estouro.length;
+  caixa.hidden = !n;
+  if (n) {
+    // As páginas montadas já se repartiram sozinhas antes desta conferência. O
+    // que sobra aqui é o que não tem como repartir: uma página do modelo com
+    // texto demais, ou um bloco único — uma tabela de quinze linhas — que não
+    // cabe inteiro em folha nenhuma.
+    caixa.innerHTML = `<strong>${n === 1 ? 'Uma página não coube' : `${n} páginas não couberam`}.</strong>
+      O que passa da margem é cortado no arquivo exportado. ${estado.estouro.map((x) =>
+        `<span class="pg-estourou">${String(x.no).padStart(2, '0')} ${escapa(x.secao)}</span>`).join(' ')}
+      Encurte o texto dessas páginas — ou, se for um bloco só que não cabe, divida-o em dois.`;
+  }
 }
 
 /** O modelo tem largura fixa em mm; a prévia mostra uma página por vez,
@@ -1024,6 +1189,24 @@ function emBranco() {
       achados.push({ nome: n, rotulo: (campos[n] || {}).rotulo || n, pagina: g.pagina, secao: g.secao });
     }
   }
+  // Os campos dos blocos não estão na estrutura do modelo — eles nascem quando
+  // o consultor acrescenta o bloco —, e por isso passavam despercebidos pelo
+  // aviso: dava para montar uma página inteira em branco e exportar sem que
+  // nada avisasse.
+  for (const pg of estado.paginas) {
+    for (const bl of pg.blocos) {
+      for (const [nome, meta] of Object.entries(blocoCampos(bl))) {
+        if ((estado.valores[nome] || '').trim()) continue;
+        achados.push({ nome, rotulo: meta.rotulo, pagina: pg.depois,
+                       secao: (pg.secao || 'Página montada') + ' · '
+                              + (blocoDe(bl.chave)?.nome || bl.chave) });
+      }
+    }
+  }
+  // Na ordem do documento, e não na de descoberta: com trezentos campos vazios
+  // a lista mostra os doze primeiros, e "os doze primeiros" só quer dizer
+  // alguma coisa se for pela página.
+  achados.sort((a, b) => a.pagina - b.pagina);
   return achados;
 }
 
@@ -1144,9 +1327,12 @@ function ligar() {
     const gr = e.target.dataset.gr;
     if (gr) {
       const i = Number(e.target.dataset.i);
+      const c = e.target.dataset.c;
       const linhas = estado.graficos[gr] || (estado.graficos[gr] = []);
-      while (linhas.length <= i) linhas.push({ r: '', v: '', m: '' });
-      linhas[i][e.target.dataset.c] = e.target.value;
+      while (linhas.length <= i) linhas.push({ r: '', v: [] });
+      if (!Array.isArray(linhas[i].v)) linhas[i] = { r: linhas[i].r || '', v: [] };
+      if (c === 'r') linhas[i].r = e.target.value;
+      else linhas[i].v[Number(c)] = e.target.value;
       clearTimeout(temporizador);
       temporizador = setTimeout(() => { salvar(); atualizarContagens(); renderizar(); }, 250);
       return;
@@ -1222,8 +1408,9 @@ function ligar() {
 
     const mais = e.target.dataset.mais;
     if (mais) {
-      const im = estado.estrutura.imagens.find((x) => String(x.id) === mais);
-      estado.graficos[mais] = linhasDe(im).concat([{ r: '', v: '', m: '' }]);
+      const im = estado.estrutura.imagens.find((x) => String(x.id) === mais)
+        || { id: mais, grafico: 'line', series: null, eixo: null };
+      estado.graficos[mais] = linhasDe(im).concat([{ r: '', v: colunasDe(im).map(() => '') }]);
       salvar();
       telaPreencher();
       return;

@@ -92,12 +92,14 @@ function estrutura(html) {
       const attrs = m[2] + m[4];
       const limpa = (x) => x.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim();
       const serie = attrs.match(/data-series="([^"]*)"/)?.[1];
+      const pts = attrs.match(/data-pontos="([^"]*)"/)?.[1];
       imagens.push({
         id: Number(m[3]),
         tipo: m[1] === 'chart' ? 'gráfico' : 'imagem',
         grafico: attrs.match(/data-grafico="([^"]*)"/)?.[1] || null,
         series: serie ? serie.split('|') : null,
         eixo: attrs.match(/data-eixo="([^"]*)"/)?.[1] || null,
+        pontos: pts ? pts.split('|') : null,
         pagina: pag.numero,
         secao: pag.secao,
         rotulo: limpa(m[5].match(/<div class="cl">([\s\S]*?)<\/div>/)?.[1] || 'Imagem'),

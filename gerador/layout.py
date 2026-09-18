@@ -194,7 +194,12 @@ def slide(t, sec, no, body, dark=False, date_ph=None):
 
 # ---------------------------------------------------------------- blocos
 
-def chart(label, desc, skeleton="bars", style="", series=None, eixo=None, ident=None):
+MESES = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+         "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
+
+
+def chart(label, desc, skeleton="bars", style="", series=None, eixo=None, pontos=None,
+          ident=None):
     """O lugar de um gráfico na página.
 
     Sai como moldura vazia com um esqueleto do formato dentro — é o que o
@@ -202,14 +207,17 @@ def chart(label, desc, skeleton="bars", style="", series=None, eixo=None, ident=
     não é uma imagem: é uma tabelinha de rótulo e valor, e o gráfico se desenha
     a partir dela, em SVG, no arquivo exportado.
 
-    Por isso a moldura carrega o formato (`data-grafico`) e os rótulos sugeridos
-    (`data-series`): são eles que dizem à ferramenta quantas linhas oferecer e
-    com que nome vêm preenchidas. `anel` é o par de roscas concêntricas — a
-    externa com a posição atual, a interna com a meta —, e é o único formato que
-    pede dois valores por linha.
+    Por isso a moldura carrega o formato (`data-grafico`) e o que preencher:
 
-    `eixo` nomeia a unidade do eixo vertical nos formatos que têm eixo, e entra
-    na tabelinha como cabeçalho da coluna de valor.
+    - `series` nomeia as séries. Nas roscas, cada série é uma fatia e o nome
+      sugerido já vem na linha. Nos de eixo, cada série é uma linha ou uma
+      barra, e o nome vira cabeçalho de coluna: é assim que o juro longo e o
+      dólar cabem no mesmo gráfico. `anel` são duas séries por definição — a
+      rosca de fora é a posição atual, a de dentro é a meta.
+    - `eixo` nomeia a unidade do eixo vertical quando há uma série só.
+    - `pontos` sugere os rótulos do eixo horizontal: os doze meses, as faixas de
+      liquidez, os vértices da curva. Sem eles a tabelinha abre com as linhas
+      em branco, e quem preenche digita "Jan, Fev, Mar…" a cada relatório.
 
     O `data-img` continua: quem preferir mandar a imagem pronta de um gráfico
     feito em outro lugar continua podendo, e o dado tem precedência sobre ela.
@@ -230,6 +238,8 @@ def chart(label, desc, skeleton="bars", style="", series=None, eixo=None, ident=
         dados += ' data-series="%s"' % "|".join(series)
     if eixo:
         dados += ' data-eixo="%s"' % eixo
+    if pontos:
+        dados += ' data-pontos="%s"' % "|".join(pontos)
     return ('<div class="chart" data-img="%s"%s style="flex:1 1 auto;%s">%s'
             '<div class="cl">%s</div>'
             '<div class="cd">%s</div>%s</div>') % (ident, dados, style, sk, label, desc, lg)

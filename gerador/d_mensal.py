@@ -114,7 +114,7 @@ def build(t, seg):
                   nums=[1, 2, 3, 4, 5]),
         ch=chart("Evolução do patrimônio",
                  "Linha do patrimônio mês a mês, ao longo dos últimos doze meses.",
-                 "line", "min-height:46mm", eixo="Patrimônio (R$)")))
+                 "line", "min-height:46mm", eixo="Patrimônio (R$)", pontos=MESES)))
 
     # ------------------------------------------------------ tabela do portfólio
     # A página era a lista de todas as posições, ativo a ativo. Quem recebe o
@@ -189,7 +189,7 @@ def build(t, seg):
                     for i in (1, 2, 3, 4)],
                    foot=["<strong>Total</strong>", "", "", ph("prov_total_bruto"), ph("prov_total_ir"), ph("total_proventos")],
                    nums=[3, 4, 5], sm=True),
-        ch=chart("Proventos por mês", "Barras com os proventos recebidos nos últimos 12 meses.", "bars", "min-height:48mm", eixo="Proventos (R$)")))
+        ch=chart("Proventos por mês", "Barras com os proventos recebidos nos últimos 12 meses.", "bars", "min-height:48mm", eixo="Proventos (R$)", pontos=MESES)))
 
     # -------------------------------------------------------------- renda fixa
     # Os indexadores saíram: a divisão entre pós, pré e inflação é decisão de

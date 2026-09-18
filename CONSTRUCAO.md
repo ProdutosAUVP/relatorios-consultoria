@@ -404,6 +404,35 @@ da página original — "depois da 07" quer dizer depois da sétima do modelo, e
 da sétima do que sobrou —, então a inserção acontece antes de tirar as páginas
 desmarcadas.
 
+**A página montada se reparte sozinha.** Quando o conteúdo passa da folha,
+`repaginar()` tira o último bloco e o passa para uma página nova, e repete até
+caber — o algoritmo do compositor. A continuação herda o cabeçalho com um
+`· continuação` no fim, para quem lê no papel saber que é a mesma seção.
+
+Ela precisa de um documento já diagramado: a conta é `scrollHeight` contra
+`clientHeight`, e num documento solto na memória não há nem um nem outro. Por
+isso roda no quadro da prévia e no quadro escondido da exportação, e não dentro
+de `montar()` — que é síncrono e trabalha sobre um `Document` sem layout. Ler
+`scrollHeight` a cada passo força o navegador a recalcular, então a medida
+acompanha a mudança.
+
+Só as páginas montadas se repartem. As do modelo são desenho fechado, e quebrar
+uma tabela ao meio para caber deixaria o cabeçalho órfão numa página e os
+números na outra.
+
+**A ferramenta avisa quando a página não coube.** A página tem altura fechada e
+`overflow:hidden`: o que passa dela some do arquivo, e sumia calado. Quem
+escrevia três parágrafos onde cabia um exportava o documento com o terceiro
+cortado sem nenhum sinal — e com o construtor isso deixou de ser raro, porque
+empilhar oito blocos é um clique cada.
+
+`conferirEstouro()` roda depois de cada desenho da prévia e faz a mesma conta do
+`npm run check`, que valida os modelos no build: o corpo da página rola mais do
+que a caixa dele. A diferença é que aqui ela roda sobre o que a pessoa acabou de
+escrever. Roda antes de `ajustarQuadro()`, e não depois, porque o ajuste esconde
+todas as páginas menos a que está à vista, e página escondida não tem altura
+para medir.
+
 **O gráfico se desenha a partir do dado, não de uma imagem.** Um espaço de
 gráfico era um espaço de imagem: o consultor montava a rosca em outro lugar,
 exportava um PNG e subia. O PNG chegava numa resolução qualquer, com a fonte de
@@ -418,9 +447,22 @@ tipografia da casa, nas cores do segmento — `--c1`..`--c6`, as mesmas da legen
 
 São quatro formatos, e cada um existe porque um documento pede: `donut` para a
 divisão de um todo, `anel` para as duas roscas concêntricas da carteira atual
-contra a meta, `bars` para uma série no tempo e `line` para a evolução do
-patrimônio. O envio de imagem continua ali, para o gráfico que não couber em
-nenhum deles, e o dado tem precedência sobre ele.
+contra a meta, `bars` para uma série no tempo e `line` para uma evolução. O
+envio de imagem continua ali, para o gráfico que não couber em nenhum deles, e o
+dado tem precedência sobre ele.
+
+**Nem todo gráfico é de uma série só.** O juro longo contra o dólar, o IPCA
+contra os núcleos e a meta, a curva de hoje contra a de um ano atrás, a carteira
+contra o benchmark: em quatro gráficos do sistema a comparação é o assunto, e
+desenhá-los com uma linha só era perder o que eles têm para dizer. `series`
+nomeia as séries e vira coluna na tabelinha; a rosca dupla deixou de ser um caso
+especial e passou a ser o que sempre foi, um gráfico de duas séries.
+
+**E a tabelinha abre preenchida.** `pontos` sugere os rótulos do eixo horizontal
+— os doze meses, as faixas de liquidez, os vértices da curva —, e eles entram no
+estado, e não só na tela: quem digitasse os valores sem tocar nos rótulos veria
+o gráfico sair sem eixo horizontal. Rótulo sozinho, porém, não desenha nada: a
+moldura que pede preenchimento vale mais do que uma linha rente ao zero.
 
 Sem biblioteca: o SVG é montado à mão, o arquivo exportado abre sozinho por
 `file://` e o Chromium imprime o vetor sem rasterizar. E `graficos.js` vive

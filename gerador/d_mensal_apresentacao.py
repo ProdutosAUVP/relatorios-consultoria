@@ -59,7 +59,8 @@ def build(t, seg):
                    ("No mês", ph("rent_mes"), "No ano: " + ph("rent_ano")),
                    ("Em 12 meses", ph("rent_12m"), "24 meses: " + ph("rent_24m")),
                    ("Aportes líquidos", ph("aporte_liquido_mes"), "Resgates: " + ph("resgates_mes"))]),
-        ch=chart("Patrimônio nos últimos 12 meses", "Linha de patrimônio com barras de aportes e resgates.", "line", "min-height:52mm"),
+        ch=chart("Patrimônio nos últimos 12 meses", "Evolução do patrimônio mês a mês.", "line",
+                 "min-height:52mm", eixo="Patrimônio (R$)", pontos=MESES),
         frase=ph("resumo_do_mes"), aten=ph("ponto_de_atencao_mes")), dark=True))
 
     S.append(slide(t, "Rentabilidade", 4, """<h1 class="t">Sua carteira x referências</h1>
@@ -73,7 +74,8 @@ def build(t, seg):
                    ["IPCA + 5%", ph("ipca5_mes"), ph("ipca5_ano"), ph("ipca5_12m"), ph("ipca5_24m")],
                    ["Ibovespa", ph("ibov_mes"), ph("ibov_ano"), ph("ibov_12m"), ph("ibov_24m")]],
                   nums=[1, 2, 3, 4]),
-        ch=chart("Carteira x IPCA + 5% a.a. acumulado", "Duas linhas acumuladas desde o início do relacionamento.", "line", "min-height:60mm"))))
+        ch=chart("Carteira x IPCA + 5% a.a. acumulado", "Duas linhas acumuladas desde o início do relacionamento.", "line", "min-height:60mm",
+                  series=["Sua carteira (%)", "IPCA + 5% a.a. (%)"], pontos=MESES))))
 
     S.append(slide(t, "Alocação", 5, """<h1 class="t">Alvo x realizado</h1>
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch">
@@ -91,7 +93,8 @@ def build(t, seg):
                                 ("Fundos imobiliários", "fii"), ("Alternativos", "alt"),
                                 ("Caixa", "caixa")]],
                   foot=["<strong>Total</strong>", "100,0%", "100,0%", "&mdash;"], nums=[1, 2, 3], sm=True),
-        ch=chart("Composição atual", "Rosca com o peso de cada classe.", "donut", "min-height:46mm"),
+        ch=chart("Composição atual", "Rosca com o peso de cada classe.", "donut", "min-height:46mm",
+                 series=["Renda fixa", "Multimercado", "Renda variável BR", "Internacional", "FIIs", "Alternativos"]),
         reb=ph("texto_rebalanceamento"))))
 
     S.append(slide(t, "Movimentações", 6, """<h1 class="t">Movimentações do período</h1>
@@ -118,11 +121,22 @@ def build(t, seg):
         tab=table(["Item", "Detalhe", "Valor", "%", "Observação"],
                   [[ph("seg_%d_item" % i), ph("seg_%d_detalhe" % i), ph("seg_%d_valor" % i),
                     ph("seg_%d_perc" % i), ph("seg_%d_obs" % i)] for i in (1, 2, 3, 4, 5)], nums=[2, 3]),
+        # O slide próprio de cada segmento olha para coisas diferentes, então o
+        # gráfico muda de forma junto: vencimentos são um calendário, e viram
+        # barras; moeda e jurisdição são uma divisão, e viram rosca.
         ch=chart("Visão do segmento",
                  {"consultoria": "Calendário de vencimentos da renda fixa.",
                   "assessoria": "Calendário de vencimentos da renda fixa.",
                   "alta-renda": "Ofertas acessadas no período e peso na carteira.",
-                  "private": "Patrimônio por moeda e por jurisdição."}[seg], "donut", "min-height:50mm"))))
+                  "private": "Patrimônio por moeda e por jurisdição."}[seg],
+                 {"consultoria": "bars", "assessoria": "bars",
+                  "alta-renda": "donut", "private": "donut"}[seg], "min-height:50mm",
+                 series={"alta-renda": ["Renda fixa", "Fundos exclusivos", "Estruturados",
+                                        "Renda variável", "Internacional"],
+                         "private": ["Real", "Dólar", "Euro", "Outras moedas"]}.get(seg),
+                 eixo={"consultoria": "A vencer (R$)",
+                       "assessoria": "A vencer (R$)"}.get(seg),
+                 pontos=MESES if seg in ("consultoria", "assessoria") else None))))
 
     S.append(slide(t, "Cenário", 8, """<h1 class="t">Cenário e posicionamento</h1>
 <div class="cols2" style="margin-bottom:6mm">

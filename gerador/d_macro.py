@@ -68,8 +68,8 @@ def build(t, seg):
                                 ("PIB China (a/a)", "pibchina"), ("Petróleo Brent", "brent"),
                                 ("Índice DXY", "dxy")]],
                   nums=[1, 2, 3]),
-        ch=chart("Juros longos e dólar", "Treasury de 10 anos e índice DXY nos últimos 12 meses.", "line",
-                 "min-height:40mm"))))
+        ch=chart("Juros longos e dólar", "Treasury de 10 anos e índice DXY nos últimos 12 meses.",
+                 "line", "min-height:40mm", series=["Treasury 10 anos (%)", "DXY"], pontos=MESES))))
 
     P.append(page_a4(t, "Brasil", 5, """<span class="eyebrow">Brasil</span>
 <h1 class="t">Atividade e inflação</h1>
@@ -90,7 +90,8 @@ def build(t, seg):
                    for n, k in [("IPCA", "ipca"), ("IPCA núcleo", "nucleo"), ("IGP-M", "igpm"),
                                 ("PIB", "pib"), ("Desemprego (PNAD)", "desemp"), ("Massa salarial real", "massa")]],
                   nums=[1, 2, 3]),
-        ch=chart("IPCA cheio e núcleos", "IPCA acumulado em 12 meses contra a banda da meta e a média dos núcleos.", "line", "min-height:38mm"))))
+        ch=chart("IPCA cheio e núcleos", "IPCA acumulado em 12 meses contra a média dos núcleos e o centro da meta.", "line", "min-height:38mm",
+                 series=["IPCA cheio", "Média dos núcleos", "Centro da meta"], pontos=MESES))))
 
     P.append(page_a4(t, "Brasil", 6, """<span class="eyebrow">Brasil</span>
 <h1 class="t">Juros, fiscal e câmbio</h1>
@@ -123,7 +124,9 @@ def build(t, seg):
                                 ("Dívida bruta (% PIB)", "dbgg"),
                                 ("Câmbio (R$/US$)", "cambio"),
                                 ("Conta corrente (% PIB)", "cc")]], nums=[1, 2, 3]),
-        ch=chart("Curva de juros DI", "Curva atual contra a de um mês atrás e a de um ano atrás.", "line", "min-height:36mm"))))
+        ch=chart("Curva de juros DI", "Curva atual contra a de um mês atrás e a de um ano atrás. Cada linha é um vértice.", "line", "min-height:36mm",
+                 series=["Hoje", "Um mês atrás", "Um ano atrás"],
+                 pontos=["jan/27", "jan/28", "jan/29", "jan/30", "jan/31", "jan/33", "jan/35"]))))
 
     P.append(page_a4(t, "Mercados", 7, """<h1 class="t">Mercados no período</h1>
 <p class="lead">Retorno das principais classes e índices em %(mes)s, no ano e em 12 meses.</p>

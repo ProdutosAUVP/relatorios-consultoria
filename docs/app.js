@@ -164,6 +164,14 @@ function sugerir() {
     estado.valores[campo] = v;
     n += 1;
   }
+  // As tabelinhas de gráfico também abrem preenchidas, com os rótulos que o
+  // modelo sugere: os doze meses, as faixas de liquidez, as classes de ativo.
+  // Precisam entrar no estado, e não só na tela — quem digitasse os valores sem
+  // tocar nos rótulos veria o gráfico sair sem eixo horizontal.
+  for (const im of estado.estrutura.imagens) {
+    if (!im.grafico || estado.graficos[im.id] !== undefined) continue;
+    estado.graficos[im.id] = linhasDe(im);
+  }
   return n;
 }
 
@@ -591,11 +599,33 @@ function campoTexto(nome, meta) {
  *  já vêm com os nomes; os de eixo temporal abrem com doze, que é o ano. */
 const LINHAS_GRAFICO = { donut: 6, anel: 6, bars: 12, line: 12 };
 
+/** As colunas de valor da tabelinha: uma por série.
+ *
+ *  Nem todo gráfico é de uma série só. O juro longo contra o dólar, a carteira
+ *  contra o benchmark, a curva de hoje contra a de um ano atrás: são três
+ *  gráficos do sistema em que a comparação é o assunto, e desenhá-los com uma
+ *  linha só era perder o que eles têm para dizer. */
+const colunasDe = (im) => window.Graficos.colunas(im.grafico, im.series, im.eixo);
+
 function linhasDe(im) {
   const guardado = estado.graficos[im.id];
-  if (guardado && guardado.length) return guardado;
-  const n = im.series ? im.series.length : (LINHAS_GRAFICO[im.grafico] || 6);
-  return Array.from({ length: n }, (_, i) => ({ r: (im.series || [])[i] || '', v: '', m: '' }));
+  if (guardado && guardado.length) {
+    // Rascunho salvo antes das séries guardava `{r, v, m}`.
+    return guardado.map((l) => (Array.isArray(l.v) ? l
+      : { r: l.r || '', v: [l.v, l.m].filter((x) => x !== undefined) }));
+  }
+  const cols = colunasDe(im);
+  // Nos de rosca, cada linha é uma fatia, e o nome da fatia vem de `series`.
+  // Nos de eixo, cada linha é um ponto do eixo horizontal, e o nome vem de
+  // `pontos` — os doze meses, as faixas de liquidez, os vértices da curva.
+  // Quem nomeia as colunas, ali, é `series`.
+  const fatias = (im.grafico === 'donut' || im.grafico === 'anel') && im.series;
+  const rotulos = fatias ? im.series : (im.pontos || []);
+  const n = rotulos.length || LINHAS_GRAFICO[im.grafico] || 6;
+  return Array.from({ length: n }, (_, i) => ({
+    r: rotulos[i] || '',
+    v: cols.map(() => ''),
+  }));
 }
 
 /** O gráfico como tabelinha: uma linha por fatia, rótulo e valor.
@@ -607,19 +637,19 @@ function linhasDe(im) {
  *  dado tem precedência sobre ela. */
 function campoGrafico(im) {
   const linhas = linhasDe(im);
-  const duplo = im.grafico === 'anel';
-  const rotuloV = im.eixo || (duplo ? 'Atual' : 'Valor');
+  const cols = colunasDe(im);
+  const eixoX = (im.grafico === 'line' || im.grafico === 'bars') ? 'Período' : 'Rótulo';
   const dado = estado.imagens[im.id];
-  const preenchido = linhas.some((l) => (l.v || '').trim() || (l.m || '').trim());
+  const preenchido = linhas.some((l) => l.v.some((x) => (x || '').trim()));
   return `<div class="grafico${preenchido ? ' cheio' : ''}" data-grafico="${escapa(im.id)}">
     <div class="nome">${escapa(im.rotulo)}</div>
     <div class="desc">${escapa(im.descricao)}</div>
     <table class="dados">
-      <thead><tr><th>Rótulo</th><th>${escapa(rotuloV)}</th>${duplo ? '<th>Meta</th>' : ''}</tr></thead>
+      <thead><tr><th>${eixoX}</th>${cols.map((c) => `<th>${escapa(c)}</th>`).join('')}</tr></thead>
       <tbody>${linhas.map((l, i) => `<tr>
         <td><input type="text" data-gr="${escapa(im.id)}" data-i="${i}" data-c="r" value="${escapa(l.r)}"></td>
-        <td><input type="text" inputmode="decimal" data-gr="${escapa(im.id)}" data-i="${i}" data-c="v" value="${escapa(l.v)}"></td>
-        ${duplo ? `<td><input type="text" inputmode="decimal" data-gr="${escapa(im.id)}" data-i="${i}" data-c="m" value="${escapa(l.m)}"></td>` : ''}
+        ${cols.map((c, k) => `<td><input type="text" inputmode="decimal" data-gr="${escapa(im.id)}"`
+          + ` data-i="${i}" data-c="${k}" value="${escapa(l.v[k] || '')}"></td>`).join('')}
       </tr>`).join('')}</tbody>
     </table>
     <div class="acoes">
@@ -794,7 +824,8 @@ function montar(modo) {
   for (const [id, linhas] of Object.entries(estado.graficos)) {
     const bloco = doc.querySelector(`[data-grafico][data-img="${CSS.escape(String(id))}"]`);
     if (!bloco || !window.Graficos.temDados(linhas)) continue;
-    const html = window.Graficos.desenha(bloco.dataset.grafico, linhas);
+    const series = bloco.dataset.series ? bloco.dataset.series.split('|') : null;
+    const html = window.Graficos.desenha(bloco.dataset.grafico, linhas, series);
     if (!html) continue;
     bloco.innerHTML = html;
     bloco.classList.add('feito');
@@ -1144,9 +1175,12 @@ function ligar() {
     const gr = e.target.dataset.gr;
     if (gr) {
       const i = Number(e.target.dataset.i);
+      const c = e.target.dataset.c;
       const linhas = estado.graficos[gr] || (estado.graficos[gr] = []);
-      while (linhas.length <= i) linhas.push({ r: '', v: '', m: '' });
-      linhas[i][e.target.dataset.c] = e.target.value;
+      while (linhas.length <= i) linhas.push({ r: '', v: [] });
+      if (!Array.isArray(linhas[i].v)) linhas[i] = { r: linhas[i].r || '', v: [] };
+      if (c === 'r') linhas[i].r = e.target.value;
+      else linhas[i].v[Number(c)] = e.target.value;
       clearTimeout(temporizador);
       temporizador = setTimeout(() => { salvar(); atualizarContagens(); renderizar(); }, 250);
       return;
@@ -1222,8 +1256,9 @@ function ligar() {
 
     const mais = e.target.dataset.mais;
     if (mais) {
-      const im = estado.estrutura.imagens.find((x) => String(x.id) === mais);
-      estado.graficos[mais] = linhasDe(im).concat([{ r: '', v: '', m: '' }]);
+      const im = estado.estrutura.imagens.find((x) => String(x.id) === mais)
+        || { id: mais, grafico: 'line', series: null, eixo: null };
+      estado.graficos[mais] = linhasDe(im).concat([{ r: '', v: colunasDe(im).map(() => '') }]);
       salvar();
       telaPreencher();
       return;

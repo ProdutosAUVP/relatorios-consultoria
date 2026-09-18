@@ -418,9 +418,22 @@ tipografia da casa, nas cores do segmento — `--c1`..`--c6`, as mesmas da legen
 
 São quatro formatos, e cada um existe porque um documento pede: `donut` para a
 divisão de um todo, `anel` para as duas roscas concêntricas da carteira atual
-contra a meta, `bars` para uma série no tempo e `line` para a evolução do
-patrimônio. O envio de imagem continua ali, para o gráfico que não couber em
-nenhum deles, e o dado tem precedência sobre ele.
+contra a meta, `bars` para uma série no tempo e `line` para uma evolução. O
+envio de imagem continua ali, para o gráfico que não couber em nenhum deles, e o
+dado tem precedência sobre ele.
+
+**Nem todo gráfico é de uma série só.** O juro longo contra o dólar, o IPCA
+contra os núcleos e a meta, a curva de hoje contra a de um ano atrás, a carteira
+contra o benchmark: em quatro gráficos do sistema a comparação é o assunto, e
+desenhá-los com uma linha só era perder o que eles têm para dizer. `series`
+nomeia as séries e vira coluna na tabelinha; a rosca dupla deixou de ser um caso
+especial e passou a ser o que sempre foi, um gráfico de duas séries.
+
+**E a tabelinha abre preenchida.** `pontos` sugere os rótulos do eixo horizontal
+— os doze meses, as faixas de liquidez, os vértices da curva —, e eles entram no
+estado, e não só na tela: quem digitasse os valores sem tocar nos rótulos veria
+o gráfico sair sem eixo horizontal. Rótulo sozinho, porém, não desenha nada: a
+moldura que pede preenchimento vale mais do que uma linha rente ao zero.
 
 Sem biblioteca: o SVG é montado à mão, o arquivo exportado abre sozinho por
 `file://` e o Chromium imprime o vetor sem rasterizar. E `graficos.js` vive

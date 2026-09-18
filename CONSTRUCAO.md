@@ -404,6 +404,19 @@ da página original — "depois da 07" quer dizer depois da sétima do modelo, e
 da sétima do que sobrou —, então a inserção acontece antes de tirar as páginas
 desmarcadas.
 
+**A ferramenta avisa quando a página não coube.** A página tem altura fechada e
+`overflow:hidden`: o que passa dela some do arquivo, e sumia calado. Quem
+escrevia três parágrafos onde cabia um exportava o documento com o terceiro
+cortado sem nenhum sinal — e com o construtor isso deixou de ser raro, porque
+empilhar oito blocos é um clique cada.
+
+`conferirEstouro()` roda depois de cada desenho da prévia e faz a mesma conta do
+`npm run check`, que valida os modelos no build: o corpo da página rola mais do
+que a caixa dele. A diferença é que aqui ela roda sobre o que a pessoa acabou de
+escrever. Roda antes de `ajustarQuadro()`, e não depois, porque o ajuste esconde
+todas as páginas menos a que está à vista, e página escondida não tem altura
+para medir.
+
 **O gráfico se desenha a partir do dado, não de uma imagem.** Um espaço de
 gráfico era um espaço de imagem: o consultor montava a rosca em outro lugar,
 exportava um PNG e subia. O PNG chegava numa resolução qualquer, com a fonte de

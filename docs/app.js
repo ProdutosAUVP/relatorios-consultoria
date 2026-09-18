@@ -26,6 +26,7 @@ const estado = {
   paginas: [],       // páginas montadas por quem preenche: [{id, depois, secao, blocos}]
   proximoBloco: 1,   // numera as instâncias de bloco, para os campos não colidirem
   fora: new Set(),   // páginas tiradas do documento
+  estouro: [],       // páginas cujo conteúdo não coube: [{no, secao, sobra}]
   pagina: 1,
   tela: 'produto',
 };
@@ -965,7 +966,49 @@ function renderizar() {
   doc.open();
   doc.write(montar('previa'));
   doc.close();
-  setTimeout(ajustarQuadro, 50);
+  // A conferência vem antes do ajuste, e não depois: o ajuste esconde todas as
+  // páginas menos a que está à vista, e página escondida não tem altura para
+  // medir.
+  setTimeout(() => { conferirEstouro(); ajustarQuadro(); }, 50);
+}
+
+/** Que páginas não couberam.
+ *
+ *  A página tem altura fechada e `overflow:hidden`: o que passa dela não
+ *  aparece, e não aparece calado. Quem escreveu três parágrafos onde cabia um
+ *  exportava o documento com o terceiro cortado sem nenhum sinal — e com o
+ *  construtor de páginas isso deixou de ser raro, porque empilhar oito blocos é
+ *  um clique cada.
+ *
+ *  A conta é a mesma do `npm run check`, que valida os modelos no build: o
+ *  corpo da página rola mais do que a caixa dele. A diferença é que aqui ela
+ *  roda sobre o que a pessoa acabou de escrever. */
+function conferirEstouro() {
+  const doc = $('#quadro').contentDocument;
+  if (!doc) return;
+  const antes = JSON.stringify(estado.estouro);
+  estado.estouro = [...doc.querySelectorAll('.page, .slide')].map((pg, i) => {
+    const corpo = pg.querySelector('.pg-body');
+    const sobra = corpo ? Math.round(corpo.scrollHeight - corpo.clientHeight) : 0;
+    return { no: i + 1, secao: pg.querySelector('.pg-head .sec')?.textContent || '', sobra };
+  }).filter((x) => x.sobra > 1);
+  if (JSON.stringify(estado.estouro) !== antes) mostrarEstouro();
+}
+
+/** O aviso, onde ele é útil: no alto do formulário e junto da página montada
+ *  que causou o problema. */
+function mostrarEstouro() {
+  const caixa = $('#estouro');
+  if (!caixa) return;
+  const n = estado.estouro.length;
+  caixa.hidden = !n;
+  if (n) {
+    caixa.innerHTML = `<strong>${n === 1 ? 'Uma página não coube' : `${n} páginas não couberam`}.</strong>
+      O que passa da margem é cortado no arquivo exportado. ${estado.estouro.map((x) =>
+        `<span class="pg-estourou">${String(x.no).padStart(2, '0')} ${escapa(x.secao)}</span>`).join(' ')}
+      Tire conteúdo, ou — nas páginas que você montou — mova um bloco para uma página nova.`;
+  }
+  for (const el of $$('.pag-nova')) el.classList.remove('estourou');
 }
 
 /** O modelo tem largura fixa em mm; a prévia mostra uma página por vez,
@@ -1055,6 +1098,24 @@ function emBranco() {
       achados.push({ nome: n, rotulo: (campos[n] || {}).rotulo || n, pagina: g.pagina, secao: g.secao });
     }
   }
+  // Os campos dos blocos não estão na estrutura do modelo — eles nascem quando
+  // o consultor acrescenta o bloco —, e por isso passavam despercebidos pelo
+  // aviso: dava para montar uma página inteira em branco e exportar sem que
+  // nada avisasse.
+  for (const pg of estado.paginas) {
+    for (const bl of pg.blocos) {
+      for (const [nome, meta] of Object.entries(blocoCampos(bl))) {
+        if ((estado.valores[nome] || '').trim()) continue;
+        achados.push({ nome, rotulo: meta.rotulo, pagina: pg.depois,
+                       secao: (pg.secao || 'Página montada') + ' · '
+                              + (blocoDe(bl.chave)?.nome || bl.chave) });
+      }
+    }
+  }
+  // Na ordem do documento, e não na de descoberta: com trezentos campos vazios
+  // a lista mostra os doze primeiros, e "os doze primeiros" só quer dizer
+  // alguma coisa se for pela página.
+  achados.sort((a, b) => a.pagina - b.pagina);
   return achados;
 }
 

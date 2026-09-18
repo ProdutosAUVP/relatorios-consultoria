@@ -232,6 +232,16 @@ main { padding: 28px 24px 64px; }
 .bloco > .cabeca .acoes { display: flex; gap: 4px; }
 .bloco .campos { display: block; }
 .secao.montagem > summary .pg { background: var(--success); color: #fff; }
+
+/* O aviso de página que não coube. Fica no alto do formulário, e não na tela de
+   exportar: o problema se resolve tirando conteúdo, e é no formulário que se
+   tira. A página tem altura fechada — o que passa dela é cortado no arquivo, e
+   antes disto era cortado em silêncio. */
+.alerta-estouro { margin: 12px 16px 0; padding: 10px 12px; font-size: 13px; line-height: 1.5;
+  border: 1px solid var(--warn-border, #E4B95B); border-radius: var(--radius-sm);
+  background: var(--warn-bg, #FDF6E6); color: var(--warn-fg, #7A5B10); }
+.alerta-estouro .pg-estourou { display: inline-block; margin: 4px 4px 0 0; padding: 1px 7px;
+  border-radius: 9px; background: rgba(0, 0, 0, .06); font-size: 12px; font-weight: 500; }
 .imagem input[type='file'] { display: none; }
 
 /* ---------- prévia ---------- */

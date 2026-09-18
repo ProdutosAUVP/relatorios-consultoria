@@ -37,6 +37,11 @@ ul{margin:0 0 3mm;padding-left:4mm}
 li{margin:0 0 1mm}
 strong{font-weight:700}
 .ph{background:var(--ph);border-radius:.6mm;padding:0 1mm;font-weight:600;overflow-wrap:break-word;text-transform:none;letter-spacing:0;font-size:.94em}
+/* O campo que já vem preenchido não é lacuna: lê-se como o texto que é, e o
+   realce só serviria para o consultor achar que falta algo ali. Continua sendo
+   campo — a ferramenta o oferece para edição —, mas isso é assunto da
+   ferramenta, não do papel. */
+.ph.pronto{background:none;padding:0;font-weight:inherit;font-size:inherit}
 .dark .ph{background:var(--ph-dk);color:#fff}
 /* capas e divisórias são monocromáticas: nada de dourado sobre a arte da capa */
 .cover .ph,.divider .ph{background:rgba(255,255,255,.18);color:#fff}
@@ -121,6 +126,34 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .tb.fix{table-layout:fixed}
 .tb td{padding:3mm 3mm;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
 .tb tbody tr:nth-child(even) td{background:var(--soft)}
+
+/* ---------- cronograma de reuniões ----------
+   A sequência do primeiro ciclo, com as fases numa trilha à esquerda. A trilha
+   é uma célula só por fase, com `rowspan`, e o rótulo deitado: são três
+   palavras longas — Estruturação, Acompanhamento, Fechamento — e em pé elas
+   roubariam uma coluna inteira da tabela para dizer o que é só a divisão.
+
+   As datas são as únicas células que mudam de cliente para cliente, e por isso
+   vêm dentro de uma cápsula: quem preenche vê onde escrever, e quem lê vê o que
+   é combinado e o que é processo da casa. */
+.crono{width:100%;border-collapse:collapse;font-size:8.4pt}
+.crono thead th{background:var(--brand);color:#fff;text-align:left;font-weight:600;
+  font-size:7pt;letter-spacing:.08em;text-transform:uppercase;padding:2.6mm 4mm}
+.crono td{padding:2mm 4mm;border-bottom:1px solid var(--line);vertical-align:middle}
+.crono tbody tr:nth-child(even) td{background:var(--soft)}
+.crono .qual{font-weight:700;color:var(--brand);white-space:nowrap}
+.crono .pauta{font-weight:600}
+.crono .prazo{color:var(--ink-2);white-space:nowrap}
+/* o objetivo estratégico é a coluna larga do plano do private: leva a frase
+   inteira, e as outras três só o que precisam */
+.crono .obj{color:var(--ink-2);width:100%}
+.crono .quando{text-align:right;white-space:nowrap}
+.crono .quando span{display:inline-block;padding:1.2mm 3.5mm;border:1px solid var(--line);
+  border-radius:9mm;background:var(--paper);font-weight:700;font-size:8.2pt}
+.crono td.fase{background:var(--brand);padding:0;width:9mm;border-bottom:1px solid var(--paper)}
+.crono td.fase span{display:block;writing-mode:vertical-rl;transform:rotate(180deg);
+  margin:0 auto;padding:4mm 0;color:var(--accent);font-size:6.8pt;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
 .slide.dark .tb td{border-color:rgba(255,255,255,.16)}
 .slide.dark .tb tbody tr:nth-child(even) td{background:rgba(255,255,255,.05)}
 .tb .num,.tb th.num{text-align:right}
@@ -142,6 +175,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3mm;text-align:center;padding:6mm}
 .slide.dark .chart{background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.045) 6px 12px)}
 .chart .cl{font-size:7.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.chart.feito{border:0;background:none;padding:0;gap:2mm}
 .slide.dark .chart .cl{color:#fff}
 .chart .cd{font-size:9pt;color:var(--ink-2);max-width:150mm;line-height:1.45}
 .slide.dark .chart .cd{color:rgba(255,255,255,.75)}
@@ -166,6 +200,13 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .imgbox .cl{font-size:7.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
 .slide.dark .imgbox .cl{color:#fff}
 .imgbox .cd{font-size:9pt;max-width:90mm;line-height:1.45;color:var(--ink-2)}
+
+/* A foto institucional é parte do desenho, e não escolha de quem preenche. Vai
+   na proporção em que foi tirada: a sede é um prédio largo, e recortá-la para
+   caber num retrato 3:4 cortava metade da fachada. A largura é a da coluna e a
+   altura sai sozinha, que é o que `height:auto` faz — nenhuma caixa impõe
+   formato a ela. */
+.imgfixa{display:block;width:100%;height:auto;border-radius:1mm}
 .slide.dark .imgbox .cd{color:rgba(255,255,255,.75)}
 
 /* capa e divisórias ----------
@@ -236,6 +277,22 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .flow p{font-size:9pt;color:var(--ink-2);margin:0;line-height:1.45}
 
 /* ---------- legenda de série, com a paleta do segmento ---------- */
+/* ---------- gráfico desenhado a partir do dado ----------
+   Entra no lugar da moldura vazia quando o consultor preenche a tabelinha na
+   ferramenta. É SVG: sai vetor no PDF, na tipografia da casa e nas cores do
+   segmento — `--c1`..`--c6`, as mesmas da legenda. */
+.g-svg{width:100%;height:auto;max-height:100%;display:block;flex:1 1 auto;min-height:0}
+.g-guia{stroke:var(--line);stroke-width:1}
+.g-eixo{fill:var(--ink-2);font-size:10px}
+.g-mini{fill:var(--ink-2);font-size:10px;text-anchor:middle;letter-spacing:.04em}
+.g-linha{fill:none;stroke:var(--c1);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}
+.g-area{fill:var(--c1);opacity:.10}
+.g-ponto{fill:var(--paper);stroke:var(--c1);stroke-width:2}
+.g-nota{font-size:7pt;color:var(--ink-2);text-align:center}
+.slide.dark .g-eixo,.slide.dark .g-mini{fill:rgba(255,255,255,.75)}
+.slide.dark .g-guia{stroke:rgba(255,255,255,.22)}
+
+
 .legend{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5mm 6mm;
   margin:4mm 0 0;padding:0;font-size:8pt;color:var(--ink-2)}
 .legend li{display:flex;align-items:center;gap:1.5mm}
@@ -442,16 +499,16 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="cv-block">
     <div class="rule"></div>
     <h1 class="cv-t"><span class="lt">Relatório </span>Mensal</h1>
-    <div class="cv-sub"><span class="ph">{{mes_referencia}}</span></div>
+    <div class="cv-sub"><span class="ph" data-campo="mes_referencia">{{mes_referencia}}</span></div>
   </div>
-  <div class="cv-foot"><div class="cf">DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</div><div class="id"><div><span class="ph">{{nome_cliente}}</span></div><div>Banker &middot; <span class="ph">{{nome_responsavel}}</span></div><div>Posição em <span class="ph">{{data_posicao}}</span></div></div></div>
+  <div class="cv-foot"><div class="cf">DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</div><div class="id"><div><span class="ph" data-campo="nome_cliente">{{nome_cliente}}</span></div><div>Banker &middot; <span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span></div><div>Posição em <span class="ph" data-campo="data_posicao">{{data_posicao}}</span></div></div></div>
 </section>
 <section class="slide">
   
   <div class="in">
     <header class="pg-head">
       <div class="sec">Agenda</div>
-      <div class="rt"><div class="dt"><span class="ph">{{mes_referencia}}</span></div><div class="logo logo-ink" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="mes_referencia">{{mes_referencia}}</span></div><div class="logo logo-ink" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
       .lg-1 {
@@ -490,12 +547,12 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <li><h4>Como fechou o&nbsp;mês</h4><p>Patrimônio, rentabilidade e comparação com as&nbsp;referências.</p></li>
   <li><h4>Alocação</h4><p>Onde a carteira está em relação ao alvo do seu&nbsp;perfil.</p></li>
   <li><h4>Movimentações</h4><p>O que foi comprado, vendido e por&nbsp;quê.</p></li>
-  <li><h4>Estruturas e&nbsp;internacional</h4><p>Exposição por moeda e jurisdição, e o andamento das estruturas da&nbsp;família.</p></li>
+  <li><h4>Internacional</h4><p>Exposição por moeda e por&nbsp;jurisdição.</p></li>
   <li><h4>Cenário e próximos&nbsp;passos</h4><p>O que esperamos e o que vamos fazer a&nbsp;respeito.</p></li>
 </ol>
-<div class="note" style="margin-top:auto"><p><strong>Tempo&nbsp;previsto.</strong> <span class="ph">{{duracao_reuniao}}</span> &middot; <strong>Dúvidas:</strong> pode interromper a qualquer&nbsp;momento.</p></div>
+<div class="note" style="margin-top:auto"><p><strong>Tempo&nbsp;previsto.</strong> <span class="ph" data-campo="duracao_reuniao">{{duracao_reuniao}}</span> &middot; <strong>Dúvidas:</strong> pode interromper a qualquer&nbsp;momento.</p></div>
     </div>
-    <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">01</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide dark">
@@ -503,7 +560,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Resultado do&nbsp;mês</div>
-      <div class="rt"><div class="dt"><span class="ph">{{mes_referencia}}</span></div><div class="logo" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="mes_referencia">{{mes_referencia}}</span></div><div class="logo" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
       .lg-1 {
@@ -536,20 +593,20 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 </svg></div></div>
     </header>
     <div class="pg-body">
-<span class="eyebrow"><span class="ph">{{mes_referencia}}</span></span>
+<span class="eyebrow"><span class="ph" data-campo="mes_referencia">{{mes_referencia}}</span></span>
 <h1 class="t">Como fechou o&nbsp;mês</h1>
-<div class="kpis" style="--n:4"><div class="kpi"><div class="k">Patrimônio&nbsp;total</div><div class="v"><span class="ph">{{patrimonio_total}}</span></div><div class="s">Em <span class="ph">{{data_posicao}}</span></div></div><div class="kpi"><div class="k">No&nbsp;mês</div><div class="v"><span class="ph">{{rent_mes}}</span></div><div class="s">No ano: <span class="ph">{{rent_ano}}</span></div></div><div class="kpi"><div class="k">Em 12&nbsp;meses</div><div class="v"><span class="ph">{{rent_12m}}</span></div><div class="s">24 meses: <span class="ph">{{rent_24m}}</span></div></div><div class="kpi"><div class="k">Aportes&nbsp;líquidos</div><div class="v"><span class="ph">{{aporte_liquido_mes}}</span></div><div class="s">Resgates: <span class="ph">{{resgates_mes}}</span></div></div></div>
+<div class="kpis" style="--n:4"><div class="kpi"><div class="k">Patrimônio&nbsp;total</div><div class="v"><span class="ph" data-campo="patrimonio_total">{{patrimonio_total}}</span></div><div class="s">Em <span class="ph" data-campo="data_posicao">{{data_posicao}}</span></div></div><div class="kpi"><div class="k">No&nbsp;mês</div><div class="v"><span class="ph" data-campo="rent_mes">{{rent_mes}}</span></div><div class="s">No ano: <span class="ph" data-campo="rent_ano">{{rent_ano}}</span></div></div><div class="kpi"><div class="k">Em 12&nbsp;meses</div><div class="v"><span class="ph" data-campo="rent_12m">{{rent_12m}}</span></div><div class="s">24 meses: <span class="ph" data-campo="rent_24m">{{rent_24m}}</span></div></div><div class="kpi"><div class="k">Aportes&nbsp;líquidos</div><div class="v"><span class="ph" data-campo="aporte_liquido_mes">{{aporte_liquido_mes}}</span></div><div class="s">Resgates: <span class="ph" data-campo="resgates_mes">{{resgates_mes}}</span></div></div></div>
 <div class="gap"></div>
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch">
-  <div class="chart" data-img="1" style="flex:1 1 auto;min-height:52mm"><div class="sk-line"></div><div class="cl">Patrimônio nos últimos 12&nbsp;meses</div><div class="cd">Linha de patrimônio com barras de aportes e&nbsp;resgates.</div></div>
+  <div class="chart" data-img="1" data-grafico="line" style="flex:1 1 auto;min-height:52mm"><div class="sk-line"></div><div class="cl">Patrimônio nos últimos 12&nbsp;meses</div><div class="cd">Linha de patrimônio com barras de aportes e&nbsp;resgates.</div></div>
   <div>
     <h2>Em uma&nbsp;frase</h2>
-    <p><span class="ph">{{resumo_do_mes}}</span></p>
-    <div class="note"><p><strong>Atenção do&nbsp;mês.</strong> <span class="ph">{{ponto_de_atencao_mes}}</span></p></div>
+    <p><span class="ph" data-campo="resumo_do_mes">{{resumo_do_mes}}</span></p>
+    <div class="note"><p><strong>Atenção do&nbsp;mês.</strong> <span class="ph" data-campo="ponto_de_atencao_mes">{{ponto_de_atencao_mes}}</span></p></div>
   </div>
 </div>
     </div>
-    <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -557,7 +614,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Rentabilidade</div>
-      <div class="rt"><div class="dt"><span class="ph">{{mes_referencia}}</span></div><div class="logo logo-ink" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="mes_referencia">{{mes_referencia}}</span></div><div class="logo logo-ink" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
       .lg-1 {
@@ -592,12 +649,12 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     <div class="pg-body">
 <h1 class="t">Sua carteira x&nbsp;referências</h1>
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch">
-  <div><table class="tb"><thead><tr><th>Indicador</th><th class="num">Mês</th><th class="num">Ano</th><th class="num">12m</th><th class="num">24m</th></tr></thead><tbody><tr><td><strong>Sua&nbsp;carteira</strong></td><td class="num"><span class="ph">{{rent_mes}}</span></td><td class="num"><span class="ph">{{rent_ano}}</span></td><td class="num"><span class="ph">{{rent_12m}}</span></td><td class="num"><span class="ph">{{rent_24m}}</span></td></tr><tr><td>IPCA +&nbsp;5%</td><td class="num"><span class="ph">{{ipca5_mes}}</span></td><td class="num"><span class="ph">{{ipca5_ano}}</span></td><td class="num"><span class="ph">{{ipca5_12m}}</span></td><td class="num"><span class="ph">{{ipca5_24m}}</span></td></tr><tr><td>Ibovespa</td><td class="num"><span class="ph">{{ibov_mes}}</span></td><td class="num"><span class="ph">{{ibov_ano}}</span></td><td class="num"><span class="ph">{{ibov_12m}}</span></td><td class="num"><span class="ph">{{ibov_24m}}</span></td></tr></tbody></table></div>
-  <div class="chart" data-img="2" style="flex:1 1 auto;min-height:60mm"><div class="sk-line"></div><div class="cl">Carteira x IPCA + 5% a.a.&nbsp;acumulado</div><div class="cd">Duas linhas acumuladas desde o início do&nbsp;relacionamento.</div></div>
+  <div><table class="tb"><thead><tr><th>Indicador</th><th class="num">Mês</th><th class="num">Ano</th><th class="num">12m</th><th class="num">24m</th></tr></thead><tbody><tr><td><strong>Sua&nbsp;carteira</strong></td><td class="num"><span class="ph" data-campo="rent_mes">{{rent_mes}}</span></td><td class="num"><span class="ph" data-campo="rent_ano">{{rent_ano}}</span></td><td class="num"><span class="ph" data-campo="rent_12m">{{rent_12m}}</span></td><td class="num"><span class="ph" data-campo="rent_24m">{{rent_24m}}</span></td></tr><tr><td>IPCA +&nbsp;5%</td><td class="num"><span class="ph" data-campo="ipca5_mes">{{ipca5_mes}}</span></td><td class="num"><span class="ph" data-campo="ipca5_ano">{{ipca5_ano}}</span></td><td class="num"><span class="ph" data-campo="ipca5_12m">{{ipca5_12m}}</span></td><td class="num"><span class="ph" data-campo="ipca5_24m">{{ipca5_24m}}</span></td></tr><tr><td>Ibovespa</td><td class="num"><span class="ph" data-campo="ibov_mes">{{ibov_mes}}</span></td><td class="num"><span class="ph" data-campo="ibov_ano">{{ibov_ano}}</span></td><td class="num"><span class="ph" data-campo="ibov_12m">{{ibov_12m}}</span></td><td class="num"><span class="ph" data-campo="ibov_24m">{{ibov_24m}}</span></td></tr></tbody></table></div>
+  <div class="chart" data-img="2" data-grafico="line" style="flex:1 1 auto;min-height:60mm"><div class="sk-line"></div><div class="cl">Carteira x IPCA + 5% a.a.&nbsp;acumulado</div><div class="cd">Duas linhas acumuladas desde o início do&nbsp;relacionamento.</div></div>
 </div>
 <p class="legal" style="margin-top:4mm">Rentabilidades líquidas de custos e brutas de impostos, salvo indicação em contrário. Rentabilidade passada não é garantia de rentabilidade&nbsp;futura.</p>
     </div>
-    <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -605,7 +662,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Alocação</div>
-      <div class="rt"><div class="dt"><span class="ph">{{mes_referencia}}</span></div><div class="logo logo-ink" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="mes_referencia">{{mes_referencia}}</span></div><div class="logo logo-ink" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
       .lg-1 {
@@ -640,14 +697,14 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     <div class="pg-body">
 <h1 class="t">Alvo x&nbsp;realizado</h1>
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch">
-  <div><table class="tb sm"><thead><tr><th>Classe</th><th class="num">Alvo</th><th class="num">Atual</th><th class="num">Desvio</th></tr></thead><tbody><tr><td>Renda fixa&nbsp;pós</td><td class="num"><span class="ph">{{alvo_rf_pos}}</span></td><td class="num"><span class="ph">{{atual_rf_pos}}</span></td><td class="num"><span class="ph">{{desvio_rf_pos}}</span></td></tr><tr><td>Renda fixa&nbsp;inflação</td><td class="num"><span class="ph">{{alvo_rf_ipca}}</span></td><td class="num"><span class="ph">{{atual_rf_ipca}}</span></td><td class="num"><span class="ph">{{desvio_rf_ipca}}</span></td></tr><tr><td>Renda fixa&nbsp;prefixada</td><td class="num"><span class="ph">{{alvo_rf_pre}}</span></td><td class="num"><span class="ph">{{atual_rf_pre}}</span></td><td class="num"><span class="ph">{{desvio_rf_pre}}</span></td></tr><tr><td>Multimercado</td><td class="num"><span class="ph">{{alvo_multi}}</span></td><td class="num"><span class="ph">{{atual_multi}}</span></td><td class="num"><span class="ph">{{desvio_multi}}</span></td></tr><tr><td>Renda variável&nbsp;BR</td><td class="num"><span class="ph">{{alvo_rv_br}}</span></td><td class="num"><span class="ph">{{atual_rv_br}}</span></td><td class="num"><span class="ph">{{desvio_rv_br}}</span></td></tr><tr><td>Internacional</td><td class="num"><span class="ph">{{alvo_intl}}</span></td><td class="num"><span class="ph">{{atual_intl}}</span></td><td class="num"><span class="ph">{{desvio_intl}}</span></td></tr><tr><td>Fundos&nbsp;imobiliários</td><td class="num"><span class="ph">{{alvo_fii}}</span></td><td class="num"><span class="ph">{{atual_fii}}</span></td><td class="num"><span class="ph">{{desvio_fii}}</span></td></tr><tr><td>Alternativos</td><td class="num"><span class="ph">{{alvo_alt}}</span></td><td class="num"><span class="ph">{{atual_alt}}</span></td><td class="num"><span class="ph">{{desvio_alt}}</span></td></tr><tr><td>Caixa</td><td class="num"><span class="ph">{{alvo_caixa}}</span></td><td class="num"><span class="ph">{{atual_caixa}}</span></td><td class="num"><span class="ph">{{desvio_caixa}}</span></td></tr></tbody><tfoot><tr><td><strong>Total</strong></td><td class="num">100,0%</td><td class="num">100,0%</td><td class="num">&mdash;</td></tr></tfoot></table></div>
+  <div><table class="tb sm"><thead><tr><th>Classe</th><th class="num">Alvo</th><th class="num">Atual</th><th class="num">Desvio</th></tr></thead><tbody><tr><td>Renda fixa&nbsp;pós</td><td class="num"><span class="ph" data-campo="alvo_rf_pos">{{alvo_rf_pos}}</span></td><td class="num"><span class="ph" data-campo="atual_rf_pos">{{atual_rf_pos}}</span></td><td class="num"><span class="ph" data-campo="desvio_rf_pos">{{desvio_rf_pos}}</span></td></tr><tr><td>Renda fixa&nbsp;inflação</td><td class="num"><span class="ph" data-campo="alvo_rf_ipca">{{alvo_rf_ipca}}</span></td><td class="num"><span class="ph" data-campo="atual_rf_ipca">{{atual_rf_ipca}}</span></td><td class="num"><span class="ph" data-campo="desvio_rf_ipca">{{desvio_rf_ipca}}</span></td></tr><tr><td>Renda fixa&nbsp;prefixada</td><td class="num"><span class="ph" data-campo="alvo_rf_pre">{{alvo_rf_pre}}</span></td><td class="num"><span class="ph" data-campo="atual_rf_pre">{{atual_rf_pre}}</span></td><td class="num"><span class="ph" data-campo="desvio_rf_pre">{{desvio_rf_pre}}</span></td></tr><tr><td>Multimercado</td><td class="num"><span class="ph" data-campo="alvo_multi">{{alvo_multi}}</span></td><td class="num"><span class="ph" data-campo="atual_multi">{{atual_multi}}</span></td><td class="num"><span class="ph" data-campo="desvio_multi">{{desvio_multi}}</span></td></tr><tr><td>Renda variável&nbsp;BR</td><td class="num"><span class="ph" data-campo="alvo_rv_br">{{alvo_rv_br}}</span></td><td class="num"><span class="ph" data-campo="atual_rv_br">{{atual_rv_br}}</span></td><td class="num"><span class="ph" data-campo="desvio_rv_br">{{desvio_rv_br}}</span></td></tr><tr><td>Internacional</td><td class="num"><span class="ph" data-campo="alvo_intl">{{alvo_intl}}</span></td><td class="num"><span class="ph" data-campo="atual_intl">{{atual_intl}}</span></td><td class="num"><span class="ph" data-campo="desvio_intl">{{desvio_intl}}</span></td></tr><tr><td>Fundos&nbsp;imobiliários</td><td class="num"><span class="ph" data-campo="alvo_fii">{{alvo_fii}}</span></td><td class="num"><span class="ph" data-campo="atual_fii">{{atual_fii}}</span></td><td class="num"><span class="ph" data-campo="desvio_fii">{{desvio_fii}}</span></td></tr><tr><td>Alternativos</td><td class="num"><span class="ph" data-campo="alvo_alt">{{alvo_alt}}</span></td><td class="num"><span class="ph" data-campo="atual_alt">{{atual_alt}}</span></td><td class="num"><span class="ph" data-campo="desvio_alt">{{desvio_alt}}</span></td></tr><tr><td>Caixa</td><td class="num"><span class="ph" data-campo="alvo_caixa">{{alvo_caixa}}</span></td><td class="num"><span class="ph" data-campo="atual_caixa">{{atual_caixa}}</span></td><td class="num"><span class="ph" data-campo="desvio_caixa">{{desvio_caixa}}</span></td></tr></tbody><tfoot><tr><td><strong>Total</strong></td><td class="num">100,0%</td><td class="num">100,0%</td><td class="num">&mdash;</td></tr></tfoot></table></div>
   <div style="display:flex;flex-direction:column;gap:5mm">
-    <div class="chart" data-img="3" style="flex:1 1 auto;min-height:46mm"><div class="sk-donut"></div><div class="cl">Composição&nbsp;atual</div><div class="cd">Rosca com o peso de cada&nbsp;classe.</div></div>
-    <div class="note"><p><strong>Rebalanceamento.</strong> <span class="ph">{{texto_rebalanceamento}}</span></p></div>
+    <div class="chart" data-img="3" data-grafico="donut" style="flex:1 1 auto;min-height:46mm"><div class="sk-donut"></div><div class="cl">Composição&nbsp;atual</div><div class="cd">Rosca com o peso de cada&nbsp;classe.</div></div>
+    <div class="note"><p><strong>Rebalanceamento.</strong> <span class="ph" data-campo="texto_rebalanceamento">{{texto_rebalanceamento}}</span></p></div>
   </div>
 </div>
     </div>
-    <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -655,7 +712,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Movimentações</div>
-      <div class="rt"><div class="dt"><span class="ph">{{mes_referencia}}</span></div><div class="logo logo-ink" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="mes_referencia">{{mes_referencia}}</span></div><div class="logo logo-ink" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
       .lg-1 {
@@ -689,19 +746,19 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     </header>
     <div class="pg-body">
 <h1 class="t">Movimentações do&nbsp;período</h1>
-<table class="tb"><thead><tr><th>Data</th><th>Operação</th><th>Ativo</th><th>Classe</th><th class="num">Valor</th><th>Motivo</th></tr></thead><tbody><tr><td><span class="ph">{{mov_1_data}}</span></td><td><span class="ph">{{mov_1_tipo}}</span></td><td><span class="ph">{{mov_1_ativo}}</span></td><td><span class="ph">{{mov_1_classe}}</span></td><td class="num"><span class="ph">{{mov_1_valor}}</span></td><td><span class="ph">{{mov_1_motivo}}</span></td></tr><tr><td><span class="ph">{{mov_2_data}}</span></td><td><span class="ph">{{mov_2_tipo}}</span></td><td><span class="ph">{{mov_2_ativo}}</span></td><td><span class="ph">{{mov_2_classe}}</span></td><td class="num"><span class="ph">{{mov_2_valor}}</span></td><td><span class="ph">{{mov_2_motivo}}</span></td></tr><tr><td><span class="ph">{{mov_3_data}}</span></td><td><span class="ph">{{mov_3_tipo}}</span></td><td><span class="ph">{{mov_3_ativo}}</span></td><td><span class="ph">{{mov_3_classe}}</span></td><td class="num"><span class="ph">{{mov_3_valor}}</span></td><td><span class="ph">{{mov_3_motivo}}</span></td></tr><tr><td><span class="ph">{{mov_4_data}}</span></td><td><span class="ph">{{mov_4_tipo}}</span></td><td><span class="ph">{{mov_4_ativo}}</span></td><td><span class="ph">{{mov_4_classe}}</span></td><td class="num"><span class="ph">{{mov_4_valor}}</span></td><td><span class="ph">{{mov_4_motivo}}</span></td></tr><tr><td><span class="ph">{{mov_5_data}}</span></td><td><span class="ph">{{mov_5_tipo}}</span></td><td><span class="ph">{{mov_5_ativo}}</span></td><td><span class="ph">{{mov_5_classe}}</span></td><td class="num"><span class="ph">{{mov_5_valor}}</span></td><td><span class="ph">{{mov_5_motivo}}</span></td></tr></tbody></table>
+<table class="tb"><thead><tr><th>Data</th><th>Operação</th><th>Ativo</th><th>Classe</th><th class="num">Valor</th><th>Motivo</th></tr></thead><tbody><tr><td><span class="ph" data-campo="mov_1_data">{{mov_1_data}}</span></td><td><span class="ph" data-campo="mov_1_tipo">{{mov_1_tipo}}</span></td><td><span class="ph" data-campo="mov_1_ativo">{{mov_1_ativo}}</span></td><td><span class="ph" data-campo="mov_1_classe">{{mov_1_classe}}</span></td><td class="num"><span class="ph" data-campo="mov_1_valor">{{mov_1_valor}}</span></td><td><span class="ph" data-campo="mov_1_motivo">{{mov_1_motivo}}</span></td></tr><tr><td><span class="ph" data-campo="mov_2_data">{{mov_2_data}}</span></td><td><span class="ph" data-campo="mov_2_tipo">{{mov_2_tipo}}</span></td><td><span class="ph" data-campo="mov_2_ativo">{{mov_2_ativo}}</span></td><td><span class="ph" data-campo="mov_2_classe">{{mov_2_classe}}</span></td><td class="num"><span class="ph" data-campo="mov_2_valor">{{mov_2_valor}}</span></td><td><span class="ph" data-campo="mov_2_motivo">{{mov_2_motivo}}</span></td></tr><tr><td><span class="ph" data-campo="mov_3_data">{{mov_3_data}}</span></td><td><span class="ph" data-campo="mov_3_tipo">{{mov_3_tipo}}</span></td><td><span class="ph" data-campo="mov_3_ativo">{{mov_3_ativo}}</span></td><td><span class="ph" data-campo="mov_3_classe">{{mov_3_classe}}</span></td><td class="num"><span class="ph" data-campo="mov_3_valor">{{mov_3_valor}}</span></td><td><span class="ph" data-campo="mov_3_motivo">{{mov_3_motivo}}</span></td></tr><tr><td><span class="ph" data-campo="mov_4_data">{{mov_4_data}}</span></td><td><span class="ph" data-campo="mov_4_tipo">{{mov_4_tipo}}</span></td><td><span class="ph" data-campo="mov_4_ativo">{{mov_4_ativo}}</span></td><td><span class="ph" data-campo="mov_4_classe">{{mov_4_classe}}</span></td><td class="num"><span class="ph" data-campo="mov_4_valor">{{mov_4_valor}}</span></td><td><span class="ph" data-campo="mov_4_motivo">{{mov_4_motivo}}</span></td></tr><tr><td><span class="ph" data-campo="mov_5_data">{{mov_5_data}}</span></td><td><span class="ph" data-campo="mov_5_tipo">{{mov_5_tipo}}</span></td><td><span class="ph" data-campo="mov_5_ativo">{{mov_5_ativo}}</span></td><td><span class="ph" data-campo="mov_5_classe">{{mov_5_classe}}</span></td><td class="num"><span class="ph" data-campo="mov_5_valor">{{mov_5_valor}}</span></td><td><span class="ph" data-campo="mov_5_motivo">{{mov_5_motivo}}</span></td></tr></tbody></table>
 <div class="gap"></div>
-<div class="kpis" style="--n:4"><div class="kpi"><div class="k">Aportado</div><div class="v"><span class="ph">{{total_aportes}}</span></div><div class="s">No&nbsp;período</div></div><div class="kpi"><div class="k">Resgatado</div><div class="v"><span class="ph">{{total_resgates}}</span></div><div class="s">No&nbsp;período</div></div><div class="kpi"><div class="k">Proventos</div><div class="v"><span class="ph">{{total_proventos}}</span></div><div class="s">Líquido de&nbsp;IR</div></div><div class="kpi"><div class="k">Custos</div><div class="v"><span class="ph">{{total_custos}}</span></div><div class="s"><span class="ph">{{custo_perc_patrimonio}}</span> do&nbsp;patrimônio</div></div></div>
+<div class="kpis" style="--n:4"><div class="kpi"><div class="k">Aportado</div><div class="v"><span class="ph" data-campo="total_aportes">{{total_aportes}}</span></div><div class="s">No&nbsp;período</div></div><div class="kpi"><div class="k">Resgatado</div><div class="v"><span class="ph" data-campo="total_resgates">{{total_resgates}}</span></div><div class="s">No&nbsp;período</div></div><div class="kpi"><div class="k">Proventos</div><div class="v"><span class="ph" data-campo="total_proventos">{{total_proventos}}</span></div><div class="s">Líquido de&nbsp;IR</div></div><div class="kpi"><div class="k">Custos</div><div class="v"><span class="ph" data-campo="total_custos">{{total_custos}}</span></div><div class="s"><span class="ph" data-campo="custo_perc_patrimonio">{{custo_perc_patrimonio}}</span> do&nbsp;patrimônio</div></div></div>
     </div>
-    <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
   
   <div class="in">
     <header class="pg-head">
-      <div class="sec">Estruturas e&nbsp;internacional</div>
-      <div class="rt"><div class="dt"><span class="ph">{{mes_referencia}}</span></div><div class="logo logo-ink" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
+      <div class="sec">Internacional</div>
+      <div class="rt"><div class="dt"><span class="ph" data-campo="mes_referencia">{{mes_referencia}}</span></div><div class="logo logo-ink" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
       .lg-1 {
@@ -735,14 +792,14 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     </header>
     <div class="pg-body">
 <span class="eyebrow">Private&nbsp;Banking</span>
-<h1 class="t">Estruturas e&nbsp;internacional</h1>
-<p class="lead">Exposição por moeda e jurisdição, e o andamento das estruturas da&nbsp;família.</p>
+<h1 class="t">Internacional</h1>
+<p class="lead">Exposição por moeda e por&nbsp;jurisdição.</p>
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch">
-  <div><table class="tb"><thead><tr><th>Item</th><th>Detalhe</th><th class="num">Valor</th><th class="num">%</th><th>Observação</th></tr></thead><tbody><tr><td><span class="ph">{{seg_1_item}}</span></td><td><span class="ph">{{seg_1_detalhe}}</span></td><td class="num"><span class="ph">{{seg_1_valor}}</span></td><td class="num"><span class="ph">{{seg_1_perc}}</span></td><td><span class="ph">{{seg_1_obs}}</span></td></tr><tr><td><span class="ph">{{seg_2_item}}</span></td><td><span class="ph">{{seg_2_detalhe}}</span></td><td class="num"><span class="ph">{{seg_2_valor}}</span></td><td class="num"><span class="ph">{{seg_2_perc}}</span></td><td><span class="ph">{{seg_2_obs}}</span></td></tr><tr><td><span class="ph">{{seg_3_item}}</span></td><td><span class="ph">{{seg_3_detalhe}}</span></td><td class="num"><span class="ph">{{seg_3_valor}}</span></td><td class="num"><span class="ph">{{seg_3_perc}}</span></td><td><span class="ph">{{seg_3_obs}}</span></td></tr><tr><td><span class="ph">{{seg_4_item}}</span></td><td><span class="ph">{{seg_4_detalhe}}</span></td><td class="num"><span class="ph">{{seg_4_valor}}</span></td><td class="num"><span class="ph">{{seg_4_perc}}</span></td><td><span class="ph">{{seg_4_obs}}</span></td></tr><tr><td><span class="ph">{{seg_5_item}}</span></td><td><span class="ph">{{seg_5_detalhe}}</span></td><td class="num"><span class="ph">{{seg_5_valor}}</span></td><td class="num"><span class="ph">{{seg_5_perc}}</span></td><td><span class="ph">{{seg_5_obs}}</span></td></tr></tbody></table></div>
-  <div class="chart" data-img="4" style="flex:1 1 auto;min-height:50mm"><div class="sk-donut"></div><div class="cl">Visão do&nbsp;segmento</div><div class="cd">Patrimônio por moeda e por&nbsp;jurisdição.</div></div>
+  <div><table class="tb"><thead><tr><th>Item</th><th>Detalhe</th><th class="num">Valor</th><th class="num">%</th><th>Observação</th></tr></thead><tbody><tr><td><span class="ph" data-campo="seg_1_item">{{seg_1_item}}</span></td><td><span class="ph" data-campo="seg_1_detalhe">{{seg_1_detalhe}}</span></td><td class="num"><span class="ph" data-campo="seg_1_valor">{{seg_1_valor}}</span></td><td class="num"><span class="ph" data-campo="seg_1_perc">{{seg_1_perc}}</span></td><td><span class="ph" data-campo="seg_1_obs">{{seg_1_obs}}</span></td></tr><tr><td><span class="ph" data-campo="seg_2_item">{{seg_2_item}}</span></td><td><span class="ph" data-campo="seg_2_detalhe">{{seg_2_detalhe}}</span></td><td class="num"><span class="ph" data-campo="seg_2_valor">{{seg_2_valor}}</span></td><td class="num"><span class="ph" data-campo="seg_2_perc">{{seg_2_perc}}</span></td><td><span class="ph" data-campo="seg_2_obs">{{seg_2_obs}}</span></td></tr><tr><td><span class="ph" data-campo="seg_3_item">{{seg_3_item}}</span></td><td><span class="ph" data-campo="seg_3_detalhe">{{seg_3_detalhe}}</span></td><td class="num"><span class="ph" data-campo="seg_3_valor">{{seg_3_valor}}</span></td><td class="num"><span class="ph" data-campo="seg_3_perc">{{seg_3_perc}}</span></td><td><span class="ph" data-campo="seg_3_obs">{{seg_3_obs}}</span></td></tr><tr><td><span class="ph" data-campo="seg_4_item">{{seg_4_item}}</span></td><td><span class="ph" data-campo="seg_4_detalhe">{{seg_4_detalhe}}</span></td><td class="num"><span class="ph" data-campo="seg_4_valor">{{seg_4_valor}}</span></td><td class="num"><span class="ph" data-campo="seg_4_perc">{{seg_4_perc}}</span></td><td><span class="ph" data-campo="seg_4_obs">{{seg_4_obs}}</span></td></tr><tr><td><span class="ph" data-campo="seg_5_item">{{seg_5_item}}</span></td><td><span class="ph" data-campo="seg_5_detalhe">{{seg_5_detalhe}}</span></td><td class="num"><span class="ph" data-campo="seg_5_valor">{{seg_5_valor}}</span></td><td class="num"><span class="ph" data-campo="seg_5_perc">{{seg_5_perc}}</span></td><td><span class="ph" data-campo="seg_5_obs">{{seg_5_obs}}</span></td></tr></tbody></table></div>
+  <div class="chart" data-img="4" data-grafico="donut" style="flex:1 1 auto;min-height:50mm"><div class="sk-donut"></div><div class="cl">Visão do&nbsp;segmento</div><div class="cd">Patrimônio por moeda e por&nbsp;jurisdição.</div></div>
 </div>
     </div>
-    <footer class="pg-foot"><span class="no">07</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide dark">
@@ -750,7 +807,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Cenário</div>
-      <div class="rt"><div class="dt"><span class="ph">{{mes_referencia}}</span></div><div class="logo" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="mes_referencia">{{mes_referencia}}</span></div><div class="logo" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
       .lg-1 {
@@ -785,12 +842,12 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     <div class="pg-body">
 <h1 class="t">Cenário e&nbsp;posicionamento</h1>
 <div class="cols2" style="margin-bottom:6mm">
-  <div><h2>Brasil</h2><p class="small"><span class="ph">{{cenario_brasil}}</span></p></div>
-  <div><h2>Internacional</h2><p class="small"><span class="ph">{{cenario_internacional}}</span></p></div>
+  <div><h2>Brasil</h2><p class="small"><span class="ph" data-campo="cenario_brasil">{{cenario_brasil}}</span></p></div>
+  <div><h2>Internacional</h2><p class="small"><span class="ph" data-campo="cenario_internacional">{{cenario_internacional}}</span></p></div>
 </div>
-<table class="tb"><thead><tr><th>Classe</th><th>Visão</th><th>Movimento no&nbsp;mês</th><th>Racional</th></tr></thead><tbody><tr><td>Renda fixa&nbsp;pós</td><td><span class="pill"><span class="ph">{{pos_rfpos_visao}}</span></span></td><td><span class="ph">{{pos_rfpos_mov}}</span></td><td><span class="ph">{{pos_rfpos_racional}}</span></td></tr><tr><td>Renda fixa&nbsp;inflação</td><td><span class="pill"><span class="ph">{{pos_rfipca_visao}}</span></span></td><td><span class="ph">{{pos_rfipca_mov}}</span></td><td><span class="ph">{{pos_rfipca_racional}}</span></td></tr><tr><td>Renda variável&nbsp;BR</td><td><span class="pill"><span class="ph">{{pos_rvbr_visao}}</span></span></td><td><span class="ph">{{pos_rvbr_mov}}</span></td><td><span class="ph">{{pos_rvbr_racional}}</span></td></tr><tr><td>Internacional</td><td><span class="pill"><span class="ph">{{pos_intl_visao}}</span></span></td><td><span class="ph">{{pos_intl_mov}}</span></td><td><span class="ph">{{pos_intl_racional}}</span></td></tr><tr><td>Alternativos</td><td><span class="pill"><span class="ph">{{pos_alt_visao}}</span></span></td><td><span class="ph">{{pos_alt_mov}}</span></td><td><span class="ph">{{pos_alt_racional}}</span></td></tr></tbody></table>
+<table class="tb"><thead><tr><th>Classe</th><th>Visão</th><th>Movimento no&nbsp;mês</th><th>Racional</th></tr></thead><tbody><tr><td>Renda fixa&nbsp;pós</td><td><span class="pill"><span class="ph" data-campo="pos_rfpos_visao">{{pos_rfpos_visao}}</span></span></td><td><span class="ph" data-campo="pos_rfpos_mov">{{pos_rfpos_mov}}</span></td><td><span class="ph" data-campo="pos_rfpos_racional">{{pos_rfpos_racional}}</span></td></tr><tr><td>Renda fixa&nbsp;inflação</td><td><span class="pill"><span class="ph" data-campo="pos_rfipca_visao">{{pos_rfipca_visao}}</span></span></td><td><span class="ph" data-campo="pos_rfipca_mov">{{pos_rfipca_mov}}</span></td><td><span class="ph" data-campo="pos_rfipca_racional">{{pos_rfipca_racional}}</span></td></tr><tr><td>Renda variável&nbsp;BR</td><td><span class="pill"><span class="ph" data-campo="pos_rvbr_visao">{{pos_rvbr_visao}}</span></span></td><td><span class="ph" data-campo="pos_rvbr_mov">{{pos_rvbr_mov}}</span></td><td><span class="ph" data-campo="pos_rvbr_racional">{{pos_rvbr_racional}}</span></td></tr><tr><td>Internacional</td><td><span class="pill"><span class="ph" data-campo="pos_intl_visao">{{pos_intl_visao}}</span></span></td><td><span class="ph" data-campo="pos_intl_mov">{{pos_intl_mov}}</span></td><td><span class="ph" data-campo="pos_intl_racional">{{pos_intl_racional}}</span></td></tr><tr><td>Alternativos</td><td><span class="pill"><span class="ph" data-campo="pos_alt_visao">{{pos_alt_visao}}</span></span></td><td><span class="ph" data-campo="pos_alt_mov">{{pos_alt_mov}}</span></td><td><span class="ph" data-campo="pos_alt_racional">{{pos_alt_racional}}</span></td></tr></tbody></table>
     </div>
-    <footer class="pg-foot"><span class="no">08</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">07</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -798,7 +855,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Próximos&nbsp;passos</div>
-      <div class="rt"><div class="dt"><span class="ph">{{mes_referencia}}</span></div><div class="logo logo-ink" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="mes_referencia">{{mes_referencia}}</span></div><div class="logo logo-ink" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
       .lg-1 {
@@ -835,21 +892,21 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 <div class="cols2u" style="flex:1 1 auto;align-items:start">
   <div>
     <h2>O que vamos&nbsp;fazer</h2>
-    <table class="tb"><thead><tr><th>Prioridade</th><th>Ação</th><th>Prazo</th></tr></thead><tbody><tr><td><span class="pill"><span class="ph">{{acao_1_prioridade}}</span></span></td><td><span class="ph">{{acao_1_descricao}}</span></td><td><span class="ph">{{acao_1_prazo}}</span></td></tr><tr><td><span class="pill"><span class="ph">{{acao_2_prioridade}}</span></span></td><td><span class="ph">{{acao_2_descricao}}</span></td><td><span class="ph">{{acao_2_prazo}}</span></td></tr><tr><td><span class="pill"><span class="ph">{{acao_3_prioridade}}</span></span></td><td><span class="ph">{{acao_3_descricao}}</span></td><td><span class="ph">{{acao_3_prazo}}</span></td></tr><tr><td><span class="pill"><span class="ph">{{acao_4_prioridade}}</span></span></td><td><span class="ph">{{acao_4_descricao}}</span></td><td><span class="ph">{{acao_4_prazo}}</span></td></tr></tbody></table>
+    <table class="tb"><thead><tr><th>Prioridade</th><th>Ação</th><th>Prazo</th></tr></thead><tbody><tr><td><span class="pill"><span class="ph" data-campo="acao_1_prioridade">{{acao_1_prioridade}}</span></span></td><td><span class="ph" data-campo="acao_1_descricao">{{acao_1_descricao}}</span></td><td><span class="ph" data-campo="acao_1_prazo">{{acao_1_prazo}}</span></td></tr><tr><td><span class="pill"><span class="ph" data-campo="acao_2_prioridade">{{acao_2_prioridade}}</span></span></td><td><span class="ph" data-campo="acao_2_descricao">{{acao_2_descricao}}</span></td><td><span class="ph" data-campo="acao_2_prazo">{{acao_2_prazo}}</span></td></tr><tr><td><span class="pill"><span class="ph" data-campo="acao_3_prioridade">{{acao_3_prioridade}}</span></span></td><td><span class="ph" data-campo="acao_3_descricao">{{acao_3_descricao}}</span></td><td><span class="ph" data-campo="acao_3_prazo">{{acao_3_prazo}}</span></td></tr><tr><td><span class="pill"><span class="ph" data-campo="acao_4_prioridade">{{acao_4_prioridade}}</span></span></td><td><span class="ph" data-campo="acao_4_descricao">{{acao_4_descricao}}</span></td><td><span class="ph" data-campo="acao_4_prazo">{{acao_4_prazo}}</span></td></tr></tbody></table>
   </div>
   <div>
     <h2>O que depende de&nbsp;você</h2>
-    <div class="card"><h4><span class="ph">{{pendencia_1_titulo}}</span></h4><p><span class="ph">{{pendencia_1_detalhe}}</span></p></div><div class="card"><h4><span class="ph">{{pendencia_2_titulo}}</span></h4><p><span class="ph">{{pendencia_2_detalhe}}</span></p></div>
+    <div class="card"><h4><span class="ph" data-campo="pendencia_1_titulo">{{pendencia_1_titulo}}</span></h4><p><span class="ph" data-campo="pendencia_1_detalhe">{{pendencia_1_detalhe}}</span></p></div><div class="card"><h4><span class="ph" data-campo="pendencia_2_titulo">{{pendencia_2_titulo}}</span></h4><p><span class="ph" data-campo="pendencia_2_detalhe">{{pendencia_2_detalhe}}</span></p></div>
     <div class="gap"></div>
     <div class="dl">
-      <dt>Próxima&nbsp;reunião</dt><dd><span class="ph">{{data_proxima_reuniao}}</span></dd>
-      <dt>Formato</dt><dd><span class="ph">{{formato_reuniao}}</span></dd>
-      <dt>Canal&nbsp;direto</dt><dd><span class="ph">{{canal_atendimento}}</span></dd>
+      <dt>Próxima&nbsp;reunião</dt><dd><span class="ph" data-campo="data_proxima_reuniao">{{data_proxima_reuniao}}</span></dd>
+      <dt>Formato</dt><dd><span class="ph" data-campo="formato_reuniao">{{formato_reuniao}}</span></dd>
+      <dt>Canal&nbsp;direto</dt><dd><span class="ph" data-campo="canal_atendimento">{{canal_atendimento}}</span></dd>
     </div>
   </div>
 </div>
     </div>
-    <footer class="pg-foot"><span class="no">09</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">08</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide dark">
@@ -857,7 +914,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Encerramento</div>
-      <div class="rt"><div class="dt"><span class="ph">{{mes_referencia}}</span></div><div class="logo" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="mes_referencia">{{mes_referencia}}</span></div><div class="logo" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
       .lg-1 {
@@ -894,20 +951,20 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div style="flex:1 1 auto">
     <span class="eyebrow">Obrigado</span>
     <h1 class="t">Alguma&nbsp;dúvida?</h1>
-    <p class="lead" style="margin-top:4mm"><span class="ph">{{mensagem_encerramento}}</span></p>
+    <p class="lead" style="margin-top:4mm"><span class="ph" data-campo="mensagem_encerramento">{{mensagem_encerramento}}</span></p>
     <div class="dl" style="margin-top:6mm">
-      <dt>Banker</dt><dd><span class="ph">{{nome_responsavel}}</span></dd>
-      <dt>WhatsApp</dt><dd><span class="ph" data-link="whatsapp">{{whatsapp_contato}}</span></dd>
-      <dt>E-mail</dt><dd><span class="ph" data-link="mailto">{{email_contato}}</span></dd>
+      <dt>Banker</dt><dd><span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span></dd>
+      <dt>WhatsApp</dt><dd><span class="ph" data-campo="whatsapp_contato" data-link="whatsapp">{{whatsapp_contato}}</span></dd>
+      <dt>E-mail</dt><dd><span class="ph" data-campo="email_contato" data-link="mailto">{{email_contato}}</span></dd>
     </div>
   </div>
   <div style="display:flex;flex-direction:column;align-items:center;gap:4mm">
     <div class="qr">QR code<br>agendamento</div>
-    <div class="small mut" style="text-align:center;max-width:52mm"><span class="ph" data-link="url">{{link_agendamento}}</span></div>
+    <div class="small mut" style="text-align:center;max-width:52mm"><span class="ph" data-campo="link_agendamento" data-link="url">{{link_agendamento}}</span></div>
   </div>
 </div>
     </div>
-    <footer class="pg-foot"><span class="no">10</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">09</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -915,7 +972,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Avisos</div>
-      <div class="rt"><div class="dt"><span class="ph">{{mes_referencia}}</span></div><div class="logo logo-ink" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="mes_referencia">{{mes_referencia}}</span></div><div class="logo logo-ink" style="width:41.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>
       .lg-1 {
@@ -949,17 +1006,17 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     </header>
     <div class="pg-body">
 <h1 class="t">Notas e&nbsp;avisos</h1>
-<p class="legal"><span class="ph" title="Texto aprovado pelo compliance para este segmento">{{disclaimer_regulatorio}}</span></p>
+<p class="legal"><span class="ph" data-campo="disclaimer_regulatorio" title="Texto aprovado pelo compliance para este segmento">{{disclaimer_regulatorio}}</span></p>
 <div class="cols2" style="margin-top:6mm">
   <div>
     <p class="legal">Rentabilidade passada não representa garantia de rentabilidade futura. Os investimentos apresentados podem não contar com garantia do Fundo Garantidor de Créditos (FGC). Antes de investir, leia os documentos oficiais de cada&nbsp;produto.</p>
   </div>
   <div>
-    <p class="legal">Material destinado exclusivamente a <span class="ph">{{nome_cliente}}</span>. Não constitui oferta, recomendação pública ou solicitação de compra ou venda de ativos. É proibida a reprodução ou o compartilhamento total ou parcial sem autorização prévia e por escrito. <span class="ph">{{razao_social}}</span> &middot; CNPJ <span class="ph">{{cnpj}}</span>. Ouvidoria: <span class="ph" data-link="auto">{{canal_ouvidoria}}</span>.</p>
+    <p class="legal">Material destinado exclusivamente a <span class="ph" data-campo="nome_cliente">{{nome_cliente}}</span>. Não constitui oferta, recomendação pública ou solicitação de compra ou venda de ativos. É proibida a reprodução ou o compartilhamento total ou parcial sem autorização prévia e por escrito. <span class="ph" data-campo="razao_social">{{razao_social}}</span> &middot; CNPJ <span class="ph" data-campo="cnpj">{{cnpj}}</span>. Ouvidoria: <span class="ph" data-campo="canal_ouvidoria" data-link="auto">{{canal_ouvidoria}}</span>.</p>
   </div>
 </div>
     </div>
-    <footer class="pg-foot"><span class="no">11</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">10</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 </body>

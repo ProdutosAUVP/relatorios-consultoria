@@ -20,7 +20,6 @@ const TITULOS = {
   'diagnostico-carteira': 'Diagnóstico de carteira',
   'relatorio-macroeconomico': 'Relatório macroeconômico',
   'apresentacao-geral': 'Apresentação geral',
-  'cronograma-reunioes': 'Cronograma de reuniões',
 };
 // Prefixos mais longos primeiro: 'relatorio-mensal-apresentacao' tem de casar
 // antes de 'relatorio-mensal'.

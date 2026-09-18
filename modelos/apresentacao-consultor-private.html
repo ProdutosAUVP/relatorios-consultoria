@@ -37,6 +37,11 @@ ul{margin:0 0 3mm;padding-left:4mm}
 li{margin:0 0 1mm}
 strong{font-weight:700}
 .ph{background:var(--ph);border-radius:.6mm;padding:0 1mm;font-weight:600;overflow-wrap:break-word;text-transform:none;letter-spacing:0;font-size:.94em}
+/* O campo que já vem preenchido não é lacuna: lê-se como o texto que é, e o
+   realce só serviria para o consultor achar que falta algo ali. Continua sendo
+   campo — a ferramenta o oferece para edição —, mas isso é assunto da
+   ferramenta, não do papel. */
+.ph.pronto{background:none;padding:0;font-weight:inherit;font-size:inherit}
 .dark .ph{background:var(--ph-dk);color:#fff}
 /* capas e divisórias são monocromáticas: nada de dourado sobre a arte da capa */
 .cover .ph,.divider .ph{background:rgba(255,255,255,.18);color:#fff}
@@ -133,6 +138,34 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   padding:2mm 2mm;font-size:6.6pt;letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
 .tb td{padding:3mm;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
 .tb tbody tr:nth-child(even) td{background:var(--soft)}
+
+/* ---------- cronograma de reuniões ----------
+   A sequência do primeiro ciclo, com as fases numa trilha à esquerda. A trilha
+   é uma célula só por fase, com `rowspan`, e o rótulo deitado: são três
+   palavras longas — Estruturação, Acompanhamento, Fechamento — e em pé elas
+   roubariam uma coluna inteira da tabela para dizer o que é só a divisão.
+
+   As datas são as únicas células que mudam de cliente para cliente, e por isso
+   vêm dentro de uma cápsula: quem preenche vê onde escrever, e quem lê vê o que
+   é combinado e o que é processo da casa. */
+.crono{width:100%;border-collapse:collapse;font-size:8.4pt}
+.crono thead th{background:var(--brand);color:#fff;text-align:left;font-weight:600;
+  font-size:7pt;letter-spacing:.08em;text-transform:uppercase;padding:2.6mm 4mm}
+.crono td{padding:2mm 4mm;border-bottom:1px solid var(--line);vertical-align:middle}
+.crono tbody tr:nth-child(even) td{background:var(--soft)}
+.crono .qual{font-weight:700;color:var(--brand);white-space:nowrap}
+.crono .pauta{font-weight:600}
+.crono .prazo{color:var(--ink-2);white-space:nowrap}
+/* o objetivo estratégico é a coluna larga do plano do private: leva a frase
+   inteira, e as outras três só o que precisam */
+.crono .obj{color:var(--ink-2);width:100%}
+.crono .quando{text-align:right;white-space:nowrap}
+.crono .quando span{display:inline-block;padding:1.2mm 3.5mm;border:1px solid var(--line);
+  border-radius:9mm;background:var(--paper);font-weight:700;font-size:8.2pt}
+.crono td.fase{background:var(--brand);padding:0;width:9mm;border-bottom:1px solid var(--paper)}
+.crono td.fase span{display:block;writing-mode:vertical-rl;transform:rotate(180deg);
+  margin:0 auto;padding:4mm 0;color:var(--accent);font-size:6.8pt;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
 .tb .num,.tb th.num{text-align:right}
 .tb tfoot td{font-weight:700;border-top:1.33px solid var(--ink);background:#fff}
 .tb caption{caption-side:bottom;text-align:left;font-size:6.8pt;color:var(--ink-2);padding-top:2mm}
@@ -158,6 +191,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2mm;text-align:center;padding:5mm}
 .chart .cl{font-size:6.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
 .chart .cd{font-size:7.6pt;color:var(--ink-2);max-width:105mm;line-height:1.45}
+/* Com o gráfico desenhado dentro, a moldura deixa de ser um pedido de
+   preenchimento: some o tracejado e a hachura, e fica só o desenho. */
+.chart.feito{border:0;background:none;padding:0;gap:1.5mm}
 .sk-bars{display:flex;align-items:flex-end;gap:2mm;height:16mm;width:70%;opacity:.28}
 .sk-bars i{flex:1;background:var(--brand);border-radius:.4mm .4mm 0 0}
 .sk-donut{width:22mm;height:22mm;border-radius:50%;opacity:.5;
@@ -214,23 +250,27 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .flow p{font-size:8pt;color:var(--ink-2);margin:0;line-height:1.45}
 
 /* ---------- legenda de série, com a paleta do segmento ---------- */
+/* ---------- gráfico desenhado a partir do dado ----------
+   Entra no lugar da moldura vazia quando o consultor preenche a tabelinha na
+   ferramenta. É SVG: sai vetor no PDF, na tipografia da casa e nas cores do
+   segmento — `--c1`..`--c6`, as mesmas da legenda. */
+.g-svg{width:100%;height:auto;max-height:100%;display:block;flex:1 1 auto;min-height:0}
+.g-guia{stroke:var(--line);stroke-width:1}
+.g-eixo{fill:var(--ink-2);font-size:9px}
+.g-mini{fill:var(--ink-2);font-size:9px;text-anchor:middle;letter-spacing:.04em}
+.g-linha{fill:none;stroke:var(--c1);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}
+.g-area{fill:var(--c1);opacity:.10}
+.g-ponto{fill:var(--paper);stroke:var(--c1);stroke-width:2}
+.g-nota{font-size:7pt;color:var(--ink-2);text-align:center}
+.slide.dark .g-eixo,.slide.dark .g-mini{fill:rgba(255,255,255,.75)}
+.slide.dark .g-guia{stroke:rgba(255,255,255,.22)}
+
+
 .legend{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5mm 4mm;
   margin:3mm 0 0;padding:0;font-size:6.6pt;color:var(--ink-2)}
 .legend li{display:flex;align-items:center;gap:1.5mm}
 .legend i{width:4mm;height:1.33px;flex:0 0 auto}
 
-/* ---------- ano em dois semestres ---------- */
-.year{list-style:none;margin:0;padding:0;counter-reset:yr;display:grid;
-  grid-template-columns:repeat(6,1fr);gap:6mm 4mm}
-.year>li{position:relative;min-width:0;padding-top:8mm}
-.year>li::after{content:"";position:absolute;left:0;right:-4mm;top:3.2mm;height:1px;background:var(--line)}
-.year>li:nth-child(6)::after,.year>li:last-child::after{right:0}
-.year .mo{position:absolute;left:0;top:0;z-index:2;width:6.4mm;height:6.4mm;border-radius:50%;
-  border:1px solid var(--line);background:var(--paper);color:var(--ink-2);
-  display:flex;align-items:center;justify-content:center;font-size:6pt;font-weight:700}
-.year>li.on .mo{border-color:var(--brand);color:var(--brand)}
-.year .nm{display:block;font-size:7.4pt;font-weight:700;margin-bottom:1mm}
-.year .ev{display:block;font-size:6.8pt;color:var(--ink-2);line-height:1.35}
 
 /* ---------- lista com marcador em fio, e retrato ---------- */
 .lista{list-style:none;margin:0;padding:0;font-size:8.4pt;line-height:17px}
@@ -382,8 +422,8 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 
 
 /* altura da folha — os dois números saem de `npm run altura -- --ajustar` */
-@page{size:210mm 1070mm;margin:0}
-.page.longa{height:1070mm;padding:0;font-size:10pt}
+@page{size:210mm 1090mm;margin:0}
+.page.longa{height:1090mm;padding:0;font-size:10pt}
 @media print{.page.longa{break-after:auto}}
 
 /* as faixas: a folha alterna fundo para marcar onde uma parte acaba e outra
@@ -499,73 +539,77 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <section class="page longa" data-sec="Apresentação do consultor">
   <header class="lg-topo">
     <div class="grain"></div>
+    <!-- O nome do plano saía por cima do nome da pessoa. É a apresentação do
+         consultor: quem abre o documento quer saber quem é ele, e o plano se
+         explica sozinho nas faixas de baixo. Fora que a folha vai para cliente
+         que já contratou e para cliente que ainda não, e anunciar um plano no
+         alto do retrato dava ao documento cara de peça de venda. -->
     <div class="lg-id">
       <div class="imgbox rt-vaga" data-img="1"><div class="cl">Retrato</div><div class="cd">Foto vertical do consultor. Recorte 3:4, mínimo 900&nbsp;px de&nbsp;largura.</div></div>
       <div>
-        <span class="lg-plano"><span class="ph" title="O nome comercial do plano.">{{nome_plano}}</span></span>
-        <h1><span class="ph">{{nome_consultor}}</span></h1>
-        <p class="papel"><span class="ph" title="Consultor de investimentos, especialista, planejador…">{{papel_consultor}}</span> na AUVP Private&nbsp;Banking</p>
-        <p class="lg-frase"><span class="ph" title="Uma frase em primeira pessoa sobre como você trabalha.">{{frase_consultor}}</span></p>
+        <h1><span class="ph" data-campo="nome_consultor">{{nome_consultor}}</span></h1>
+        <p class="papel"><span class="ph" data-campo="papel_consultor" title="Consultor de investimentos, especialista, planejador…">{{papel_consultor}}</span> na AUVP Private&nbsp;Banking</p>
+        <p class="lg-frase"><span class="ph" data-campo="frase_consultor" title="Uma frase em primeira pessoa sobre como você trabalha.">{{frase_consultor}}</span></p>
       </div>
     </div>
-    <div class="lg-cred" style="--n:3"><div><h3>Formação</h3><ul class="lista"><li><span class="ph">{{formacao_1}}</span></li><li><span class="ph">{{formacao_2}}</span></li></ul></div><div><h3>Especialização</h3><ul class="lista"><li><span class="ph">{{especializacao_1}}</span></li><li><span class="ph">{{especializacao_2}}</span></li></ul></div><div><h3>Certificações</h3><div class="chips"><span class="pill"><span class="ph">{{certificacao_1}}</span></span><span class="pill"><span class="ph">{{certificacao_2}}</span></span><span class="pill"><span class="ph">{{certificacao_3}}</span></span></div></div></div>
+    <div class="lg-cred" style="--n:3"><div><h3>Formação</h3><ul class="lista"><li><span class="ph" data-campo="formacao_1">{{formacao_1}}</span></li><li><span class="ph" data-campo="formacao_2">{{formacao_2}}</span></li><li><span class="ph" data-campo="formacao_3">{{formacao_3}}</span></li><li><span class="ph" data-campo="formacao_4">{{formacao_4}}</span></li><li><span class="ph" data-campo="formacao_5">{{formacao_5}}</span></li></ul></div><div><h3>Especialização</h3><ul class="lista"><li><span class="ph" data-campo="especializacao_1">{{especializacao_1}}</span></li><li><span class="ph" data-campo="especializacao_2">{{especializacao_2}}</span></li><li><span class="ph" data-campo="especializacao_3">{{especializacao_3}}</span></li><li><span class="ph" data-campo="especializacao_4">{{especializacao_4}}</span></li><li><span class="ph" data-campo="especializacao_5">{{especializacao_5}}</span></li></ul></div><div><h3>Certificações</h3><div class="chips"><span class="pill"><span class="ph" data-campo="certificacao_1">{{certificacao_1}}</span></span><span class="pill"><span class="ph" data-campo="certificacao_2">{{certificacao_2}}</span></span><span class="pill"><span class="ph" data-campo="certificacao_3">{{certificacao_3}}</span></span><span class="pill"><span class="ph" data-campo="certificacao_4">{{certificacao_4}}</span></span><span class="pill"><span class="ph" data-campo="certificacao_5">{{certificacao_5}}</span></span></div></div></div>
   </header>
 
   <div class="lg-corpo">
     <div class="lg-sec">
       <h2>O meu&nbsp;propósito</h2>
-      <div class="corrido"><p><span class="ph">{{proposito_1}}</span></p><p><span class="ph">{{proposito_2}}</span></p><p><span class="ph">{{proposito_3}}</span></p><p><span class="ph">{{proposito_4}}</span></p></div>
+      <div class="corrido"><p><span class="ph" data-campo="proposito_1">{{proposito_1}}</span></p><p><span class="ph" data-campo="proposito_2">{{proposito_2}}</span></p><p><span class="ph" data-campo="proposito_3">{{proposito_3}}</span></p><p><span class="ph" data-campo="proposito_4">{{proposito_4}}</span></p></div>
     </div>
     <div class="esp"></div>
     <div class="lg-sec">
       <h2>Formação acadêmica e&nbsp;qualificações</h2>
-      <div class="corrido"><p><span class="ph">{{qualificacoes_1}}</span></p><p><span class="ph">{{qualificacoes_2}}</span></p></div>
+      <div class="corrido"><p><span class="ph" data-campo="qualificacoes_1">{{qualificacoes_1}}</span></p><p><span class="ph" data-campo="qualificacoes_2">{{qualificacoes_2}}</span></p></div>
     </div>
     <div class="esp"></div>
     <div class="lg-sec">
       <h2>A minha trajetória no mercado&nbsp;financeiro</h2>
       <div class="cols2u" style="align-items:start">
-        <div class="corrido"><p><span class="ph">{{trajetoria_1}}</span></p><p><span class="ph">{{trajetoria_2}}</span></p><p><span class="ph">{{trajetoria_3}}</span></p></div>
-        <div class="side"><h3 style="margin-top:0">Em&nbsp;marcos</h3><ol class="marcos"><li><span class="q"><span class="ph" title="2016, Depois, Hoje…">{{marco_1_quando}}</span></span><p><span class="ph">{{marco_1_texto}}</span></p></li><li><span class="q"><span class="ph" title="2016, Depois, Hoje…">{{marco_2_quando}}</span></span><p><span class="ph">{{marco_2_texto}}</span></p></li><li><span class="q"><span class="ph" title="2016, Depois, Hoje…">{{marco_3_quando}}</span></span><p><span class="ph">{{marco_3_texto}}</span></p></li></ol></div>
+        <div class="corrido"><p><span class="ph" data-campo="trajetoria_1">{{trajetoria_1}}</span></p><p><span class="ph" data-campo="trajetoria_2">{{trajetoria_2}}</span></p><p><span class="ph" data-campo="trajetoria_3">{{trajetoria_3}}</span></p></div>
+        <div class="side"><h3 style="margin-top:0">Em&nbsp;marcos</h3><ol class="marcos"><li><span class="q"><span class="ph" data-campo="marco_1_quando" title="2016, Depois, Hoje…">{{marco_1_quando}}</span></span><p><span class="ph" data-campo="marco_1_texto">{{marco_1_texto}}</span></p></li><li><span class="q"><span class="ph" data-campo="marco_2_quando" title="2016, Depois, Hoje…">{{marco_2_quando}}</span></span><p><span class="ph" data-campo="marco_2_texto">{{marco_2_texto}}</span></p></li><li><span class="q"><span class="ph" data-campo="marco_3_quando" title="2016, Depois, Hoje…">{{marco_3_quando}}</span></span><p><span class="ph" data-campo="marco_3_texto">{{marco_3_texto}}</span></p></li></ol></div>
       </div>
     </div>
     <div class="esp"></div>
     <div class="lg-sec">
       <h2>Além dos&nbsp;investimentos</h2>
-      <div class="corrido"><p><span class="ph">{{fora_do_escritorio_1}}</span></p><p><span class="ph">{{fora_do_escritorio_2}}</span></p><p><span class="ph">{{fora_do_escritorio_3}}</span></p></div>
-      <div style="margin-top:7mm"><div class="tags"><span><span class="ph">{{interesse_1}}</span></span><span><span class="ph">{{interesse_2}}</span></span><span><span class="ph">{{interesse_3}}</span></span><span><span class="ph">{{interesse_4}}</span></span><span><span class="ph">{{interesse_5}}</span></span><span><span class="ph">{{interesse_6}}</span></span></div></div>
+      <div class="corrido"><p><span class="ph" data-campo="fora_do_escritorio_1">{{fora_do_escritorio_1}}</span></p><p><span class="ph" data-campo="fora_do_escritorio_2">{{fora_do_escritorio_2}}</span></p><p><span class="ph" data-campo="fora_do_escritorio_3">{{fora_do_escritorio_3}}</span></p></div>
+      <div style="margin-top:7mm"><div class="tags"><span><span class="ph" data-campo="interesse_1">{{interesse_1}}</span></span><span><span class="ph" data-campo="interesse_2">{{interesse_2}}</span></span><span><span class="ph" data-campo="interesse_3">{{interesse_3}}</span></span><span><span class="ph" data-campo="interesse_4">{{interesse_4}}</span></span><span><span class="ph" data-campo="interesse_5">{{interesse_5}}</span></span><span><span class="ph" data-campo="interesse_6">{{interesse_6}}</span></span></div></div>
     </div>
   </div>
 
   <div class="lg-faixa">
     <div class="lg-sec">
-      <h2><span class="ph" title="O nome comercial do plano.">{{nome_plano}}</span></h2>
-      <p class="lead"><span class="ph" title="Duas ou três frases sobre o que o cliente contrata.">{{plano_resumo}}</span></p>
+      <h2><span class="ph" data-campo="nome_plano" title="O nome comercial do plano.">{{nome_plano}}</span></h2>
+      <p class="lead"><span class="ph" data-campo="plano_resumo" title="Duas ou três frases sobre o que o cliente contrata.">{{plano_resumo}}</span></p>
     </div>
     <div class="esp"></div>
     <div class="lg-sec">
       <h2>Como funciona no dia a&nbsp;dia</h2>
-      <div class="corrido"><p><span class="ph" title="Um parágrafo sobre como o plano funciona.">{{funciona_1}}</span></p><p><span class="ph" title="Um parágrafo sobre como o plano funciona.">{{funciona_2}}</span></p><p><span class="ph" title="Um parágrafo sobre como o plano funciona.">{{funciona_3}}</span></p></div>
+      <div class="corrido"><p><span class="ph" data-campo="funciona_1" title="Um parágrafo sobre como o plano funciona.">{{funciona_1}}</span></p><p><span class="ph" data-campo="funciona_2" title="Um parágrafo sobre como o plano funciona.">{{funciona_2}}</span></p><p><span class="ph" data-campo="funciona_3" title="Um parágrafo sobre como o plano funciona.">{{funciona_3}}</span></p></div>
     </div>
     <div class="esp"></div>
     <div class="lg-sec">
       <h2>O que você pode pedir ao seu&nbsp;consultor</h2>
-      <ul class="lista"><li><span class="ph">{{pode_pedir_1}}</span></li><li><span class="ph">{{pode_pedir_2}}</span></li><li><span class="ph">{{pode_pedir_3}}</span></li><li><span class="ph">{{pode_pedir_4}}</span></li><li><span class="ph">{{pode_pedir_5}}</span></li><li><span class="ph">{{pode_pedir_6}}</span></li></ul>
+      <ul class="lista"><li><span class="ph" data-campo="pode_pedir_1">{{pode_pedir_1}}</span></li><li><span class="ph" data-campo="pode_pedir_2">{{pode_pedir_2}}</span></li><li><span class="ph" data-campo="pode_pedir_3">{{pode_pedir_3}}</span></li><li><span class="ph" data-campo="pode_pedir_4">{{pode_pedir_4}}</span></li><li><span class="ph" data-campo="pode_pedir_5">{{pode_pedir_5}}</span></li><li><span class="ph" data-campo="pode_pedir_6">{{pode_pedir_6}}</span></li></ul>
     </div>
     <div class="esp"></div>
     <div class="lg-sec">
       <div class="cols2">
         <div>
           <h2>O que já vem&nbsp;incluído</h2>
-          <ul class="lista"><li><span class="ph">{{incluido_1}}</span></li><li><span class="ph">{{incluido_2}}</span></li><li><span class="ph">{{incluido_3}}</span></li><li><span class="ph">{{incluido_4}}</span></li><li><span class="ph">{{incluido_5}}</span></li><li><span class="ph">{{incluido_6}}</span></li><li><span class="ph">{{incluido_7}}</span></li><li><span class="ph">{{incluido_8}}</span></li></ul>
+          <ul class="lista"><li><span class="ph" data-campo="incluido_1">{{incluido_1}}</span></li><li><span class="ph" data-campo="incluido_2">{{incluido_2}}</span></li><li><span class="ph" data-campo="incluido_3">{{incluido_3}}</span></li><li><span class="ph" data-campo="incluido_4">{{incluido_4}}</span></li><li><span class="ph" data-campo="incluido_5">{{incluido_5}}</span></li><li><span class="ph" data-campo="incluido_6">{{incluido_6}}</span></li><li><span class="ph" data-campo="incluido_7">{{incluido_7}}</span></li><li><span class="ph" data-campo="incluido_8">{{incluido_8}}</span></li></ul>
         </div>
         <div>
           <h2>O que não faz parte deste&nbsp;plano</h2>
           <p class="small mut">Algumas coisas não estão incluídas aqui, e é melhor deixar isso combinado desde o&nbsp;começo.</p>
-          <ul class="lista mut"><li><span class="ph">{{nao_incluido_1}}</span></li><li><span class="ph">{{nao_incluido_2}}</span></li><li><span class="ph">{{nao_incluido_3}}</span></li><li><span class="ph">{{nao_incluido_4}}</span></li></ul>
+          <ul class="lista mut"><li><span class="ph" data-campo="nao_incluido_1">{{nao_incluido_1}}</span></li><li><span class="ph" data-campo="nao_incluido_2">{{nao_incluido_2}}</span></li><li><span class="ph" data-campo="nao_incluido_3">{{nao_incluido_3}}</span></li><li><span class="ph" data-campo="nao_incluido_4">{{nao_incluido_4}}</span></li></ul>
         </div>
       </div>
-      <p class="legal" style="margin-top:8mm"><span class="ph" title="As ressalvas numeradas que os itens acima referenciam.">{{notas_de_rodape}}</span></p>
+      <p class="legal" style="margin-top:8mm"><span class="ph" data-campo="notas_de_rodape" title="As ressalvas numeradas que os itens acima referenciam.">{{notas_de_rodape}}</span></p>
     </div>
   </div>
 
@@ -578,7 +622,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
     <div class="esp"></div>
     <div class="lg-sec">
       <h2>Como somos&nbsp;remunerados</h2>
-      <div class="corrido"><p>A AUVP Private Banking trabalha no modelo <em>fee&nbsp;based</em>. Neste plano, a consultoria cobra uma taxa sobre o patrimônio orientado, de <strong><span class="ph" title="Ex.: 0,075%">{{taxa_mensal}}</span> ao&nbsp;mês</strong>, o que dá <strong><span class="ph" title="Ex.: 0,9%">{{taxa_anual}}</span> ao&nbsp;ano</strong>.</p><p>No modelo comissionado, que é o mais comum no mercado, quem indica o investimento é pago pelo produto que vende. Quanto maior a comissão daquele produto, maior o incentivo para oferecer justamente ele, e para sugerir troca na carteira com mais frequência do que seria necessário. O interesse de quem recomenda acaba ficando diferente do interesse de quem&nbsp;investe.</p><p>No <em>fee&nbsp;based</em> (modelo que praticamos) esse conflito não aparece. A nossa remuneração é a mesma seja qual for o investimento recomendado, então a escolha é feita só pelo que serve para você. A comissão que a indicação geraria volta para a sua conta em forma de&nbsp;cashback.</p><p>E como a taxa é um percentual do que você tem investido, a consultoria só ganha mais quando o seu patrimônio&nbsp;cresce.</p></div>
+      <div class="corrido"><p>A AUVP Private Banking trabalha no modelo <em>fee&nbsp;based</em>: a consultoria cobra uma taxa sobre o patrimônio orientado, combinada com você e escrita na&nbsp;proposta.</p><p>No modelo comissionado, que é o mais comum no mercado, quem indica o investimento é pago pelo produto que vende. Quanto maior a comissão daquele produto, maior o incentivo para oferecer justamente ele, e para sugerir troca na carteira com mais frequência do que seria necessário. O interesse de quem recomenda acaba ficando diferente do interesse de quem&nbsp;investe.</p><p>No <em>fee&nbsp;based</em> (modelo que praticamos) esse conflito não aparece. A nossa remuneração é a mesma seja qual for o investimento recomendado, então a escolha é feita só pelo que serve para você. A comissão que a indicação geraria volta para a sua conta em forma de&nbsp;cashback.</p><p>E como a taxa é um percentual do que você tem investido, a consultoria só ganha mais quando o seu patrimônio&nbsp;cresce.</p></div>
     </div>
   </div>
 
@@ -596,12 +640,12 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
       </div>
       <div>
         <h2>Falar com o seu&nbsp;consultor</h2>
-        <div class="dl"><dt>WhatsApp</dt><dd><span class="ph" data-link="whatsapp">{{whatsapp_consultor}}</span></dd><dt>E-mail</dt><dd><span class="ph" data-link="mailto">{{email_consultor}}</span></dd></div>
+        <div class="dl"><dt>WhatsApp</dt><dd><span class="ph" data-campo="whatsapp_consultor" data-link="whatsapp">{{whatsapp_consultor}}</span></dd><dt>E-mail</dt><dd><span class="ph" data-campo="email_consultor" data-link="mailto">{{email_consultor}}</span></dd></div>
         <p class="small mut" style="margin:5mm 0 0">Sempre que precisar, é só mandar mensagem para o seu&nbsp;consultor.</p>
       </div>
     </div>
     <div class="lg-assina">
-      <span class="data"><span class="ph">{{data_apresentacao}}</span></span>
+      <span class="data"><span class="ph" data-campo="data_apresentacao">{{data_apresentacao}}</span></span>
       <div class="logo" style="width:52.1mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1123.56 172.44">
   <defs>
     <style>

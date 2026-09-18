@@ -37,6 +37,11 @@ ul{margin:0 0 3mm;padding-left:4mm}
 li{margin:0 0 1mm}
 strong{font-weight:700}
 .ph{background:var(--ph);border-radius:.6mm;padding:0 1mm;font-weight:600;overflow-wrap:break-word;text-transform:none;letter-spacing:0;font-size:.94em}
+/* O campo que já vem preenchido não é lacuna: lê-se como o texto que é, e o
+   realce só serviria para o consultor achar que falta algo ali. Continua sendo
+   campo — a ferramenta o oferece para edição —, mas isso é assunto da
+   ferramenta, não do papel. */
+.ph.pronto{background:none;padding:0;font-weight:inherit;font-size:inherit}
 .dark .ph{background:var(--ph-dk);color:#fff}
 /* capas e divisórias são monocromáticas: nada de dourado sobre a arte da capa */
 .cover .ph,.divider .ph{background:rgba(255,255,255,.18);color:#fff}
@@ -121,6 +126,34 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .tb.fix{table-layout:fixed}
 .tb td{padding:3mm 3mm;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
 .tb tbody tr:nth-child(even) td{background:var(--soft)}
+
+/* ---------- cronograma de reuniões ----------
+   A sequência do primeiro ciclo, com as fases numa trilha à esquerda. A trilha
+   é uma célula só por fase, com `rowspan`, e o rótulo deitado: são três
+   palavras longas — Estruturação, Acompanhamento, Fechamento — e em pé elas
+   roubariam uma coluna inteira da tabela para dizer o que é só a divisão.
+
+   As datas são as únicas células que mudam de cliente para cliente, e por isso
+   vêm dentro de uma cápsula: quem preenche vê onde escrever, e quem lê vê o que
+   é combinado e o que é processo da casa. */
+.crono{width:100%;border-collapse:collapse;font-size:8.4pt}
+.crono thead th{background:var(--brand);color:#fff;text-align:left;font-weight:600;
+  font-size:7pt;letter-spacing:.08em;text-transform:uppercase;padding:2.6mm 4mm}
+.crono td{padding:2mm 4mm;border-bottom:1px solid var(--line);vertical-align:middle}
+.crono tbody tr:nth-child(even) td{background:var(--soft)}
+.crono .qual{font-weight:700;color:var(--brand);white-space:nowrap}
+.crono .pauta{font-weight:600}
+.crono .prazo{color:var(--ink-2);white-space:nowrap}
+/* o objetivo estratégico é a coluna larga do plano do private: leva a frase
+   inteira, e as outras três só o que precisam */
+.crono .obj{color:var(--ink-2);width:100%}
+.crono .quando{text-align:right;white-space:nowrap}
+.crono .quando span{display:inline-block;padding:1.2mm 3.5mm;border:1px solid var(--line);
+  border-radius:9mm;background:var(--paper);font-weight:700;font-size:8.2pt}
+.crono td.fase{background:var(--brand);padding:0;width:9mm;border-bottom:1px solid var(--paper)}
+.crono td.fase span{display:block;writing-mode:vertical-rl;transform:rotate(180deg);
+  margin:0 auto;padding:4mm 0;color:var(--accent);font-size:6.8pt;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
 .slide.dark .tb td{border-color:rgba(255,255,255,.16)}
 .slide.dark .tb tbody tr:nth-child(even) td{background:rgba(255,255,255,.05)}
 .tb .num,.tb th.num{text-align:right}
@@ -142,6 +175,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3mm;text-align:center;padding:6mm}
 .slide.dark .chart{background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.045) 6px 12px)}
 .chart .cl{font-size:7.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.chart.feito{border:0;background:none;padding:0;gap:2mm}
 .slide.dark .chart .cl{color:#fff}
 .chart .cd{font-size:9pt;color:var(--ink-2);max-width:150mm;line-height:1.45}
 .slide.dark .chart .cd{color:rgba(255,255,255,.75)}
@@ -166,6 +200,13 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .imgbox .cl{font-size:7.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
 .slide.dark .imgbox .cl{color:#fff}
 .imgbox .cd{font-size:9pt;max-width:90mm;line-height:1.45;color:var(--ink-2)}
+
+/* A foto institucional é parte do desenho, e não escolha de quem preenche. Vai
+   na proporção em que foi tirada: a sede é um prédio largo, e recortá-la para
+   caber num retrato 3:4 cortava metade da fachada. A largura é a da coluna e a
+   altura sai sozinha, que é o que `height:auto` faz — nenhuma caixa impõe
+   formato a ela. */
+.imgfixa{display:block;width:100%;height:auto;border-radius:1mm}
 .slide.dark .imgbox .cd{color:rgba(255,255,255,.75)}
 
 /* capa e divisórias ----------
@@ -236,6 +277,22 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .flow p{font-size:9pt;color:var(--ink-2);margin:0;line-height:1.45}
 
 /* ---------- legenda de série, com a paleta do segmento ---------- */
+/* ---------- gráfico desenhado a partir do dado ----------
+   Entra no lugar da moldura vazia quando o consultor preenche a tabelinha na
+   ferramenta. É SVG: sai vetor no PDF, na tipografia da casa e nas cores do
+   segmento — `--c1`..`--c6`, as mesmas da legenda. */
+.g-svg{width:100%;height:auto;max-height:100%;display:block;flex:1 1 auto;min-height:0}
+.g-guia{stroke:var(--line);stroke-width:1}
+.g-eixo{fill:var(--ink-2);font-size:10px}
+.g-mini{fill:var(--ink-2);font-size:10px;text-anchor:middle;letter-spacing:.04em}
+.g-linha{fill:none;stroke:var(--c1);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}
+.g-area{fill:var(--c1);opacity:.10}
+.g-ponto{fill:var(--paper);stroke:var(--c1);stroke-width:2}
+.g-nota{font-size:7pt;color:var(--ink-2);text-align:center}
+.slide.dark .g-eixo,.slide.dark .g-mini{fill:rgba(255,255,255,.75)}
+.slide.dark .g-guia{stroke:rgba(255,255,255,.22)}
+
+
 .legend{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5mm 6mm;
   margin:4mm 0 0;padding:0;font-size:8pt;color:var(--ink-2)}
 .legend li{display:flex;align-items:center;gap:1.5mm}
@@ -448,16 +505,16 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="cv-block">
     <div class="rule"></div>
     <h1 class="cv-t"><span class="lt">Carta&nbsp;de </span>Apresentação</h1>
-    <div class="cv-sub"><span class="ph" title="Ex.: o que conversamos e o que vem a seguir">{{subtitulo_carta}}</span></div>
+    <div class="cv-sub"><span class="ph" data-campo="subtitulo_carta" title="Ex.: o que conversamos e o que vem a seguir">{{subtitulo_carta}}</span></div>
   </div>
-  <div class="cv-foot"><div class="cf">DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</div><div class="id"><div><span class="ph">{{nome_cliente}}</span></div><div>Elaborada por <span class="ph">{{nome_responsavel}}</span></div><div><span class="ph">{{data_carta}}</span></div></div></div>
+  <div class="cv-foot"><div class="cf">DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</div><div class="id"><div><span class="ph" data-campo="nome_cliente">{{nome_cliente}}</span></div><div>Elaborada por <span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span></div><div><span class="ph" data-campo="data_carta">{{data_carta}}</span></div></div></div>
 </section>
 <section class="slide">
   
   <div class="in">
     <header class="pg-head">
       <div class="sec">Síntese</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_carta">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -499,13 +556,13 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 <h1 class="t">O que entendemos até&nbsp;aqui</h1>
 <div class="cols2u" style="flex:1 1 auto;align-items:center">
   <div>
-    <p class="lead">Prezado(a) <span class="ph">{{nome_cliente}}</span>,</p>
-    <p>Foi um prazer a nossa primeira conversa, em <span class="ph">{{data_primeira_reuniao}}</span>. É o começo de uma jornada
+    <p class="lead">Prezado(a) <span class="ph" data-campo="nome_cliente">{{nome_cliente}}</span>,</p>
+    <p>Foi um prazer a nossa primeira conversa, em <span class="ph" data-campo="data_primeira_reuniao">{{data_primeira_reuniao}}</span>. É o começo de uma jornada
     estruturada, que existe para que o seu patrimônio não seja apenas cuidado, mas construído e
     preservado ao longo do&nbsp;tempo.</p>
-    <p>Dessa conversa, passamos a entender o seu momento: <span class="ph" title="Ex.: transição de carreira, com liquidez recente">{{momento_do_cliente}}</span>. E ficou claro que o seu
-    principal objetivo patrimonial hoje é <span class="ph">{{objetivo_principal}}</span>.</p>
-    <p>A condução da estratégia fica com o consultor <span class="ph">{{nome_responsavel}}</span>, com o apoio da equipe técnica
+    <p>Dessa conversa, passamos a entender o seu momento: <span class="ph" data-campo="momento_do_cliente" title="Ex.: transição de carreira, com liquidez recente">{{momento_do_cliente}}</span>. E ficou claro que o seu
+    principal objetivo patrimonial hoje é <span class="ph" data-campo="objetivo_principal">{{objetivo_principal}}</span>.</p>
+    <p>A condução da estratégia fica com o consultor <span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span>, com o apoio da equipe técnica
     da AUVP&nbsp;Capital.</p>
   </div>
   <div>
@@ -513,9 +570,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     <ul class="lista"><li>A estrutura do nosso&nbsp;relacionamento</li><li>A metodologia que nos&nbsp;guia</li><li>O cronograma de trabalho dos próximos&nbsp;encontros</li><li>A estrutura de alocação que orienta as carteiras da&nbsp;casa</li><li>O que você recebe em cada etapa desta&nbsp;jornada</li></ul>
   </div>
 </div>
-<div class="note" style="margin-top:auto"><p><span class="ph" title="Ex.: patrimônio construído ao longo de uma vida deve ter caráter perpétuo.">{{frase_de_abertura}}</span></p></div>
+<div class="note" style="margin-top:auto"><p><span class="ph" data-campo="frase_de_abertura" title="Ex.: patrimônio construído ao longo de uma vida deve ter caráter perpétuo.">{{frase_de_abertura}}</span></p></div>
     </div>
-    <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">01</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide dark">
@@ -523,7 +580,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Remuneração</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_carta}}</span></div><div class="logo" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_carta">{{data_carta}}</span></div><div class="logo" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -565,17 +622,17 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 <h1 class="t">Fee based, e&nbsp;só</h1>
 <div class="center"><div class="cols2u" style="align-items:center">
   <div>
-    <div class="big"><span class="ph" title="Ex.: 0,9% ao ano">{{taxa_anual}}</span></div>
+    <div class="big"><span class="ph" data-campo="taxa_anual" title="Ex.: 0,9% ao ano">{{taxa_anual}}</span></div>
     <p class="lead" style="margin-top:4mm">ao ano, para o seu cenário e o seu nível de
     complexidade patrimonial. Cobrada mensalmente de forma proporcional ao patrimônio sob
     orientação e debitada na sua conta de&nbsp;investimentos.</p>
     <div class="note"><p><strong>Antes do método, o&nbsp;preço.</strong> Você precisa conhecer os
-    termos da nossa remuneração antes de avaliar qualquer benefício do modelo. <span class="ph" title="Base de cálculo, cobrança, impostos e condições">{{nota_taxas}}</span></p></div>
+    termos da nossa remuneração antes de avaliar qualquer benefício do&nbsp;modelo. </p></div>
   </div>
   <div><div class="cards" style="--n:1"><div class="card"><h4>Percentual fixo sobre o&nbsp;patrimônio</h4><p>Cobrado mensalmente, de forma proporcional ao que está sob&nbsp;orientação.</p></div><div class="card"><h4>Única forma de&nbsp;remuneração</h4><p>Sem comissão, rebate ou incentivo vinculado a produto&nbsp;financeiro.</p></div><div class="card"><h4>Alinhamento de&nbsp;interesses</h4><p>Se o melhor produto para você paga menos à casa, ele entra do mesmo&nbsp;jeito.</p></div></div></div>
 </div></div>
     </div>
-    <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -583,7 +640,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Relacionamento</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_carta">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -625,7 +682,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 <h1 class="t">Como o relacionamento se&nbsp;estrutura</h1>
 <div class="center"><ol class="steps" style="--n:3"><li><h4>Diagnóstico</h4><p>Mapeamento do patrimônio atual: ativos, passivos, fluxo, concentrações, exposições e aderência ao perfil de&nbsp;risco.</p></li><li><h4>Proposta</h4><p>Alocação personalizada com racional claro para cada classe, projeções e&nbsp;cenários.</p></li><li><h4>Transição</h4><p>Execução gradual, respeitando carências, vencimentos, eficiência fiscal e o momento de&nbsp;mercado.</p></li><li><h4>Acompanhamento</h4><p>Carteira acompanhada de perto, com reuniões periódicas, relatório mensal e ajustes táticos quando fizerem&nbsp;falta.</p></li><li><h4>Revisão</h4><p>Fechamento de ciclo: desempenho do período, revisão de metas e agenda do período&nbsp;seguinte.</p></li><li><h4>Acesso e eficiência&nbsp;tributária</h4><p>Ofertas restritas avaliadas à luz da sua carteira, e escolha de veículos e prazos considerando come-cotas, isenções e&nbsp;compensação.</p></li></ol></div>
     </div>
-    <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -633,7 +690,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   <div class="in">
     <header class="pg-head">
       <div class="sec">Metodologia</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_carta">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -678,7 +735,7 @@ consistente, que guie a decisão independentemente do momento de mercado. É ela
 disciplinados quando o mercado oscila e atentos quando a oportunidade&nbsp;aparece.</p>
 <div class="center"><div class="cards" style="--n:2"><div class="card"><h4>KYC e suitability&nbsp;aprofundados</h4><p>Vai além da tolerância a risco: objetivos de vida, estrutura familiar, horizonte de usufruto, obrigações futuras e o legado&nbsp;desejado.</p></div><div class="card"><h4>Diagnóstico do&nbsp;portfólio</h4><p>Cinco dimensões: concentração de risco, descasamento de prazo e liquidez, custos desnecessários, ineficiência tributária e desalinhamento ao&nbsp;perfil.</p></div><div class="card"><h4>Construção da estratégia&nbsp;meta</h4><p>Alocação com racional fundamentado, classe a classe. Disciplina e horizonte longo como base, sem movimento&nbsp;especulativo.</p></div><div class="card"><h4>Monitoramento e&nbsp;evolução</h4><p>Acompanhamento trimestral da carteira, revisão da estratégia meta, relatório mensal de resultado e relatório macroeconômico para contextualizar cada&nbsp;decisão.</p></div></div></div>
     </div>
-    <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -686,7 +743,7 @@ disciplinados quando o mercado oscila e atentos quando a oportunidade&nbsp;apare
   <div class="in">
     <header class="pg-head">
       <div class="sec">Cronograma</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_carta">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -731,7 +788,7 @@ disciplinados quando o mercado oscila e atentos quando a oportunidade&nbsp;apare
 calendário do ciclo de acompanhamento, com pauta e entregável de cada encontro, está no
 cronograma de&nbsp;reuniões.</p></div>
     </div>
-    <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -739,7 +796,7 @@ cronograma de&nbsp;reuniões.</p></div>
   <div class="in">
     <header class="pg-head">
       <div class="sec">Próximos&nbsp;passos</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_carta">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -793,7 +850,7 @@ cronograma de&nbsp;reuniões.</p></div>
   </div>
 </div></div>
     </div>
-    <footer class="pg-foot"><span class="no">07</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -801,7 +858,7 @@ cronograma de&nbsp;reuniões.</p></div>
   <div class="in">
     <header class="pg-head">
       <div class="sec">Alocação</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_carta">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -846,7 +903,7 @@ limitar a elas quando o seu perfil e os seus objetivos pedirem outra coisa. A co
 elas é que busca o equilíbrio entre preservação, renda e&nbsp;crescimento.</p>
 <div class="center"><table class="tb sm fix"><colgroup><col style="width:18%"><col style="width:24%"><col style="width:58%"></colgroup><thead><tr><th>Classe</th><th>Função</th><th>Como&nbsp;trabalhamos</th></tr></thead><tbody><tr><td>Renda&nbsp;fixa</td><td>Proteção, renda e&nbsp;liquidez</td><td>Pós-fixados, IPCA+ e prefixados, de olho no FGC, no risco de crédito e nas oportunidades de marcação a&nbsp;mercado.</td></tr><tr><td>Ações</td><td>Crescimento no longo&nbsp;prazo</td><td>Seleção por fundamento, governança, valuation e vantagem competitiva&nbsp;durável.</td></tr><tr><td>Fundos&nbsp;imobiliários</td><td>Renda recorrente e diversificação&nbsp;real</td><td>Logística e shoppings, com inquilinos sólidos e contratos que repassam&nbsp;inflação.</td></tr><tr><td>Internacional</td><td>Diversificação global e proteção&nbsp;cambial</td><td>ETFs passivos em core-satellite, reduzindo a concentração em um único&nbsp;mercado.</td></tr><tr><td>Caixa e&nbsp;liquidez</td><td>Flexibilidade e oportunidade&nbsp;tática</td><td>Reserva calibrada pela sua necessidade de liquidez e pelo aproveitamento de&nbsp;oportunidades.</td></tr></tbody></table></div>
     </div>
-    <footer class="pg-foot"><span class="no">08</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">07</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -854,7 +911,7 @@ elas é que busca o equilíbrio entre preservação, renda e&nbsp;crescimento.</
   <div class="in">
     <header class="pg-head">
       <div class="sec">Alocação</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_carta">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -894,16 +951,16 @@ elas é que busca o equilíbrio entre preservação, renda e&nbsp;crescimento.</
     </header>
     <div class="pg-body">
 <span class="eyebrow">Prévia da&nbsp;implementação</span>
-<h1 class="t">As bandas da estrutura&nbsp;meta</h1>
+<h1 class="t">As bandas da estrutura meta <span class="pill" style="margin-left:4mm;vertical-align:middle;font-size:.42em">Opcional</span></h1>
 <p class="lead">Cada classe trabalha dentro de uma banda, e não de um número fixo: é o que
 permite acomodar o momento de mercado sem sair da estratégia. As bandas abaixo são as do seu
-perfil <span class="ph">{{perfil_investidor}}</span>.</p>
-<table class="tb sm fix"><colgroup><col style="width:26%"><col style="width:12%"><col style="width:12%"><col style="width:50%"></colgroup><thead><tr><th>Classe</th><th class="num">Mínimo</th><th class="num">Máximo</th><th>Função no&nbsp;portfólio</th></tr></thead><tbody><tr><td>Renda&nbsp;fixa</td><td class="num"><span class="ph">{{banda_rf_min}}</span></td><td class="num"><span class="ph">{{banda_rf_max}}</span></td><td>Preservação, renda e&nbsp;liquidez</td></tr><tr><td>Internacional — renda&nbsp;fixa</td><td class="num"><span class="ph">{{banda_irf_min}}</span></td><td class="num"><span class="ph">{{banda_irf_max}}</span></td><td>Diversificação cambial e renda em moeda&nbsp;forte</td></tr><tr><td>Internacional — renda&nbsp;variável</td><td class="num"><span class="ph">{{banda_irv_min}}</span></td><td class="num"><span class="ph">{{banda_irv_max}}</span></td><td>Crescimento&nbsp;global</td></tr><tr><td>Ações</td><td class="num"><span class="ph">{{banda_acoes_min}}</span></td><td class="num"><span class="ph">{{banda_acoes_max}}</span></td><td>Crescimento patrimonial de longo&nbsp;prazo</td></tr><tr><td>Fundos&nbsp;imobiliários</td><td class="num"><span class="ph">{{banda_fii_min}}</span></td><td class="num"><span class="ph">{{banda_fii_max}}</span></td><td>Renda recorrente&nbsp;isenta</td></tr><tr><td>Alternativos</td><td class="num"><span class="ph">{{banda_alt_min}}</span></td><td class="num"><span class="ph">{{banda_alt_max}}</span></td><td>Diversificação fora das classes&nbsp;tradicionais</td></tr></tbody></table>
+perfil <span class="ph" data-campo="perfil_investidor">{{perfil_investidor}}</span>.</p>
+<table class="tb sm fix"><colgroup><col style="width:26%"><col style="width:12%"><col style="width:12%"><col style="width:50%"></colgroup><thead><tr><th>Classe</th><th class="num">Mínimo</th><th class="num">Máximo</th><th>Função no&nbsp;portfólio</th></tr></thead><tbody><tr><td>Renda&nbsp;fixa</td><td class="num"><span class="ph pronto" data-campo="banda_rf_min">40%</span></td><td class="num"><span class="ph pronto" data-campo="banda_rf_max">70%</span></td><td>Preservação, renda e&nbsp;liquidez</td></tr><tr><td>Internacional — renda&nbsp;fixa</td><td class="num"><span class="ph pronto" data-campo="banda_irf_min">5%</span></td><td class="num"><span class="ph pronto" data-campo="banda_irf_max">15%</span></td><td>Diversificação cambial e renda em moeda&nbsp;forte</td></tr><tr><td>Internacional — renda&nbsp;variável</td><td class="num"><span class="ph pronto" data-campo="banda_irv_min">5%</span></td><td class="num"><span class="ph pronto" data-campo="banda_irv_max">15%</span></td><td>Crescimento&nbsp;global</td></tr><tr><td>Ações</td><td class="num"><span class="ph pronto" data-campo="banda_acoes_min">10%</span></td><td class="num"><span class="ph pronto" data-campo="banda_acoes_max">25%</span></td><td>Crescimento patrimonial de longo&nbsp;prazo</td></tr><tr><td>Fundos&nbsp;imobiliários</td><td class="num"><span class="ph pronto" data-campo="banda_fii_min">5%</span></td><td class="num"><span class="ph pronto" data-campo="banda_fii_max">15%</span></td><td>Renda recorrente&nbsp;isenta</td></tr><tr><td>Alternativos</td><td class="num"><span class="ph pronto" data-campo="banda_alt_min">0%</span></td><td class="num"><span class="ph pronto" data-campo="banda_alt_max">10%</span></td><td>Diversificação fora das classes&nbsp;tradicionais</td></tr></tbody></table>
 <p class="legal" style="margin-top:auto">Este material não constitui promessa de rentabilidade
 nem carteira definitiva. A alocação final depende da análise completa do seu perfil, objetivos,
 restrições e&nbsp;suitability.</p>
     </div>
-    <footer class="pg-foot"><span class="no">09</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">08</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -911,7 +968,7 @@ restrições e&nbsp;suitability.</p>
   <div class="in">
     <header class="pg-head">
       <div class="sec">Estratégia</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_carta">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -955,9 +1012,9 @@ restrições e&nbsp;suitability.</p>
 crédito bancário para prêmio com risco mitigado pelo FGC e crédito privado para spreads
 maiores, com análise rigorosa. Em todos os casos, o ativo só é escolhido depois de definido o
 papel daquela parcela na&nbsp;carteira.</p>
-<div class="center"><table class="tb sm fix"><colgroup><col style="width:13%"><col style="width:29%"><col style="width:29%"><col style="width:29%"></colgroup><thead><tr><th></th><th>Pós-fixado (CDI e&nbsp;Selic)</th><th>Inflação&nbsp;(IPCA+)</th><th>Prefixado</th></tr></thead><tbody><tr><td><strong>Objetivo</strong></td><td>Liquidez, previsibilidade e reserva de&nbsp;oportunidade.</td><td>Proteção do poder de compra e crescimento real no longo&nbsp;prazo.</td><td>Captura do prêmio de juros nominais, com retorno previsível até o&nbsp;vencimento.</td></tr><tr><td><strong>Horizonte</strong></td><td>Carrego até 2&nbsp;anos.</td><td>Carrego a partir de 4 anos; marcação a mercado a partir de 10&nbsp;anos.</td><td>Carrego até 3&nbsp;anos.</td></tr><tr><td><strong>Estrutura</strong></td><td>Metade em liquidez imediata (D+0 e D+1) e metade em crédito bancário e privado com vencimento em até 2&nbsp;anos.</td><td>Metade em carrego via crédito bancário e ETFs, com crédito privado limitado a um terço da parcela; o restante em Tesouro IPCA+ para&nbsp;duration.</td><td>Metade em crédito bancário, um quarto em crédito privado e ETFs e um quarto em títulos&nbsp;soberanos.</td></tr><tr><td><strong>Critérios</strong></td><td>Qualidade do emissor, liquidez D+0 ou D+1, cobertura do FGC, taxa contra o CDI e prazo compatível com o uso do&nbsp;dinheiro.</td><td>Taxa real contra o histórico, prazo compatível, qualidade do emissor e cobertura do&nbsp;FGC.</td><td>Taxa nominal contra o contexto macro, prazo, qualidade do emissor e liquidez no&nbsp;secundário.</td></tr></tbody></table></div>
+<div class="center"><table class="tb sm fix"><colgroup><col style="width:13%"><col style="width:29%"><col style="width:29%"><col style="width:29%"></colgroup><thead><tr><th></th><th>Pós-fixado (CDI e&nbsp;Selic)</th><th>Inflação&nbsp;(IPCA+)</th><th>Prefixado</th></tr></thead><tbody><tr><td><strong>Objetivo</strong></td><td><span class="ph pronto" data-campo="rf_objetivo_pos">Liquidez, previsibilidade e reserva de&nbsp;oportunidade.</span></td><td><span class="ph pronto" data-campo="rf_objetivo_ipca">Proteção do poder de compra e crescimento real no longo&nbsp;prazo.</span></td><td><span class="ph pronto" data-campo="rf_objetivo_pre">Captura do prêmio de juros nominais, com retorno previsível até o&nbsp;vencimento.</span></td></tr><tr><td><strong>Horizonte</strong></td><td><span class="ph pronto" data-campo="rf_horizonte_pos">Carrego até 2&nbsp;anos.</span></td><td><span class="ph pronto" data-campo="rf_horizonte_ipca">Carrego a partir de 4 anos; marcação a mercado a partir de 10&nbsp;anos.</span></td><td><span class="ph pronto" data-campo="rf_horizonte_pre">Carrego até 3&nbsp;anos.</span></td></tr><tr><td><strong>Estrutura</strong></td><td><span class="ph pronto" data-campo="rf_estrutura_pos">Metade em liquidez imediata (D+0 e D+1) e metade em crédito bancário e privado com vencimento em até 2&nbsp;anos.</span></td><td><span class="ph pronto" data-campo="rf_estrutura_ipca">Metade em carrego via crédito bancário e ETFs, com crédito privado limitado a um terço da parcela; o restante em Tesouro IPCA+ para&nbsp;duration.</span></td><td><span class="ph pronto" data-campo="rf_estrutura_pre">Metade em crédito bancário, um quarto em crédito privado e ETFs e um quarto em títulos&nbsp;soberanos.</span></td></tr><tr><td><strong>Critérios</strong></td><td><span class="ph pronto" data-campo="rf_critérios_pos">Qualidade do emissor, liquidez D+0 ou D+1, cobertura do FGC, taxa contra o CDI e prazo compatível com o uso do&nbsp;dinheiro.</span></td><td><span class="ph pronto" data-campo="rf_critérios_ipca">Taxa real contra o histórico, prazo compatível, qualidade do emissor e cobertura do&nbsp;FGC.</span></td><td><span class="ph pronto" data-campo="rf_critérios_pre">Taxa nominal contra o contexto macro, prazo, qualidade do emissor e liquidez no&nbsp;secundário.</span></td></tr></tbody></table></div>
     </div>
-    <footer class="pg-foot"><span class="no">10</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">09</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -965,7 +1022,7 @@ papel daquela parcela na&nbsp;carteira.</p>
   <div class="in">
     <header class="pg-head">
       <div class="sec">Estratégia</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_carta">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -1010,7 +1067,7 @@ e por isso são selecionadas por critérios diferentes. O que elas têm em comum
 fundamento: nenhuma posição entra por movimento de&nbsp;preço.</p>
 <div class="center"><table class="tb sm fix"><colgroup><col style="width:16%"><col style="width:28%"><col style="width:28%"><col style="width:28%"></colgroup><thead><tr><th></th><th>Fundos&nbsp;imobiliários</th><th>Ações</th><th>Internacional</th></tr></thead><tbody><tr><td><strong>Objetivo</strong></td><td>Renda imobiliária mensal isenta para pessoa física, com liquidez de bolsa e diversificação&nbsp;setorial.</td><td>Crescimento patrimonial de longo prazo, via participação no lucro das empresas e exposição a ativos&nbsp;reais.</td><td>Diversificação cambial, liquidez em moeda forte e eficiência no planejamento&nbsp;sucessório.</td></tr><tr><td><strong>Estratégia</strong></td><td>Prioridade para logística e shoppings, com inquilinos sólidos, contratos consistentes e capacidade de repassar&nbsp;inflação.</td><td>Seleção por fundamento, governança, valuation e vantagem competitiva durável, com aporte concentrado nos ativos mais&nbsp;descontados.</td><td>ETFs passivos em core-satellite, combinados com money market e bonds de grau&nbsp;elevado.</td></tr><tr><td><strong>Riscos&nbsp;monitorados</strong></td><td>Vacância, inadimplência, sensibilidade à taxa de juros e risco de&nbsp;gestão.</td><td>Concentração setorial, ciclicidade, endividamento e deterioração de&nbsp;fundamento.</td><td>Risco cambial, duration, risco de crédito nos bonds e tracking difference dos&nbsp;ETFs.</td></tr><tr><td><strong>Critérios</strong></td><td>Múltiplos imóveis e inquilinos, qualidade dos ativos, solidez do gestor, valuation e liquidez em&nbsp;bolsa.</td><td>Lucro recorrente, endividamento controlado, vantagem competitiva, setor perene e descorrelação&nbsp;real.</td><td>Money market com rating alto e liquidez D+1, sem high yield; ETFs com duration moderada, patrimônio suficiente e tracking difference&nbsp;baixo.</td></tr></tbody></table></div>
     </div>
-    <footer class="pg-foot"><span class="no">11</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">10</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -1018,7 +1075,7 @@ fundamento: nenhuma posição entra por movimento de&nbsp;preço.</p>
   <div class="in">
     <header class="pg-head">
       <div class="sec">Modelo de&nbsp;atuação</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_carta">{{data_carta}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -1074,7 +1131,7 @@ fundamento: nenhuma posição entra por movimento de&nbsp;preço.</p>
   </div>
 </div></div>
     </div>
-    <footer class="pg-foot"><span class="no">12</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">11</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide dark">
@@ -1082,7 +1139,7 @@ fundamento: nenhuma posição entra por movimento de&nbsp;preço.</p>
   <div class="in">
     <header class="pg-head">
       <div class="sec">Compromisso</div>
-      <div class="rt"><div class="dt"><span class="ph">{{data_carta}}</span></div><div class="logo" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_carta">{{data_carta}}</span></div><div class="logo" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -1124,7 +1181,7 @@ fundamento: nenhuma posição entra por movimento de&nbsp;preço.</p>
 <div style="display:flex;gap:16mm;flex:1 1 auto;align-items:center">
   <div style="flex:1 1 auto">
     <h1 class="t">O nosso trabalho começa&nbsp;agora</h1>
-    <p class="lead" style="margin-top:4mm">Prezado(a) <span class="ph">{{nome_cliente}}</span>, entendemos que a confiança
+    <p class="lead" style="margin-top:4mm">Prezado(a) <span class="ph" data-campo="nome_cliente">{{nome_cliente}}</span>, entendemos que a confiança
     depositada aqui vai além de uma relação comercial: é confiança sobre o que representa anos
     de dedicação e&nbsp;construção.</p>
     <p>O nosso papel é ser o parceiro estratégico que você não precisa gerenciar — o que cuida
@@ -1132,18 +1189,20 @@ fundamento: nenhuma posição entra por movimento de&nbsp;preço.</p>
     importa, com a certeza de que o seu patrimônio está sendo tratado com o mesmo cuidado com
     que foi&nbsp;construído.</p>
     <div class="dl" style="margin-top:6mm">
-      <dt>Consultor</dt><dd><span class="ph">{{nome_responsavel}}</span></dd>
-      <dt>WhatsApp</dt><dd><span class="ph" data-link="whatsapp">{{whatsapp_contato}}</span></dd>
-      <dt>E-mail</dt><dd><span class="ph" data-link="mailto">{{email_contato}}</span></dd>
+      <dt>Consultor</dt><dd><span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span></dd>
+      <dt>WhatsApp</dt><dd><span class="ph" data-campo="whatsapp_contato" data-link="whatsapp">{{whatsapp_contato}}</span></dd>
+      <dt>E-mail</dt><dd><span class="ph" data-campo="email_contato" data-link="mailto">{{email_contato}}</span></dd>
     </div>
   </div>
+  <!-- Saiu o QR code de agendamento. A carta chega por e-mail ou WhatsApp e se
+       lê na tela, onde ninguém aponta a câmera para o próprio monitor; o link
+       clicável ao lado fazia o trabalho inteiro sozinho. -->
   <div style="display:flex;flex-direction:column;align-items:center;gap:4mm">
-    <div class="qr">QR code<br>agendamento</div>
-    <div class="small mut" style="text-align:center;max-width:52mm"><span class="ph" data-link="url">{{link_agendamento}}</span></div>
+    <div class="small mut" style="text-align:center;max-width:52mm"><span class="ph" data-campo="link_agendamento" data-link="url">{{link_agendamento}}</span></div>
   </div>
 </div>
     </div>
-    <footer class="pg-foot"><span class="no">13</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">12</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 </body>

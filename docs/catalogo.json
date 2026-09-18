@@ -33,7 +33,7 @@
      "rotulo": "Alta Renda",
      "arquivo": "apresentacao-consultor-alta-renda.html",
      "paginas": 1,
-     "campos": 63,
+     "campos": 69,
      "imagens": 1
     },
     {
@@ -41,7 +41,7 @@
      "rotulo": "Alta Renda, sem data",
      "arquivo": "apresentacao-consultor-alta-renda-sem-data.html",
      "paginas": 1,
-     "campos": 62,
+     "campos": 68,
      "imagens": 1
     },
     {
@@ -49,7 +49,7 @@
      "rotulo": "Private Banking",
      "arquivo": "apresentacao-consultor-private.html",
      "paginas": 1,
-     "campos": 63,
+     "campos": 69,
      "imagens": 1
     },
     {
@@ -57,7 +57,7 @@
      "rotulo": "Private Banking, sem data",
      "arquivo": "apresentacao-consultor-private-sem-data.html",
      "paginas": 1,
-     "campos": 62,
+     "campos": 68,
      "imagens": 1
     },
     {
@@ -65,7 +65,7 @@
      "rotulo": "Assessoria",
      "arquivo": "apresentacao-consultor-assessoria.html",
      "paginas": 1,
-     "campos": 63,
+     "campos": 69,
      "imagens": 1
     },
     {
@@ -73,15 +73,7 @@
      "rotulo": "Assessoria, sem data",
      "arquivo": "apresentacao-consultor-assessoria-sem-data.html",
      "paginas": 1,
-     "campos": 62,
-     "imagens": 1
-    },
-    {
-     "sufixo": "se-vira-ai",
-     "rotulo": "Se Vira Aí (autoatendimento)",
-     "arquivo": "apresentacao-consultor-se-vira-ai.html",
-     "paginas": 1,
-     "campos": 37,
+     "campos": 68,
      "imagens": 1
     },
     {
@@ -89,15 +81,7 @@
      "rotulo": "Me Diz o Que Fazer (básico)",
      "arquivo": "apresentacao-consultor-me-diz-o-que-fazer.html",
      "paginas": 1,
-     "campos": 37,
-     "imagens": 1
-    },
-    {
-     "sufixo": "resolve-ai",
-     "rotulo": "Resolve Aí (consultoria completa)",
-     "arquivo": "apresentacao-consultor-resolve-ai.html",
-     "paginas": 1,
-     "campos": 37,
+     "campos": 45,
      "imagens": 1
     }
    ]
@@ -152,33 +136,33 @@
      "sufixo": "consultoria",
      "rotulo": "Consultoria",
      "arquivo": "apresentacao-geral-consultoria.html",
-     "paginas": 14,
-     "campos": 141,
-     "imagens": 1
+     "paginas": 13,
+     "campos": 90,
+     "imagens": 0
     },
     {
      "sufixo": "alta-renda",
      "rotulo": "Alta Renda",
      "arquivo": "apresentacao-geral-alta-renda.html",
-     "paginas": 14,
-     "campos": 141,
-     "imagens": 1
+     "paginas": 12,
+     "campos": 56,
+     "imagens": 0
     },
     {
      "sufixo": "private",
      "rotulo": "Private Banking",
      "arquivo": "apresentacao-geral-private.html",
-     "paginas": 14,
-     "campos": 141,
-     "imagens": 1
+     "paginas": 12,
+     "campos": 50,
+     "imagens": 0
     },
     {
      "sufixo": "assessoria",
      "rotulo": "Assessoria",
      "arquivo": "apresentacao-geral-assessoria.html",
-     "paginas": 14,
-     "campos": 141,
-     "imagens": 1
+     "paginas": 12,
+     "campos": 56,
+     "imagens": 0
     }
    ]
   },
@@ -193,7 +177,7 @@
      "rotulo": "Consultoria",
      "arquivo": "carta-apresentacao-consultoria.html",
      "paginas": 13,
-     "campos": 26,
+     "campos": 34,
      "imagens": 0
     },
     {
@@ -201,7 +185,7 @@
      "rotulo": "Alta Renda",
      "arquivo": "carta-apresentacao-alta-renda.html",
      "paginas": 13,
-     "campos": 26,
+     "campos": 34,
      "imagens": 0
     },
     {
@@ -209,7 +193,7 @@
      "rotulo": "Private Banking",
      "arquivo": "carta-apresentacao-private.html",
      "paginas": 13,
-     "campos": 26,
+     "campos": 34,
      "imagens": 0
     },
     {
@@ -217,47 +201,7 @@
      "rotulo": "Assessoria",
      "arquivo": "carta-apresentacao-assessoria.html",
      "paginas": 13,
-     "campos": 25,
-     "imagens": 0
-    }
-   ]
-  },
-  {
-   "chave": "cronograma-reunioes",
-   "nome": "Cronograma de reuniões",
-   "formato": "a4",
-   "descricao": "Calendário do ciclo de acompanhamento e pauta de cada encontro.",
-   "variantes": [
-    {
-     "sufixo": "consultoria",
-     "rotulo": "Consultoria",
-     "arquivo": "cronograma-reunioes-consultoria.html",
-     "paginas": 6,
-     "campos": 153,
-     "imagens": 0
-    },
-    {
-     "sufixo": "alta-renda",
-     "rotulo": "Alta Renda",
-     "arquivo": "cronograma-reunioes-alta-renda.html",
-     "paginas": 6,
-     "campos": 153,
-     "imagens": 0
-    },
-    {
-     "sufixo": "private",
-     "rotulo": "Private Banking",
-     "arquivo": "cronograma-reunioes-private.html",
-     "paginas": 6,
-     "campos": 153,
-     "imagens": 0
-    },
-    {
-     "sufixo": "assessoria",
-     "rotulo": "Assessoria",
-     "arquivo": "cronograma-reunioes-assessoria.html",
-     "paginas": 6,
-     "campos": 153,
+     "campos": 34,
      "imagens": 0
     }
    ]
@@ -266,6 +210,7 @@
    "chave": "diagnostico-carteira",
    "nome": "Diagnóstico de carteira",
    "formato": "a4",
+   "blocos": true,
    "descricao": "Leitura da carteira atual, riscos encontrados e plano de ajuste.",
    "variantes": [
     {
@@ -306,6 +251,7 @@
    "chave": "relatorio-macroeconomico",
    "nome": "Relatório macroeconômico",
    "formato": "a4",
+   "blocos": true,
    "descricao": "Cenário do mês no Brasil e no exterior e o que ele muda na estratégia.",
    "variantes": [
     {
@@ -353,32 +299,32 @@
      "rotulo": "Consultoria",
      "arquivo": "relatorio-mensal-consultoria.html",
      "paginas": 11,
-     "campos": 467,
-     "imagens": 6
+     "campos": 381,
+     "imagens": 5
     },
     {
      "sufixo": "alta-renda",
      "rotulo": "Alta Renda",
      "arquivo": "relatorio-mensal-alta-renda.html",
      "paginas": 11,
-     "campos": 467,
-     "imagens": 6
+     "campos": 381,
+     "imagens": 5
     },
     {
      "sufixo": "private",
      "rotulo": "Private Banking",
      "arquivo": "relatorio-mensal-private.html",
-     "paginas": 12,
-     "campos": 503,
-     "imagens": 6
+     "paginas": 11,
+     "campos": 381,
+     "imagens": 5
     },
     {
      "sufixo": "assessoria",
      "rotulo": "Assessoria",
      "arquivo": "relatorio-mensal-assessoria.html",
      "paginas": 12,
-     "campos": 502,
-     "imagens": 6
+     "campos": 416,
+     "imagens": 5
     }
    ]
   },

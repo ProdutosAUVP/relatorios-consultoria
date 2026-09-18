@@ -53,6 +53,10 @@ autossuficientes na entrega, fonte única na manutenção.
 | `gerador/d_*.py` | um módulo por tipo de documento; contém o conteúdo e a ordem das seções |
 | `gerador/d_consultor_simples.py` | a apresentação de uma página, com chrome próprio; reaproveita os dados e os auxiliares de `d_consultor` |
 | `scripts/fotos.py` | prepara os retratos para envio pela ferramenta: recorta pelo rosto, sem tocar em cor ou brilho |
+| `scripts/institucional.py` | prepara as fotos da casa, que vêm embutidas no modelo e não são campo de imagem |
+| `gerador/blocos.py` | os blocos com que a ferramenta monta uma página nova, no desenho do resto |
+| `scripts/blocos.py` | publica os blocos em `docs/blocos.json` |
+| `assets/institucional/` | as fotos da casa, saída do `institucional.py`; os originais vêm da landing page institucional |
 | `assets/consultores/originais/` | fotos originais, como vieram |
 | `assets/consultores/` | retratos prontos, saída do `scripts/fotos.py` |
 | `documentos/consultores/` | apresentações nominais prontas, uma pasta por consultor, fora do pipeline: o `npm run all` não as toca |
@@ -374,6 +378,55 @@ para mostrar cinco cartões.
 robusto que substituir texto — um campo que aparece dentro de um atributo, ou um bloco de
 imagem com marcação aninhada, não quebra a montagem.
 
+**Dois documentos aceitam páginas montadas na ferramenta.** O diagnóstico e o
+macroeconômico não cabem num molde fixo: o diagnóstico muda de forma conforme a
+carteira que se lê, e o macro precisa abrir espaço quando o mês traz um evento
+que ninguém previu. Antes, quem precisava de uma página a mais tinha duas saídas
+ruins — espremer o assunto numa página existente ou pedir alteração no gerador e
+esperar.
+
+Eles são marcados com `blocos: true` em `scripts/documentos.mjs`, e na ferramenta
+ganham um editor: nova página, escolha do lugar dela no documento, e blocos
+prontos para pôr dentro.
+
+Não é um editor livre. Os doze blocos vivem em `gerador/blocos.py`, escritos com
+os mesmos componentes do resto — `table()`, `kpis()`, `chart()`, as mesmas
+classes —, e o que se escolhe é qual bloco e o que escrever nele. É o que evita
+que a página montada pareça de outro documento. `scripts/blocos.py` os publica em
+`docs/blocos.json`, com o número da instância trocado por uma marca que a
+ferramenta substitui: é isso que faz os campos do terceiro bloco de texto se
+chamarem `bl3_titulo` e não colidirem com os do primeiro.
+
+A casca da página não vem de lugar nenhum: a ferramenta clona uma página do
+modelo aberto e esvazia o corpo. Assim o cabeçalho, a logo, a data e o rodapé são
+exatamente os daquele documento e daquele segmento. A posição é dada pelo número
+da página original — "depois da 07" quer dizer depois da sétima do modelo, e não
+da sétima do que sobrou —, então a inserção acontece antes de tirar as páginas
+desmarcadas.
+
+**O gráfico se desenha a partir do dado, não de uma imagem.** Um espaço de
+gráfico era um espaço de imagem: o consultor montava a rosca em outro lugar,
+exportava um PNG e subia. O PNG chegava numa resolução qualquer, com a fonte de
+outro sistema e as cores de outro tema, e corrigir um número queria dizer
+refazer tudo — quando não vinha a captura de tela de uma planilha.
+
+Agora `chart()` anuncia na moldura o formato (`data-grafico`) e os rótulos
+sugeridos (`data-series`), a ferramenta oferece uma tabelinha de rótulo e valor,
+e `docs/graficos.js` desenha o SVG no arquivo exportado. Vetor no PDF, na
+tipografia da casa, nas cores do segmento — `--c1`..`--c6`, as mesmas da legenda
+— e editável até o último minuto.
+
+São quatro formatos, e cada um existe porque um documento pede: `donut` para a
+divisão de um todo, `anel` para as duas roscas concêntricas da carteira atual
+contra a meta, `bars` para uma série no tempo e `line` para a evolução do
+patrimônio. O envio de imagem continua ali, para o gráfico que não couber em
+nenhum deles, e o dado tem precedência sobre ele.
+
+Sem biblioteca: o SVG é montado à mão, o arquivo exportado abre sozinho por
+`file://` e o Chromium imprime o vetor sem rasterizar. E `graficos.js` vive
+dentro de uma função — os dois arquivos são scripts clássicos e dividem um
+escopo global só, então o único nome que sai é `window.Graficos`.
+
 **Os espaços de imagem são numerados no gerador.** `imgbox()` e `chart()` marcam cada
 espaço com `data-img`, e é por esse número que a foto enviada encontra o lugar dela. Sem
 isso a ferramenta dependeria da ordem dos elementos na página, que muda a cada edição de
@@ -451,7 +504,7 @@ Nos dois casos, `npm run build && npm run check` fecha o ciclo.
 ### Acrescentar um documento
 
 1. Crie `gerador/d_novo.py` com uma função `build(t, seg)` que devolve uma lista de
-   páginas — comece copiando `d_cronograma.py`, que é o menor.
+   páginas — comece copiando `d_diagnostico.py`, que é o mais direto.
 2. Registre em `gerador/build.py`, na lista `DOCUMENTOS`:
 
 ```python

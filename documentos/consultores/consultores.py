@@ -235,10 +235,10 @@ CONSULTORES = [
         papel="Consultor de investimentos",
         whatsapp="+55 (62) 3095-8115",
         email="danilo.barbosa@auvpconsultoria.com.br",
-        frase="O meu grande objetivo é ajudar você a tirar o foco exclusivo das necessidades "
-              "imediatas do seu &lsquo;eu do presente&rsquo; para construirmos, juntos, um "
-              "planejamento estratégico de longo prazo voltado para o seu &lsquo;eu do "
-              "futuro&rsquo;.",
+        frase="Meu compromisso é conectar seus objetivos a um planejamento financeiro "
+              "responsável, realista e seguro. Com o foco no longo prazo e uma estratégia "
+              "madura, garantimos a direção certa para o seu patrimônio. Conte comigo nessa "
+              "jornada!",
         proposito=[
             "Olá! Eu sou Danilo Barbosa, seu consultor de investimentos aqui na AUVP.",
             "Nesta jornada, vamos construir juntos o seu futuro financeiro, tijolo a tijolo, "
@@ -291,6 +291,17 @@ CONSULTORES = [
             "bem o que eu gosto além dos investimentos, embora eu quase tenha me esquecido de "
             "dizer que o feijão deve ser colocado por cima do arroz.",
         ],
+        # A folha de uma página não fecha com a vida fora do trabalho: é o cartão
+        # que vai antes da primeira conversa, e ele quis fechá-lo falando do
+        # trabalho. O parágrafo da vida pessoal continua na folha longa.
+        fecho_simples=(
+            "Vejo que investir é uma ferramenta fundamental não só para potencializar seus "
+            "resultados, mas também para proteger você financeiramente dos reveses que ocorrem "
+            "na vida. Portanto, saiba que comigo você terá um olhar maduro e totalmente livre "
+            "de conflito de interesses sobre o seu patrimônio. O meu grande objetivo é ajudar "
+            "você a tirar o foco exclusivo das necessidades imediatas do seu &lsquo;eu do "
+            "presente&rsquo; para construirmos, juntos, um planejamento estratégico de longo "
+            "prazo voltado para o seu &lsquo;eu do futuro&rsquo;. Conte comigo sempre!"),
         graduacao=["Administração de Empresas", "Gestão Financeira"],
         pos=["Análise de Dados"],
         certificacoes=["CPA", "C-Pro I", "C-Pro R"],
@@ -301,8 +312,10 @@ CONSULTORES = [
             ("Depois", "O que era hábito se tornou o meu trabalho."),
             ("Hoje", "Consultor de investimentos na AUVP Capital."),
         ],
-        interesses=["Música", "Violão, guitarra e baixo", "Queen", "Leitura",
-                    "Psicologia e filosofia", "Viagens", "Inglês e francês", "Família e amigos"],
+        # Sem etiquetas: ele achou que resumir o próprio parágrafo em palavras
+        # soltas logo abaixo dele repetia o texto em vez de acrescentar. A lista
+        # vazia faz o bloco inteiro sair da folha.
+        interesses=[],
     ),
     dict(
         slug="erika-barreto",

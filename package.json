@@ -9,7 +9,7 @@
     "pdf": "node scripts/render.mjs",
     "check": "node scripts/check.mjs",
     "vars": "node scripts/variaveis.mjs",
-    "site": "node scripts/catalogo.mjs",
+    "site": "node scripts/catalogo.mjs && python3 scripts/blocos.py",
     "servir": "python3 -m http.server 8099 --directory docs",
     "all": "npm run build && npm run altura -- --ajustar && npm run vars && npm run check && npm run site && npm run pdf",
     "altura": "node scripts/altura.mjs"

@@ -1,0 +1,360 @@
+{
+ "marca": "@I@",
+ "blocos": [
+  {
+   "chave": "abertura",
+   "nome": "Abertura de página",
+   "descricao": "Chapéu, título e linha de abertura. Use no alto de uma página nova.",
+   "html": "<span class=\"eyebrow\"><span class=\"ph\" data-campo=\"bl@I@_chapeu\">{{bl@I@_chapeu}}</span></span>\n<h1 class=\"t\"><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></h1>\n<p class=\"lead\"><span class=\"ph\" data-campo=\"bl@I@_lead\">{{bl@I@_lead}}</span></p>",
+   "campos": {
+    "bl@I@_chapeu": {
+     "rotulo": "Chapéu",
+     "dica": "A linha pequena acima do título."
+    },
+    "bl@I@_titulo": {
+     "rotulo": "Título da página",
+     "dica": ""
+    },
+    "bl@I@_lead": {
+     "rotulo": "Linha de abertura",
+     "dica": "Uma ou duas frases."
+    }
+   }
+  },
+  {
+   "chave": "texto",
+   "nome": "Texto",
+   "descricao": "Um título e um parágrafo corrido.",
+   "html": "<h2><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></h2>\n<p><span class=\"ph\" data-campo=\"bl@I@_texto\">{{bl@I@_texto}}</span></p>",
+   "campos": {
+    "bl@I@_titulo": {
+     "rotulo": "Título do bloco",
+     "dica": ""
+    },
+    "bl@I@_texto": {
+     "rotulo": "Texto",
+     "dica": "Um parágrafo corrido."
+    }
+   }
+  },
+  {
+   "chave": "texto2",
+   "nome": "Texto em duas colunas",
+   "descricao": "Um título e dois parágrafos lado a lado.",
+   "html": "<h2><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></h2>\n<div class=\"cols2\">\n  <p><span class=\"ph\" data-campo=\"bl@I@_texto_a\">{{bl@I@_texto_a}}</span></p>\n  <p><span class=\"ph\" data-campo=\"bl@I@_texto_b\">{{bl@I@_texto_b}}</span></p>\n</div>",
+   "campos": {
+    "bl@I@_titulo": {
+     "rotulo": "Título do bloco",
+     "dica": ""
+    },
+    "bl@I@_texto_a": {
+     "rotulo": "Coluna da esquerda",
+     "dica": ""
+    },
+    "bl@I@_texto_b": {
+     "rotulo": "Coluna da direita",
+     "dica": ""
+    }
+   }
+  },
+  {
+   "chave": "topicos",
+   "nome": "Tópicos",
+   "descricao": "Um título e até cinco tópicos.",
+   "html": "<h2><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></h2>\n<ul class=\"lista\"><li><span class=\"ph\" data-campo=\"bl@I@_item_1\">{{bl@I@_item_1}}</span></li><li><span class=\"ph\" data-campo=\"bl@I@_item_2\">{{bl@I@_item_2}}</span></li><li><span class=\"ph\" data-campo=\"bl@I@_item_3\">{{bl@I@_item_3}}</span></li><li><span class=\"ph\" data-campo=\"bl@I@_item_4\">{{bl@I@_item_4}}</span></li><li><span class=\"ph\" data-campo=\"bl@I@_item_5\">{{bl@I@_item_5}}</span></li></ul>",
+   "campos": {
+    "bl@I@_titulo": {
+     "rotulo": "Título do bloco",
+     "dica": ""
+    },
+    "bl@I@_item_1": {
+     "rotulo": "Tópico 1",
+     "dica": ""
+    },
+    "bl@I@_item_2": {
+     "rotulo": "Tópico 2",
+     "dica": ""
+    },
+    "bl@I@_item_3": {
+     "rotulo": "Tópico 3",
+     "dica": ""
+    },
+    "bl@I@_item_4": {
+     "rotulo": "Tópico 4",
+     "dica": ""
+    },
+    "bl@I@_item_5": {
+     "rotulo": "Tópico 5",
+     "dica": ""
+    }
+   }
+  },
+  {
+   "chave": "marcos",
+   "nome": "Linha do tempo",
+   "descricao": "Quatro itens em sequência, com título e texto.",
+   "html": "<h2><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></h2>\n<ol class=\"tl\"><li><h4><span class=\"ph\" data-campo=\"bl@I@_marco_1_titulo\">{{bl@I@_marco_1_titulo}}</span></h4><p><span class=\"ph\" data-campo=\"bl@I@_marco_1_texto\">{{bl@I@_marco_1_texto}}</span></p></li><li><h4><span class=\"ph\" data-campo=\"bl@I@_marco_2_titulo\">{{bl@I@_marco_2_titulo}}</span></h4><p><span class=\"ph\" data-campo=\"bl@I@_marco_2_texto\">{{bl@I@_marco_2_texto}}</span></p></li><li><h4><span class=\"ph\" data-campo=\"bl@I@_marco_3_titulo\">{{bl@I@_marco_3_titulo}}</span></h4><p><span class=\"ph\" data-campo=\"bl@I@_marco_3_texto\">{{bl@I@_marco_3_texto}}</span></p></li><li><h4><span class=\"ph\" data-campo=\"bl@I@_marco_4_titulo\">{{bl@I@_marco_4_titulo}}</span></h4><p><span class=\"ph\" data-campo=\"bl@I@_marco_4_texto\">{{bl@I@_marco_4_texto}}</span></p></li></ol>",
+   "campos": {
+    "bl@I@_titulo": {
+     "rotulo": "Título do bloco",
+     "dica": ""
+    },
+    "bl@I@_marco_1_titulo": {
+     "rotulo": "Item 1 — título",
+     "dica": ""
+    },
+    "bl@I@_marco_1_texto": {
+     "rotulo": "Item 1 — texto",
+     "dica": ""
+    },
+    "bl@I@_marco_2_titulo": {
+     "rotulo": "Item 2 — título",
+     "dica": ""
+    },
+    "bl@I@_marco_2_texto": {
+     "rotulo": "Item 2 — texto",
+     "dica": ""
+    },
+    "bl@I@_marco_3_titulo": {
+     "rotulo": "Item 3 — título",
+     "dica": ""
+    },
+    "bl@I@_marco_3_texto": {
+     "rotulo": "Item 3 — texto",
+     "dica": ""
+    },
+    "bl@I@_marco_4_titulo": {
+     "rotulo": "Item 4 — título",
+     "dica": ""
+    },
+    "bl@I@_marco_4_texto": {
+     "rotulo": "Item 4 — texto",
+     "dica": ""
+    }
+   }
+  },
+  {
+   "chave": "destaque",
+   "nome": "Destaque",
+   "descricao": "Uma caixa com o fio da marca, para o que não pode passar batido.",
+   "html": "<div class=\"note\"><p><strong><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></strong> <span class=\"ph\" data-campo=\"bl@I@_texto\">{{bl@I@_texto}}</span></p></div>",
+   "campos": {
+    "bl@I@_titulo": {
+     "rotulo": "Chamada",
+     "dica": "As primeiras palavras, em negrito."
+    },
+    "bl@I@_texto": {
+     "rotulo": "Texto do destaque",
+     "dica": ""
+    }
+   }
+  },
+  {
+   "chave": "kpis",
+   "nome": "Números",
+   "descricao": "Quatro números com rótulo e nota.",
+   "html": "<div class=\"kpis\" style=\"--n:4\"><div class=\"kpi\"><div class=\"k\"><span class=\"ph\" data-campo=\"bl@I@_kpi_1_rotulo\">{{bl@I@_kpi_1_rotulo}}</span></div><div class=\"v\"><span class=\"ph\" data-campo=\"bl@I@_kpi_1_valor\">{{bl@I@_kpi_1_valor}}</span></div><div class=\"s\"><span class=\"ph\" data-campo=\"bl@I@_kpi_1_nota\">{{bl@I@_kpi_1_nota}}</span></div></div><div class=\"kpi\"><div class=\"k\"><span class=\"ph\" data-campo=\"bl@I@_kpi_2_rotulo\">{{bl@I@_kpi_2_rotulo}}</span></div><div class=\"v\"><span class=\"ph\" data-campo=\"bl@I@_kpi_2_valor\">{{bl@I@_kpi_2_valor}}</span></div><div class=\"s\"><span class=\"ph\" data-campo=\"bl@I@_kpi_2_nota\">{{bl@I@_kpi_2_nota}}</span></div></div><div class=\"kpi\"><div class=\"k\"><span class=\"ph\" data-campo=\"bl@I@_kpi_3_rotulo\">{{bl@I@_kpi_3_rotulo}}</span></div><div class=\"v\"><span class=\"ph\" data-campo=\"bl@I@_kpi_3_valor\">{{bl@I@_kpi_3_valor}}</span></div><div class=\"s\"><span class=\"ph\" data-campo=\"bl@I@_kpi_3_nota\">{{bl@I@_kpi_3_nota}}</span></div></div><div class=\"kpi\"><div class=\"k\"><span class=\"ph\" data-campo=\"bl@I@_kpi_4_rotulo\">{{bl@I@_kpi_4_rotulo}}</span></div><div class=\"v\"><span class=\"ph\" data-campo=\"bl@I@_kpi_4_valor\">{{bl@I@_kpi_4_valor}}</span></div><div class=\"s\"><span class=\"ph\" data-campo=\"bl@I@_kpi_4_nota\">{{bl@I@_kpi_4_nota}}</span></div></div></div>",
+   "campos": {
+    "bl@I@_kpi_1_rotulo": {
+     "rotulo": "Número 1 — rótulo",
+     "dica": ""
+    },
+    "bl@I@_kpi_1_valor": {
+     "rotulo": "Número 1 — valor",
+     "dica": ""
+    },
+    "bl@I@_kpi_1_nota": {
+     "rotulo": "Número 1 — nota",
+     "dica": ""
+    },
+    "bl@I@_kpi_2_rotulo": {
+     "rotulo": "Número 2 — rótulo",
+     "dica": ""
+    },
+    "bl@I@_kpi_2_valor": {
+     "rotulo": "Número 2 — valor",
+     "dica": ""
+    },
+    "bl@I@_kpi_2_nota": {
+     "rotulo": "Número 2 — nota",
+     "dica": ""
+    },
+    "bl@I@_kpi_3_rotulo": {
+     "rotulo": "Número 3 — rótulo",
+     "dica": ""
+    },
+    "bl@I@_kpi_3_valor": {
+     "rotulo": "Número 3 — valor",
+     "dica": ""
+    },
+    "bl@I@_kpi_3_nota": {
+     "rotulo": "Número 3 — nota",
+     "dica": ""
+    },
+    "bl@I@_kpi_4_rotulo": {
+     "rotulo": "Número 4 — rótulo",
+     "dica": ""
+    },
+    "bl@I@_kpi_4_valor": {
+     "rotulo": "Número 4 — valor",
+     "dica": ""
+    },
+    "bl@I@_kpi_4_nota": {
+     "rotulo": "Número 4 — nota",
+     "dica": ""
+    }
+   }
+  },
+  {
+   "chave": "tabela",
+   "nome": "Tabela",
+   "descricao": "Quatro colunas e cinco linhas, com cabeçalho.",
+   "html": "<h2><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></h2>\n<table class=\"tb sm\"><thead><tr><th><span class=\"ph\" data-campo=\"bl@I@_col_1\">{{bl@I@_col_1}}</span></th><th><span class=\"ph\" data-campo=\"bl@I@_col_2\">{{bl@I@_col_2}}</span></th><th><span class=\"ph\" data-campo=\"bl@I@_col_3\">{{bl@I@_col_3}}</span></th><th><span class=\"ph\" data-campo=\"bl@I@_col_4\">{{bl@I@_col_4}}</span></th></tr></thead><tbody><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_1_1\">{{bl@I@_cel_1_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_1_2\">{{bl@I@_cel_1_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_1_3\">{{bl@I@_cel_1_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_1_4\">{{bl@I@_cel_1_4}}</span></td></tr><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_2_1\">{{bl@I@_cel_2_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_2_2\">{{bl@I@_cel_2_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_2_3\">{{bl@I@_cel_2_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_2_4\">{{bl@I@_cel_2_4}}</span></td></tr><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_3_1\">{{bl@I@_cel_3_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_3_2\">{{bl@I@_cel_3_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_3_3\">{{bl@I@_cel_3_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_3_4\">{{bl@I@_cel_3_4}}</span></td></tr><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_4_1\">{{bl@I@_cel_4_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_4_2\">{{bl@I@_cel_4_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_4_3\">{{bl@I@_cel_4_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_4_4\">{{bl@I@_cel_4_4}}</span></td></tr><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_5_1\">{{bl@I@_cel_5_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_5_2\">{{bl@I@_cel_5_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_5_3\">{{bl@I@_cel_5_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_5_4\">{{bl@I@_cel_5_4}}</span></td></tr></tbody></table>",
+   "campos": {
+    "bl@I@_titulo": {
+     "rotulo": "Título do bloco",
+     "dica": ""
+    },
+    "bl@I@_col_1": {
+     "rotulo": "Cabeçalho da coluna 1",
+     "dica": ""
+    },
+    "bl@I@_col_2": {
+     "rotulo": "Cabeçalho da coluna 2",
+     "dica": ""
+    },
+    "bl@I@_col_3": {
+     "rotulo": "Cabeçalho da coluna 3",
+     "dica": ""
+    },
+    "bl@I@_col_4": {
+     "rotulo": "Cabeçalho da coluna 4",
+     "dica": ""
+    },
+    "bl@I@_cel_1_1": {
+     "rotulo": "Linha 1, coluna 1",
+     "dica": ""
+    },
+    "bl@I@_cel_1_2": {
+     "rotulo": "Linha 1, coluna 2",
+     "dica": ""
+    },
+    "bl@I@_cel_1_3": {
+     "rotulo": "Linha 1, coluna 3",
+     "dica": ""
+    },
+    "bl@I@_cel_1_4": {
+     "rotulo": "Linha 1, coluna 4",
+     "dica": ""
+    },
+    "bl@I@_cel_2_1": {
+     "rotulo": "Linha 2, coluna 1",
+     "dica": ""
+    },
+    "bl@I@_cel_2_2": {
+     "rotulo": "Linha 2, coluna 2",
+     "dica": ""
+    },
+    "bl@I@_cel_2_3": {
+     "rotulo": "Linha 2, coluna 3",
+     "dica": ""
+    },
+    "bl@I@_cel_2_4": {
+     "rotulo": "Linha 2, coluna 4",
+     "dica": ""
+    },
+    "bl@I@_cel_3_1": {
+     "rotulo": "Linha 3, coluna 1",
+     "dica": ""
+    },
+    "bl@I@_cel_3_2": {
+     "rotulo": "Linha 3, coluna 2",
+     "dica": ""
+    },
+    "bl@I@_cel_3_3": {
+     "rotulo": "Linha 3, coluna 3",
+     "dica": ""
+    },
+    "bl@I@_cel_3_4": {
+     "rotulo": "Linha 3, coluna 4",
+     "dica": ""
+    },
+    "bl@I@_cel_4_1": {
+     "rotulo": "Linha 4, coluna 1",
+     "dica": ""
+    },
+    "bl@I@_cel_4_2": {
+     "rotulo": "Linha 4, coluna 2",
+     "dica": ""
+    },
+    "bl@I@_cel_4_3": {
+     "rotulo": "Linha 4, coluna 3",
+     "dica": ""
+    },
+    "bl@I@_cel_4_4": {
+     "rotulo": "Linha 4, coluna 4",
+     "dica": ""
+    },
+    "bl@I@_cel_5_1": {
+     "rotulo": "Linha 5, coluna 1",
+     "dica": ""
+    },
+    "bl@I@_cel_5_2": {
+     "rotulo": "Linha 5, coluna 2",
+     "dica": ""
+    },
+    "bl@I@_cel_5_3": {
+     "rotulo": "Linha 5, coluna 3",
+     "dica": ""
+    },
+    "bl@I@_cel_5_4": {
+     "rotulo": "Linha 5, coluna 4",
+     "dica": ""
+    }
+   }
+  },
+  {
+   "chave": "grafico_donut",
+   "nome": "Gráfico de rosca",
+   "descricao": "A divisão de um todo em partes. Você digita os valores e o desenho sai no documento.",
+   "html": "<div class=\"chart\" data-img=\"bl@I@\" data-grafico=\"donut\" style=\"flex:1 1 auto;min-height:52mm\"><div class=\"sk-donut\"></div><div class=\"cl\"><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></div><div class=\"cd\"></div></div>",
+   "campos": {
+    "bl@I@_titulo": {
+     "rotulo": "Título do gráfico",
+     "dica": ""
+    }
+   }
+  },
+  {
+   "chave": "grafico_bars",
+   "nome": "Gráfico de barras",
+   "descricao": "Uma série ao longo do tempo. Você digita os valores e o desenho sai no documento.",
+   "html": "<div class=\"chart\" data-img=\"bl@I@\" data-grafico=\"bars\" style=\"flex:1 1 auto;min-height:52mm\"><div class=\"sk-bars\"><i style=\"height:42%\"></i><i style=\"height:68%\"></i><i style=\"height:55%\"></i><i style=\"height:88%\"></i><i style=\"height:72%\"></i><i style=\"height:96%\"></i></div><div class=\"cl\"><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></div><div class=\"cd\"></div></div>",
+   "campos": {
+    "bl@I@_titulo": {
+     "rotulo": "Título do gráfico",
+     "dica": ""
+    }
+   }
+  },
+  {
+   "chave": "grafico_line",
+   "nome": "Gráfico de linha",
+   "descricao": "Uma evolução ao longo do tempo. Você digita os valores e o desenho sai no documento.",
+   "html": "<div class=\"chart\" data-img=\"bl@I@\" data-grafico=\"line\" style=\"flex:1 1 auto;min-height:52mm\"><div class=\"sk-line\"></div><div class=\"cl\"><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></div><div class=\"cd\"></div></div>",
+   "campos": {
+    "bl@I@_titulo": {
+     "rotulo": "Título do gráfico",
+     "dica": ""
+    }
+   }
+  },
+  {
+   "chave": "imagem",
+   "nome": "Imagem",
+   "descricao": "Um espaço para uma imagem que você envia.",
+   "html": "<div class=\"imgbox\" data-img=\"bl@I@\" style=\"flex:1 1 auto;min-height:52mm\"><div class=\"cl\">Imagem</div><div class=\"cd\">Imagem para este bloco.</div></div>",
+   "campos": {}
+  }
+ ]
+}

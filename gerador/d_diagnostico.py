@@ -212,8 +212,8 @@ def build(t, seg):
                                 ("Internacional", "intl"), ("Alternativos", "alt")]],
                   foot=["<strong>Total</strong>", "100,0%", "100,0%", "&mdash;", "", ""],
                   nums=[1, 2, 3], sm=True),
-        ch=chart("Atual x proposta", "Duas roscas comparando o peso de cada classe antes e depois da proposta.",
-                 "donut", "min-height:50mm", series=["Renda fixa", "Multimercado", "Renda variável BR", "Internacional", "FIIs", "Alternativos"]),
+        ch=chart("Atual x proposta", "Duas roscas concêntricas: a externa com a carteira atual, a interna com a proposta.",
+                 "anel", "min-height:50mm", series=["Renda fixa", "Multimercado", "Renda variável BR", "Internacional", "FIIs", "Alternativos"]),
         muda=ph("texto_o_que_muda"), ret=ph("retorno_esperado_proposta"), risco=ph("risco_esperado_proposta"))))
 
     P.append(page_a4(t, "Transição", 9, """<h1 class="t">Plano de transição</h1>

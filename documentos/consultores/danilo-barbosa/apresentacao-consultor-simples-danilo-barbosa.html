@@ -37,6 +37,11 @@ ul{margin:0 0 3mm;padding-left:4mm}
 li{margin:0 0 1mm}
 strong{font-weight:700}
 .ph{background:var(--ph);border-radius:.6mm;padding:0 1mm;font-weight:600;overflow-wrap:break-word;text-transform:none;letter-spacing:0;font-size:.94em}
+/* O campo que já vem preenchido não é lacuna: lê-se como o texto que é, e o
+   realce só serviria para o consultor achar que falta algo ali. Continua sendo
+   campo — a ferramenta o oferece para edição —, mas isso é assunto da
+   ferramenta, não do papel. */
+.ph.pronto{background:none;padding:0;font-weight:inherit;font-size:inherit}
 .dark .ph{background:var(--ph-dk);color:#fff}
 /* capas e divisórias são monocromáticas: nada de dourado sobre a arte da capa */
 .cover .ph,.divider .ph{background:rgba(255,255,255,.18);color:#fff}
@@ -133,6 +138,34 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   padding:2mm 2mm;font-size:6.6pt;letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
 .tb td{padding:3mm;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
 .tb tbody tr:nth-child(even) td{background:var(--soft)}
+
+/* ---------- cronograma de reuniões ----------
+   A sequência do primeiro ciclo, com as fases numa trilha à esquerda. A trilha
+   é uma célula só por fase, com `rowspan`, e o rótulo deitado: são três
+   palavras longas — Estruturação, Acompanhamento, Fechamento — e em pé elas
+   roubariam uma coluna inteira da tabela para dizer o que é só a divisão.
+
+   As datas são as únicas células que mudam de cliente para cliente, e por isso
+   vêm dentro de uma cápsula: quem preenche vê onde escrever, e quem lê vê o que
+   é combinado e o que é processo da casa. */
+.crono{width:100%;border-collapse:collapse;font-size:8.4pt}
+.crono thead th{background:var(--brand);color:#fff;text-align:left;font-weight:600;
+  font-size:7pt;letter-spacing:.08em;text-transform:uppercase;padding:2.6mm 4mm}
+.crono td{padding:2mm 4mm;border-bottom:1px solid var(--line);vertical-align:middle}
+.crono tbody tr:nth-child(even) td{background:var(--soft)}
+.crono .qual{font-weight:700;color:var(--brand);white-space:nowrap}
+.crono .pauta{font-weight:600}
+.crono .prazo{color:var(--ink-2);white-space:nowrap}
+/* o objetivo estratégico é a coluna larga do plano do private: leva a frase
+   inteira, e as outras três só o que precisam */
+.crono .obj{color:var(--ink-2);width:100%}
+.crono .quando{text-align:right;white-space:nowrap}
+.crono .quando span{display:inline-block;padding:1.2mm 3.5mm;border:1px solid var(--line);
+  border-radius:9mm;background:var(--paper);font-weight:700;font-size:8.2pt}
+.crono td.fase{background:var(--brand);padding:0;width:9mm;border-bottom:1px solid var(--paper)}
+.crono td.fase span{display:block;writing-mode:vertical-rl;transform:rotate(180deg);
+  margin:0 auto;padding:4mm 0;color:var(--accent);font-size:6.8pt;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
 .tb .num,.tb th.num{text-align:right}
 .tb tfoot td{font-weight:700;border-top:1.33px solid var(--ink);background:#fff}
 .tb caption{caption-side:bottom;text-align:left;font-size:6.8pt;color:var(--ink-2);padding-top:2mm}
@@ -158,6 +191,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2mm;text-align:center;padding:5mm}
 .chart .cl{font-size:6.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
 .chart .cd{font-size:7.6pt;color:var(--ink-2);max-width:105mm;line-height:1.45}
+/* Com o gráfico desenhado dentro, a moldura deixa de ser um pedido de
+   preenchimento: some o tracejado e a hachura, e fica só o desenho. */
+.chart.feito{border:0;background:none;padding:0;gap:1.5mm}
 .sk-bars{display:flex;align-items:flex-end;gap:2mm;height:16mm;width:70%;opacity:.28}
 .sk-bars i{flex:1;background:var(--brand);border-radius:.4mm .4mm 0 0}
 .sk-donut{width:22mm;height:22mm;border-radius:50%;opacity:.5;
@@ -214,23 +250,27 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .flow p{font-size:8pt;color:var(--ink-2);margin:0;line-height:1.45}
 
 /* ---------- legenda de série, com a paleta do segmento ---------- */
+/* ---------- gráfico desenhado a partir do dado ----------
+   Entra no lugar da moldura vazia quando o consultor preenche a tabelinha na
+   ferramenta. É SVG: sai vetor no PDF, na tipografia da casa e nas cores do
+   segmento — `--c1`..`--c6`, as mesmas da legenda. */
+.g-svg{width:100%;height:auto;max-height:100%;display:block;flex:1 1 auto;min-height:0}
+.g-guia{stroke:var(--line);stroke-width:1}
+.g-eixo{fill:var(--ink-2);font-size:9px}
+.g-mini{fill:var(--ink-2);font-size:9px;text-anchor:middle;letter-spacing:.04em}
+.g-linha{fill:none;stroke:var(--c1);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}
+.g-area{fill:var(--c1);opacity:.10}
+.g-ponto{fill:var(--paper);stroke:var(--c1);stroke-width:2}
+.g-nota{font-size:7pt;color:var(--ink-2);text-align:center}
+.slide.dark .g-eixo,.slide.dark .g-mini{fill:rgba(255,255,255,.75)}
+.slide.dark .g-guia{stroke:rgba(255,255,255,.22)}
+
+
 .legend{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5mm 4mm;
   margin:3mm 0 0;padding:0;font-size:6.6pt;color:var(--ink-2)}
 .legend li{display:flex;align-items:center;gap:1.5mm}
 .legend i{width:4mm;height:1.33px;flex:0 0 auto}
 
-/* ---------- ano em dois semestres ---------- */
-.year{list-style:none;margin:0;padding:0;counter-reset:yr;display:grid;
-  grid-template-columns:repeat(6,1fr);gap:6mm 4mm}
-.year>li{position:relative;min-width:0;padding-top:8mm}
-.year>li::after{content:"";position:absolute;left:0;right:-4mm;top:3.2mm;height:1px;background:var(--line)}
-.year>li:nth-child(6)::after,.year>li:last-child::after{right:0}
-.year .mo{position:absolute;left:0;top:0;z-index:2;width:6.4mm;height:6.4mm;border-radius:50%;
-  border:1px solid var(--line);background:var(--paper);color:var(--ink-2);
-  display:flex;align-items:center;justify-content:center;font-size:6pt;font-weight:700}
-.year>li.on .mo{border-color:var(--brand);color:var(--brand)}
-.year .nm{display:block;font-size:7.4pt;font-weight:700;margin-bottom:1mm}
-.year .ev{display:block;font-size:6.8pt;color:var(--ink-2);line-height:1.35}
 
 /* ---------- lista com marcador em fio, e retrato ---------- */
 .lista{list-style:none;margin:0;padding:0;font-size:8.4pt;line-height:17px}
@@ -393,7 +433,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
     <p>Consultor de&nbsp;investimentos</p>
   </div>
   <div class="fl-corpo">
-    <div class="fl-bio"><p>Olá! Eu sou Danilo Barbosa, seu consultor de investimentos aqui na&nbsp;AUVP.</p><p>Nesta jornada, vamos construir juntos o seu futuro financeiro, tijolo a tijolo, focando sempre no que o seu &lsquo;eu do futuro&rsquo; espera das decisões e atitudes tomadas hoje. Vamos traçar esse caminho com muita responsabilidade, planejamento e estratégia, visando seus objetivos e à constância no longo prazo. É dessa forma que você conseguirá alcançar o que almeja com tranquilidade e sem correr riscos&nbsp;desnecessários.</p><p>Fora dos investimentos, sou apaixonado por música, leitura e viagens. Minha banda favorita é o &ldquo;Queen&rdquo; — inclusive, tenho a guitarra signature do guitarrista da banda, Brian May. Entretanto, meu gosto musical não se restringe apenas ao rock, mas também gosto do pop, MPB, um pouco de sertanejo &ldquo;raiz&rdquo;, blues, soul, música clássica e outros. Sei tocar violão, guitarra e baixo, sendo este o meu primeiro instrumento&nbsp;musical.</p></div>
+    <div class="fl-bio"><p>Olá! Eu sou Danilo Barbosa, seu consultor de investimentos aqui na&nbsp;AUVP.</p><p>Nesta jornada, vamos construir juntos o seu futuro financeiro, tijolo a tijolo, focando sempre no que o seu &lsquo;eu do futuro&rsquo; espera das decisões e atitudes tomadas hoje. Vamos traçar esse caminho com muita responsabilidade, planejamento e estratégia, visando seus objetivos e à constância no longo prazo. É dessa forma que você conseguirá alcançar o que almeja com tranquilidade e sem correr riscos&nbsp;desnecessários.</p><p>Vejo que investir é uma ferramenta fundamental não só para potencializar seus resultados, mas também para proteger você financeiramente dos reveses que ocorrem na vida. Portanto, saiba que comigo você terá um olhar maduro e totalmente livre de conflito de interesses sobre o seu patrimônio. O meu grande objetivo é ajudar você a tirar o foco exclusivo das necessidades imediatas do seu &lsquo;eu do presente&rsquo; para construirmos, juntos, um planejamento estratégico de longo prazo voltado para o seu &lsquo;eu do futuro&rsquo;. Conte comigo&nbsp;sempre!</p></div>
     <div class="fl-vao"></div>
     <div class="fl-contatos"><div class="fl-ct"><span class="ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="6.5" width="15" height="11" rx="1.5"/><path d="M4.5 8.5 12 13.5 19.5 8.5"/></svg></span><span><a href="mailto:danilo.barbosa@auvpconsultoria.com.br">danilo.barbosa@auvpconsultoria.com.br</a></span></div><div class="fl-ct"><span class="ic"><svg viewBox="0 0 24 24"><path d="M8.2 4.8c.6 0 1 .3 1.2.9l1 2.4c.2.5.1 1-.3 1.3l-1 .9c1 2 2.6 3.6 4.6 4.6l.9-1c.3-.4.8-.5 1.3-.3l2.4 1c.6.2.9.6.9 1.2v2.1c0 .8-.6 1.4-1.4 1.4C11.6 19.3 4.7 12.4 4.7 6.2c0-.8.6-1.4 1.4-1.4z"/></svg></span><span><a href="https://wa.me/556230958115">+55 (62) 3095-8115</a></span></div></div>
   </div>

@@ -57,14 +57,18 @@ function estrutura(html) {
     // Os atributos vêm em número e ordem variáveis — `title` quando há dica,
     // `data-link` quando o campo é endereço de alguma coisa —, então o
     // casamento é pelo bloco e a dica sai de dentro dele.
-    const re = /<span class="ph"([^>]*)>\{\{([a-z0-9_]+)\}\}<\/span>/g;
+    // O nome sai do `data-campo`, e não das chaves: o campo que já vem
+    // preenchido não tem chaves — o que está escrito ali é o texto padrão, e é
+    // ele que a ferramenta oferece para editar.
+    const re = /<span class="ph( pronto)?" data-campo="([a-z0-9_]+)"([^>]*)>([\s\S]*?)<\/span>/g;
     let m;
     while ((m = re.exec(pag.corpo))) {
-      const [, attrs, nome] = m;
+      const [, pronto, nome, attrs, conteudo] = m;
       const dica = attrs.match(/ title="([^"]*)"/)?.[1];
       if (!campos[nome]) {
         campos[nome] = { rotulo: rotuloCampo(nome), pagina: pag.numero, exemplo: exemplo(nome) };
         if (dica) campos[nome].dica = dica;
+        if (pronto) campos[nome].padrao = conteudo.replace(/&nbsp;/g, ' ').trim();
         nomes.push(nome);
       }
     }
@@ -80,16 +84,24 @@ function estrutura(html) {
     // A classe pode trazer modificadores e os atributos vêm em qualquer ordem,
     // então o casamento é pelo nome do bloco e pelo `data-img`, não pela forma
     // exata da tag.
-    const ri = /<div class="[^"]*\b(chart|imgbox)\b[^"]*"[^>]*\bdata-img="(\d+)"[^>]*>([\s\S]*?)<div class="cd">([\s\S]*?)<\/div>/g;
+    const ri = /<div class="[^"]*\b(chart|imgbox)\b[^"]*"([^>]*)\bdata-img="(\d+)"([^>]*)>([\s\S]*?)<div class="cd">([\s\S]*?)<\/div>/g;
     while ((m = ri.exec(pag.corpo))) {
+      // O bloco de gráfico anuncia o formato e os rótulos sugeridos. É o que
+      // permite à ferramenta oferecer a tabelinha certa — quantas linhas, com
+      // que nome, e se pede um valor ou dois — em vez de um campo de imagem.
+      const attrs = m[2] + m[4];
+      const limpa = (x) => x.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim();
+      const serie = attrs.match(/data-series="([^"]*)"/)?.[1];
       imagens.push({
-        id: Number(m[2]),
+        id: Number(m[3]),
         tipo: m[1] === 'chart' ? 'gráfico' : 'imagem',
+        grafico: attrs.match(/data-grafico="([^"]*)"/)?.[1] || null,
+        series: serie ? serie.split('|') : null,
+        eixo: attrs.match(/data-eixo="([^"]*)"/)?.[1] || null,
         pagina: pag.numero,
         secao: pag.secao,
-        rotulo: (m[3].match(/<div class="cl">([\s\S]*?)<\/div>/)?.[1] || 'Imagem')
-          .replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim(),
-        descricao: m[4].replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim(),
+        rotulo: limpa(m[5].match(/<div class="cl">([\s\S]*?)<\/div>/)?.[1] || 'Imagem'),
+        descricao: limpa(m[6]),
       });
     }
   }

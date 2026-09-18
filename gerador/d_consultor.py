@@ -76,6 +76,14 @@ def _marcos(itens):
 
 
 def _tags(itens):
+    """As etiquetas de interesse, quando há interesse a etiquetar.
+
+    Sem itens não sai nada — nem a caixa. A lista é um resumo em palavras soltas
+    do parágrafo logo acima, e há quem ache que ela repete o texto em vez de
+    acrescentar; quem pensa assim deixa `interesses` vazio e fica só com o texto.
+    """
+    if not itens:
+        return ""
     return '<div class="tags">%s</div>' % "".join("<span>%s</span>" % i for i in itens)
 
 
@@ -106,9 +114,13 @@ def _consultor_vazio():
         nome=ph("nome_consultor"),
         papel=ph("papel_consultor", "Consultor de investimentos, especialista, planejador…"),
         frase=ph("frase_consultor", "Uma frase em primeira pessoa sobre como você trabalha."),
-        graduacao=_numerados("formacao", 2),
-        pos=_numerados("especializacao", 2),
-        certificacoes=_numerados("certificacao", 3),
+        # Cinco linhas de cada, e não duas: quem tem uma graduação preenche uma
+        # e deixa as outras em branco, que saem do documento sem deixar marca.
+        # O teto existe porque a faixa de credenciais tem largura fechada, não
+        # porque alguém deva ter cinco.
+        graduacao=_numerados("formacao", 5),
+        pos=_numerados("especializacao", 5),
+        certificacoes=_numerados("certificacao", 5),
         marcos=[(ph("marco_%d_quando" % i, "2016, Depois, Hoje…"), ph("marco_%d_texto" % i))
                 for i in (1, 2, 3)],
         proposito=_numerados("proposito", 4),
@@ -191,10 +203,14 @@ def _contato(c, chave, rotulo, escreve):
 FOLHA = """<section class="page longa" data-sec="Apresentação do consultor">
   <header class="lg-topo">
     <div class="grain"></div>
+    <!-- O nome do plano saía por cima do nome da pessoa. É a apresentação do
+         consultor: quem abre o documento quer saber quem é ele, e o plano se
+         explica sozinho nas faixas de baixo. Fora que a folha vai para cliente
+         que já contratou e para cliente que ainda não, e anunciar um plano no
+         alto do retrato dava ao documento cara de peça de venda. -->
     <div class="lg-id">
       %(foto)s
       <div>
-        <span class="lg-plano">%(plano)s</span>
         <h1>%(nome)s</h1>
         <p class="papel">%(papel)s na %(marca)s</p>
         <p class="lg-frase">%(frase)s</p>
@@ -225,7 +241,7 @@ FOLHA = """<section class="page longa" data-sec="Apresentação do consultor">
     <div class="lg-sec">
       <h2>Além dos investimentos</h2>
       <div class="corrido">%(fora)s</div>%(fora_extra)s
-      <div style="margin-top:7mm">%(tags)s</div>
+      %(tags)s
     </div>
   </div>
 
@@ -337,16 +353,28 @@ NOTAS = ("¹ Referente às operações de renda variável na conta nacional. &nb
 FORA_LEAD = ("Algumas coisas não estão incluídas aqui, e é melhor deixar isso "
              "combinado desde o começo.")
 
-# A remuneração da casa, escrita por extenso. Vale nos três planos: o que muda
-# entre eles é a taxa, que entra na primeira frase.
+# A remuneração da casa, escrita por extenso.
+#
+# Sem número: a taxa muda de plano para plano e de cliente para cliente, e um
+# percentual impresso aqui vira a condição que o documento promete. O que esta
+# seção explica é o modelo — por que fee based, e o que ele muda para quem
+# investe —, e isso não depende de quanto se cobra. A taxa de cada caso se
+# combina na proposta, que é onde ela pode ser negociada e revista.
 REMUNERACAO = [
-    "A %(marca)s trabalha no modelo <em>fee based</em>. Neste plano, a consultoria cobra uma taxa sobre o patrimônio orientado, de <strong>%(mes)s ao mês</strong>, o que dá <strong>%(ano)s ao ano</strong>.",
+    "A %(marca)s trabalha no modelo <em>fee based</em>: a consultoria cobra uma taxa sobre o patrimônio orientado, combinada com você e escrita na proposta.",
     "No modelo comissionado, que é o mais comum no mercado, quem indica o investimento é pago pelo produto que vende. Quanto maior a comissão daquele produto, maior o incentivo para oferecer justamente ele, e para sugerir troca na carteira com mais frequência do que seria necessário. O interesse de quem recomenda acaba ficando diferente do interesse de quem investe.",
     "No <em>fee based</em> (modelo que praticamos) esse conflito não aparece. A nossa remuneração é a mesma seja qual for o investimento recomendado, então a escolha é feita só pelo que serve para você. A comissão que a indicação geraria volta para a sua conta em forma de cashback.",
     "E como a taxa é um percentual do que você tem investido, a consultoria só ganha mais quando o seu patrimônio cresce.",
 ]
 
 # Os três planos da consultoria. O conteúdo é o da peça comercial de cada um.
+#
+# Só o Me Diz o Que Fazer sai em folha longa hoje (ver `variantes`). O Se Vira
+# Aí e o Resolve Aí ficam escritos aqui de propósito, e não por esquecimento: é
+# a peça comercial dos dois, aprovada, e apagá-la para o build ficar limpo
+# significaria reescrevê-la do zero no dia em que a folha longa voltar a valer
+# para eles. Quem mexer neles não tem como conferir na tela, então convém
+# confirmar o texto com o produto antes.
 # A página não muda de forma entre eles — muda o texto —, então trocar de plano
 # é trocar este dicionário.
 #
@@ -377,7 +405,7 @@ PLANOS = {
             "Estratégia de alocação personalizada.",
             "Gestão ativa.",
         ],
-        mes="0,025% a 0,033%", ano="0,3% a 0,4%", notas=NOTAS,
+        notas=NOTAS,
     ),
     "me-diz-o-que-fazer": dict(
         plano="Me Diz o Que Fazer",
@@ -421,7 +449,7 @@ PLANOS = {
             "No Me Diz o Que Fazer, você conta com o suporte da nossa equipe para cuidar dos seus investimentos dentro da proposta do plano. Caso busque uma estratégia de alocação mais personalizada para o seu caso, com um consultor dedicado e reuniões periódicas para acompanhamento da sua carteira e do cenário macroeconômico, esse acompanhamento faz parte do Resolve Aí.",
             "O Resolve Aí é exclusivo para clientes com patrimônio a partir de R$&nbsp;300 mil.",
         ],
-        mes="0,075%", ano="0,9%", notas=NOTAS,
+        notas=NOTAS,
     ),
     "resolve-ai": dict(
         plano="Resolve Aí",
@@ -451,20 +479,22 @@ PLANOS = {
         fora=[
             "A execução das ordens continua sendo sua: a consultoria recomenda, não opera pela sua conta.",
         ],
-        mes="definida conforme o patrimônio orientado", ano="variável", notas=NOTAS,
+        notas=NOTAS,
     ),
 }
 
 
 def _em_branco():
     return dict(
+        # O nome do plano saiu do alto da folha, mas a faixa que descreve o
+        # plano continua abrindo com ele: ali é o título da seção, não um selo
+        # sobre o retrato de quem assina.
         plano=ph("nome_plano", "O nome comercial do plano."),
         resumo=ph("plano_resumo", "Duas ou três frases sobre o que o cliente contrata."),
         funciona=_numerados("funciona", 3, "Um parágrafo sobre como o plano funciona."),
         pedir=_numerados("pode_pedir", 6),
         incluido=_numerados("incluido", 8),
         fora=_numerados("nao_incluido", 4),
-        mes=ph("taxa_mensal", "Ex.: 0,075%"), ano=ph("taxa_anual", "Ex.: 0,9%"),
         notas=ph("notas_de_rodape", "As ressalvas numeradas que os itens acima referenciam."),
     )
 
@@ -475,15 +505,18 @@ SEM_DATA = "-sem-data"
 def variantes(temas, segmentos):
     """(sufixo, rótulo, tema) de cada variante.
 
-    A lista mora aqui, e não em `build.py`, porque os planos são deste módulo:
-    acrescentar um plano em `PLANOS` já o coloca no build.
+    Dos três planos da consultoria, só o Me Diz o Que Fazer sai nesta folha. O
+    Se Vira Aí e o Resolve Aí passam a ser atendidos pela folha de uma página,
+    `d_consultor_simples`: são planos cujo consultor se apresenta, não explica
+    um serviço página a página. O Me Diz o Que Fazer é a exceção porque é nele
+    que o cliente precisa saber, escrito, o que pode pedir e o que não entra.
 
-    O modelo em branco sai também sem data. É o documento que o consultor manda
-    para um cliente novo a qualquer momento, e uma data carimbada nele nasce
-    vencida. Os planos continuam só com data: ali ela diz de quando são as
-    condições comerciais.
+    Os modelos em branco por segmento continuam: não são planos, são a folha
+    vazia para as outras marcas da casa preencherem com as condições delas. E
+    saem também sem data — é o documento que o consultor manda para um cliente
+    novo a qualquer momento, e uma data carimbada nele nasce vencida.
     """
-    return ([(chave, dados["rotulo"], "consultoria") for chave, dados in PLANOS.items()]
+    return ([("me-diz-o-que-fazer", PLANOS["me-diz-o-que-fazer"]["rotulo"], "consultoria")]
             + [v for seg in segmentos if seg != "consultoria"
                for v in ((seg, temas[seg]["nome_full"], seg),
                          (seg + SEM_DATA, temas[seg]["nome_full"] + ", sem data", seg))])
@@ -505,13 +538,15 @@ def folha(t, variante, c=None, foto=None, primeiro=None, data=True):
 
     return FOLHA % dict(
         # o alto
-        foto=foto, plano=texto["plano"], nome=c["nome"], papel=c["papel"],
+        foto=foto, nome=c["nome"], papel=c["papel"], plano=texto["plano"],
         marca=t["marca"], frase=c["frase"], nc=ncred, cred=cred,
         # a pessoa
         proposito=_paras(c["proposito"]),
         qualificacoes=_paras(c["formacao_paras"]),
         trajetoria=_paras(c["trajetoria"]), marcos=_marcos(c["marcos"]),
-        fora=_paras(c["fora_paras"]), tags=_tags(c["interesses"]),
+        fora=_paras(c["fora_paras"]),
+        tags=('<div style="margin-top:7mm">%s</div>' % _tags(c["interesses"])
+              if c["interesses"] else ""),
         # onde o texto termina anunciando uma lista, a lista vem depois dele,
         # como no original — e não diluída dentro do parágrafo
         fora_extra=(_lista(c["fora_lista"]) if c.get("fora_lista") else ""),
@@ -523,8 +558,7 @@ def folha(t, variante, c=None, foto=None, primeiro=None, data=True):
         fora_nota=_nota_fora(texto, t["marca"]), notas=texto["notas"],
         # a casa
         metodo=METODO,
-        remuneracao=_paras([par % dict(marca=t["marca"], mes=texto["mes"], ano=texto["ano"])
-                            for par in REMUNERACAO]),
+        remuneracao=_paras([par % dict(marca=t["marca"]) for par in REMUNERACAO]),
         # o pé
         canais_lead=CANAIS_LEAD, primeiro=primeiro,
         contatos=(_contato(c, "whatsapp", "WhatsApp", _whatsapp)

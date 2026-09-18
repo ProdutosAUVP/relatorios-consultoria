@@ -4,15 +4,18 @@ from layout import *
 PAPEL = {"consultoria": "Consultor(a)", "alta-renda": "Consultor(a)",
          "private": "Banker", "assessoria": "Assessor(a)"}
 
+# O slide próprio de cada segmento. Acompanha o relatório escrito: lá saíram a
+# divisão por indexador — que é decisão de estratégia, discutida na revisão — e
+# o quadro de estruturas e sucessão, que passou para o semestral. Aqui também.
 EXTRA = {
     "consultoria": ("Renda fixa e vencimentos",
-                    "Posições por indexador e o que vence nos próximos 12 meses."),
+                    "Quando a renda fixa vira caixa, nos próximos 12 meses."),
     "alta-renda": ("Ofertas do período",
                    "O que esteve disponível para o segmento e o que entrou na sua carteira."),
-    "private": ("Estruturas e internacional",
-                "Exposição por moeda e jurisdição, e o andamento das estruturas da família."),
+    "private": ("Internacional",
+                "Exposição por moeda e por jurisdição."),
     "assessoria": ("Renda fixa e vencimentos",
-                   "Posições por indexador e o que vence nos próximos 12 meses."),
+                   "Quando a renda fixa vira caixa, nos próximos 12 meses."),
 }
 
 
@@ -116,8 +119,8 @@ def build(t, seg):
                   [[ph("seg_%d_item" % i), ph("seg_%d_detalhe" % i), ph("seg_%d_valor" % i),
                     ph("seg_%d_perc" % i), ph("seg_%d_obs" % i)] for i in (1, 2, 3, 4, 5)], nums=[2, 3]),
         ch=chart("Visão do segmento",
-                 {"consultoria": "Renda fixa por indexador e calendário de vencimentos.",
-                  "assessoria": "Renda fixa por indexador e calendário de vencimentos.",
+                 {"consultoria": "Calendário de vencimentos da renda fixa.",
+                  "assessoria": "Calendário de vencimentos da renda fixa.",
                   "alta-renda": "Ofertas acessadas no período e peso na carteira.",
                   "private": "Patrimônio por moeda e por jurisdição."}[seg], "donut", "min-height:50mm"))))
 

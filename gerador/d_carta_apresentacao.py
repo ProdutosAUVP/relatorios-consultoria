@@ -70,13 +70,27 @@ ROADMAP_SEG = {
 
 # As seis classes da estrutura meta. A função de cada uma é posição da casa; as
 # bandas variam com o perfil, e por isso entram como campo.
+OPCIONAL = ('<span class="pill" style="margin-left:4mm;vertical-align:middle;'
+            'font-size:.42em">Opcional</span>')
+
+# As bandas da estrutura meta, com a faixa de cada classe já escrita.
+#
+# Vêm preenchidas e continuam sendo campo: são a carteira recomendada vigente,
+# que muda de tempos em tempos e por perfil. Travar obrigaria a mexer no gerador
+# a cada revisão do comitê; deixar em branco obrigaria o consultor a redigitar
+# doze números a cada carta. Pré-preenchido, ele corrige o que for do caso do
+# cliente e deixa o resto como está.
+#
+# Os números são os do perfil moderado, que é o mais comum — quem escrever para
+# um conservador ou um arrojado ajusta as duas colunas na ferramenta.
 BANDAS = [
-    ("Renda fixa", "rf", "Preservação, renda e liquidez"),
-    ("Internacional — renda fixa", "irf", "Diversificação cambial e renda em moeda forte"),
-    ("Internacional — renda variável", "irv", "Crescimento global"),
-    ("Ações", "acoes", "Crescimento patrimonial de longo prazo"),
-    ("Fundos imobiliários", "fii", "Renda recorrente isenta"),
-    ("Alternativos", "alt", "Diversificação fora das classes tradicionais"),
+    ("Renda fixa", "rf", "40%", "70%", "Preservação, renda e liquidez"),
+    ("Internacional — renda fixa", "irf", "5%", "15%",
+     "Diversificação cambial e renda em moeda forte"),
+    ("Internacional — renda variável", "irv", "5%", "15%", "Crescimento global"),
+    ("Ações", "acoes", "10%", "25%", "Crescimento patrimonial de longo prazo"),
+    ("Fundos imobiliários", "fii", "5%", "15%", "Renda recorrente isenta"),
+    ("Alternativos", "alt", "0%", "10%", "Diversificação fora das classes tradicionais"),
 ]
 
 PILARES = [
@@ -222,7 +236,11 @@ def _remuneracao(t, seg):
                 ("Alinhamento de interesses",
                  "Se o melhor produto para você paga menos à casa, ele entra do mesmo jeito.")],
                 n=1),
-            nota=ph("nota_taxas", "Base de cálculo, cobrança, impostos e condições"))
+            # Havia aqui uma "nota de taxas" livre, para base de cálculo,
+            # cobrança e impostos. Ninguém sabia o que escrever nela: os três
+            # cartões acima já dizem como a cobrança funciona, e o que sobrava
+            # era um campo em branco no meio da página mais sensível da carta.
+            nota="")
 
     return """<h1 class="t">Você não paga taxa de assessoria</h1>
 <div class="center"><div class="cols2u" style="align-items:center">
@@ -401,8 +419,12 @@ elas é que busca o equilíbrio entre preservação, renda e crescimento.</p>
                   [[n, f, c] for n, f, c in CLASSES], sm=True, widths=[18, 24, 58]))))
 
     # ------------------------------------------------------------ estrutura meta
+    # A página é opcional. Nem toda carta precisa dela: quando o diagnóstico
+    # ainda não fechou, prometer faixa por classe é adiantar o que não foi
+    # analisado. Quem manda decide na ferramenta, desmarcando a página — a
+    # etiqueta ao lado do título é o lembrete de que isso é uma escolha.
     S.append(slide(t, "Alocação", 9, """<span class="eyebrow">Prévia da implementação</span>
-<h1 class="t">As bandas da estrutura meta</h1>
+<h1 class="t">As bandas da estrutura meta %(op)s</h1>
 <p class="lead">Cada classe trabalha dentro de uma banda, e não de um número fixo: é o que
 permite acomodar o momento de mercado sem sair da estratégia. As bandas abaixo são as do seu
 perfil %(perf)s.</p>
@@ -410,10 +432,10 @@ perfil %(perf)s.</p>
 <p class="legal" style="margin-top:auto">Este material não constitui promessa de rentabilidade
 nem carteira definitiva. A alocação final depende da análise completa do seu perfil, objetivos,
 restrições e suitability.</p>""" % dict(
-        perf=ph("perfil_investidor"),
+        op=OPCIONAL, perf=ph("perfil_investidor"),
         tab=table(["Classe", "Mínimo", "Máximo", "Função no portfólio"],
-                  [[n, ph("banda_%s_min" % k), ph("banda_%s_max" % k), f]
-                   for n, k, f in BANDAS],
+                  [[n, ph("banda_%s_min" % k, padrao=mn), ph("banda_%s_max" % k, padrao=mx), f]
+                   for n, k, mn, mx, f in BANDAS],
                   nums=[1, 2], sm=True, widths=[26, 12, 12, 50]))))
 
     # -------------------------------------------------------- doutrina: RF e RV
@@ -423,8 +445,15 @@ crédito bancário para prêmio com risco mitigado pelo FGC e crédito privado p
 maiores, com análise rigorosa. Em todos os casos, o ativo só é escolhido depois de definido o
 papel daquela parcela na carteira.</p>
 <div class="center">%(tab)s</div>""" % dict(
+        # O racional de cada camada vem escrito e continua editável: é doutrina
+        # da casa, mas doutrina que se revisa — o horizonte de carrego de hoje
+        # não é o de dois anos atrás. Cada célula é um campo com o texto atual
+        # dentro.
         tab=table(["", "Pós-fixado (CDI e Selic)", "Inflação (IPCA+)", "Prefixado"],
-                  [["<strong>%s</strong>" % l[0], l[1], l[2], l[3]] for l in RENDA_FIXA],
+                  [["<strong>%s</strong>" % l[0]]
+                   + [ph("rf_%s_%s" % (l[0].lower(), c), padrao=l[i + 1])
+                      for i, c in enumerate(["pos", "ipca", "pre"])]
+                   for l in RENDA_FIXA],
                   sm=True, widths=[13, 29, 29, 29]))))
 
     S.append(slide(t, "Estratégia", 11, """<h1 class="t">Ações, fundos imobiliários e internacional</h1>
@@ -456,8 +485,10 @@ fundamento: nenhuma posição entra por movimento de preço.</p>
       <dt>E-mail</dt><dd>%(email)s</dd>
     </div>
   </div>
+  <!-- Saiu o QR code de agendamento. A carta chega por e-mail ou WhatsApp e se
+       lê na tela, onde ninguém aponta a câmera para o próprio monitor; o link
+       clicável ao lado fazia o trabalho inteiro sozinho. -->
   <div style="display:flex;flex-direction:column;align-items:center;gap:4mm">
-    <div class="qr">QR code<br>agendamento</div>
     <div class="small mut" style="text-align:center;max-width:52mm">%(link)s</div>
   </div>
 </div>""" % dict(

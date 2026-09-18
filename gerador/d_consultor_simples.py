@@ -87,11 +87,16 @@ def _bio(c):
 
     Quantos parágrafos cabem depende de quanto cada um escreveu, e por isso a
     conta é por tamanho e não por posição: dois parágrafos de quem escreve
-    curto cabem, dois de quem escreve longo estouram a folha. O fecho sobre a
-    vida fora do trabalho é reservado antes, porque é ele que fecha a página —
-    sem ele a folha vira só currículo.
+    curto cabem, dois de quem escreve longo estouram a folha. O fecho é
+    reservado antes, porque é ele que fecha a página — sem ele a folha vira só
+    currículo.
+
+    Por padrão o fecho é o primeiro parágrafo da vida fora do trabalho. Quem
+    preferir fechar de outro jeito escreve `fecho_simples`: esta folha é o
+    cartão que se manda antes de uma primeira conversa, e nem todo mundo quer
+    abrir a apresentação falando do que faz no fim de semana.
     """
-    fecho = c["fora_paras"][0]
+    fecho = c.get("fecho_simples") or c["fora_paras"][0]
     custo = lambda p: len(p) + PEDAGIO
     sobra = COUBE - custo(fecho)
     escolhidos = []

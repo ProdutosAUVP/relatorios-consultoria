@@ -25,7 +25,6 @@ da consultoria e por segmento, e a versão em branco sai também sem a data no c
 | Apresentação geral | 16:9 | 14 | ✓ | ✓ | ✓ | ✓ |
 | Relatório mensal em apresentação | 16:9 | 11 | ✓ | ✓ | ✓ | ✓ |
 | Carta de apresentação | 16:9 | 13 | ✓ | ✓ | ✓ | ✓ |
-| Cronograma de reuniões | A4 retrato | 6 | ✓ | ✓ | ✓ | ✓ |
 | Apresentação do consultor | folha 210 mm × altura do texto | 1 | 3 planos | ✓ | ✓ | ✓ |
 | Apresentação do consultor (uma página) | A4 retrato | 1 | ✓ | ✓ | ✓ | ✓ |
 
@@ -398,7 +397,6 @@ Para dados que não são tabela nem gráfico há três blocos:
 | --- | --- |
 | `.flow` | sequência de etapas sobre um trilho contínuo, com nó numerado e etiqueta de prazo. Método, primeiros passos, etapas do diagnóstico, plano de transição e preparação para a reunião |
 | `.hero` + `.stats` | um número em destaque com a leitura ao lado e uma fileira de números de apoio separados por fio. Página de números da apresentação |
-| `.year` | os doze meses em dois semestres, cada um com o tipo de encontro. Cronograma, acima da tabela de detalhe |
 
 Todos usam só fio de 1 pt, numeração no tom de acento e a mesma escala tipográfica das
 tabelas — nenhum recurso novo de cor ou de peso.
@@ -444,12 +442,6 @@ de uma reunião: agenda, fechamento do mês, rentabilidade contra referências, 
 movimentações, página do segmento, cenário, próximos passos e encerramento. Os números
 são os mesmos do relatório, com as mesmas ausências; o que o deck acrescenta é a
 conversa em volta deles.
-
-**Cronograma de reuniões** — ritmo de acompanhamento do segmento, calendário dos doze
-meses, pauta e entregável de cada tipo de encontro, canais e SLA de resposta, regras de
-remarcação e QR de agendamento. A cadência já vem diferente por segmento: trimestral na
-consultoria, trimestral com revisão semestral na alta renda, mensal com comitê
-trimestral no private e semestral com contatos da mesa na assessoria.
 
 ## Decisões que ficaram em aberto
 

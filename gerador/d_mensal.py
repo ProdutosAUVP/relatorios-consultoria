@@ -22,12 +22,14 @@ TRATAMENTO = {"private": "Prezado(a)", "alta-renda": "Prezado(a)",
 PAPEL = {"consultoria": "Consultor(a)", "alta-renda": "Consultor(a)",
          "private": "Banker", "assessoria": "Assessor(a)"}
 
-# Página extra por segmento, depois das seções comuns. Consultoria e Alta Renda
-# não têm: tudo o que as distingue já está nas seções comuns.
+# Página extra por segmento, depois das seções comuns. Só a assessoria tem: é o
+# quadro de remuneração, que existe porque naquele modelo quem paga a casa é o
+# produto, e isso precisa estar escrito todo mês. Nos outros segmentos tudo o
+# que os distingue já está nas seções comuns.
 EXTRA_TITULO = {
     "consultoria": None,
     "alta-renda": None,
-    "private": "Estruturas, internacional e sucessão",
+    "private": None,
     "assessoria": "Transparência de remuneração",
 }
 
@@ -36,30 +38,11 @@ OPCIONAL = ('<span class="pill" style="margin-left:3mm;vertical-align:middle">'
 
 
 def pagina_extra(t, seg):
-    if seg == "private":
-        return """<h1 class="t">Estruturas e sucessão</h1>
-<p class="lead">Acompanhamento das estruturas patrimoniais e do plano sucessório definidos com a família. A exposição internacional está na seção anterior.</p>
-<h2>Estruturas e veículos</h2>
-%(tab)s
-<h2>Planejamento sucessório e patrimonial</h2>
-%(cards)s
-<div class="gap"></div>
-<h2>Liquidez da família nos próximos 12 meses</h2>
-%(tab2)s""" % dict(
-            tab=table(["Estrutura", "Tipo", "Finalidade", "Jurisdição", "Status", "Próxima revisão"],
-                      [[ph("estrutura_%d_nome" % i), ph("estrutura_%d_tipo" % i), ph("estrutura_%d_finalidade" % i),
-                        ph("estrutura_%d_jurisdicao" % i), ph("estrutura_%d_status" % i),
-                        ph("estrutura_%d_revisao" % i)] for i in (1, 2, 3)], xs=True,
-                      widths=[20, 14, 24, 14, 14, 14]),
-            cards=cards([("Holding e governança", ph("nota_holding")),
-                         ("Seguros e liquidez sucessória", ph("nota_seguros")),
-                         ("Doações e testamento", ph("nota_sucessao"))]),
-            tab2=table(["Compromisso", "Quando", "Valor", "Origem dos recursos", "Situação"],
-                       [[ph("compromisso_%d_nome" % i), ph("compromisso_%d_quando" % i),
-                         ph("compromisso_%d_valor" % i), ph("compromisso_%d_origem" % i),
-                         ph("compromisso_%d_situacao" % i)] for i in (1, 2, 3)], nums=[2],
-                       sm=True, widths=[26, 14, 16, 26, 18]))
-
+    # O private tinha aqui as estruturas patrimoniais e o plano sucessório.
+    # Saíram: holding, testamento e doação não mudam de um mês para o outro, e
+    # uma página que repete o mesmo quadro doze vezes por ano ensina a pulá-la.
+    # O acompanhamento passa para a revisão semestral e para o planejador, onde
+    # há o que revisar. A exposição internacional continua na seção comum.
     # assessoria
     return """<h1 class="t">Transparência de remuneração</h1>
 <p class="lead">Você não paga taxa de assessoria. A casa é remunerada pela distribuição dos produtos que estão na sua carteira, e o quadro abaixo mostra quanto isso representou no período.</p>
@@ -129,22 +112,39 @@ def build(t, seg):
                    ["Ibovespa", ph("ibov_mes"), ph("ibov_ano"), ph("ibov_12m"), ph("ibov_24m"), ph("ibov_inicio")]],
                   caption="Rentabilidades líquidas de custos e brutas de impostos, salvo indicação em contrário. Rentabilidade passada não é garantia de rentabilidade futura.",
                   nums=[1, 2, 3, 4, 5]),
-        ch=chart("Carteira x IPCA + 5% a.a.",
-                 "Linha da carteira acumulada contra o benchmark, e barras de aportes e resgates no eixo secundário.",
-                 "line", "min-height:46mm")))
+        ch=chart("Evolução do patrimônio",
+                 "Linha do patrimônio mês a mês, ao longo dos últimos doze meses.",
+                 "line", "min-height:46mm", eixo="Patrimônio (R$)")))
 
     # ------------------------------------------------------ tabela do portfólio
+    # A página era a lista de todas as posições, ativo a ativo. Quem recebe o
+    # relatório tem essa lista na corretora, atualizada e ordenável; aqui ela
+    # ocupava páginas e ninguém lia linha por linha. O que só existe aqui é a
+    # leitura agregada: quanto há em cada classe e onde o dinheiro está
+    # custodiado. A conferência posição a posição continua sendo do extrato.
     add("Carteira", "Carteira consolidada", """<h1 class="t">Carteira consolidada</h1>
-<p class="lead">Todas as posições em %(dt)s, com a instituição em que estão custodiadas.</p>
-%(tab)s""" % dict(
+<p class="lead">Onde o patrimônio está em %(dt)s, por classe de ativo e por instituição custodiante. A relação posição a posição está no extrato da sua conta.</p>
+<h2>Por classe de ativo</h2>
+%(tab)s
+<div class="gap"></div>
+<h2>Por instituição custodiante</h2>
+%(tab2)s""" % dict(
         dt=ph("data_posicao"),
-        tab=table(["Ativo", "Classe", "Instituição", "Quantidade", "Posição", "% da carteira"],
-                  [[ph("pos_%d_ativo" % i), ph("pos_%d_classe" % i), ph("pos_%d_instituicao" % i),
-                    ph("pos_%d_qtd" % i), ph("pos_%d_valor" % i), ph("pos_%d_perc" % i)]
-                   for i in range(1, 15)],
-                  foot=["<strong>Total</strong>", "", "", "", ph("patrimonio_total"), "100,0%"],
-                  nums=[3, 4, 5], xs=True, widths=[24, 17, 17, 13, 16, 13],
-                  caption="Repita as linhas conforme o número de posições. Ativos zerados no período aparecem na seção de movimentações.")))
+        tab=table(["Classe de ativo", "Posição", "% da carteira", "Variação no mês", "Resultado no mês"],
+                  [[n, ph("cls_%s_valor" % k), ph("cls_%s_perc" % k),
+                    ph("cls_%s_variacao" % k), ph("cls_%s_resultado" % k)]
+                   for n, k in [("Renda fixa", "rf"), ("Renda fixa internacional", "rfi"),
+                                ("Ações", "acoes"), ("Fundos imobiliários", "fii"),
+                                ("Renda variável internacional", "rvi"),
+                                ("Criptomoedas", "cripto"), ("Caixa e liquidez imediata", "caixa")]],
+                  foot=["<strong>Total</strong>", ph("patrimonio_total"), "100,0%",
+                        ph("variacao_total"), ph("resultado_total")],
+                  nums=[1, 2, 3, 4], sm=True, widths=[30, 18, 16, 18, 18]),
+        tab2=table(["Instituição", "Posição", "% da carteira", "Classes custodiadas"],
+                   [[ph("cust_%d_nome" % i), ph("cust_%d_valor" % i), ph("cust_%d_perc" % i),
+                     ph("cust_%d_classes" % i)] for i in (1, 2, 3, 4)],
+                   foot=["<strong>Total</strong>", ph("patrimonio_total"), "100,0%", ""],
+                   nums=[1, 2], sm=True, widths=[26, 20, 16, 38])))
 
     # --------------------------------------------------- alocação por estratégia
     add("Alocação por estratégia", "Alocação por estratégia", """<h1 class="t">Alocação por estratégia</h1>
@@ -165,7 +165,7 @@ def build(t, seg):
                   nums=[1, 2, 3, 4],
                   caption="Meta conforme o diagrama do cerrado / carteira recomendada vigente para o perfil. Desvios acima da banda de tolerância acionam rebalanceamento."),
         ch=chart("Carteira atual x meta", "Duas roscas concêntricas: a interna com a meta, a externa com a posição atual.",
-                  "donut", "flex:1 1 auto;min-height:52mm",
+                  "anel", "flex:1 1 auto;min-height:52mm",
                   series=["Renda fixa", "Multimercado", "Renda variável BR", "Internacional", "FIIs", "Alternativos"])))
 
     # ------------------------------------------------ movimentações e proventos
@@ -189,26 +189,16 @@ def build(t, seg):
                     for i in (1, 2, 3, 4)],
                    foot=["<strong>Total</strong>", "", "", ph("prov_total_bruto"), ph("prov_total_ir"), ph("total_proventos")],
                    nums=[3, 4, 5], sm=True),
-        ch=chart("Proventos por mês", "Barras com os proventos recebidos nos últimos 12 meses, empilhadas por origem (dividendos, JCP, aluguel, cupom).", "bars", "min-height:48mm")))
+        ch=chart("Proventos por mês", "Barras com os proventos recebidos nos últimos 12 meses.", "bars", "min-height:48mm", eixo="Proventos (R$)")))
 
     # -------------------------------------------------------------- renda fixa
-    add("Renda fixa", "Renda fixa: indexadores e liquidez", """<h1 class="t">Indexadores e liquidez projetada</h1>
-<p class="lead">Como a renda fixa está distribuída entre indexadores e quando ela vira caixa.</p>
-<h2>Posições por indexador</h2>
-<div class="cols2u">
-  <div>%(tab)s</div>
-  %(ch)s
-</div>
-<h2>Liquidez projetada</h2>
+    # Os indexadores saíram: a divisão entre pós, pré e inflação é decisão de
+    # estratégia, e é na revisão de carteira que ela se discute. No mensal o que
+    # muda de um mês para o outro, e o que o cliente precisa saber, é quando o
+    # dinheiro vira caixa.
+    add("Renda fixa", "Renda fixa: liquidez projetada", """<h1 class="t">Liquidez projetada</h1>
+<p class="lead">Quando a renda fixa vira caixa, faixa a faixa.</p>
 %(tab2)s""" % dict(
-        tab=table(["Indexador", "Valor", "% da RF", "Taxa média", "Prazo médio"],
-                  [[n, ph("rf_%s_valor" % k), ph("rf_%s_perc" % k), ph("rf_%s_taxa" % k), ph("rf_%s_prazo" % k)]
-                   for n, k in [("Pós-fixado (CDI)", "pos"), ("Prefixado", "pre"),
-                                ("Inflação (IPCA+)", "ipca"), ("Isentos (LCI/LCA/CRI/CRA/deb.)", "isento")]],
-                  foot=["<strong>Total</strong>", ph("rf_total_valor"), "100,0%", ph("rf_taxa_media"), ph("rf_prazo_medio")],
-                  nums=[1, 2, 3, 4], sm=True),
-        ch=chart("Renda fixa por indexador", "Rosca com a divisão entre pós-fixado, prefixado, inflação e isentos.",
-                 "donut", "min-height:44mm", series=["Pós-fixado", "Prefixado", "Inflação", "Isentos"]),
         tab2=table(["Faixa", "Valor", "% da RF", "% do patrimônio", "Acumulado", "Observação"],
                    [[n, ph("liq_%s_valor" % k), ph("liq_%s_perc_rf" % k), ph("liq_%s_perc_pat" % k),
                      ph("liq_%s_acum" % k), ph("liq_%s_obs" % k)]
@@ -219,76 +209,92 @@ def build(t, seg):
                    nums=[1, 2, 3, 4], xs=True,
                    caption="Liquidez projetada considera carência, vencimento e liquidez de mercado do papel.")))
 
+    # Duas tabelas, e não uma. Emprestar a um banco e emprestar a uma empresa
+    # são riscos diferentes, e a diferença é justamente a coluna do FGC: no
+    # crédito bancário ela é o teto que protege, e no crédito privado ela não se
+    # aplica nunca. Numa tabela só, metade das linhas trazia "não se aplica" na
+    # coluna que mais importa, e o controle de quanto cabe sob a cobertura ficava
+    # misturado com o de concentração em empresa.
     add("Renda fixa", "Renda fixa: emissores", """<h1 class="t">Controle por emissor</h1>
-<p class="lead">A quem você está emprestando, quanto, com qual risco de crédito e até onde vai a cobertura do FGC.</p>
+<p class="lead">A quem você está emprestando e quanto. O crédito bancário vem primeiro, com a cobertura do FGC; o crédito privado vem depois, onde não há cobertura e o que protege é a diluição.</p>
+<h2>Crédito bancário</h2>
 %(tab)s
 <div class="gap"></div>
+<h2>Crédito privado</h2>
+%(tab2)s
+<div class="gap"></div>
 <div class="note"><p><strong>Limite interno por emissor.</strong> %(nota)s</p></div>""" % dict(
-        tab=table(["Emissor", "Exposição", "% da RF", "% do patrimônio", "Rating", "Coberto pelo FGC", "Limite interno"],
-                  [[ph("emissor_%d_nome" % i), ph("emissor_%d_valor" % i), ph("emissor_%d_perc_rf" % i),
-                    ph("emissor_%d_perc_pat" % i), ph("emissor_%d_rating" % i), ph("emissor_%d_fgc" % i),
-                    ph("emissor_%d_limite" % i)] for i in (1, 2, 3, 4, 5, 6)],
-                  nums=[1, 2, 3, 6], sm=True,
+        tab=table(["Emissor", "Exposição", "% da RF", "% do patrimônio", "Rating", "Coberto pelo FGC", "Sob o teto"],
+                  [[ph("banco_%d_nome" % i), ph("banco_%d_valor" % i), ph("banco_%d_perc_rf" % i),
+                    ph("banco_%d_perc_pat" % i), ph("banco_%d_rating" % i), ph("banco_%d_fgc" % i),
+                    ph("banco_%d_margem" % i)] for i in (1, 2, 3, 4, 5)],
+                  foot=["<strong>Total</strong>", ph("banco_total_valor"), ph("banco_total_perc_rf"),
+                        ph("banco_total_perc_pat"), "", ph("banco_total_fgc"), ""],
+                  nums=[1, 2, 3, 6], xs=True,
                   widths=[24, 14, 11, 14, 10, 13, 14]),
+        tab2=table(["Emissor", "Exposição", "% da RF", "% do patrimônio", "Rating", "Setor", "Vencimento"],
+                   [[ph("privado_%d_nome" % i), ph("privado_%d_valor" % i), ph("privado_%d_perc_rf" % i),
+                     ph("privado_%d_perc_pat" % i), ph("privado_%d_rating" % i), ph("privado_%d_setor" % i),
+                     ph("privado_%d_vencimento" % i)] for i in (1, 2, 3, 4, 5)],
+                   foot=["<strong>Total</strong>", ph("privado_total_valor"), ph("privado_total_perc_rf"),
+                         ph("privado_total_perc_pat"), "", "", ""],
+                   nums=[1, 2, 3], xs=True,
+                   widths=[24, 14, 11, 14, 10, 13, 14]),
         nota=ph("texto_limite_emissor")))
 
     # ----------------------------------------------------------- ações e FIIs
     add("Ações e FIIs", "Ações e fundos imobiliários", """<h1 class="t">Ações e fundos imobiliários</h1>
-<p class="lead">Distribuição por setor e por segmento, e a lista completa das posições em bolsa.</p>
+<p class="lead">Como a parte em bolsa está distribuída — por setor, nas ações, e por segmento, nos fundos imobiliários. A relação papel a papel está no extrato da sua conta.</p>
 <div class="cols2">
   %(ch)s
   %(ch2)s
 </div>
-<h2>Posições em ações</h2>
-%(tab)s
-<h2>Posições em fundos imobiliários</h2>
-%(tab2)s""" % dict(
-        ch=chart("Ações por setor", "Rosca com a distribuição setorial das ações, na curadoria de setor da AUVP.", "donut", "min-height:40mm"),
+<div class="gap"></div>
+<h2>Por setor e por segmento</h2>
+%(tab)s""" % dict(
+        ch=chart("Ações por setor", "Rosca com a distribuição setorial das ações, na curadoria de setor da AUVP.", "donut", "min-height:40mm",
+                 series=["Financeiro", "Energia", "Consumo", "Indústria", "Saúde", "Outros"]),
         ch2=chart("FIIs por segmento", "Rosca com a distribuição por segmento.",
                    "donut", "min-height:40mm", series=["Tijolo", "Papel", "Híbrido", "Fundo de fundos"]),
-        tab=table(["Ativo", "Empresa", "Setor", "Qtd.", "Cotação", "Posição", "% da carteira"],
-                  [[ph("acao_%d_ticker" % i), ph("acao_%d_empresa" % i), ph("acao_%d_setor" % i),
-                    ph("acao_%d_qtd" % i), ph("acao_%d_cotacao" % i), ph("acao_%d_valor" % i),
-                    ph("acao_%d_perc" % i)]
-                   for i in (1, 2, 3, 4, 5)], nums=[3, 4, 5, 6], xs=True,
-                  widths=[12, 19, 16, 10, 15, 15, 13]),
-        tab2=table(["Ativo", "Segmento", "Qtd.", "Cotação", "Posição", "% da carteira"],
-                   [[ph("fii_%d_ticker" % i), ph("fii_%d_segmento" % i), ph("fii_%d_qtd" % i),
-                     ph("fii_%d_cotacao" % i), ph("fii_%d_valor" % i), ph("fii_%d_perc" % i)]
-                    for i in (1, 2, 3, 4)],
-                   nums=[2, 3, 4, 5], sm=True,
-                   widths=[14, 28, 12, 15, 16, 15])))
+        tab=table(["Bloco", "Recorte", "Posição", "% da bolsa", "% da carteira", "Resultado no mês"],
+                  [[b, ph("bolsa_%d_recorte" % i), ph("bolsa_%d_valor" % i),
+                    ph("bolsa_%d_perc_bolsa" % i), ph("bolsa_%d_perc_carteira" % i),
+                    ph("bolsa_%d_resultado" % i)]
+                   for i, b in enumerate(["Ações", "Ações", "Ações", "FIIs", "FIIs"], start=1)],
+                  foot=["<strong>Total</strong>", "", ph("bolsa_total_valor"), "100,0%",
+                        ph("bolsa_total_perc_carteira"), ph("bolsa_total_resultado")],
+                  nums=[2, 3, 4, 5], sm=True, widths=[13, 27, 16, 14, 15, 15])))
 
     # ----------------------------------------------------------- internacional
     add("Internacional", "Internacional", """<h1 class="t">Carteira internacional %(op)s</h1>
 <p class="lead">Posições denominadas em moeda estrangeira, convertidas pela PTAX de %(ptax)s. A página mostra a posição no exterior; o resultado da carteira está no resumo. Esta seção só entra quando houver posição no exterior.</p>
 %(kpis)s
 <div class="gap"></div>
-<h2>Renda fixa internacional</h2>
-%(tab)s
-<h2>Renda variável internacional</h2>
-%(tab2)s""" % dict(
+<h2>Por classe, no exterior</h2>
+%(tab)s""" % dict(
         op=OPCIONAL, ptax=ph("data_ptax"),
         kpis=kpis([("Total no exterior", ph("intl_total_usd"), "Em reais: " + ph("intl_total_brl")),
                    ("% do patrimônio", ph("intl_perc_patrimonio"), "Meta: " + ph("alvo_intl")),
                    ("Câmbio da conversão", ph("ptax_utilizada"), "PTAX de " + ph("data_ptax"))], n=3),
-        tab=table(["Ativo", "Emissor", "Moeda", "Vencimento", "Taxa", "Posição (US$)", "% do exterior"],
-                  [[ph("irf_%d_ativo" % i), ph("irf_%d_emissor" % i), ph("irf_%d_moeda" % i),
-                    ph("irf_%d_vencimento" % i), ph("irf_%d_taxa" % i), ph("irf_%d_valor_usd" % i),
-                    ph("irf_%d_perc" % i)] for i in (1, 2, 3)], nums=[4, 5, 6], sm=True),
-        tab2=table(["Ativo", "Nome", "Tipo", "Qtd.", "Cotação (US$)", "Posição (US$)", "% do exterior"],
-                   [[ph("irv_%d_ticker" % i), ph("irv_%d_nome" % i), ph("irv_%d_tipo" % i),
-                     ph("irv_%d_qtd" % i), ph("irv_%d_cotacao" % i), ph("irv_%d_valor_usd" % i),
-                     ph("irv_%d_perc" % i)] for i in (1, 2, 3, 4)],
-                   nums=[3, 4, 5, 6], xs=True,
-                   widths=[13, 22, 13, 11, 15, 15, 11])))
+        tab=table(["Classe", "Posição (US$)", "Posição (R$)", "% do exterior", "% da carteira"],
+                  [[n, ph("intl_%s_usd" % k), ph("intl_%s_brl" % k),
+                    ph("intl_%s_perc_ext" % k), ph("intl_%s_perc_cart" % k)]
+                   for n, k in [("Renda fixa internacional", "rf"),
+                                ("Ações e ETFs", "acoes"),
+                                ("REITs e imobiliário", "reits"),
+                                ("Caixa em moeda estrangeira", "caixa")]],
+                  foot=["<strong>Total</strong>", ph("intl_total_usd"), ph("intl_total_brl"),
+                        "100,0%", ph("intl_perc_patrimonio")],
+                  nums=[1, 2, 3, 4], sm=True, widths=[32, 18, 18, 16, 16])))
 
     # ------------------------------------------------------- página do segmento
     if EXTRA_TITULO[seg]:
         add(EXTRA_TITULO[seg], EXTRA_TITULO[seg], pagina_extra(t, seg))
 
     # ------------------------------------------------------------------ notas
-    add("Notas e avisos", "Notas metodológicas e avisos", """<h1 class="t">Notas metodológicas e avisos</h1>
+    # Sem nota metodológica: o que a página tem, e o que o cliente procura nela,
+    # são os avisos legais e o caminho para falar com a gente.
+    add("Avisos e contato", "Avisos e contato", """<h1 class="t">Avisos e contato</h1>
 <h2>Avisos legais</h2>
 <p class="legal">%(disc)s</p>
 <p class="legal">Rentabilidade passada não representa garantia de rentabilidade futura. Os investimentos apresentados podem não ser adequados a todos os investidores e não contam, salvo quando expressamente indicado, com garantia do Fundo Garantidor de Créditos (FGC) nem de qualquer mecanismo de seguro. Antes de investir, leia atentamente os documentos de cada produto, incluindo regulamento, lâmina, prospecto e formulário de informações complementares.</p>

@@ -37,6 +37,11 @@ ul{margin:0 0 3mm;padding-left:4mm}
 li{margin:0 0 1mm}
 strong{font-weight:700}
 .ph{background:var(--ph);border-radius:.6mm;padding:0 1mm;font-weight:600;overflow-wrap:break-word;text-transform:none;letter-spacing:0;font-size:.94em}
+/* O campo que já vem preenchido não é lacuna: lê-se como o texto que é, e o
+   realce só serviria para o consultor achar que falta algo ali. Continua sendo
+   campo — a ferramenta o oferece para edição —, mas isso é assunto da
+   ferramenta, não do papel. */
+.ph.pronto{background:none;padding:0;font-weight:inherit;font-size:inherit}
 .dark .ph{background:var(--ph-dk);color:#fff}
 /* capas e divisórias são monocromáticas: nada de dourado sobre a arte da capa */
 .cover .ph,.divider .ph{background:rgba(255,255,255,.18);color:#fff}
@@ -266,18 +271,6 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .legend li{display:flex;align-items:center;gap:1.5mm}
 .legend i{width:4mm;height:1.33px;flex:0 0 auto}
 
-/* ---------- ano em dois semestres ---------- */
-.year{list-style:none;margin:0;padding:0;counter-reset:yr;display:grid;
-  grid-template-columns:repeat(6,1fr);gap:6mm 4mm}
-.year>li{position:relative;min-width:0;padding-top:8mm}
-.year>li::after{content:"";position:absolute;left:0;right:-4mm;top:3.2mm;height:1px;background:var(--line)}
-.year>li:nth-child(6)::after,.year>li:last-child::after{right:0}
-.year .mo{position:absolute;left:0;top:0;z-index:2;width:6.4mm;height:6.4mm;border-radius:50%;
-  border:1px solid var(--line);background:var(--paper);color:var(--ink-2);
-  display:flex;align-items:center;justify-content:center;font-size:6pt;font-weight:700}
-.year>li.on .mo{border-color:var(--brand);color:var(--brand)}
-.year .nm{display:block;font-size:7.4pt;font-weight:700;margin-bottom:1mm}
-.year .ev{display:block;font-size:6.8pt;color:var(--ink-2);line-height:1.35}
 
 /* ---------- lista com marcador em fio, e retrato ---------- */
 .lista{list-style:none;margin:0;padding:0;font-size:8.4pt;line-height:17px}

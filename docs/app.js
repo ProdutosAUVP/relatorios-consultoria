@@ -764,10 +764,7 @@ function montar(modo) {
   // depois da sétima do modelo, e não da sétima do que sobrou.
   inserirMontadas(doc, paginas);
   paginas.forEach((p, i) => { if (!dentro(i + 1)) p.remove(); });
-  [...doc.querySelectorAll('.page, .slide')].forEach((p, i) => {
-    const no = p.querySelector('.pg-foot .no');
-    if (no) no.textContent = String(i + 1).padStart(2, '0');
-  });
+  renumerar(doc);
 
   const esvaziados = new Set();
   for (const span of doc.querySelectorAll('span.ph')) {
@@ -890,6 +887,10 @@ function inserirMontadas(doc, originais) {
     .sort((a, b) => b.depois - a.depois);
   for (const pg of pedidos) {
     const nova = molde.cloneNode(true);
+    // A marca é o que permite repaginá-la depois. Só as páginas montadas se
+    // dividem: as do modelo são desenho fechado, e quebrar uma tabela ao meio
+    // para caber deixaria o cabeçalho órfão numa página e os números na outra.
+    nova.classList.add('montada');
     const sec = nova.querySelector('.pg-head .sec');
     if (sec) sec.textContent = pg.secao || 'Análise';
     const corpo = nova.querySelector('.pg-body');
@@ -899,21 +900,70 @@ function inserirMontadas(doc, originais) {
   }
 }
 
+/** Renumera o rodapé na ordem em que as páginas ficaram. */
+function renumerar(doc) {
+  [...doc.querySelectorAll('.page, .slide')].forEach((pg, i) => {
+    const no = pg.querySelector('.pg-foot .no');
+    if (no) no.textContent = String(i + 1).padStart(2, '0');
+  });
+}
+
+/** Quebra em duas a página montada que não coube, e repete até caber.
+ *
+ *  Precisa de um documento já diagramado: a conta é `scrollHeight` contra
+ *  `clientHeight`, e num documento solto na memória não há nem um nem outro.
+ *  Por isso ela roda no quadro da prévia e no quadro escondido da exportação, e
+ *  não dentro de `montar()`.
+ *
+ *  O algoritmo é o do compositor: enquanto não couber, tira o último bloco e
+ *  passa para a página seguinte. Ler `scrollHeight` a cada passo força o
+ *  navegador a recalcular, então a medida acompanha a mudança.
+ *
+ *  Um bloco sozinho que não cabe não tem como ser dividido — uma tabela de
+ *  quinze linhas é uma coisa só. Esse fica, e quem avisa é `conferirEstouro()`.
+ *
+ *  A guarda de 60 voltas existe para o caso de uma página em que nada couber:
+ *  sem ela, o laço passaria o bloco adiante para sempre.
+ */
+function repaginar(doc) {
+  const fila = [...doc.querySelectorAll('.page.montada')];
+  let guarda = 0;
+  while (fila.length && guarda < 60) {
+    guarda += 1;
+    const pg = fila.shift();
+    const corpo = pg.querySelector('.pg-body');
+    if (!corpo || corpo.scrollHeight - corpo.clientHeight <= 1) continue;
+    if (corpo.children.length <= 1) continue;
+
+    const nova = pg.cloneNode(true);
+    const novoCorpo = nova.querySelector('.pg-body');
+    novoCorpo.innerHTML = '';
+    // A continuação diz que é continuação: quem lê o documento impresso vê duas
+    // páginas com o mesmo título no cabeçalho e precisa saber que é a mesma
+    // seção, e não um assunto repetido.
+    const sec = nova.querySelector('.pg-head .sec');
+    if (sec && !/ · continuação$/.test(sec.textContent)) {
+      sec.textContent = `${sec.textContent} · continuação`;
+    }
+    while (corpo.children.length > 1 && corpo.scrollHeight - corpo.clientHeight > 1) {
+      novoCorpo.prepend(corpo.lastElementChild);
+    }
+    pg.after(nova);
+    fila.unshift(nova);   // a continuação também pode não caber
+  }
+  renumerar(doc);
+}
+
 const PX_MM = 96 / 25.4;
 
-/** A altura, em milímetros, que a folha longa precisa para caber o que foi
- *  escrito — ou `null` se o documento não tiver folha longa, que é o caso da
- *  maioria: A4 e slide têm tamanho de papel, e neles é o conteúdo que se ajusta
- *  à página, não o contrário.
+/** Faz um trabalho sobre o documento diagramado, e devolve o HTML resultante.
  *
- *  A apresentação do consultor é a exceção: uma folha só, de mais de um metro,
- *  cuja altura depende de quanto foi escrito. Medir exige renderizar, então isto
- *  monta o documento num quadro escondido, solta a altura da folha para ler o
- *  que o conteúdo ocupa e devolve a caixa ao que era. É a mesma conta do
- *  `scripts/altura.mjs`, que acerta os arquivos gerados; aqui ela vale para o
- *  que a pessoa acabou de digitar. */
-async function alturaDaFolha(html) {
-  if (!html.includes('page longa')) return null;
+ *  Há coisas que não se sabem sobre um documento solto na memória: quanto uma
+ *  página ocupa, se o conteúdo dela coube, onde cortar. Tudo isso pede layout,
+ *  e layout pede um documento numa janela. O quadro escondido é essa janela —
+ *  fora da tela, sem interferir em nada, descartado ao fim.
+ */
+async function noQuadro(html, trabalho) {
   const quadro = document.createElement('iframe');
   quadro.setAttribute('aria-hidden', 'true');
   quadro.style.cssText = 'position:fixed;left:-20000px;top:0;width:1200px;height:800px;'
@@ -924,41 +974,74 @@ async function alturaDaFolha(html) {
     doc.open();
     doc.write(html);
     doc.close();
-    // A fonte e o retrato vêm embutidos no próprio arquivo, mas assentar leva um
-    // quadro: medir antes disso dá a altura da fonte de reserva, que é outra.
+    // A fonte e as imagens vêm embutidas no próprio arquivo, mas assentar leva
+    // um quadro: medir antes disso dá a altura da fonte de reserva, que é outra.
     if (doc.fonts) { try { await doc.fonts.ready; } catch (e) { /* sem a API */ } }
     await new Promise((pronto) => requestAnimationFrame(pronto));
-    const altos = [...doc.querySelectorAll('.page.longa')].map((folha) => {
-      const antes = folha.style.height;
-      folha.style.height = 'auto';
-      const px = folha.getBoundingClientRect().height;
-      folha.style.height = antes;
-      return px / PX_MM;
-    });
-    if (!altos.length) return null;
-    // Arredonda para cima, ao múltiplo de 5 mm seguinte e com pelo menos 2 mm de
-    // folga: os poucos milímetros de sobra são o que os respiros elásticos
-    // repartem entre as seções, e absorvem a diferença entre o que este
-    // navegador mede e o que o mecanismo de impressão desenha. O piso é o A4.
-    // `@page` tem um tamanho só para o arquivo inteiro, então com mais de uma
-    // folha vale a maior: sobra vão nas outras, mas nenhuma sai cortada.
-    return Math.max(297, Math.ceil((Math.max(...altos) + 2) / 5) * 5);
+    trabalho(doc);
+    return '<!doctype html>\n' + doc.documentElement.outerHTML;
   } finally {
     quadro.remove();
   }
 }
 
-/** O arquivo pronto para sair: o modelo preenchido e, quando é folha longa, a
- *  altura medida escrita por cima da que veio do gerador. */
+/** A altura, em milímetros, que a folha longa precisa para caber o que foi
+ *  escrito — ou `null` se o documento não tiver folha longa, que é o caso da
+ *  maioria: A4 e slide têm tamanho de papel, e neles é o conteúdo que se ajusta
+ *  à página, não o contrário.
+ *
+ *  A apresentação do consultor é a exceção: uma folha só, de mais de um metro,
+ *  cuja altura depende de quanto foi escrito. Solta a altura da folha, lê o que
+ *  o conteúdo ocupa e devolve a caixa ao que era. É a mesma conta do
+ *  `scripts/altura.mjs`, que acerta os arquivos gerados; aqui ela vale para o
+ *  que a pessoa acabou de digitar. */
+function alturaDaFolha(doc) {
+  const altos = [...doc.querySelectorAll('.page.longa')].map((folha) => {
+    const antes = folha.style.height;
+    folha.style.height = 'auto';
+    const px = folha.getBoundingClientRect().height;
+    folha.style.height = antes;
+    return px / PX_MM;
+  });
+  if (!altos.length) return null;
+  // Arredonda para cima, ao múltiplo de 5 mm seguinte e com pelo menos 2 mm de
+  // folga: os poucos milímetros de sobra são o que os respiros elásticos
+  // repartem entre as seções, e absorvem a diferença entre o que este navegador
+  // mede e o que o mecanismo de impressão desenha. O piso é o A4. `@page` tem um
+  // tamanho só para o arquivo inteiro, então com mais de uma folha vale a maior:
+  // sobra vão nas outras, mas nenhuma sai cortada.
+  return Math.max(297, Math.ceil((Math.max(...altos) + 2) / 5) * 5);
+}
+
+/** O arquivo pronto para sair.
+ *
+ *  Duas coisas exigem um documento diagramado, e as duas acontecem no mesmo
+ *  quadro escondido: repaginar as páginas montadas que não couberam e medir a
+ *  altura da folha longa. O quadro trabalha sempre sobre a versão sem o script
+ *  de impressão — ele é um documento como outro qualquer, e o script mandaria o
+ *  navegador abrir a caixa de imprimir a partir dele. O script entra no fim,
+ *  no texto já pronto. */
 async function montarFinal(modo) {
-  const html = montar(modo);
-  // Mede sobre a versão sem o script de impressão: o quadro de medida é um
-  // documento como outro qualquer, e o script mandaria o navegador abrir a
-  // caixa de imprimir a partir dele.
-  const alto = await alturaDaFolha(modo === 'imprimir' ? montar('exportar') : html);
-  if (!alto) return html;
-  const regras = `@page{size:210mm ${alto}mm;margin:0}.page.longa{height:${alto}mm}`;
-  return html.replace('</head>', () => `<style>${regras}</style></head>`);
+  let html = montar(modo === 'imprimir' ? 'exportar' : modo);
+  const montadas = html.includes('page montada');
+  const longa = html.includes('page longa');
+  if (montadas || longa) {
+    html = await noQuadro(html, (doc) => {
+      if (montadas) repaginar(doc);
+      if (!longa) return;
+      const alto = alturaDaFolha(doc);
+      if (!alto) return;
+      const estilo = doc.createElement('style');
+      estilo.textContent =
+        `@page{size:210mm ${alto}mm;margin:0}.page.longa{height:${alto}mm}`;
+      doc.head.appendChild(estilo);
+    });
+  }
+  if (modo === 'imprimir') {
+    html = html.replace('</body>', () =>
+      '<script>addEventListener("load",()=>setTimeout(()=>print(),300))</script></body>');
+  }
+  return html;
 }
 
 function renderizar() {
@@ -966,10 +1049,15 @@ function renderizar() {
   doc.open();
   doc.write(montar('previa'));
   doc.close();
-  // A conferência vem antes do ajuste, e não depois: o ajuste esconde todas as
-  // páginas menos a que está à vista, e página escondida não tem altura para
-  // medir.
-  setTimeout(() => { conferirEstouro(); ajustarQuadro(); }, 50);
+  // Na mesma ordem da exportação: primeiro reparte as páginas montadas que não
+  // couberam, depois confere o que sobrou, e só então ajusta a vista. O ajuste
+  // esconde todas as páginas menos a que está à frente, e página escondida não
+  // tem altura para medir nem para repaginar.
+  setTimeout(() => {
+    repaginar(doc);
+    conferirEstouro();
+    ajustarQuadro();
+  }, 50);
 }
 
 /** Que páginas não couberam.
@@ -1003,12 +1091,15 @@ function mostrarEstouro() {
   const n = estado.estouro.length;
   caixa.hidden = !n;
   if (n) {
+    // As páginas montadas já se repartiram sozinhas antes desta conferência. O
+    // que sobra aqui é o que não tem como repartir: uma página do modelo com
+    // texto demais, ou um bloco único — uma tabela de quinze linhas — que não
+    // cabe inteiro em folha nenhuma.
     caixa.innerHTML = `<strong>${n === 1 ? 'Uma página não coube' : `${n} páginas não couberam`}.</strong>
       O que passa da margem é cortado no arquivo exportado. ${estado.estouro.map((x) =>
         `<span class="pg-estourou">${String(x.no).padStart(2, '0')} ${escapa(x.secao)}</span>`).join(' ')}
-      Tire conteúdo, ou — nas páginas que você montou — mova um bloco para uma página nova.`;
+      Encurte o texto dessas páginas — ou, se for um bloco só que não cabe, divida-o em dois.`;
   }
-  for (const el of $$('.pag-nova')) el.classList.remove('estourou');
 }
 
 /** O modelo tem largura fixa em mm; a prévia mostra uma página por vez,

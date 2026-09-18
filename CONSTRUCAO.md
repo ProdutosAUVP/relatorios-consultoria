@@ -404,6 +404,22 @@ da página original — "depois da 07" quer dizer depois da sétima do modelo, e
 da sétima do que sobrou —, então a inserção acontece antes de tirar as páginas
 desmarcadas.
 
+**A página montada se reparte sozinha.** Quando o conteúdo passa da folha,
+`repaginar()` tira o último bloco e o passa para uma página nova, e repete até
+caber — o algoritmo do compositor. A continuação herda o cabeçalho com um
+`· continuação` no fim, para quem lê no papel saber que é a mesma seção.
+
+Ela precisa de um documento já diagramado: a conta é `scrollHeight` contra
+`clientHeight`, e num documento solto na memória não há nem um nem outro. Por
+isso roda no quadro da prévia e no quadro escondido da exportação, e não dentro
+de `montar()` — que é síncrono e trabalha sobre um `Document` sem layout. Ler
+`scrollHeight` a cada passo força o navegador a recalcular, então a medida
+acompanha a mudança.
+
+Só as páginas montadas se repartem. As do modelo são desenho fechado, e quebrar
+uma tabela ao meio para caber deixaria o cabeçalho órfão numa página e os
+números na outra.
+
 **A ferramenta avisa quando a página não coube.** A página tem altura fechada e
 `overflow:hidden`: o que passa dela some do arquivo, e sumia calado. Quem
 escrevia três parágrafos onde cabia um exportava o documento com o terceiro

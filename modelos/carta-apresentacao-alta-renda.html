@@ -281,7 +281,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
    Entra no lugar da moldura vazia quando o consultor preenche a tabelinha na
    ferramenta. É SVG: sai vetor no PDF, na tipografia da casa e nas cores do
    segmento — `--c1`..`--c6`, as mesmas da legenda. */
-.g-svg{width:100%;height:auto;max-height:100%;display:block;flex:1 1 auto;min-height:0}
+.g-svg{width:100%;height:auto;max-height:100%;display:block;flex:1 1 0;min-height:0}
+/* O desenho não empurra a caixa: ele ocupa o que sobra dela. A moldura vazia e a
+   preenchida medem o mesmo, e o gráfico nunca cresce por cima do que está ao lado. */
 .g-guia{stroke:var(--line);stroke-width:1}
 .g-eixo{fill:var(--ink-2);font-size:10px}
 .g-mini{fill:var(--ink-2);font-size:10px;text-anchor:middle;letter-spacing:.04em}

@@ -174,10 +174,9 @@ def build(t, seg):
 <h2>Operações executadas</h2>
 %(tab)s
 <h2>Proventos e rendimentos recebidos</h2>
-<div class="cols2u" style="flex:1 1 auto;align-items:stretch">
-  <div>%(tab2)s</div>
-  %(ch)s
-</div>""" % dict(
+%(tab2)s
+<div class="gap"></div>
+%(ch)s""" % dict(
         ini=ph("data_inicio_periodo"), fim=ph("data_fim_periodo"),
         tab=table(["Data", "Operação", "Ativo", "Classe", "Quantidade", "Valor", "Motivo"],
                   [[ph("mov_%d_data" % i), ph("mov_%d_tipo" % i), ph("mov_%d_ativo" % i),
@@ -188,8 +187,8 @@ def build(t, seg):
                      ph("prov_%d_bruto" % i), ph("prov_%d_ir" % i), ph("prov_%d_liquido" % i)]
                     for i in (1, 2, 3, 4)],
                    foot=["<strong>Total</strong>", "", "", ph("prov_total_bruto"), ph("prov_total_ir"), ph("total_proventos")],
-                   nums=[3, 4, 5], sm=True),
-        ch=chart("Proventos por mês", "Barras com os proventos recebidos nos últimos 12 meses.", "bars", "min-height:48mm", eixo="Proventos (R$)", pontos=MESES)))
+                   nums=[3, 4, 5], sm=True, widths=[12, 28, 20, 14, 12, 14]),
+        ch=chart("Proventos por mês", "Barras com os proventos recebidos nos últimos 12 meses.", "bars", "min-height:38mm", eixo="Proventos (R$)", pontos=MESES)))
 
     # -------------------------------------------------------------- renda fixa
     # Os indexadores saíram: a divisão entre pós, pré e inflação é decisão de
@@ -245,7 +244,7 @@ def build(t, seg):
     # ----------------------------------------------------------- ações e FIIs
     add("Ações e FIIs", "Ações e fundos imobiliários", """<h1 class="t">Ações e fundos imobiliários</h1>
 <p class="lead">Como a parte em bolsa está distribuída — por setor, nas ações, e por segmento, nos fundos imobiliários. A relação papel a papel está no extrato da sua conta.</p>
-<div class="cols2">
+<div class="cols2" style="flex:1 1 auto;align-items:stretch">
   %(ch)s
   %(ch2)s
 </div>

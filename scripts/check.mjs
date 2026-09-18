@@ -80,6 +80,23 @@ for (const file of files) {
         if (r.right > box.right + 1 || r.left < box.left - 1)
           out.push({ pg: i + 1, kind: el.className.split(' ')[0], v: Math.round(r.right - box.right) });
       });
+
+      // Transbordo de coluna, e não de página. Uma tabela larga demais para a
+      // coluna da grelha em que está não estoura a página — ela invade a coluna
+      // vizinha e fica por baixo do que houver lá. Foi assim que o gráfico de
+      // proventos passou a ser desenhado por cima da tabela ao lado dele sem
+      // que nada aqui reclamasse.
+      p.querySelectorAll('.cols2>*,.cols3>*,.cols2u>*').forEach((cel) => {
+        const c = cel.getBoundingClientRect();
+        for (const el of cel.querySelectorAll('table,.kpis,.cards,.chart,.imgbox')) {
+          const r = el.getBoundingClientRect();
+          if (r.right > c.right + 1) {
+            out.push({ pg: i + 1, kind: `${el.tagName.toLowerCase()} fora da coluna`,
+                       v: Math.round(r.right - c.right) });
+            break;
+          }
+        }
+      });
     });
     return out;
   });

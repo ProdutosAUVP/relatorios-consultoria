@@ -31,8 +31,26 @@
 
   /* O quadro de desenho. A caixa do documento tem a proporção que tiver, então o
    * SVG trabalha num sistema de coordenadas fixo e o `viewBox` o encaixa. */
-  const W = 400;
-  const H = 260;
+  /* A caixa de desenho.
+   *
+   *  Era fixa em 400 por 260, e por isso um gráfico numa faixa larga e baixa —
+   *  a evolução do patrimônio ocupa a página inteira e uns quatro centímetros
+   *  de altura — encolhia até caber na altura e deixava metade da largura vazia.
+   *  Agora a proporção vem da caixa que o documento reservou: o desenho se
+   *  estica no eixo em que há espaço.
+   *
+   *  A largura é sempre 400 porque é ela que fixa a escala do texto; o que muda
+   *  é a altura, limitada para o gráfico não virar nem uma tira nem um poste. */
+  const LARGURA = 400;
+  const ALTURA_MIN = 120;
+  const ALTURA_MAX = 640;
+  const ALTURA_PADRAO = 260;
+
+  function geometria(caixa) {
+    if (!caixa || !caixa.w || !caixa.h) return { W: LARGURA, H: ALTURA_PADRAO };
+    const alta = Math.round(LARGURA * (caixa.h / caixa.w));
+    return { W: LARGURA, H: Math.min(ALTURA_MAX, Math.max(ALTURA_MIN, alta)) };
+  }
 
   const CORES = 6;
   const cor = (i) => `var(--c${(i % CORES) + 1})`;
@@ -94,7 +112,7 @@
     return `M ${x1} ${y1} A ${raio} ${raio} 0 ${ate - de > 0.5 ? 1 : 0} 1 ${x2} ${y2}`;
   }
 
-  function rosca(valores, raio, largura) {
+  function rosca(valores, g, cx, cy, raio, largura) {
     const total = valores.reduce((a, b) => a + b, 0);
     if (total <= 0) return '';
     let t = 0;
@@ -102,16 +120,23 @@
       const de = t;
       t += v / total;
       if (v <= 0) return '';
-      return `<path d="${arco(W / 2, H / 2, raio, de, t)}" fill="none" stroke="${cor(i)}"`
+      return `<path d="${arco(cx, cy, raio, de, t)}" fill="none" stroke="${cor(i)}"`
            + ` stroke-width="${largura}"/>`;
     }).join('');
   }
 
   const NOTA_ANEL = 'Rosca externa: posição atual &middot; rosca interna: meta';
 
-  function donut(l, duplo) {
-    const fora = rosca(l.map((x) => numero(x.v[0])), 78, 34);
-    const dentro = duplo && quantas(l) > 1 ? rosca(l.map((x) => numero(x.v[1])), 42, 26) : '';
+  function donut(l, duplo, g) {
+    // A rosca é redonda: cresce com o lado menor da caixa, e fica no meio dela.
+    const raio = Math.min(g.W, g.H) * 0.38;
+    const grossura = raio * 0.44;
+    const cx = g.W / 2;
+    const cy = g.H / 2;
+    const fora = rosca(l.map((x) => numero(x.v[0])), g, cx, cy, raio, grossura);
+    const dentro = duplo && quantas(l) > 1
+      ? rosca(l.map((x) => numero(x.v[1])), g, cx, cy, raio * 0.54, grossura * 0.76)
+      : '';
     return { svg: fora + dentro, chaves: l.map((x) => x.r), nota: dentro ? NOTA_ANEL : '' };
   }
 
@@ -133,14 +158,14 @@
   };
 
   /** A moldura de quem tem eixo: guias, escala e rótulos do eixo horizontal. */
-  function comEixo(l, series, desenho) {
+  function comEixo(l, series, desenho, g) {
     const n = quantas(l);
     const vals = l.map((x) => Array.from({ length: n }, (_, k) => numero(x.v[k])));
     const alvo = teto(Math.max(0, ...vals.flat()));
     const esq = 54;
-    const base = H - 34;
+    const base = g.H - 34;
     const alto = base - 16;
-    const larg = W - esq - 14;
+    const larg = g.W - esq - 14;
     const guias = [0, 0.5, 1].map((f) => {
       const y = base - f * alto;
       return `<line x1="${esq}" y1="${y}" x2="${esq + larg}" y2="${y}" class="g-guia"/>`
@@ -162,7 +187,7 @@
     };
   }
 
-  const bars = (l, series) => comEixo(l, series, ({ vals, n, alvo, esq, base, alto, larg }) => {
+  const bars = (l, series, g) => comEixo(l, series, ({ vals, n, alvo, esq, base, alto, larg }) => {
     const passo = larg / vals.length;
     const w = Math.min(38, (passo * 0.62) / n);
     return vals.map((linha, i) => linha.map((v, k) => {
@@ -170,9 +195,9 @@
       const x = esq + passo * (i + 0.5) - (w * n) / 2 + w * k;
       return `<rect x="${x}" y="${base - h}" width="${w}" height="${h}" fill="${cor(k)}" rx="1.5"/>`;
     }).join('')).join('');
-  });
+  }, g);
 
-  const line = (l, series) => comEixo(l, series, ({ vals, n, alvo, esq, base, alto, larg }) => {
+  const line = (l, series, g) => comEixo(l, series, ({ vals, n, alvo, esq, base, alto, larg }) => {
     const passo = larg / vals.length;
     const ponto = (v, i) => [esq + passo * (i + 0.5), base - (alvo > 0 ? (v / alvo) * alto : 0)];
     let fora = '';
@@ -192,11 +217,11 @@
       }
     }
     return fora;
-  });
+  }, g);
 
   const FORMATOS = {
-    donut: (l) => donut(l, false),
-    anel: (l) => donut(l, true),
+    donut: (l, series, g) => donut(l, false, g),
+    anel: (l, series, g) => donut(l, true, g),
     bars,
     line,
   };
@@ -211,14 +236,15 @@
   /** O gráfico pronto, como HTML, para entrar no lugar da moldura vazia.
    *  Devolve '' quando não há dado: sem dado, a moldura vazia continua sendo a
    *  resposta certa — ela diz o que falta. */
-  function desenha(tipo, linhas, series) {
+  function desenha(tipo, linhas, series, caixa) {
     const f = FORMATOS[tipo];
     if (!f) return '';
     const l = validas(linhas);
     if (!l.length) return '';
-    const { svg, chaves, nota } = f(l, series);
+    const g = geometria(caixa);
+    const { svg, chaves, nota } = f(l, series, g);
     if (!svg) return '';
-    return `<svg class="g-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet"`
+    return `<svg class="g-svg" viewBox="0 0 ${g.W} ${g.H}" preserveAspectRatio="xMidYMid meet"`
          + ` role="img">${svg}</svg>${legenda(chaves)}`
          + (nota ? `<div class="g-nota">${nota}</div>` : '');
   }

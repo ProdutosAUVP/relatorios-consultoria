@@ -125,6 +125,9 @@ main { padding: 28px 24px 64px; }
 .btn.neutro:hover { border-color: var(--primary); color: var(--primary); background: var(--background); }
 .btn.pequeno { height: 32px; padding: 0 12px; font-size: 11px; }
 .btn:disabled { opacity: .5; cursor: not-allowed; }
+/* O rótulo do botão não quebra em duas linhas: a altura é fechada, e o texto
+   quebrado transbordava por cima da borda. */
+.btn { white-space: nowrap; }
 .btn.claro { border-color: hsl(0 0% 38%); background: transparent; color: hsl(0 0% 100%); }
 .btn.claro:hover { background: hsl(0 0% 100%); color: hsl(0 0% 0%); border-color: hsl(0 0% 100%); }
 
@@ -242,7 +245,12 @@ main { padding: 28px 24px 64px; }
   background: var(--warn-bg, #FDF6E6); color: var(--warn-fg, #7A5B10); }
 .alerta-estouro .pg-estourou { display: inline-block; margin: 4px 4px 0 0; padding: 1px 7px;
   border-radius: 9px; background: rgba(0, 0, 0, .06); font-size: 12px; font-weight: 500; }
-.imagem input[type='file'] { display: none; }
+/* O campo de arquivo dentro de um botão é o botão: o controle nativo do
+   navegador — "Escolher arquivo · Nenhum arquivo escolhido" — some, e quem
+   clica no rótulo abre o seletor do mesmo jeito. A regra era `.imagem input`, e
+   por isso o controle nativo reapareceu no dia em que a tabelinha de gráfico
+   ganhou o mesmo botão. Vale para qualquer botão, agora. */
+label.btn input[type='file'] { display: none; }
 
 /* ---------- prévia ---------- */
 

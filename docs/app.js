@@ -655,7 +655,7 @@ function campoGrafico(im) {
     </table>
     <div class="acoes">
       <button type="button" class="btn neutro pequeno" data-mais="${escapa(im.id)}">Mais uma linha</button>
-      <label class="btn neutro pequeno">${dado ? 'Trocar imagem' : 'Usar imagem em vez disso'}
+      <label class="btn neutro pequeno">${dado ? 'Trocar imagem' : 'Enviar imagem'}
         <input type="file" accept="image/*" data-arquivo="${escapa(im.id)}"></label>
       ${dado ? `<button type="button" class="btn neutro pequeno" data-tirar="${escapa(im.id)}">Remover imagem</button>` : ''}
     </div>
@@ -900,6 +900,35 @@ function inserirMontadas(doc, originais) {
   }
 }
 
+/** Redesenha os gráficos na proporção da caixa que o documento reservou.
+ *
+ *  `montar()` desenha às cegas: ele trabalha sobre um documento sem layout, e
+ *  ali não há como saber que a evolução do patrimônio ocupa a página inteira e
+ *  quatro centímetros de altura. O desenho saía sempre na mesma proporção e
+ *  encolhia até caber na altura, deixando metade da largura vazia.
+ *
+ *  Aqui, com o documento diagramado, a caixa se mede — e o gráfico se estica no
+ *  eixo em que há espaço. */
+function ajustarGraficos(doc) {
+  for (const bloco of doc.querySelectorAll('.chart.feito[data-grafico]')) {
+    const linhas = estado.graficos[bloco.dataset.img];
+    if (!linhas || !window.Graficos.temDados(linhas)) continue;
+    const caixa = bloco.getBoundingClientRect();
+    if (!caixa.width || !caixa.height) continue;
+    const series = bloco.dataset.series ? bloco.dataset.series.split('|') : null;
+    // O que sobra para o desenho é a caixa menos a legenda e a nota, que ficam
+    // embaixo dele. Descontá-las é o que faz a conta dar o mesmo resultado na
+    // segunda passada: sem isso, o desenho encolheria um pouco a cada vez.
+    let ocupado = 0;
+    for (const abaixo of bloco.querySelectorAll('.legend, .g-nota')) {
+      ocupado += abaixo.getBoundingClientRect().height;
+    }
+    const html = window.Graficos.desenha(bloco.dataset.grafico, linhas, series,
+                                         { w: caixa.width, h: Math.max(60, caixa.height - ocupado) });
+    if (html) bloco.innerHTML = html;
+  }
+}
+
 /** Renumera o rodapé na ordem em que as páginas ficaram. */
 function renumerar(doc) {
   [...doc.querySelectorAll('.page, .slide')].forEach((pg, i) => {
@@ -1025,9 +1054,11 @@ async function montarFinal(modo) {
   let html = montar(modo === 'imprimir' ? 'exportar' : modo);
   const montadas = html.includes('page montada');
   const longa = html.includes('page longa');
-  if (montadas || longa) {
+  const graficos = html.includes('chart feito');
+  if (montadas || longa || graficos) {
     html = await noQuadro(html, (doc) => {
       if (montadas) repaginar(doc);
+      if (graficos) ajustarGraficos(doc);
       if (!longa) return;
       const alto = alturaDaFolha(doc);
       if (!alto) return;
@@ -1055,6 +1086,7 @@ function renderizar() {
   // tem altura para medir nem para repaginar.
   setTimeout(() => {
     repaginar(doc);
+    ajustarGraficos(doc);
     conferirEstouro();
     ajustarQuadro();
   }, 50);

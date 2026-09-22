@@ -265,26 +265,61 @@ main { padding: 28px 24px 64px; }
 .grafico .dados input:focus { outline: 2px solid var(--ring); outline-offset: -1px; }
 .grafico .acoes { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 
-/* As páginas montadas com blocos. Cada página é uma caixa, cada bloco uma caixa
-   dentro dela — é a única hierarquia do formulário com dois níveis, e o recuo é
-   o que diz de que página é o bloco. */
+/* O construtor de páginas. Cada página é uma caixa; dentro dela os blocos, na
+   ordem do papel, e embaixo a paleta com todos os blocos à vista. */
 .pag-nova { border: 1px solid var(--border); border-radius: var(--radius-sm);
-  padding: 10px; margin-bottom: 12px; background: var(--muted); }
-.pag-nova > .cabeca { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
-.pag-nova .secao-nome { flex: 1 1 auto; min-width: 0; padding: 6px 10px; font-size: 13px;
-  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 12px; margin-bottom: 12px; background: var(--muted); min-width: 0; }
+.pag-nova .onde select { text-overflow: ellipsis; }
+.pag-nova > .cabeca { display: flex; justify-content: space-between; align-items: center;
+  gap: 8px; margin-bottom: 8px; }
+.pag-nova .etiqueta { font-family: var(--font-ui); font-size: 11px; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--success); font-weight: 600; }
+.pag-nova .onde { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.pag-nova .onde label { display: block; min-width: 0; font-family: var(--font-ui); font-size: 11px;
+  letter-spacing: .04em; color: var(--muted-foreground); }
+.pag-nova .onde input, .pag-nova .onde select { display: block; width: 100%; margin-top: 4px;
+  padding: 7px 10px; font-size: 13px; border: 1px solid var(--border); border-radius: var(--radius-sm);
   background: var(--background); color: inherit; font-family: inherit; }
-.pag-nova select { padding: 6px 8px; font-size: 12px; border: 1px solid var(--border);
-  border-radius: var(--radius-sm); background: var(--background); color: inherit;
-  font-family: inherit; max-width: 46%; }
-.pag-nova > .acoes { margin-top: 8px; }
-.pag-nova > .acoes select { max-width: 100%; width: 100%; }
+.pag-nova .onde input:focus, .pag-nova .onde select:focus { outline: 2px solid var(--ring); outline-offset: -1px; }
+@media (max-width: 520px) { .pag-nova .onde { grid-template-columns: 1fr; } }
+
+.blocos { display: grid; gap: 6px; margin-bottom: 12px; min-width: 0; }
+.blocos > .bloco, .bloco > .campos > * { min-width: 0; }
 .bloco { border: 1px solid var(--border); border-radius: var(--radius-sm);
-  background: var(--background); padding: 10px; margin-bottom: 8px; }
-.bloco > .cabeca { display: flex; justify-content: space-between; align-items: center;
-  gap: 8px; margin-bottom: 8px; font-size: 13px; }
-.bloco > .cabeca .acoes { display: flex; gap: 4px; }
-.bloco .campos { display: block; }
+  background: var(--background); }
+.bloco > summary { display: flex; align-items: center; gap: 8px; padding: 8px 10px;
+  font-size: 13px; cursor: pointer; list-style: none; }
+.bloco > summary::-webkit-details-marker { display: none; }
+.bloco > summary .alca { cursor: grab; color: var(--muted-foreground); letter-spacing: -2px;
+  padding: 0 2px; user-select: none; }
+.bloco > summary .alca:active { cursor: grabbing; }
+.bloco > summary .nome { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.bloco > summary .previa { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap; font-size: 12px; color: var(--muted-foreground); }
+.bloco[open] > summary .previa { visibility: hidden; }
+.bloco > summary .acoes { display: flex; gap: 4px; flex: 0 0 auto; }
+.bloco > summary .acoes .btn { min-width: 28px; padding: 3px 6px; }
+.bloco > .campos { display: block; padding: 4px 10px 12px; border-top: 1px solid var(--border); }
+.bloco.arrastando { opacity: .45; }
+.bloco.antes { box-shadow: 0 -3px 0 0 var(--success); }
+.bloco.depois { box-shadow: 0 3px 0 0 var(--success); }
+
+.paleta { border: 1px dashed var(--border); border-radius: var(--radius-sm); padding: 10px 12px;
+  background: var(--background); }
+.paleta-titulo { font-family: var(--font-ui); font-size: 11px; letter-spacing: .04em;
+  color: var(--muted-foreground); margin-bottom: 8px; }
+.paleta .grupo { display: grid; grid-template-columns: 64px 1fr; gap: 6px; align-items: start;
+  margin-bottom: 6px; }
+.paleta .grupo .rotulo { font-family: var(--font-ui); font-size: 10px; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--muted-foreground); padding-top: 7px; }
+.paleta .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px 5px 8px;
+  font: inherit; font-size: 12px; color: var(--foreground); background: var(--background);
+  border: 1px solid var(--border); border-radius: 999px; cursor: pointer; }
+.chip .ico { width: 15px; height: 15px; color: var(--success); }
+.chip:hover { border-color: var(--ring); background: var(--muted); }
+.chip:focus-visible { outline: 2px solid var(--ring); outline-offset: 1px; }
+.bloco .ico { width: 14px; height: 14px; color: var(--success); }
 .secao.montagem > summary .pg { background: var(--success); color: #fff; }
 
 /* O aviso de página que não coube. Fica no alto do formulário, e não na tela de

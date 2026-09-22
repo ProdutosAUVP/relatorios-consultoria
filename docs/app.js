@@ -472,6 +472,7 @@ function novaPagina() {
     secao: '',
     blocos: [],
   });
+  estado.verMontada = estado.paginas[estado.paginas.length - 1].id;
   salvar();
   telaPreencher();
 }
@@ -622,6 +623,16 @@ function campoImagemSimples(id) {
   </div>`;
 }
 
+/** A chave que põe uma página no documento ou tira dela. Diz o estado por
+ *  extenso — "Entra" / "Fora" — e não só pela cor. */
+function chaveDePagina(n) {
+  const entra = dentro(n);
+  return `<span class="chave${entra ? ' ligada' : ''}" data-pagina="${n}" role="switch"
+    aria-checked="${entra}" title="${entra ? 'Tirar esta página do documento' : 'Pôr esta página no documento'}">
+    <span class="trilho"><span class="botao"></span></span>
+    <span class="estado">${entra ? 'Entra' : 'Fora'}</span></span>`;
+}
+
 function listaDePaginas() {
   const idx = estado.estrutura.indice || [];
   if (idx.length < 2) return '';
@@ -629,16 +640,18 @@ function listaDePaginas() {
   return `<details class="secao paginas"${n < idx.length ? ' open' : ''}>
     <summary>
       <span class="pg">${String(idx.length).padStart(2, '0')}</span>
-      <span>Páginas do documento</span>
-      <span class="contagem${n === idx.length ? ' pronto' : ''}">${n}/${idx.length}</span>
+      <span class="titulo-secao">Páginas do documento</span>
+      <span class="contagem${n === idx.length ? ' pronto' : ''}">${n} de ${idx.length} entram</span>
     </summary>
     <div class="campos">
-      <p class="dica" style="margin:0 0 2mm">Desmarque o que não deve entrar neste documento.</p>
-      ${idx.map((p) => `<label class="pg-item">
-        <input type="checkbox" data-pagina="${p.numero}"${dentro(p.numero) ? ' checked' : ''}>
+      <p class="dica" style="margin:0 0 2mm">Cada página tem uma chave: ligada, entra no arquivo
+        exportado; desligada, fica de fora e o resto é renumerado. A mesma chave está no alto
+        de cada seção, ao lado do nome.</p>
+      ${idx.map((p) => `<div class="pg-item${dentro(p.numero) ? '' : ' fora'}">
+        ${chaveDePagina(p.numero)}
         <span class="n">${String(p.numero).padStart(2, '0')}</span>
-        <span>${escapa(p.secao)}</span>
-      </label>`).join('')}
+        <span class="nome">${escapa(p.secao)}</span>
+      </div>`).join('')}
     </div>
   </details>`;
 }
@@ -667,8 +680,9 @@ function telaPreencher() {
     <details class="secao${dentro(s.pagina) ? '' : ' fora'}" data-pagina="${s.pagina}"${i === 0 && dentro(s.pagina) ? ' open' : ''}>
       <summary>
         <span class="pg">${String(s.pagina).padStart(2, '0')}</span>
-        <span>${escapa(s.secao)}</span>
+        <span class="titulo-secao">${escapa(s.secao)}</span>
         <span class="contagem" data-contagem="${s.pagina}"></span>
+        ${chaveDePagina(s.pagina)}
       </summary>
       <div class="campos">
         ${s.imagens.map(campoImagem).join('')}
@@ -1040,7 +1054,8 @@ function montar(modo) {
   // As páginas montadas entram antes de tirar as desmarcadas, porque a posição
   // delas é dada pelo número original da página — "depois da 07" quer dizer
   // depois da sétima do modelo, e não da sétima do que sobrou.
-  inserirMontadas(doc, paginas);
+  paginas.forEach((p, i) => { p.dataset.original = i + 1; });
+  inserirMontadas(doc, paginas, modo);
   paginas.forEach((p, i) => { if (!dentro(i + 1)) p.remove(); });
   renumerar(doc);
 
@@ -1180,13 +1195,15 @@ function montar(modo) {
  *  daquele segmento — nada aqui redesenha nada.
  *
  *  Página sem bloco nenhum não entra: é uma página em branco, e ninguém a quis. */
-function inserirMontadas(doc, originais) {
+function inserirMontadas(doc, originais, modo = 'previa') {
   if (!estado.paginas.length || !BIBLIOTECA) return;
   const molde = originais.find((p) => p.querySelector('.pg-body') && p.querySelector('.pg-head'));
   if (!molde) return;
   // De trás para a frente: inserir a de trás primeiro não mexe no índice das
   // que ainda faltam.
-  const pedidos = [...estado.paginas].filter((pg) => pg.blocos.length)
+  // Na prévia a página sem bloco entra também, em branco: quem acabou de
+  // clicar em "Nova página" precisa vê-la. No arquivo exportado ela não sai.
+  const pedidos = [...estado.paginas].filter((pg) => pg.blocos.length || modo === 'previa')
     .sort((a, b) => b.depois - a.depois);
   for (const pg of pedidos) {
     const nova = molde.cloneNode(true);
@@ -1195,10 +1212,14 @@ function inserirMontadas(doc, originais) {
     // para caber deixaria o cabeçalho órfão numa página e os números na outra.
     nova.classList.add('montada');
     nova.dataset.montada = pg.id;
+    delete nova.dataset.original;   // é cópia do molde, não a página dele
     const sec = nova.querySelector('.pg-head .sec');
     if (sec) sec.textContent = pg.secao || 'Análise';
     const corpo = nova.querySelector('.pg-body');
-    corpo.innerHTML = pg.blocos.map(blocoHtml).join('\n');
+    corpo.innerHTML = pg.blocos.length ? pg.blocos.map(blocoHtml).join('\n')
+      : '<div style="flex:1 1 auto;display:flex;align-items:center;justify-content:center;'
+        + 'border:1px dashed currentColor;opacity:.45;border-radius:2mm;font-size:9pt;text-align:center;padding:8mm">'
+        + 'Página em branco.<br>Escolha o primeiro bloco na paleta.</div>';
     const depois = originais[Math.min(pg.depois, originais.length) - 1] || originais[originais.length - 1];
     depois.after(nova);
   }
@@ -1489,10 +1510,20 @@ function ajustarQuadro() {
 
 /** A prévia mostra só as páginas incluídas, então a seção do formulário — que
  *  conhece o número original — aponta para a posição que a página tem agora. */
+/** Leva a prévia à página `original` do modelo. O índice na prévia não é o
+ *  número do modelo: páginas desmarcadas saem e páginas montadas entram no
+ *  meio, então a busca é pela marca que `montar()` deixa em cada uma. */
 function irPara(original) {
-  const i = (estado.estrutura.indice || []).filter((p) => dentro(p.numero))
-    .findIndex((p) => p.numero === original);
-  estado.pagina = i >= 0 ? i + 1 : original;
+  const doc = $('#quadro').contentDocument;
+  const i = doc ? [...doc.querySelectorAll('.page, .slide')]
+    .findIndex((p) => Number(p.dataset.original) === original) : -1;
+  if (i >= 0) estado.pagina = i + 1;
+  ajustarQuadro();
+}
+
+/** Leva a prévia à posição `i` (1 a n), como o paginador conta. */
+function irIndice(i) {
+  estado.pagina = i;
   ajustarQuadro();
 }
 
@@ -1807,7 +1838,6 @@ function ligar() {
   });
 
   form.addEventListener('change', (e) => {
-    if (e.target.dataset.pagina) alternarPagina(Number(e.target.dataset.pagina));
 
     const onde = e.target.dataset.pagOnde;
     if (onde) {
@@ -1828,6 +1858,14 @@ function ligar() {
 
   form.addEventListener('click', (e) => {
     if (e.target.id === 'nova-pagina') { novaPagina(); return; }
+
+    const chave = e.target.closest('.chave[data-pagina]');
+    if (chave) {
+      // Dentro do <summary>, o clique abriria ou fecharia a seção: não é isso.
+      e.preventDefault();
+      alternarPagina(Number(chave.dataset.pagina));
+      return;
+    }
 
     // Botão dentro do <summary> do bloco age sem abrir nem fechar o bloco.
     if (e.target.closest('summary') && e.target.closest('button')) e.preventDefault();
@@ -1897,9 +1935,18 @@ function ligar() {
 
   // Abrir uma seção leva a prévia para a página correspondente. A lista de
   // páginas é a exceção: ela não é de uma página, é de todas.
+  // Só o clique de quem usa conta: o formulário se redesenha a cada mudança, e
+  // a seção que nasce aberta também dispara `toggle` — sem esta trava, mudar a
+  // ordem de um bloco levava a prévia de volta à página 1.
+  form.addEventListener('click', (e) => {
+    const sum = e.target.closest('.secao > summary');
+    estado.secaoClicada = sum && !e.target.closest('.chave') ? sum.parentElement : null;
+  }, true);
   form.addEventListener('toggle', (e) => {
+    if (e.target !== estado.secaoClicada) return;
+    estado.secaoClicada = null;
     const n = Number(e.target.dataset.pagina);
-    if (e.target.tagName === 'DETAILS' && e.target.open && n) irPara(n);
+    if (e.target.open && n) irPara(n);
   }, true);
 
   $('#abrir-tudo').onclick = () => $$('.secao', form).forEach((d) => { d.open = true; });
@@ -1932,8 +1979,8 @@ function ligar() {
   });
   $$('[data-voltar]').forEach((b) => { b.onclick = () => mostrar(b.dataset.voltar); });
 
-  $('#pag-anterior').onclick = () => irPara(estado.pagina - 1);
-  $('#pag-proxima').onclick = () => irPara(estado.pagina + 1);
+  $('#pag-anterior').onclick = () => irIndice(estado.pagina - 1);
+  $('#pag-proxima').onclick = () => irIndice(estado.pagina + 1);
   $('#exportar-html').onclick = async () => {
     if (!confirmaBrancos()) return;
     baixar(await montarFinal('exportar'), nomeArquivo('html'), 'text/html;charset=utf-8');

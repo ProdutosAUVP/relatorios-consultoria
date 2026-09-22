@@ -476,14 +476,120 @@ function novaPagina() {
   telaPreencher();
 }
 
+/* O construtor de páginas.
+ *
+ *  Uma página montada é uma caixa; dentro dela, os blocos empilhados na ordem
+ *  em que saem no papel, e embaixo a paleta com todos os blocos à vista — não
+ *  numa lista suspensa que esconde o que existe. Clicar num bloco da paleta
+ *  o acrescenta ao fim; a alça arrasta para reordenar, e as setas fazem o
+ *  mesmo sem mouse. Cada bloco fecha e abre, e fechado mostra o começo do que
+ *  tem dentro, para uma página com oito blocos continuar navegável. */
+const GRUPOS_DE_BLOCOS = [
+  ['Texto', ['titulo', 'subtitulo', 'paragrafo', 'texto', 'texto2', 'topicos', 'destaque', 'abertura']],
+  ['Dados', ['kpis', 'tabela', 'tabela6', 'marcos']],
+  ['Gráficos', ['grafico_donut', 'grafico_anel', 'grafico_bars', 'grafico_bars2', 'grafico_line', 'grafico_line2']],
+  ['Imagem', ['imagem']],
+];
+
+// Ícones de 16 px, traço só, para a paleta ler de relance.
+const ICONES = {
+  titulo: '<path d="M3 3v10M11 3v10M3 8h8"/>',
+  subtitulo: '<path d="M3 5v8M9 5v8M3 9h6M13 11v2"/>',
+  paragrafo: '<path d="M2 4h12M2 7h12M2 10h8"/>',
+  texto: '<path d="M2 3h7M2 7h12M2 10h12M2 13h8"/>',
+  texto2: '<path d="M2 4h5M2 7h5M2 10h5M9 4h5M9 7h5M9 10h5"/>',
+  topicos: '<path d="M6 4h8M6 8h8M6 12h8"/><circle cx="3" cy="4" r="1"/><circle cx="3" cy="8" r="1"/><circle cx="3" cy="12" r="1"/>',
+  destaque: '<path d="M3 3v10M6 5h7M6 8h7M6 11h5"/>',
+  abertura: '<path d="M2 3h5M2 7h12M2 11h9"/>',
+  kpis: '<path d="M2 12V6M6 12V3M10 12V8M14 12V5"/>',
+  tabela: '<path d="M2 3h12v10H2zM2 7h12M2 10h12M7 3v10"/>',
+  tabela6: '<path d="M2 3h12v10H2zM2 6h12M2 9h12M5 3v10M8 3v10M11 3v10"/>',
+  marcos: '<path d="M2 8h12"/><circle cx="4" cy="8" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="12" cy="8" r="1.5"/>',
+  grafico_donut: '<circle cx="8" cy="8" r="5.5"/><circle cx="8" cy="8" r="2"/><path d="M8 2.5v3.5"/>',
+  grafico_anel: '<circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="3.5"/><circle cx="8" cy="8" r="1.2"/>',
+  grafico_bars: '<path d="M3 13V7M7 13V4M11 13V9M2 13h12"/>',
+  grafico_bars2: '<path d="M2.5 13V8M5 13V5M8.5 13V9M11 13V6M2 13h12"/>',
+  grafico_line: '<path d="M2 12l4-5 3 3 5-6"/>',
+  grafico_line2: '<path d="M2 12l4-5 3 3 5-6M2 8l4 3 3-4 5 4"/>',
+  imagem: '<path d="M2 3h12v10H2zM2 11l4-4 3 3 2-2 3 3"/><circle cx="11" cy="6" r="1"/>',
+};
+const icone = (chave) => `<svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+  stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">${ICONES[chave] || ICONES.paragrafo}</svg>`;
+
+/** A paleta de blocos de uma página: todos à vista, por grupo. */
+function paletaDeBlocos(pagId, primeira) {
+  const blocos = BIBLIOTECA.blocos || [];
+  // O grupo já diz "Gráficos": a ficha diz só qual.
+  const curto = (n) => n.replace(/^Gráfico de (\w)/, (m, c) => c.toUpperCase());
+  const chip = (b) => `<button type="button" class="chip" data-bl-add="${pagId}" data-chave="${b.chave}"
+      title="${escapa(b.descricao)}">${icone(b.chave)}<span>${escapa(curto(b.nome))}</span></button>`;
+  const vistos = new Set();
+  const grupos = GRUPOS_DE_BLOCOS.map(([nome, chaves]) => {
+    const itens = chaves.map((c) => blocos.find((b) => b.chave === c)).filter(Boolean);
+    itens.forEach((b) => vistos.add(b.chave));
+    return [nome, itens];
+  });
+  const resto = blocos.filter((b) => !vistos.has(b.chave));
+  if (resto.length) grupos.push(['Outros', resto]);
+  return `<div class="paleta">
+    <div class="paleta-titulo">${primeira ? 'Escolha o primeiro bloco da página' : 'Acrescentar bloco no fim da página'}</div>
+    ${grupos.filter(([, itens]) => itens.length).map(([nome, itens]) => `<div class="grupo">
+      <span class="rotulo">${nome}</span>
+      <span class="chips">${itens.map(chip).join('')}</span>
+    </div>`).join('')}
+  </div>`;
+}
+
+/** O começo do que o bloco tem dentro, para o bloco fechado. */
+function resumoDoBloco(inst) {
+  const nomes = Object.keys(blocoCampos(inst));
+  const texto = nomes.map((n) => (estado.valores[n] || '').trim()).find(Boolean);
+  if (texto) return texto.length > 48 ? texto.slice(0, 47) + '…' : texto;
+  const b = blocoDe(inst.chave);
+  if (b?.imagem?.tipo === 'gráfico') {
+    const linhas = estado.graficos[b.imagem.id.split(BIBLIOTECA.marca).join(String(inst.id))];
+    if (linhas && window.Graficos.temDados(linhas)) return 'com dados';
+  }
+  if (b?.imagem && estado.imagens['bl' + inst.id]) return 'com imagem';
+  return 'em branco';
+}
+
 function editorDePaginas() {
   if (!podeBlocos()) return '';
   const idx = estado.estrutura.indice || [];
   const opcoes = (sel) => idx.map((p) =>
     `<option value="${p.numero}"${p.numero === sel ? ' selected' : ''}>`
     + `depois da ${String(p.numero).padStart(2, '0')} — ${escapa(p.secao)}</option>`).join('');
-  const nomes = (BIBLIOTECA.blocos || []).map((b) =>
-    `<option value="${b.chave}">${escapa(b.nome)} — ${escapa(b.descricao)}</option>`).join('');
+  const fechados = estado.fechados || new Set();
+
+  const bloco = (bl, i, n) => `<details class="bloco" data-bloco="${bl.id}"${fechados.has(bl.id) ? '' : ' open'}>
+    <summary>
+      <span class="alca" draggable="true" data-arrasta="${bl.id}" title="Arraste para mudar a ordem">⋮⋮</span>
+      <span class="nome">${icone(bl.chave)}<strong>${escapa(blocoDe(bl.chave)?.nome || bl.chave)}</strong></span>
+      <span class="previa">${escapa(resumoDoBloco(bl))}</span>
+      <span class="acoes">
+        <button type="button" class="btn neutro pequeno" data-bl-sobe="${bl.id}"${i === 0 ? ' disabled' : ''} title="Subir">↑</button>
+        <button type="button" class="btn neutro pequeno" data-bl-desce="${bl.id}"${i === n - 1 ? ' disabled' : ''} title="Descer">↓</button>
+        <button type="button" class="btn neutro pequeno" data-bl-fora="${bl.id}" title="Remover bloco">×</button>
+      </span>
+    </summary>
+    <div class="campos">${camposDoBloco(bl)}</div>
+  </details>`;
+
+  const pagina = (pg, k) => `<div class="pag-nova" data-pag="${pg.id}">
+    <div class="cabeca">
+      <span class="etiqueta">Página nova ${k + 1}</span>
+      <button type="button" class="btn neutro pequeno" data-pag-fora="${pg.id}" title="Remover esta página">Remover página</button>
+    </div>
+    <div class="onde">
+      <label>Nome no cabeçalho
+        <input type="text" class="secao-nome" data-pag-secao="${pg.id}" placeholder="Ex.: Análise setorial" value="${escapa(pg.secao)}"></label>
+      <label>Posição no documento
+        <select data-pag-onde="${pg.id}">${opcoes(pg.depois)}</select></label>
+    </div>
+    ${pg.blocos.length ? `<div class="blocos">${pg.blocos.map((bl, i) => bloco(bl, i, pg.blocos.length)).join('')}</div>` : ''}
+    ${paletaDeBlocos(pg.id, !pg.blocos.length)}
+  </div>`;
 
   return `<details class="secao montagem"${estado.paginas.length ? ' open' : ''}>
     <summary>
@@ -492,32 +598,11 @@ function editorDePaginas() {
       <span class="contagem">${estado.paginas.length}</span>
     </summary>
     <div class="campos">
-      <p class="dica" style="margin:0 0 3mm">Este documento aceita páginas novas, montadas
-        com blocos prontos. Use quando o mês ou a carteira pedirem um assunto que não cabe
-        nas páginas que já existem.</p>
-      ${estado.paginas.map((pg) => `<div class="pag-nova" data-pag="${pg.id}">
-        <div class="cabeca">
-          <input type="text" class="secao-nome" data-pag-secao="${pg.id}"
-                 placeholder="Nome da seção, no alto da página" value="${escapa(pg.secao)}">
-          <select data-pag-onde="${pg.id}">${opcoes(pg.depois)}</select>
-          <button type="button" class="btn neutro pequeno" data-pag-fora="${pg.id}">Remover página</button>
-        </div>
-        ${pg.blocos.length ? pg.blocos.map((bl, i) => `<div class="bloco" data-bloco="${bl.id}">
-          <div class="cabeca">
-            <strong>${escapa(blocoDe(bl.chave)?.nome || bl.chave)}</strong>
-            <span class="acoes">
-              <button type="button" class="btn neutro pequeno" data-bl-sobe="${bl.id}"${i === 0 ? ' disabled' : ''}>↑</button>
-              <button type="button" class="btn neutro pequeno" data-bl-desce="${bl.id}"${i === pg.blocos.length - 1 ? ' disabled' : ''}>↓</button>
-              <button type="button" class="btn neutro pequeno" data-bl-fora="${bl.id}">Remover</button>
-            </span>
-          </div>
-          <div class="campos">${camposDoBloco(bl)}</div>
-        </div>`).join('') : '<p class="dica" style="margin:0 0 3mm">Nenhum bloco ainda.</p>'}
-        <div class="acoes">
-          <select data-bl-novo="${pg.id}"><option value="">Acrescentar bloco…</option>${nomes}</select>
-        </div>
-      </div>`).join('')}
-      <button type="button" class="btn neutro" id="nova-pagina">Nova página</button>
+      ${estado.paginas.length ? '' : `<p class="dica" style="margin:0 0 3mm">Este documento aceita páginas novas,
+        montadas com blocos prontos no desenho da casa: título, texto, tabela, gráficos, imagem.
+        Use quando o mês ou a carteira pedirem um assunto que não cabe nas páginas que já existem.</p>`}
+      ${estado.paginas.map(pagina).join('')}
+      <button type="button" class="btn neutro" id="nova-pagina">${estado.paginas.length ? 'Mais uma página' : 'Nova página'}</button>
     </div>
   </details>`;
 }
@@ -1109,6 +1194,7 @@ function inserirMontadas(doc, originais) {
     // dividem: as do modelo são desenho fechado, e quebrar uma tabela ao meio
     // para caber deixaria o cabeçalho órfão numa página e os números na outra.
     nova.classList.add('montada');
+    nova.dataset.montada = pg.id;
     const sec = nova.querySelector('.pg-head .sec');
     if (sec) sec.textContent = pg.secao || 'Análise';
     const corpo = nova.querySelector('.pg-body');
@@ -1293,6 +1379,13 @@ async function montarFinal(modo) {
   return html;
 }
 
+/** Em que posição da prévia está a página montada `id` (-1 se não está). */
+function indiceDaMontada(id) {
+  const doc = $('#quadro').contentDocument;
+  if (!doc) return -1;
+  return [...doc.querySelectorAll('.page, .slide')].findIndex((p) => p.dataset.montada === id);
+}
+
 function renderizar() {
   const doc = $('#quadro').contentDocument;
   doc.open();
@@ -1306,6 +1399,12 @@ function renderizar() {
     repaginar(doc);
     ajustarGraficos(doc);
     conferirEstouro();
+    // O bloco recém-acrescentado pede a página dele à vista.
+    if (estado.verMontada) {
+      const i = indiceDaMontada(estado.verMontada);
+      if (i >= 0) estado.pagina = i + 1;
+      estado.verMontada = null;
+    }
     ajustarQuadro();
   }, 50);
 }
@@ -1602,6 +1701,62 @@ function ligar() {
     anotar(e.target, f);
   });
 
+  // Arrastar a alça de um bloco para cima ou para baixo de outro da mesma
+  // página. As setas continuam fazendo o mesmo para quem não usa mouse.
+  let arrastando = null;
+  form.addEventListener('dragstart', (e) => {
+    const alca = e.target.closest?.('[data-arrasta]');
+    if (!alca) return;
+    arrastando = Number(alca.dataset.arrasta);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', String(arrastando));
+    alca.closest('.bloco').classList.add('arrastando');
+  });
+  form.addEventListener('dragover', (e) => {
+    const sobre = e.target.closest?.('.bloco');
+    if (arrastando === null || !sobre) return;
+    const pg = estado.paginas.find((p) => p.blocos.some((b) => b.id === arrastando));
+    if (!pg || !pg.blocos.some((b) => b.id === Number(sobre.dataset.bloco))) return;
+    e.preventDefault();
+    const r = sobre.getBoundingClientRect();
+    const antes = e.clientY < r.top + r.height / 2;
+    $$('.bloco.antes, .bloco.depois', form).forEach((b) => b.classList.remove('antes', 'depois'));
+    sobre.classList.add(antes ? 'antes' : 'depois');
+  });
+  form.addEventListener('dragleave', (e) => {
+    const sobre = e.target.closest?.('.bloco');
+    if (sobre && !sobre.contains(e.relatedTarget)) sobre.classList.remove('antes', 'depois');
+  });
+  form.addEventListener('drop', (e) => {
+    const sobre = e.target.closest?.('.bloco');
+    if (arrastando === null || !sobre) return;
+    e.preventDefault();
+    const pg = estado.paginas.find((p) => p.blocos.some((b) => b.id === arrastando));
+    const alvo = Number(sobre.dataset.bloco);
+    if (!pg || alvo === arrastando) { arrastando = null; telaPreencher(); return; }
+    const antes = sobre.classList.contains('antes');
+    const [bl] = pg.blocos.splice(pg.blocos.findIndex((b) => b.id === arrastando), 1);
+    const j = pg.blocos.findIndex((b) => b.id === alvo);
+    pg.blocos.splice(antes ? j : j + 1, 0, bl);
+    arrastando = null;
+    salvar();
+    telaPreencher();
+  });
+  form.addEventListener('dragend', () => {
+    arrastando = null;
+    $$('.bloco.arrastando, .bloco.antes, .bloco.depois', form)
+      .forEach((b) => b.classList.remove('arrastando', 'antes', 'depois'));
+  });
+
+  // A prévia acompanha: escrever num bloco mostra a página montada em que
+  // ele está, em vez de deixar a página do modelo que estava à vista.
+  form.addEventListener('focusin', (e) => {
+    const pg = e.target.closest('.pag-nova');
+    if (!pg) return;
+    const i = indiceDaMontada(pg.dataset.pag);
+    if (i >= 0 && estado.pagina !== i + 1) { estado.pagina = i + 1; ajustarQuadro(); }
+  });
+
   // A soma de uma coluna, na linha de total. Soma o que é número nas linhas
   // do corpo e escreve no formato do campo de total.
   form.addEventListener('click', (e) => {
@@ -1654,14 +1809,6 @@ function ligar() {
   form.addEventListener('change', (e) => {
     if (e.target.dataset.pagina) alternarPagina(Number(e.target.dataset.pagina));
 
-    const novo = e.target.dataset.blNovo;
-    if (novo && e.target.value) {
-      const pg = estado.paginas.find((p) => p.id === novo);
-      if (pg) pg.blocos.push({ id: estado.proximoBloco++, chave: e.target.value });
-      salvar();
-      telaPreencher();
-      return;
-    }
     const onde = e.target.dataset.pagOnde;
     if (onde) {
       const pg = estado.paginas.find((p) => p.id === onde);
@@ -1671,8 +1818,33 @@ function ligar() {
     }
   });
 
+  form.addEventListener('toggle', (e) => {
+    const bl = e.target.closest?.('details.bloco');
+    if (!bl) return;
+    estado.fechados = estado.fechados || new Set();
+    if (bl.open) estado.fechados.delete(Number(bl.dataset.bloco));
+    else estado.fechados.add(Number(bl.dataset.bloco));
+  }, true);
+
   form.addEventListener('click', (e) => {
     if (e.target.id === 'nova-pagina') { novaPagina(); return; }
+
+    // Botão dentro do <summary> do bloco age sem abrir nem fechar o bloco.
+    if (e.target.closest('summary') && e.target.closest('button')) e.preventDefault();
+
+    const add = e.target.closest('[data-bl-add]');
+    if (add) {
+      const pg = estado.paginas.find((p) => p.id === add.dataset.blAdd);
+      if (!pg) return;
+      const id = estado.proximoBloco++;
+      pg.blocos.push({ id, chave: add.dataset.chave });
+      estado.verMontada = pg.id;
+      salvar();
+      telaPreencher();
+      // O foco vai para o primeiro campo do bloco novo: quem clicou quer escrever nele.
+      $(`.bloco[data-bloco="${id}"] input, .bloco[data-bloco="${id}"] textarea`)?.focus();
+      return;
+    }
 
     const pgFora = e.target.dataset.pagFora;
     if (pgFora) {
@@ -1694,8 +1866,11 @@ function ligar() {
       const pg = estado.paginas.find((p) => p.blocos.some((b) => b.id === Number(alvo)));
       if (!pg) return;
       const i = pg.blocos.findIndex((b) => b.id === Number(alvo));
-      if (blFora) pg.blocos.splice(i, 1);
-      else {
+      if (blFora) {
+        const cheio = resumoDoBloco(pg.blocos[i]) !== 'em branco';
+        if (cheio && !confirm('Remover este bloco e o que você escreveu nele?')) return;
+        pg.blocos.splice(i, 1);
+      } else {
         const j = sobe ? i - 1 : i + 1;
         [pg.blocos[i], pg.blocos[j]] = [pg.blocos[j], pg.blocos[i]];
       }

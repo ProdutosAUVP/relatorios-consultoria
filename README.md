@@ -198,7 +198,9 @@ parágrafo, texto em duas colunas, tópicos, destaque, números, linha do tempo,
 quatro ou de seis colunas; linha e coluna em branco não saem), gráficos de rosca, rosca
 dupla, barras, linhas e as versões comparativas de duas séries, e imagem. A biblioteca
 está em `gerador/blocos.py`, no mesmo desenho do resto, e vira `docs/blocos.json` no
-`npm run site`. O que não couber na página se reparte sozinho em outra. O que
+`npm run site`. Todos os blocos ficam à vista numa paleta embaixo da página; clicar num
+acrescenta, a alça arrasta para reordenar, e a prévia acompanha o bloco em que se está
+escrevendo. O que não couber na página se reparte sozinho em outra. O que
 você digita e as imagens que envia ficam guardados no próprio navegador: o texto no
 `localStorage`, as imagens no IndexedDB, porque uma foto sozinha estouraria a cota do
 primeiro. O botão de rascunho baixa um JSON para retomar em outro computador ou

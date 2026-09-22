@@ -151,3 +151,23 @@ export function exemploDoTipo(tipo) {
     data: '31/08/2026', mes: 'Setembro de 2026', ano: '2026',
   }[tipo] || null;
 }
+
+/** Exemplo para célula de texto, pelo cabeçalho da coluna. O exemplo pelo
+ *  nome vinha do prefixo da linha — a coluna Ativo da tabela de movimentações
+ *  mostrava "Compra", porque o campo se chama `mov_1_ativo`. */
+export function exemploDoCabecalho(cabecalho) {
+  const cab = (cabecalho || '').replace(/\s+/g, ' ').trim();
+  return {
+    'Ativo': 'PETR4', 'Ativo / posição': 'PETR4', 'Origem': 'PETR4', 'Item': 'Tesouro IPCA+ 2035',
+    'Instituição': 'Banco BTG Pactual', 'Emissor': 'Banco BTG Pactual',
+    'Emissor / contraparte': 'Banco BTG Pactual', 'Contrapartida': 'Corretora',
+    'Motivo': 'Concentração acima do limite definido no plano.',
+    'Prazo': '2029', 'Vencimento': '15/05/2029', 'Setor': 'Financeiro',
+    'Instrumento sugerido': 'Tesouro IPCA+ 2035', 'Destino': 'Tesouro IPCA+ 2035',
+    'Recorte': 'Financeiro', 'Classes custodiadas': 'Renda fixa e ações',
+    'Evento / indicador': 'Reunião do Copom', 'Quando': 'Setembro',
+    'Onde incide': 'No app da corretora', 'Origem do custo': 'Corretagem',
+    'Observação': 'Sem ressalvas.', 'Racional': 'Uma frase com o motivo.',
+    'Leitura': 'Uma frase sobre o que o dado significa.',
+  }[cab] || null;
+}

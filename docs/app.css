@@ -205,6 +205,44 @@ main { padding: 28px 24px 64px; }
 .imagem .desc { font-size: 12px; color: var(--muted-foreground); margin: 2px 0 8px; }
 .imagem .acoes { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 
+/* Uma tabela do modelo, como grade. Rola na horizontal quando tem mais
+   colunas do que o painel comporta — o cabeçalho e o rótulo da linha ficam
+   para dizer onde se está. */
+.tabela { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px 8px;
+  min-width: 0; max-width: 100%; }   /* item de grade: sem isto ele cresce até a largura da tabela */
+.tabela .nome { font-family: var(--font-ui); font-size: 11px; letter-spacing: .04em;
+  color: var(--muted-foreground); margin-bottom: 6px; }
+.tabela .rolagem { overflow-x: auto; margin: 0 -12px; padding: 0 12px; }
+.tabela table.dados { border-collapse: separate; border-spacing: 4px 4px; margin-left: -4px; }
+.tabela th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: .02em;
+  color: var(--muted-foreground); padding: 0 4px 2px; white-space: nowrap; vertical-align: bottom; }
+.tabela td { padding: 0; vertical-align: top; }
+.tabela td.rotulo { font-size: 12px; white-space: nowrap; padding: 8px 6px 0 4px; color: var(--foreground); }
+/* O rótulo da linha fica à vista enquanto a tabela rola: é ele que diz de que
+   linha é o número que se está digitando. */
+.tabela td.rotulo:first-child, .tabela th:first-child { position: sticky; left: 0; z-index: 1;
+  background: var(--background); }
+.tabela td input, .tabela td textarea {
+  width: 100%; min-width: 132px; padding: 6px 8px; font: inherit; font-size: 13px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--background); color: inherit; resize: none; }
+.tabela td textarea { field-sizing: content; min-height: 32px; min-width: 220px; }
+.tabela td.t-dinheiro input, .tabela td.t-percentual input, .tabela td.t-pp input,
+.tabela td.t-numero input, .tabela td.t-ano input { min-width: 104px; text-align: right; }
+.tabela td.t-data .com-seletor, .tabela td.t-mes .com-seletor { min-width: 158px; }
+.tabela td.t-data input[type='text'] { min-width: 0; }
+.tabela td.t-opcoes input { min-width: 120px; }
+.tabela td input:focus, .tabela td textarea:focus { outline: 2px solid var(--ring); outline-offset: -1px; }
+.tabela td input[data-preenchido='1'], .tabela td textarea[data-preenchido='1'] { border-color: var(--success); }
+.tabela tfoot td { padding-top: 6px; }
+.tabela .com-soma { display: flex; gap: 4px; align-items: center; }
+.tabela .com-soma input { min-width: 112px; }
+.tabela tfoot td.rotulo { font-weight: 600; }
+.tabela .soma { flex: 0 0 auto; width: 26px; height: 30px; padding: 0; font-size: 13px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--muted);
+  color: var(--muted-foreground); cursor: pointer; }
+.tabela .soma:hover { color: var(--foreground); background: var(--background); }
+
 /* A tabelinha de um gráfico. Substituiu o campo de imagem nos espaços de
    gráfico: o consultor digita rótulo e valor e o desenho sai no documento.
    Fica com a mesma moldura do campo de imagem, e fecha em verde do mesmo jeito

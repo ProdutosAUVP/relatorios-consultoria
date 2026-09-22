@@ -187,7 +187,10 @@ se apresenta conforme o que recebe: data e mês têm um calendário ao lado, din
 percentual ganham teclado numérico e saem formatados ao deixar o campo (`12400` vira
 `R$ 12.400,00`, `-1,2` vira `-1,2%`), e rating, classe, operação e afins oferecem a lista
 do que costuma ir ali sem impedir outro texto. O tipo sai de `scripts/tipos.mjs`, pelo
-cabeçalho da coluna quando o campo está numa tabela e pelo nome quando não está. O que
+cabeçalho da coluna quando o campo está numa tabela e pelo nome quando não está. As
+tabelas do modelo aparecem como grade — cabeçalho, uma linha por linha, o rótulo fixo onde
+o modelo o tem — e não como lista de campos soltos; a linha de total tem um botão de soma
+por coluna numérica, a pedido e não automático, porque nem toda coluna se soma. O que
 você digita e as imagens que envia ficam guardados no próprio navegador: o texto no
 `localStorage`, as imagens no IndexedDB, porque uma foto sozinha estouraria a cota do
 primeiro. O botão de rascunho baixa um JSON para retomar em outro computador ou

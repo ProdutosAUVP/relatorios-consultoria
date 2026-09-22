@@ -16,7 +16,7 @@ import { dirname, join, resolve } from 'node:path';
 
 import { PRODUTOS, classifica, rotuloVariante, ordemVariante } from './documentos.mjs';
 import { exemplo, nomeado } from './exemplos.mjs';
-import { tipoDoCampo, exemploDoTipo, OPCOES } from './tipos.mjs';
+import { tipoDoCampo, exemploDoTipo, exemploDoCabecalho, OPCOES } from './tipos.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const srcDir = join(root, 'modelos');
@@ -69,14 +69,50 @@ function colunas(html) {
   return onde;
 }
 
+/** As tabelas de uma página, célula a célula: o que a ferramenta precisa para
+ *  oferecer a tabela como grade — uma linha por linha, os campos nas colunas
+ *  certas, o rótulo da linha onde o modelo tem texto fixo — em vez de uma
+ *  lista de quarenta campos soltos chamados `mov_1_data`, `mov_1_tipo`... */
+function tabelasDe(corpo, numero) {
+  const ENT = { nbsp: ' ', mdash: '—', ndash: '–', amp: '&', middot: '·', lt: '<', gt: '>' };
+  const limpa = (x) => x.replace(/<[^>]+>/g, '')
+    .replace(/&([a-z]+);/g, (m, e) => ENT[e] ?? m).trim();
+  const celula = (td) => {
+    const campo = td.match(/data-campo="([a-z0-9_]+)"/)?.[1];
+    return campo ? { c: campo } : { t: limpa(td) };
+  };
+  const linhasDe = (bloco) => [...bloco.matchAll(/<tr>([\s\S]*?)<\/tr>/g)]
+    .map((tr) => [...tr[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)].map((m) => celula(m[1])))
+    .filter((l) => l.length);
+  const out = [];
+  for (const tb of corpo.matchAll(/<table class="tb[^"]*">([\s\S]*?)<\/table>/g)) {
+    const cabecalhos = [...tb[1].matchAll(/<th[^>]*>([\s\S]*?)<\/th>/g)].map((m) => limpa(m[1]));
+    const pe = tb[1].match(/<tfoot>([\s\S]*?)<\/tfoot>/)?.[1] || '';
+    const linhas = linhasDe(tb[1].replace(/<tfoot>[\s\S]*?<\/tfoot>/, ''));
+    const rodape = pe ? linhasDe(pe) : [];
+    const todas = [...linhas, ...rodape];
+    if (!todas.length || todas.some((l) => l.length !== cabecalhos.length)) continue;
+    if (!todas.some((l) => l.some((c) => c.c))) continue;
+    // O título é o último <h2> antes da tabela — "Operações executadas",
+    // "Por instituição custodiante" — ou o da página quando não há um.
+    const antes = corpo.slice(0, tb.index);
+    const h2 = [...antes.matchAll(/<h2[^>]*>([\s\S]*?)<\/h2>/g)].pop()?.[1]
+      || antes.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] || '';
+    out.push({ pagina: numero, titulo: limpa(h2), cabecalhos, linhas, rodape });
+  }
+  return out;
+}
+
 /** Campos e espaços de imagem de um modelo, na ordem do documento. */
 function estrutura(html) {
   const campos = {};
   const grupos = [];
   const imagens = [];
+  const tabelas = [];
   const emTabela = colunas(html);
   for (const pag of paginas(html)) {
     const nomes = [];
+    tabelas.push(...tabelasDe(pag.corpo, pag.numero));
     // Os atributos vêm em número e ordem variáveis — `title` quando há dica,
     // `data-link` quando o campo é endereço de alguma coisa —, então o
     // casamento é pelo bloco e a dica sai de dentro dele.
@@ -93,8 +129,8 @@ function estrutura(html) {
         const t = tipoDoCampo(nome, col?.cabecalho, col?.num);
         // O exemplo pelo tipo só entra onde o pelo nome é chute: o que está
         // escrito à mão em `exemplos.mjs` continua valendo.
-        const ex = (!nomeado(nome) && (exemploDoTipo(t.tipo) || (t.opcoes && OPCOES[t.opcoes][0])))
-          || exemplo(nome);
+        const ex = (!nomeado(nome) && (exemploDoTipo(t.tipo) || (t.opcoes && OPCOES[t.opcoes][0])
+          || (col && exemploDoCabecalho(col.cabecalho)))) || exemplo(nome);
         campos[nome] = { rotulo: rotuloCampo(nome), pagina: pag.numero, exemplo: ex, ...t };
         if (t.tipo === 'texto') delete campos[nome].tipo;
         if (dica) campos[nome].dica = dica;
@@ -137,7 +173,7 @@ function estrutura(html) {
       });
     }
   }
-  return { campos, grupos, imagens };
+  return { campos, grupos, imagens, tabelas };
 }
 
 function main() {

@@ -627,34 +627,27 @@ function campoImagemSimples(id) {
  *  extenso — "Entra" / "Fora" — e não só pela cor. */
 function chaveDePagina(n) {
   const entra = dentro(n);
-  return `<span class="chave${entra ? ' ligada' : ''}" data-pagina="${n}" role="switch"
-    aria-checked="${entra}" title="${entra ? 'Tirar esta página do documento' : 'Pôr esta página no documento'}">
-    <span class="trilho"><span class="botao"></span></span>
-    <span class="estado">${entra ? 'Entra' : 'Fora'}</span></span>`;
+  return `<span class="chave${entra ? ' ligada' : ''}" data-pagina="${n}" role="switch" tabindex="0"
+    aria-checked="${entra}" aria-label="${entra ? 'Página no documento' : 'Página fora do documento'}"
+    title="${entra ? 'Tirar esta página do documento' : 'Pôr esta página no documento'}">
+    <span class="trilho"><span class="botao"></span></span></span>`;
 }
 
-function listaDePaginas() {
+/** A linha que abre o formulário: quantas páginas entram, e o cabeçalho da
+ *  coluna de chaves à direita. A chave de cada página fica numa coluna só,
+ *  ao lado da seção dela — um lugar, um controle. */
+function cabecaDasPaginas() {
   const idx = estado.estrutura.indice || [];
   if (idx.length < 2) return '';
   const n = incluidas().length;
-  return `<details class="secao paginas"${n < idx.length ? ' open' : ''}>
-    <summary>
-      <span class="pg">${String(idx.length).padStart(2, '0')}</span>
-      <span class="titulo-secao">Páginas do documento</span>
-      <span class="contagem${n === idx.length ? ' pronto' : ''}">${n} de ${idx.length} entram</span>
-    </summary>
-    <div class="campos">
-      <p class="dica" style="margin:0 0 2mm">Cada página tem uma chave: ligada, entra no arquivo
-        exportado; desligada, fica de fora e o resto é renumerado. A mesma chave está no alto
-        de cada seção, ao lado do nome.</p>
-      ${idx.map((p) => `<div class="pg-item${dentro(p.numero) ? '' : ' fora'}">
-        ${chaveDePagina(p.numero)}
-        <span class="n">${String(p.numero).padStart(2, '0')}</span>
-        <span class="nome">${escapa(p.secao)}</span>
-      </div>`).join('')}
-    </div>
-  </details>`;
+  const todas = n === idx.length;
+  return `<div class="linha-secao cabeca-paginas">
+    <div class="estado-paginas${todas ? '' : ' parcial'}">${n} de ${idx.length} páginas entram no documento${todas ? ''
+      : ` <button type="button" class="ligar-todas" id="todas-paginas">Incluir todas</button>`}</div>
+    <div class="rotulo-coluna" title="Ligada, a página entra no arquivo exportado; desligada, fica de fora e o resto é renumerado">Entra</div>
+  </div>`;
 }
+
 
 /* ---------------------------------------------------------- tela 4: preencher */
 
@@ -676,7 +669,7 @@ function telaPreencher() {
   }
   const secoes = [...porPagina.values()].sort((a, b) => a.pagina - b.pagina);
 
-  $('#formulario').innerHTML = listasDeOpcoes() + listaDePaginas() + editorDePaginas() + (secoes.length ? secoes.map((s, i) => `
+  $('#formulario').innerHTML = listasDeOpcoes() + cabecaDasPaginas() + editorDePaginas() + (secoes.length ? secoes.map((s, i) => `
     <div class="linha-secao${dentro(s.pagina) ? '' : ' fora'}">
     <details class="secao${dentro(s.pagina) ? '' : ' fora'}" data-pagina="${s.pagina}"${i === 0 && dentro(s.pagina) ? ' open' : ''}>
       <summary>
@@ -1923,6 +1916,8 @@ function ligar() {
   form.addEventListener('click', (e) => {
     if (e.target.id === 'nova-pagina') { novaPagina(); return; }
 
+    if (e.target.id === 'todas-paginas') { estado.fora = new Set(); salvar(); telaPreencher(); return; }
+
     const chave = e.target.closest('.chave[data-pagina]');
     if (chave) {
       // Dentro do <summary>, o clique abriria ou fecharia a seção: não é isso.
@@ -2006,6 +2001,11 @@ function ligar() {
     const sum = e.target.closest('.secao > summary');
     estado.secaoClicada = sum && !e.target.closest('.chave') ? sum.parentElement : null;
   }, true);
+  form.addEventListener('keydown', (e) => {
+    const chave = e.target.closest?.('.chave[data-pagina]');
+    if (chave && (e.key === ' ' || e.key === 'Enter')) { e.preventDefault(); alternarPagina(Number(chave.dataset.pagina)); }
+  });
+
   form.addEventListener('toggle', (e) => {
     if (e.target !== estado.secaoClicada) return;
     estado.secaoClicada = null;

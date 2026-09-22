@@ -2,6 +2,46 @@
  "marca": "@I@",
  "blocos": [
   {
+   "chave": "titulo",
+   "nome": "Título",
+   "descricao": "O título da página, como nas páginas do documento.",
+   "html": "<h1 class=\"t\"><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></h1>",
+   "campos": {
+    "bl@I@_titulo": {
+     "rotulo": "Título da página",
+     "dica": ""
+    }
+   },
+   "tabelas": []
+  },
+  {
+   "chave": "subtitulo",
+   "nome": "Subtítulo",
+   "descricao": "Um subtítulo de seção.",
+   "html": "<h2><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></h2>",
+   "campos": {
+    "bl@I@_titulo": {
+     "rotulo": "Subtítulo",
+     "dica": ""
+    }
+   },
+   "tabelas": []
+  },
+  {
+   "chave": "paragrafo",
+   "nome": "Parágrafo",
+   "descricao": "Um parágrafo corrido, sem título.",
+   "html": "<p><span class=\"ph\" data-campo=\"bl@I@_texto\">{{bl@I@_texto}}</span></p>",
+   "campos": {
+    "bl@I@_texto": {
+     "rotulo": "Texto",
+     "dica": "Um parágrafo corrido.",
+     "tipo": "longo"
+    }
+   },
+   "tabelas": []
+  },
+  {
    "chave": "abertura",
    "nome": "Abertura de página",
    "descricao": "Chapéu, título e linha de abertura. Use no alto de uma página nova.",
@@ -19,11 +59,12 @@
      "rotulo": "Linha de abertura",
      "dica": "Uma ou duas frases."
     }
-   }
+   },
+   "tabelas": []
   },
   {
    "chave": "texto",
-   "nome": "Texto",
+   "nome": "Texto com título",
    "descricao": "Um título e um parágrafo corrido.",
    "html": "<h2><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></h2>\n<p><span class=\"ph\" data-campo=\"bl@I@_texto\">{{bl@I@_texto}}</span></p>",
    "campos": {
@@ -33,9 +74,11 @@
     },
     "bl@I@_texto": {
      "rotulo": "Texto",
-     "dica": "Um parágrafo corrido."
+     "dica": "Um parágrafo corrido.",
+     "tipo": "longo"
     }
-   }
+   },
+   "tabelas": []
   },
   {
    "chave": "texto2",
@@ -49,13 +92,16 @@
     },
     "bl@I@_texto_a": {
      "rotulo": "Coluna da esquerda",
-     "dica": ""
+     "dica": "",
+     "tipo": "longo"
     },
     "bl@I@_texto_b": {
      "rotulo": "Coluna da direita",
-     "dica": ""
+     "dica": "",
+     "tipo": "longo"
     }
-   }
+   },
+   "tabelas": []
   },
   {
    "chave": "topicos",
@@ -87,7 +133,8 @@
      "rotulo": "Tópico 5",
      "dica": ""
     }
-   }
+   },
+   "tabelas": []
   },
   {
    "chave": "marcos",
@@ -105,7 +152,8 @@
     },
     "bl@I@_marco_1_texto": {
      "rotulo": "Item 1 — texto",
-     "dica": ""
+     "dica": "",
+     "tipo": "longo"
     },
     "bl@I@_marco_2_titulo": {
      "rotulo": "Item 2 — título",
@@ -113,7 +161,8 @@
     },
     "bl@I@_marco_2_texto": {
      "rotulo": "Item 2 — texto",
-     "dica": ""
+     "dica": "",
+     "tipo": "longo"
     },
     "bl@I@_marco_3_titulo": {
      "rotulo": "Item 3 — título",
@@ -121,7 +170,8 @@
     },
     "bl@I@_marco_3_texto": {
      "rotulo": "Item 3 — texto",
-     "dica": ""
+     "dica": "",
+     "tipo": "longo"
     },
     "bl@I@_marco_4_titulo": {
      "rotulo": "Item 4 — título",
@@ -129,9 +179,11 @@
     },
     "bl@I@_marco_4_texto": {
      "rotulo": "Item 4 — texto",
-     "dica": ""
+     "dica": "",
+     "tipo": "longo"
     }
-   }
+   },
+   "tabelas": []
   },
   {
    "chave": "destaque",
@@ -145,9 +197,11 @@
     },
     "bl@I@_texto": {
      "rotulo": "Texto do destaque",
-     "dica": ""
+     "dica": "",
+     "tipo": "longo"
     }
-   }
+   },
+   "tabelas": []
   },
   {
    "chave": "kpis",
@@ -161,11 +215,14 @@
     },
     "bl@I@_kpi_1_valor": {
      "rotulo": "Número 1 — valor",
-     "dica": ""
+     "dica": "",
+     "tipo": "dinheiro",
+     "exemplo": "R$ 128.400,00"
     },
     "bl@I@_kpi_1_nota": {
      "rotulo": "Número 1 — nota",
-     "dica": ""
+     "dica": "",
+     "tipo": "longo"
     },
     "bl@I@_kpi_2_rotulo": {
      "rotulo": "Número 2 — rótulo",
@@ -173,11 +230,14 @@
     },
     "bl@I@_kpi_2_valor": {
      "rotulo": "Número 2 — valor",
-     "dica": ""
+     "dica": "",
+     "tipo": "dinheiro",
+     "exemplo": "R$ 128.400,00"
     },
     "bl@I@_kpi_2_nota": {
      "rotulo": "Número 2 — nota",
-     "dica": ""
+     "dica": "",
+     "tipo": "longo"
     },
     "bl@I@_kpi_3_rotulo": {
      "rotulo": "Número 3 — rótulo",
@@ -185,11 +245,14 @@
     },
     "bl@I@_kpi_3_valor": {
      "rotulo": "Número 3 — valor",
-     "dica": ""
+     "dica": "",
+     "tipo": "dinheiro",
+     "exemplo": "R$ 128.400,00"
     },
     "bl@I@_kpi_3_nota": {
      "rotulo": "Número 3 — nota",
-     "dica": ""
+     "dica": "",
+     "tipo": "longo"
     },
     "bl@I@_kpi_4_rotulo": {
      "rotulo": "Número 4 — rótulo",
@@ -197,18 +260,22 @@
     },
     "bl@I@_kpi_4_valor": {
      "rotulo": "Número 4 — valor",
-     "dica": ""
+     "dica": "",
+     "tipo": "dinheiro",
+     "exemplo": "R$ 128.400,00"
     },
     "bl@I@_kpi_4_nota": {
      "rotulo": "Número 4 — nota",
-     "dica": ""
+     "dica": "",
+     "tipo": "longo"
     }
-   }
+   },
+   "tabelas": []
   },
   {
    "chave": "tabela",
    "nome": "Tabela",
-   "descricao": "Quatro colunas e cinco linhas, com cabeçalho.",
+   "descricao": "Quatro colunas e cinco linhas, com cabeçalho. O que ficar em branco não sai.",
    "html": "<h2><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></h2>\n<table class=\"tb sm\"><thead><tr><th><span class=\"ph\" data-campo=\"bl@I@_col_1\">{{bl@I@_col_1}}</span></th><th><span class=\"ph\" data-campo=\"bl@I@_col_2\">{{bl@I@_col_2}}</span></th><th><span class=\"ph\" data-campo=\"bl@I@_col_3\">{{bl@I@_col_3}}</span></th><th><span class=\"ph\" data-campo=\"bl@I@_col_4\">{{bl@I@_col_4}}</span></th></tr></thead><tbody><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_1_1\">{{bl@I@_cel_1_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_1_2\">{{bl@I@_cel_1_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_1_3\">{{bl@I@_cel_1_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_1_4\">{{bl@I@_cel_1_4}}</span></td></tr><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_2_1\">{{bl@I@_cel_2_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_2_2\">{{bl@I@_cel_2_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_2_3\">{{bl@I@_cel_2_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_2_4\">{{bl@I@_cel_2_4}}</span></td></tr><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_3_1\">{{bl@I@_cel_3_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_3_2\">{{bl@I@_cel_3_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_3_3\">{{bl@I@_cel_3_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_3_4\">{{bl@I@_cel_3_4}}</span></td></tr><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_4_1\">{{bl@I@_cel_4_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_4_2\">{{bl@I@_cel_4_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_4_3\">{{bl@I@_cel_4_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_4_4\">{{bl@I@_cel_4_4}}</span></td></tr><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_5_1\">{{bl@I@_cel_5_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_5_2\">{{bl@I@_cel_5_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_5_3\">{{bl@I@_cel_5_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_5_4\">{{bl@I@_cel_5_4}}</span></td></tr></tbody></table>",
    "campos": {
     "bl@I@_titulo": {
@@ -311,7 +378,495 @@
      "rotulo": "Linha 5, coluna 4",
      "dica": ""
     }
-   }
+   },
+   "tabelas": [
+    {
+     "titulo": "{{bl0_titulo}}",
+     "cabecalhos": [
+      "{{bl0_col_1}}",
+      "{{bl0_col_2}}",
+      "{{bl0_col_3}}",
+      "{{bl0_col_4}}"
+     ],
+     "linhas": [
+      [
+       {
+        "c": "bl@I@_cel_1_1"
+       },
+       {
+        "c": "bl@I@_cel_1_2"
+       },
+       {
+        "c": "bl@I@_cel_1_3"
+       },
+       {
+        "c": "bl@I@_cel_1_4"
+       }
+      ],
+      [
+       {
+        "c": "bl@I@_cel_2_1"
+       },
+       {
+        "c": "bl@I@_cel_2_2"
+       },
+       {
+        "c": "bl@I@_cel_2_3"
+       },
+       {
+        "c": "bl@I@_cel_2_4"
+       }
+      ],
+      [
+       {
+        "c": "bl@I@_cel_3_1"
+       },
+       {
+        "c": "bl@I@_cel_3_2"
+       },
+       {
+        "c": "bl@I@_cel_3_3"
+       },
+       {
+        "c": "bl@I@_cel_3_4"
+       }
+      ],
+      [
+       {
+        "c": "bl@I@_cel_4_1"
+       },
+       {
+        "c": "bl@I@_cel_4_2"
+       },
+       {
+        "c": "bl@I@_cel_4_3"
+       },
+       {
+        "c": "bl@I@_cel_4_4"
+       }
+      ],
+      [
+       {
+        "c": "bl@I@_cel_5_1"
+       },
+       {
+        "c": "bl@I@_cel_5_2"
+       },
+       {
+        "c": "bl@I@_cel_5_3"
+       },
+       {
+        "c": "bl@I@_cel_5_4"
+       }
+      ]
+     ],
+     "rodape": []
+    }
+   ]
+  },
+  {
+   "chave": "tabela6",
+   "nome": "Tabela larga",
+   "descricao": "Seis colunas e oito linhas, na fonte menor. O que ficar em branco não sai.",
+   "html": "<h2><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></h2>\n<table class=\"tb xs\"><thead><tr><th><span class=\"ph\" data-campo=\"bl@I@_col_1\">{{bl@I@_col_1}}</span></th><th><span class=\"ph\" data-campo=\"bl@I@_col_2\">{{bl@I@_col_2}}</span></th><th><span class=\"ph\" data-campo=\"bl@I@_col_3\">{{bl@I@_col_3}}</span></th><th><span class=\"ph\" data-campo=\"bl@I@_col_4\">{{bl@I@_col_4}}</span></th><th><span class=\"ph\" data-campo=\"bl@I@_col_5\">{{bl@I@_col_5}}</span></th><th><span class=\"ph\" data-campo=\"bl@I@_col_6\">{{bl@I@_col_6}}</span></th></tr></thead><tbody><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_1_1\">{{bl@I@_cel_1_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_1_2\">{{bl@I@_cel_1_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_1_3\">{{bl@I@_cel_1_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_1_4\">{{bl@I@_cel_1_4}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_1_5\">{{bl@I@_cel_1_5}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_1_6\">{{bl@I@_cel_1_6}}</span></td></tr><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_2_1\">{{bl@I@_cel_2_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_2_2\">{{bl@I@_cel_2_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_2_3\">{{bl@I@_cel_2_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_2_4\">{{bl@I@_cel_2_4}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_2_5\">{{bl@I@_cel_2_5}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_2_6\">{{bl@I@_cel_2_6}}</span></td></tr><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_3_1\">{{bl@I@_cel_3_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_3_2\">{{bl@I@_cel_3_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_3_3\">{{bl@I@_cel_3_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_3_4\">{{bl@I@_cel_3_4}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_3_5\">{{bl@I@_cel_3_5}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_3_6\">{{bl@I@_cel_3_6}}</span></td></tr><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_4_1\">{{bl@I@_cel_4_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_4_2\">{{bl@I@_cel_4_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_4_3\">{{bl@I@_cel_4_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_4_4\">{{bl@I@_cel_4_4}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_4_5\">{{bl@I@_cel_4_5}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_4_6\">{{bl@I@_cel_4_6}}</span></td></tr><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_5_1\">{{bl@I@_cel_5_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_5_2\">{{bl@I@_cel_5_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_5_3\">{{bl@I@_cel_5_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_5_4\">{{bl@I@_cel_5_4}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_5_5\">{{bl@I@_cel_5_5}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_5_6\">{{bl@I@_cel_5_6}}</span></td></tr><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_6_1\">{{bl@I@_cel_6_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_6_2\">{{bl@I@_cel_6_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_6_3\">{{bl@I@_cel_6_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_6_4\">{{bl@I@_cel_6_4}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_6_5\">{{bl@I@_cel_6_5}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_6_6\">{{bl@I@_cel_6_6}}</span></td></tr><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_7_1\">{{bl@I@_cel_7_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_7_2\">{{bl@I@_cel_7_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_7_3\">{{bl@I@_cel_7_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_7_4\">{{bl@I@_cel_7_4}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_7_5\">{{bl@I@_cel_7_5}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_7_6\">{{bl@I@_cel_7_6}}</span></td></tr><tr><td><span class=\"ph\" data-campo=\"bl@I@_cel_8_1\">{{bl@I@_cel_8_1}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_8_2\">{{bl@I@_cel_8_2}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_8_3\">{{bl@I@_cel_8_3}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_8_4\">{{bl@I@_cel_8_4}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_8_5\">{{bl@I@_cel_8_5}}</span></td><td><span class=\"ph\" data-campo=\"bl@I@_cel_8_6\">{{bl@I@_cel_8_6}}</span></td></tr></tbody></table>",
+   "campos": {
+    "bl@I@_titulo": {
+     "rotulo": "Título do bloco",
+     "dica": ""
+    },
+    "bl@I@_col_1": {
+     "rotulo": "Cabeçalho da coluna 1",
+     "dica": ""
+    },
+    "bl@I@_col_2": {
+     "rotulo": "Cabeçalho da coluna 2",
+     "dica": ""
+    },
+    "bl@I@_col_3": {
+     "rotulo": "Cabeçalho da coluna 3",
+     "dica": ""
+    },
+    "bl@I@_col_4": {
+     "rotulo": "Cabeçalho da coluna 4",
+     "dica": ""
+    },
+    "bl@I@_col_5": {
+     "rotulo": "Cabeçalho da coluna 5",
+     "dica": ""
+    },
+    "bl@I@_col_6": {
+     "rotulo": "Cabeçalho da coluna 6",
+     "dica": ""
+    },
+    "bl@I@_cel_1_1": {
+     "rotulo": "Linha 1, coluna 1",
+     "dica": ""
+    },
+    "bl@I@_cel_1_2": {
+     "rotulo": "Linha 1, coluna 2",
+     "dica": ""
+    },
+    "bl@I@_cel_1_3": {
+     "rotulo": "Linha 1, coluna 3",
+     "dica": ""
+    },
+    "bl@I@_cel_1_4": {
+     "rotulo": "Linha 1, coluna 4",
+     "dica": ""
+    },
+    "bl@I@_cel_1_5": {
+     "rotulo": "Linha 1, coluna 5",
+     "dica": ""
+    },
+    "bl@I@_cel_1_6": {
+     "rotulo": "Linha 1, coluna 6",
+     "dica": ""
+    },
+    "bl@I@_cel_2_1": {
+     "rotulo": "Linha 2, coluna 1",
+     "dica": ""
+    },
+    "bl@I@_cel_2_2": {
+     "rotulo": "Linha 2, coluna 2",
+     "dica": ""
+    },
+    "bl@I@_cel_2_3": {
+     "rotulo": "Linha 2, coluna 3",
+     "dica": ""
+    },
+    "bl@I@_cel_2_4": {
+     "rotulo": "Linha 2, coluna 4",
+     "dica": ""
+    },
+    "bl@I@_cel_2_5": {
+     "rotulo": "Linha 2, coluna 5",
+     "dica": ""
+    },
+    "bl@I@_cel_2_6": {
+     "rotulo": "Linha 2, coluna 6",
+     "dica": ""
+    },
+    "bl@I@_cel_3_1": {
+     "rotulo": "Linha 3, coluna 1",
+     "dica": ""
+    },
+    "bl@I@_cel_3_2": {
+     "rotulo": "Linha 3, coluna 2",
+     "dica": ""
+    },
+    "bl@I@_cel_3_3": {
+     "rotulo": "Linha 3, coluna 3",
+     "dica": ""
+    },
+    "bl@I@_cel_3_4": {
+     "rotulo": "Linha 3, coluna 4",
+     "dica": ""
+    },
+    "bl@I@_cel_3_5": {
+     "rotulo": "Linha 3, coluna 5",
+     "dica": ""
+    },
+    "bl@I@_cel_3_6": {
+     "rotulo": "Linha 3, coluna 6",
+     "dica": ""
+    },
+    "bl@I@_cel_4_1": {
+     "rotulo": "Linha 4, coluna 1",
+     "dica": ""
+    },
+    "bl@I@_cel_4_2": {
+     "rotulo": "Linha 4, coluna 2",
+     "dica": ""
+    },
+    "bl@I@_cel_4_3": {
+     "rotulo": "Linha 4, coluna 3",
+     "dica": ""
+    },
+    "bl@I@_cel_4_4": {
+     "rotulo": "Linha 4, coluna 4",
+     "dica": ""
+    },
+    "bl@I@_cel_4_5": {
+     "rotulo": "Linha 4, coluna 5",
+     "dica": ""
+    },
+    "bl@I@_cel_4_6": {
+     "rotulo": "Linha 4, coluna 6",
+     "dica": ""
+    },
+    "bl@I@_cel_5_1": {
+     "rotulo": "Linha 5, coluna 1",
+     "dica": ""
+    },
+    "bl@I@_cel_5_2": {
+     "rotulo": "Linha 5, coluna 2",
+     "dica": ""
+    },
+    "bl@I@_cel_5_3": {
+     "rotulo": "Linha 5, coluna 3",
+     "dica": ""
+    },
+    "bl@I@_cel_5_4": {
+     "rotulo": "Linha 5, coluna 4",
+     "dica": ""
+    },
+    "bl@I@_cel_5_5": {
+     "rotulo": "Linha 5, coluna 5",
+     "dica": ""
+    },
+    "bl@I@_cel_5_6": {
+     "rotulo": "Linha 5, coluna 6",
+     "dica": ""
+    },
+    "bl@I@_cel_6_1": {
+     "rotulo": "Linha 6, coluna 1",
+     "dica": ""
+    },
+    "bl@I@_cel_6_2": {
+     "rotulo": "Linha 6, coluna 2",
+     "dica": ""
+    },
+    "bl@I@_cel_6_3": {
+     "rotulo": "Linha 6, coluna 3",
+     "dica": ""
+    },
+    "bl@I@_cel_6_4": {
+     "rotulo": "Linha 6, coluna 4",
+     "dica": ""
+    },
+    "bl@I@_cel_6_5": {
+     "rotulo": "Linha 6, coluna 5",
+     "dica": ""
+    },
+    "bl@I@_cel_6_6": {
+     "rotulo": "Linha 6, coluna 6",
+     "dica": ""
+    },
+    "bl@I@_cel_7_1": {
+     "rotulo": "Linha 7, coluna 1",
+     "dica": ""
+    },
+    "bl@I@_cel_7_2": {
+     "rotulo": "Linha 7, coluna 2",
+     "dica": ""
+    },
+    "bl@I@_cel_7_3": {
+     "rotulo": "Linha 7, coluna 3",
+     "dica": ""
+    },
+    "bl@I@_cel_7_4": {
+     "rotulo": "Linha 7, coluna 4",
+     "dica": ""
+    },
+    "bl@I@_cel_7_5": {
+     "rotulo": "Linha 7, coluna 5",
+     "dica": ""
+    },
+    "bl@I@_cel_7_6": {
+     "rotulo": "Linha 7, coluna 6",
+     "dica": ""
+    },
+    "bl@I@_cel_8_1": {
+     "rotulo": "Linha 8, coluna 1",
+     "dica": ""
+    },
+    "bl@I@_cel_8_2": {
+     "rotulo": "Linha 8, coluna 2",
+     "dica": ""
+    },
+    "bl@I@_cel_8_3": {
+     "rotulo": "Linha 8, coluna 3",
+     "dica": ""
+    },
+    "bl@I@_cel_8_4": {
+     "rotulo": "Linha 8, coluna 4",
+     "dica": ""
+    },
+    "bl@I@_cel_8_5": {
+     "rotulo": "Linha 8, coluna 5",
+     "dica": ""
+    },
+    "bl@I@_cel_8_6": {
+     "rotulo": "Linha 8, coluna 6",
+     "dica": ""
+    }
+   },
+   "tabelas": [
+    {
+     "titulo": "{{bl0_titulo}}",
+     "cabecalhos": [
+      "{{bl0_col_1}}",
+      "{{bl0_col_2}}",
+      "{{bl0_col_3}}",
+      "{{bl0_col_4}}",
+      "{{bl0_col_5}}",
+      "{{bl0_col_6}}"
+     ],
+     "linhas": [
+      [
+       {
+        "c": "bl@I@_cel_1_1"
+       },
+       {
+        "c": "bl@I@_cel_1_2"
+       },
+       {
+        "c": "bl@I@_cel_1_3"
+       },
+       {
+        "c": "bl@I@_cel_1_4"
+       },
+       {
+        "c": "bl@I@_cel_1_5"
+       },
+       {
+        "c": "bl@I@_cel_1_6"
+       }
+      ],
+      [
+       {
+        "c": "bl@I@_cel_2_1"
+       },
+       {
+        "c": "bl@I@_cel_2_2"
+       },
+       {
+        "c": "bl@I@_cel_2_3"
+       },
+       {
+        "c": "bl@I@_cel_2_4"
+       },
+       {
+        "c": "bl@I@_cel_2_5"
+       },
+       {
+        "c": "bl@I@_cel_2_6"
+       }
+      ],
+      [
+       {
+        "c": "bl@I@_cel_3_1"
+       },
+       {
+        "c": "bl@I@_cel_3_2"
+       },
+       {
+        "c": "bl@I@_cel_3_3"
+       },
+       {
+        "c": "bl@I@_cel_3_4"
+       },
+       {
+        "c": "bl@I@_cel_3_5"
+       },
+       {
+        "c": "bl@I@_cel_3_6"
+       }
+      ],
+      [
+       {
+        "c": "bl@I@_cel_4_1"
+       },
+       {
+        "c": "bl@I@_cel_4_2"
+       },
+       {
+        "c": "bl@I@_cel_4_3"
+       },
+       {
+        "c": "bl@I@_cel_4_4"
+       },
+       {
+        "c": "bl@I@_cel_4_5"
+       },
+       {
+        "c": "bl@I@_cel_4_6"
+       }
+      ],
+      [
+       {
+        "c": "bl@I@_cel_5_1"
+       },
+       {
+        "c": "bl@I@_cel_5_2"
+       },
+       {
+        "c": "bl@I@_cel_5_3"
+       },
+       {
+        "c": "bl@I@_cel_5_4"
+       },
+       {
+        "c": "bl@I@_cel_5_5"
+       },
+       {
+        "c": "bl@I@_cel_5_6"
+       }
+      ],
+      [
+       {
+        "c": "bl@I@_cel_6_1"
+       },
+       {
+        "c": "bl@I@_cel_6_2"
+       },
+       {
+        "c": "bl@I@_cel_6_3"
+       },
+       {
+        "c": "bl@I@_cel_6_4"
+       },
+       {
+        "c": "bl@I@_cel_6_5"
+       },
+       {
+        "c": "bl@I@_cel_6_6"
+       }
+      ],
+      [
+       {
+        "c": "bl@I@_cel_7_1"
+       },
+       {
+        "c": "bl@I@_cel_7_2"
+       },
+       {
+        "c": "bl@I@_cel_7_3"
+       },
+       {
+        "c": "bl@I@_cel_7_4"
+       },
+       {
+        "c": "bl@I@_cel_7_5"
+       },
+       {
+        "c": "bl@I@_cel_7_6"
+       }
+      ],
+      [
+       {
+        "c": "bl@I@_cel_8_1"
+       },
+       {
+        "c": "bl@I@_cel_8_2"
+       },
+       {
+        "c": "bl@I@_cel_8_3"
+       },
+       {
+        "c": "bl@I@_cel_8_4"
+       },
+       {
+        "c": "bl@I@_cel_8_5"
+       },
+       {
+        "c": "bl@I@_cel_8_6"
+       }
+      ]
+     ],
+     "rodape": []
+    }
+   ]
   },
   {
    "chave": "grafico_donut",
@@ -323,6 +878,40 @@
      "rotulo": "Título do gráfico",
      "dica": ""
     }
+   },
+   "tabelas": [],
+   "imagem": {
+    "id": "bl@I@",
+    "tipo": "gráfico",
+    "grafico": "donut",
+    "series": null,
+    "eixo": null,
+    "pontos": null,
+    "rotulo": "{{bl0_titulo}}",
+    "descricao": ""
+   }
+  },
+  {
+   "chave": "grafico_anel",
+   "nome": "Gráfico de rosca dupla",
+   "descricao": "Atual por fora, meta por dentro. Você digita os valores e o desenho sai no documento.",
+   "html": "<div class=\"chart\" data-img=\"bl@I@\" data-grafico=\"anel\" style=\"flex:1 1 auto;min-height:52mm\"><div class=\"sk-donut\"></div><div class=\"cl\"><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></div><div class=\"cd\"></div></div>",
+   "campos": {
+    "bl@I@_titulo": {
+     "rotulo": "Título do gráfico",
+     "dica": ""
+    }
+   },
+   "tabelas": [],
+   "imagem": {
+    "id": "bl@I@",
+    "tipo": "gráfico",
+    "grafico": "anel",
+    "series": null,
+    "eixo": null,
+    "pontos": null,
+    "rotulo": "{{bl0_titulo}}",
+    "descricao": ""
    }
   },
   {
@@ -335,6 +924,43 @@
      "rotulo": "Título do gráfico",
      "dica": ""
     }
+   },
+   "tabelas": [],
+   "imagem": {
+    "id": "bl@I@",
+    "tipo": "gráfico",
+    "grafico": "bars",
+    "series": null,
+    "eixo": null,
+    "pontos": null,
+    "rotulo": "{{bl0_titulo}}",
+    "descricao": ""
+   }
+  },
+  {
+   "chave": "grafico_bars2",
+   "nome": "Gráfico de barras comparativo",
+   "descricao": "Duas séries lado a lado, período a período. Você digita os valores e o desenho sai no documento.",
+   "html": "<div class=\"chart\" data-img=\"bl@I@\" data-grafico=\"bars\" data-series=\"Série A|Série B\" style=\"flex:1 1 auto;min-height:52mm\"><div class=\"sk-bars\"><i style=\"height:42%\"></i><i style=\"height:68%\"></i><i style=\"height:55%\"></i><i style=\"height:88%\"></i><i style=\"height:72%\"></i><i style=\"height:96%\"></i></div><div class=\"cl\"><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></div><div class=\"cd\"></div><ul class=\"legend\"><li><i style=\"background:var(--c1)\"></i>Série A</li><li><i style=\"background:var(--c2)\"></i>Série B</li></ul></div>",
+   "campos": {
+    "bl@I@_titulo": {
+     "rotulo": "Título do gráfico",
+     "dica": ""
+    }
+   },
+   "tabelas": [],
+   "imagem": {
+    "id": "bl@I@",
+    "tipo": "gráfico",
+    "grafico": "bars",
+    "series": [
+     "Série A",
+     "Série B"
+    ],
+    "eixo": null,
+    "pontos": null,
+    "rotulo": "{{bl0_titulo}}",
+    "descricao": ""
    }
   },
   {
@@ -347,6 +973,43 @@
      "rotulo": "Título do gráfico",
      "dica": ""
     }
+   },
+   "tabelas": [],
+   "imagem": {
+    "id": "bl@I@",
+    "tipo": "gráfico",
+    "grafico": "line",
+    "series": null,
+    "eixo": null,
+    "pontos": null,
+    "rotulo": "{{bl0_titulo}}",
+    "descricao": ""
+   }
+  },
+  {
+   "chave": "grafico_line2",
+   "nome": "Gráfico de linhas comparativo",
+   "descricao": "Duas evoluções no mesmo eixo. Você digita os valores e o desenho sai no documento.",
+   "html": "<div class=\"chart\" data-img=\"bl@I@\" data-grafico=\"line\" data-series=\"Série A|Série B\" style=\"flex:1 1 auto;min-height:52mm\"><div class=\"sk-line\"></div><div class=\"cl\"><span class=\"ph\" data-campo=\"bl@I@_titulo\">{{bl@I@_titulo}}</span></div><div class=\"cd\"></div><ul class=\"legend\"><li><i style=\"background:var(--c1)\"></i>Série A</li><li><i style=\"background:var(--c2)\"></i>Série B</li></ul></div>",
+   "campos": {
+    "bl@I@_titulo": {
+     "rotulo": "Título do gráfico",
+     "dica": ""
+    }
+   },
+   "tabelas": [],
+   "imagem": {
+    "id": "bl@I@",
+    "tipo": "gráfico",
+    "grafico": "line",
+    "series": [
+     "Série A",
+     "Série B"
+    ],
+    "eixo": null,
+    "pontos": null,
+    "rotulo": "{{bl0_titulo}}",
+    "descricao": ""
    }
   },
   {
@@ -354,7 +1017,18 @@
    "nome": "Imagem",
    "descricao": "Um espaço para uma imagem que você envia.",
    "html": "<div class=\"imgbox\" data-img=\"bl@I@\" style=\"flex:1 1 auto;min-height:52mm\"><div class=\"cl\">Imagem</div><div class=\"cd\">Imagem para este bloco.</div></div>",
-   "campos": {}
+   "campos": {},
+   "tabelas": [],
+   "imagem": {
+    "id": "bl@I@",
+    "tipo": "imagem",
+    "grafico": null,
+    "series": null,
+    "eixo": null,
+    "pontos": null,
+    "rotulo": "Imagem",
+    "descricao": "Imagem para este bloco."
+   }
   }
  ]
 }

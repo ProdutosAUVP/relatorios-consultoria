@@ -439,6 +439,27 @@ function blocoCampos(inst) {
   return fora;
 }
 
+/** O formulário de uma instância: os campos na ordem do bloco, com a tabela
+ *  do bloco como grade, e a tabelinha de gráfico ou o envio de imagem quando
+ *  o bloco os tem. */
+function camposDoBloco(inst) {
+  const b = blocoDe(inst.chave);
+  if (!b) return '';
+  const num = (x) => x.split(BIBLIOTECA.marca).join(String(inst.id));
+  const campos = blocoCampos(inst);
+  const celula = (c) => (c.c ? { c: num(c.c) } : c);
+  const tabelas = (b.tabelas || []).map((t) => ({
+    ...t, linhas: t.linhas.map((l) => l.map(celula)), rodape: t.rodape.map((l) => l.map(celula)),
+  }));
+  let fora = camposEmOrdem(Object.keys(campos), campos, tabelas);
+  if (b.imagem && b.imagem.tipo === 'gráfico') {
+    fora += campoGrafico({ ...b.imagem, id: num(b.imagem.id), rotulo: 'Dados do gráfico', descricao: '' });
+  } else if (b.imagem) {
+    fora += campoImagemSimples(num(b.imagem.id));
+  }
+  return fora;
+}
+
 const podeBlocos = () => !!(estado.documento && estado.documento.blocos && BIBLIOTECA);
 
 function novaPagina() {
@@ -490,14 +511,7 @@ function editorDePaginas() {
               <button type="button" class="btn neutro pequeno" data-bl-fora="${bl.id}">Remover</button>
             </span>
           </div>
-          <div class="campos">${Object.entries(blocoCampos(bl))
-            .map(([nome, meta]) => campoTexto(nome, meta)).join('')}
-            ${/grafico_/.test(bl.chave) ? campoGrafico({
-              id: 'bl' + bl.id, rotulo: 'Dados do gráfico', descricao: '',
-              grafico: bl.chave.replace('grafico_', ''), series: null, eixo: null,
-            }) : ''}
-            ${bl.chave === 'imagem' ? campoImagemSimples('bl' + bl.id) : ''}
-          </div>
+          <div class="campos">${camposDoBloco(bl)}</div>
         </div>`).join('') : '<p class="dica" style="margin:0 0 3mm">Nenhum bloco ainda.</p>'}
         <div class="acoes">
           <select data-bl-novo="${pg.id}"><option value="">Acrescentar bloco…</option>${nomes}</select>
@@ -677,6 +691,10 @@ function camposDaPagina(nomes, campos, pagina) {
   // total é KPI na página 3 e linha de total na 5 — e a tabela entra onde
   // está, não onde o campo apareceu primeiro.
   const tabelas = (estado.estrutura.tabelas || []).filter((t) => t.pagina === pagina);
+  return camposEmOrdem(nomes, campos, tabelas);
+}
+
+function camposEmOrdem(nomes, campos, tabelas) {
   const de = new Map();
   for (const t of tabelas) for (const c of [...t.linhas, ...t.rodape].flat()) if (c.c) de.set(c.c, t);
   const feitas = new Set();
@@ -957,8 +975,10 @@ function montar(modo) {
         // texto vira uma cápsula vazia. Guarda o pai para conferir depois de
         // tirar todos os campos — antes disso não dá para saber se o que
         // sobrou está vazio.
-        const item = span.closest('.pill, .tags > span, li, dd, dt, td, th, p');
-        if (item) esvaziados.add(item);
+        // A célula de tabela fica: tirá-la desalinharia a linha. Linha e
+        // coluna que ficaram inteiras em branco saem mais abaixo, juntas.
+        const item = span.closest('.pill, .tags > span, li, dd, dt, p');
+        if (item && !item.closest('td, th')) esvaziados.add(item);
         span.remove();
       }
       continue;
@@ -974,6 +994,29 @@ function montar(modo) {
       a.href = href;
       span.replaceWith(a);
       a.appendChild(span);
+    }
+  }
+
+  // Tabela: a linha do corpo que ficou toda em branco sai, e a coluna cujo
+  // cabeçalho e células ficaram em branco também. É o que deixa a tabela de
+  // cinco linhas do construtor servir para três, e a de movimentações do
+  // mensal servir para um mês com duas operações.
+  if (modo !== 'previa') {
+    const vazia = (cel) => !cel.textContent.trim() && !cel.querySelector('img, svg');
+    for (const tabela of doc.querySelectorAll('table')) {
+      const corpo = [...tabela.querySelectorAll('tbody > tr')];
+      for (const tr of corpo) {
+        if ([...tr.children].every(vazia)) tr.remove();
+      }
+      const cabecalho = tabela.querySelector('thead > tr');
+      if (!cabecalho) continue;
+      const linhas = [...tabela.querySelectorAll('tbody > tr, tfoot > tr')];
+      for (let i = cabecalho.children.length - 1; i >= 0; i--) {
+        const coluna = [cabecalho.children[i], ...linhas.map((tr) => tr.children[i])].filter(Boolean);
+        if (!vazia(cabecalho.children[i]) || !coluna.every(vazia)) continue;
+        coluna.forEach((cel) => cel.remove());
+        tabela.querySelectorAll('colgroup > col')[i]?.remove();
+      }
     }
   }
 

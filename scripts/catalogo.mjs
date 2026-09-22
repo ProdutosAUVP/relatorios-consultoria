@@ -15,7 +15,8 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 
 import { PRODUTOS, classifica, rotuloVariante, ordemVariante } from './documentos.mjs';
-import { exemplo } from './exemplos.mjs';
+import { exemplo, nomeado } from './exemplos.mjs';
+import { tipoDoCampo, exemploDoTipo, exemploDoCabecalho, OPCOES } from './tipos.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const srcDir = join(root, 'modelos');
@@ -47,13 +48,71 @@ function paginas(html) {
   });
 }
 
+/** Em que coluna de tabela cada campo está: o cabeçalho dela e se a célula é
+ *  numérica. É o que diz o tipo do campo com mais segurança do que o nome —
+ *  `alvo_rf_pos` é percentual porque a coluna se chama Meta. */
+function colunas(html) {
+  const limpa = (x) => x.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim();
+  const onde = {};
+  for (const tb of html.matchAll(/<table class="tb[^"]*">([\s\S]*?)<\/table>/g)) {
+    const cabs = [...tb[1].matchAll(/<th[^>]*>([\s\S]*?)<\/th>/g)].map((m) => limpa(m[1]));
+    for (const tr of tb[1].matchAll(/<tr>([\s\S]*?)<\/tr>/g)) {
+      const tds = [...tr[1].matchAll(/<td([^>]*)>([\s\S]*?)<\/td>/g)];
+      if (tds.length !== cabs.length) continue;
+      tds.forEach((td, i) => {
+        for (const c of td[2].matchAll(/data-campo="([a-z0-9_]+)"/g)) {
+          if (!onde[c[1]]) onde[c[1]] = { cabecalho: cabs[i], num: /\bnum\b/.test(td[1]) };
+        }
+      });
+    }
+  }
+  return onde;
+}
+
+/** As tabelas de uma página, célula a célula: o que a ferramenta precisa para
+ *  oferecer a tabela como grade — uma linha por linha, os campos nas colunas
+ *  certas, o rótulo da linha onde o modelo tem texto fixo — em vez de uma
+ *  lista de quarenta campos soltos chamados `mov_1_data`, `mov_1_tipo`... */
+function tabelasDe(corpo, numero) {
+  const ENT = { nbsp: ' ', mdash: '—', ndash: '–', amp: '&', middot: '·', lt: '<', gt: '>' };
+  const limpa = (x) => x.replace(/<[^>]+>/g, '')
+    .replace(/&([a-z]+);/g, (m, e) => ENT[e] ?? m).trim();
+  const celula = (td) => {
+    const campo = td.match(/data-campo="([a-z0-9_]+)"/)?.[1];
+    return campo ? { c: campo } : { t: limpa(td) };
+  };
+  const linhasDe = (bloco) => [...bloco.matchAll(/<tr>([\s\S]*?)<\/tr>/g)]
+    .map((tr) => [...tr[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)].map((m) => celula(m[1])))
+    .filter((l) => l.length);
+  const out = [];
+  for (const tb of corpo.matchAll(/<table class="tb[^"]*">([\s\S]*?)<\/table>/g)) {
+    const cabecalhos = [...tb[1].matchAll(/<th[^>]*>([\s\S]*?)<\/th>/g)].map((m) => limpa(m[1]));
+    const pe = tb[1].match(/<tfoot>([\s\S]*?)<\/tfoot>/)?.[1] || '';
+    const linhas = linhasDe(tb[1].replace(/<tfoot>[\s\S]*?<\/tfoot>/, ''));
+    const rodape = pe ? linhasDe(pe) : [];
+    const todas = [...linhas, ...rodape];
+    if (!todas.length || todas.some((l) => l.length !== cabecalhos.length)) continue;
+    if (!todas.some((l) => l.some((c) => c.c))) continue;
+    // O título é o último <h2> antes da tabela — "Operações executadas",
+    // "Por instituição custodiante" — ou o da página quando não há um.
+    const antes = corpo.slice(0, tb.index);
+    const h2 = [...antes.matchAll(/<h2[^>]*>([\s\S]*?)<\/h2>/g)].pop()?.[1]
+      || antes.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] || '';
+    out.push({ pagina: numero, titulo: limpa(h2), cabecalhos, linhas, rodape });
+  }
+  return out;
+}
+
 /** Campos e espaços de imagem de um modelo, na ordem do documento. */
 function estrutura(html) {
   const campos = {};
   const grupos = [];
   const imagens = [];
+  const tabelas = [];
+  const emTabela = colunas(html);
   for (const pag of paginas(html)) {
     const nomes = [];
+    tabelas.push(...tabelasDe(pag.corpo, pag.numero));
     // Os atributos vêm em número e ordem variáveis — `title` quando há dica,
     // `data-link` quando o campo é endereço de alguma coisa —, então o
     // casamento é pelo bloco e a dica sai de dentro dele.
@@ -66,7 +125,14 @@ function estrutura(html) {
       const [, pronto, nome, attrs, conteudo] = m;
       const dica = attrs.match(/ title="([^"]*)"/)?.[1];
       if (!campos[nome]) {
-        campos[nome] = { rotulo: rotuloCampo(nome), pagina: pag.numero, exemplo: exemplo(nome) };
+        const col = emTabela[nome];
+        const t = tipoDoCampo(nome, col?.cabecalho, col?.num);
+        // O exemplo pelo tipo só entra onde o pelo nome é chute: o que está
+        // escrito à mão em `exemplos.mjs` continua valendo.
+        const ex = (!nomeado(nome) && (exemploDoTipo(t.tipo) || (t.opcoes && OPCOES[t.opcoes][0])
+          || (col && exemploDoCabecalho(col.cabecalho)))) || exemplo(nome);
+        campos[nome] = { rotulo: rotuloCampo(nome), pagina: pag.numero, exemplo: ex, ...t };
+        if (t.tipo === 'texto') delete campos[nome].tipo;
         if (dica) campos[nome].dica = dica;
         if (pronto) campos[nome].padrao = conteudo.replace(/&nbsp;/g, ' ').trim();
         nomes.push(nome);
@@ -79,35 +145,75 @@ function estrutura(html) {
         rotulo: 'Retrato do consultor',
         descricao: 'Foto vertical, recortada em 3:4. Substitui o retrato que já vem no modelo.' });
     }
-    // A classe pode trazer um modificador junto (`imgbox rt-vaga`), então o
-    // casamento é pelo nome do bloco dentro do atributo, não pelo atributo todo.
-    // A classe pode trazer modificadores e os atributos vêm em qualquer ordem,
-    // então o casamento é pelo nome do bloco e pelo `data-img`, não pela forma
-    // exata da tag.
-    const ri = /<div class="[^"]*\b(chart|imgbox)\b[^"]*"([^>]*)\bdata-img="(\d+)"([^>]*)>([\s\S]*?)<div class="cd">([\s\S]*?)<\/div>/g;
-    while ((m = ri.exec(pag.corpo))) {
-      // O bloco de gráfico anuncia o formato e os rótulos sugeridos. É o que
-      // permite à ferramenta oferecer a tabelinha certa — quantas linhas, com
-      // que nome, e se pede um valor ou dois — em vez de um campo de imagem.
-      const attrs = m[2] + m[4];
-      const limpa = (x) => x.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim();
-      const serie = attrs.match(/data-series="([^"]*)"/)?.[1];
-      const pts = attrs.match(/data-pontos="([^"]*)"/)?.[1];
-      imagens.push({
-        id: Number(m[3]),
-        tipo: m[1] === 'chart' ? 'gráfico' : 'imagem',
-        grafico: attrs.match(/data-grafico="([^"]*)"/)?.[1] || null,
-        series: serie ? serie.split('|') : null,
-        eixo: attrs.match(/data-eixo="([^"]*)"/)?.[1] || null,
-        pontos: pts ? pts.split('|') : null,
-        pagina: pag.numero,
-        secao: pag.secao,
-        rotulo: limpa(m[5].match(/<div class="cl">([\s\S]*?)<\/div>/)?.[1] || 'Imagem'),
-        descricao: limpa(m[6]),
-      });
+    for (const im of imagensDe(pag.corpo)) {
+      imagens.push({ ...im, id: Number(im.id), pagina: pag.numero, secao: pag.secao });
     }
   }
-  return { campos, grupos, imagens };
+  return { campos, grupos, imagens, tabelas };
+}
+
+/** Os espaços de gráfico e de imagem de um trecho de HTML.
+ *
+ *  A classe pode trazer modificadores e os atributos vêm em qualquer ordem,
+ *  então o casamento é pelo nome do bloco e pelo `data-img`, não pela forma
+ *  exata da tag. O bloco de gráfico anuncia o formato e os rótulos sugeridos:
+ *  é o que permite à ferramenta oferecer a tabelinha certa — quantas linhas,
+ *  com que nome, e se pede um valor ou dois — em vez de um campo de imagem. */
+function imagensDe(corpo) {
+  const limpa = (x) => x.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim();
+  const ri = /<div class="[^"]*\b(chart|imgbox)\b[^"]*"([^>]*)\bdata-img="([^"]+)"([^>]*)>([\s\S]*?)<div class="cd">([\s\S]*?)<\/div>/g;
+  const out = [];
+  let m;
+  while ((m = ri.exec(corpo))) {
+    const attrs = m[2] + m[4];
+    const serie = attrs.match(/data-series="([^"]*)"/)?.[1];
+    const pts = attrs.match(/data-pontos="([^"]*)"/)?.[1];
+    out.push({
+      id: m[3],
+      tipo: m[1] === 'chart' ? 'gráfico' : 'imagem',
+      grafico: attrs.match(/data-grafico="([^"]*)"/)?.[1] || null,
+      series: serie ? serie.split('|') : null,
+      eixo: attrs.match(/data-eixo="([^"]*)"/)?.[1] || null,
+      pontos: pts ? pts.split('|') : null,
+      rotulo: limpa(m[5].match(/<div class="cl">([\s\S]*?)<\/div>/)?.[1] || 'Imagem'),
+      descricao: limpa(m[6]),
+    });
+  }
+  return out;
+}
+
+/** Completa `docs/blocos.json` com o que a ferramenta precisa além do HTML:
+ *  o tipo de cada campo, as tabelas célula a célula e o espaço de gráfico ou
+ *  imagem de cada bloco. `scripts/blocos.py` escreve o arquivo com a marca
+ *  `@I@` no lugar do número da instância; a análise é feita com zero no lugar
+ *  e a marca volta nos nomes. */
+function enriquecerBlocos() {
+  const arq = join(outDir, 'blocos.json');
+  if (!existsSync(arq)) return 0;
+  const lib = JSON.parse(readFileSync(arq, 'utf8'));
+  const marca = lib.marca;
+  const volta = (x) => x.split('bl0').join('bl' + marca);
+  for (const b of lib.blocos) {
+    const html = b.html.split('bl' + marca).join('bl0');
+    const col = colunas(html);
+    for (const [nome, meta] of Object.entries(b.campos)) {
+      const n0 = nome.split('bl' + marca).join('bl0');
+      const t = tipoDoCampo(n0, col[n0]?.cabecalho, col[n0]?.num);
+      if (t.tipo !== 'texto') meta.tipo = t.tipo;
+      if (t.opcoes) meta.opcoes = t.opcoes;
+      const ex = exemploDoTipo(t.tipo) || (t.opcoes && OPCOES[t.opcoes][0]);
+      if (ex) meta.exemplo = ex;
+    }
+    const celula = (c) => (c.c ? { c: volta(c.c) } : c);
+    b.tabelas = tabelasDe(html, 0).map((t) => ({
+      titulo: t.titulo, cabecalhos: t.cabecalhos,
+      linhas: t.linhas.map((l) => l.map(celula)), rodape: t.rodape.map((l) => l.map(celula)),
+    }));
+    const im = imagensDe(html)[0];
+    if (im) b.imagem = { ...im, id: volta(im.id) };
+  }
+  writeFileSync(arq, JSON.stringify(lib, null, 1) + '\n');
+  return lib.blocos.length;
 }
 
 function main() {
@@ -171,11 +277,12 @@ function main() {
     });
   }
 
-  const catalogo = { produtos: PRODUTOS, documentos: [...porDoc.values()] };
+  const catalogo = { produtos: PRODUTOS, documentos: [...porDoc.values()], opcoes: OPCOES };
   writeFileSync(join(outDir, 'catalogo.json'), JSON.stringify(catalogo, null, 1));
 
+  const nb = enriquecerBlocos();
   console.log(`docs/: ${arquivos.length} modelos, ${catalogo.documentos.length} documentos, `
-              + `${nc} campos, ${ni} espaços de imagem.`);
+              + `${nc} campos, ${ni} espaços de imagem, ${nb} blocos.`);
   return 0;
 }
 

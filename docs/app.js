@@ -439,6 +439,27 @@ function blocoCampos(inst) {
   return fora;
 }
 
+/** O formulário de uma instância: os campos na ordem do bloco, com a tabela
+ *  do bloco como grade, e a tabelinha de gráfico ou o envio de imagem quando
+ *  o bloco os tem. */
+function camposDoBloco(inst) {
+  const b = blocoDe(inst.chave);
+  if (!b) return '';
+  const num = (x) => x.split(BIBLIOTECA.marca).join(String(inst.id));
+  const campos = blocoCampos(inst);
+  const celula = (c) => (c.c ? { c: num(c.c) } : c);
+  const tabelas = (b.tabelas || []).map((t) => ({
+    ...t, linhas: t.linhas.map((l) => l.map(celula)), rodape: t.rodape.map((l) => l.map(celula)),
+  }));
+  let fora = camposEmOrdem(Object.keys(campos), campos, tabelas);
+  if (b.imagem && b.imagem.tipo === 'gráfico') {
+    fora += campoGrafico({ ...b.imagem, id: num(b.imagem.id), rotulo: 'Dados do gráfico', descricao: '' });
+  } else if (b.imagem) {
+    fora += campoImagemSimples(num(b.imagem.id));
+  }
+  return fora;
+}
+
 const podeBlocos = () => !!(estado.documento && estado.documento.blocos && BIBLIOTECA);
 
 function novaPagina() {
@@ -490,14 +511,7 @@ function editorDePaginas() {
               <button type="button" class="btn neutro pequeno" data-bl-fora="${bl.id}">Remover</button>
             </span>
           </div>
-          <div class="campos">${Object.entries(blocoCampos(bl))
-            .map(([nome, meta]) => campoTexto(nome, meta)).join('')}
-            ${/grafico_/.test(bl.chave) ? campoGrafico({
-              id: 'bl' + bl.id, rotulo: 'Dados do gráfico', descricao: '',
-              grafico: bl.chave.replace('grafico_', ''), series: null, eixo: null,
-            }) : ''}
-            ${bl.chave === 'imagem' ? campoImagemSimples('bl' + bl.id) : ''}
-          </div>
+          <div class="campos">${camposDoBloco(bl)}</div>
         </div>`).join('') : '<p class="dica" style="margin:0 0 3mm">Nenhum bloco ainda.</p>'}
         <div class="acoes">
           <select data-bl-novo="${pg.id}"><option value="">Acrescentar bloco…</option>${nomes}</select>
@@ -564,7 +578,7 @@ function telaPreencher() {
   }
   const secoes = [...porPagina.values()].sort((a, b) => a.pagina - b.pagina);
 
-  $('#formulario').innerHTML = listaDePaginas() + editorDePaginas() + (secoes.length ? secoes.map((s, i) => `
+  $('#formulario').innerHTML = listasDeOpcoes() + listaDePaginas() + editorDePaginas() + (secoes.length ? secoes.map((s, i) => `
     <details class="secao${dentro(s.pagina) ? '' : ' fora'}" data-pagina="${s.pagina}"${i === 0 && dentro(s.pagina) ? ' open' : ''}>
       <summary>
         <span class="pg">${String(s.pagina).padStart(2, '0')}</span>
@@ -573,7 +587,7 @@ function telaPreencher() {
       </summary>
       <div class="campos">
         ${s.imagens.map(campoImagem).join('')}
-        ${s.campos.map((n) => campoTexto(n, campos[n])).join('')}
+        ${camposDaPagina(s.campos, campos, s.pagina)}
       </div>
     </details>`).join('')
     : '<p class="solto">Este modelo não tem campos preenchíveis.</p>');
@@ -582,18 +596,197 @@ function telaPreencher() {
   renderizar();
 }
 
-function campoTexto(nome, meta) {
+/* O campo pelo tipo.
+ *
+ *  O catálogo diz o que cada campo recebe — dinheiro, percentual, data, uma
+ *  escolha entre poucas —, e o campo se apresenta de acordo: teclado numérico
+ *  onde vai número, calendário onde vai data, lista onde há opções. O que sai
+ *  para o documento continua sendo texto, no formato que o modelo espera; o
+ *  tipo só encurta o caminho até ele. */
+const ENTRADA = {
+  dinheiro: ' inputmode="decimal" data-formato="dinheiro"',
+  percentual: ' inputmode="decimal" data-formato="percentual"',
+  pp: ' inputmode="decimal" data-formato="pp"',
+  numero: ' inputmode="decimal" data-formato="numero"',
+  ano: ' type="number" inputmode="numeric" min="1990" max="2100" step="1"',
+  email: ' type="email" autocomplete="off"',
+  telefone: ' type="tel" inputmode="tel"',
+  data: ' inputmode="numeric"',
+};
+
+const tipoDe = (nome, meta) => meta.tipo || (multilinha(nome) ? 'longo' : 'texto');
+
+/** A entrada de um campo — só o controle, sem rótulo. `grade` é a versão
+ *  compacta para célula de tabela: o texto corrido vira uma linha que cresce
+ *  conforme se escreve, porque três linhas fixas por célula não cabem. */
+function entradaDe(nome, meta, grade = false) {
   const v = escapa(estado.valores[nome] || '');
   const cheio = (estado.valores[nome] || '').trim() ? ' data-preenchido="1"' : '';
-  const dica = meta.dica ? `<p class="dica">${escapa(meta.dica)}</p>` : '';
   // O exemplo é `placeholder`: mostra o formato esperado, some ao digitar e
   // nunca entra no documento.
   const ex = meta.exemplo ? ` placeholder="${escapa(meta.exemplo)}"` : '';
-  const entrada = multilinha(nome)
-    ? `<textarea id="c-${nome}" rows="3" data-campo="${nome}"${ex}${cheio}>${v}</textarea>`
-    : `<input id="c-${nome}" type="text" data-campo="${nome}" value="${v}"${ex}${cheio}>`;
+  const tipo = tipoDe(nome, meta);
+  let entrada;
+  if (tipo === 'longo') {
+    entrada = `<textarea id="c-${nome}" rows="${grade ? 1 : 3}" data-campo="${nome}"${ex}${cheio}>${v}</textarea>`;
+  } else {
+    const extra = (ENTRADA[tipo] || '') + (tipo === 'opcoes' ? ` list="op-${meta.opcoes}"` : '');
+    const type = /type="/.test(extra) ? '' : ' type="text"';
+    entrada = `<input id="c-${nome}"${type} data-campo="${nome}" value="${v}"${ex}${cheio}${extra}>`;
+    // Data e mês ganham o calendário do navegador ao lado. O campo continua
+    // sendo de texto — "2º semestre" ainda cabe ali —, e o calendário só
+    // escreve nele, no formato que o documento usa.
+    if (tipo === 'data' || tipo === 'mes') {
+      entrada = `<div class="com-seletor">${entrada}
+        <button type="button" class="seletor" data-seletor="${nome}" title="Escolher no calendário">📅</button>
+        <input type="${tipo === 'mes' ? 'month' : 'date'}" class="oculto" data-seletor-de="${nome}" tabindex="-1" aria-hidden="true"></div>`;
+    }
+  }
+  return entrada;
+}
+
+function campoTexto(nome, meta) {
+  const dica = meta.dica ? `<p class="dica">${escapa(meta.dica)}</p>` : '';
   return `<div class="campo" data-nome="${nome}">
-    <label for="c-${nome}">${escapa(meta.rotulo)}</label>${entrada}${dica}</div>`;
+    <label for="c-${nome}">${escapa(meta.rotulo)}</label>${entradaDe(nome, meta)}${dica}</div>`;
+}
+
+/** Uma tabela do modelo como grade de preenchimento.
+ *
+ *  O modelo tem a tabela pronta; o que falta são os números. Oferecer os
+ *  campos dela um a um, em lista — `Mov 1 data`, `Mov 1 tipo`, `Mov 1 ativo`,
+ *  quarenta vezes — obrigava a reconstruir de cabeça a tabela que está logo
+ *  ali na prévia. Aqui ela aparece com a mesma forma: cabeçalho, uma linha
+ *  por linha, o rótulo fixo onde o modelo o tem, e o campo na coluna certa.
+ *
+ *  A linha de total ganha um botão de soma por coluna numérica. É pedido, não
+ *  automático: nem toda coluna se soma — rentabilidade não —, e quem preenche
+ *  sabe qual é qual. */
+function campoTabela(tab, campos) {
+  const cab = (t) => t.replace(/\{\{([a-z0-9_]+)\}\}/g, (_, n) => estado.valores[n] || n);
+  const celula = (c, i, rodape) => {
+    if (!c.c) return `<td class="rotulo">${escapa(c.t)}</td>`;
+    const meta = campos[c.c] || { rotulo: c.c };
+    const tipo = tipoDe(c.c, meta);
+    const soma = rodape && /^(dinheiro|percentual|pp|numero)$/.test(tipo)
+      ? `<button type="button" class="soma" data-soma="${c.c}" data-coluna="${i}" title="Somar a coluna">Σ</button>` : '';
+    const entrada = entradaDe(c.c, meta, true);
+    return `<td class="t-${tipo}">${soma ? `<span class="com-soma">${entrada}${soma}</span>` : entrada}</td>`;
+  };
+  const linha = (l, rodape) => `<tr>${l.map((c, i) => celula(c, i, rodape)).join('')}</tr>`;
+  const nomes = [...tab.linhas, ...tab.rodape].flat().filter((c) => c.c).map((c) => c.c);
+  return `<div class="tabela" data-nome="${nomes.join(' ')}">
+    <div class="nome">${escapa(tab.titulo || 'Tabela')}</div>
+    <div class="rolagem"><table class="dados">
+      <thead><tr>${tab.cabecalhos.map((h) => `<th>${escapa(cab(h))}</th>`).join('')}</tr></thead>
+      <tbody>${tab.linhas.map((l) => linha(l, false)).join('')}</tbody>
+      ${tab.rodape.length ? `<tfoot>${tab.rodape.map((l) => linha(l, true)).join('')}</tfoot>` : ''}
+    </table></div></div>`;
+}
+
+/** Os campos de uma página, na ordem do documento, com cada tabela entrando
+ *  inteira no lugar do seu primeiro campo. */
+function camposDaPagina(nomes, campos, pagina) {
+  // Só as tabelas desta página. Um campo pode aparecer em duas — o patrimônio
+  // total é KPI na página 3 e linha de total na 5 — e a tabela entra onde
+  // está, não onde o campo apareceu primeiro.
+  const tabelas = (estado.estrutura.tabelas || []).filter((t) => t.pagina === pagina);
+  return camposEmOrdem(nomes, campos, tabelas);
+}
+
+function camposEmOrdem(nomes, campos, tabelas) {
+  const de = new Map();
+  for (const t of tabelas) for (const c of [...t.linhas, ...t.rodape].flat()) if (c.c) de.set(c.c, t);
+  const feitas = new Set();
+  const partes = [];
+  for (const n of nomes) {
+    const t = de.get(n);
+    if (!t) { partes.push(campoTexto(n, campos[n])); continue; }
+    if (feitas.has(t)) continue;
+    feitas.add(t);
+    partes.push(campoTabela(t, campos));
+  }
+  return partes.join('');
+}
+
+/** As listas dos campos de escolha, uma vez por formulário. */
+function listasDeOpcoes() {
+  return Object.entries(estado.catalogo.opcoes || {}).map(([k, itens]) =>
+    `<datalist id="op-${k}">${itens.map((o) => `<option value="${escapa(o)}">`).join('')}</datalist>`).join('');
+}
+
+/** Guarda o que foi digitado num campo e agenda salvar e redesenhar. */
+function anotar(el, valor) {
+  estado.valores[el.dataset.campo] = valor;
+  // O mesmo campo pode estar em dois lugares do formulário — o total como KPI
+  // e como pé de tabela. O que se escreve num aparece no outro.
+  for (const outro of $$(`[data-campo="${CSS.escape(el.dataset.campo)}"]`)) {
+    if (outro !== el && outro.value !== valor) outro.value = valor;
+    outro.dataset.preenchido = valor.trim() ? '1' : '';
+  }
+  clearTimeout(temporizador);
+  temporizador = setTimeout(() => { salvar(); atualizarContagens(); renderizar(); }, 250);
+}
+
+/* ---------------------------------------------------------------- formatos */
+
+/** O número dentro de um texto como `R$ 12.400,00`, `-1,2%` ou `12400`.
+ *  Devolve `null` quando o texto tem mais do que número e unidade — "CDI +
+ *  2,10%" ou "isento" ficam como estão. */
+function numeroDe(texto) {
+  const s = texto.trim().replace(/^(R\$|US\$|EUR|€)\s*/i, '').replace(/\s*(%|p\.p\.)$/i, '').trim();
+  if (!/^[+-]?\d[\d.,]*$/.test(s)) return null;
+  let n = s;
+  if (s.includes(',')) n = s.replace(/\./g, '').replace(',', '.');
+  else if (/^[+-]?\d{1,3}(\.\d{3})+$/.test(s)) n = s.replace(/\./g, '');   // 1.284.000 é milhar
+  const v = Number(n);
+  return Number.isFinite(v) ? v : null;
+}
+
+/** Quantas casas decimais o texto tem. É o que preserva "12%" e "12,4%" em
+ *  vez de forçar tudo a duas casas. */
+function casasDe(texto) {
+  const m = texto.match(/[.,](\d+)\s*(%|p\.p\.)?$/);
+  return m && !/^\d{3}$/.test(m[1]) ? Math.min(m[1].length, 2) : 0;
+}
+
+/** O texto no formato do documento. Só mexe no que é número puro. */
+function formatar(tipo, texto) {
+  const n = numeroDe(texto);
+  if (n === null) return texto;
+  const sinal = /^\s*\+/.test(texto) && n >= 0 ? '+' : '';
+  const fixo = (d) => n.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+  switch (tipo) {
+    case 'dinheiro': {
+      const moeda = /^\s*US\$/i.test(texto) ? 'US$' : /^\s*(EUR|€)/i.test(texto) ? 'EUR' : 'R$';
+      return `${moeda} ${fixo(2)}`;
+    }
+    case 'percentual': return `${sinal}${fixo(casasDe(texto))}%`;
+    case 'pp': return `${sinal}${fixo(casasDe(texto))} p.p.`;
+    case 'numero': return `${sinal}${n.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}`;
+    default: return texto;
+  }
+}
+
+/** `31/08/2026` -> `2026-08-31`, para abrir o calendário no dia certo. */
+function isoDe(texto) {
+  const m = texto.match(/^\s*(\d{1,2})\/(\d{1,2})\/(\d{4})\s*$/);
+  return m ? `${m[3]}-${m[2].padStart(2, '0')}-${m[1].padStart(2, '0')}` : '';
+}
+
+/** `Setembro de 2026` -> `2026-09`. */
+function mesIsoDe(texto) {
+  const m = texto.match(/^\s*([A-Za-zçÇ]+)\s+de\s+(\d{4})\s*$/);
+  if (!m) return '';
+  const i = MESES.findIndex((x) => x.toLowerCase() === m[1].toLowerCase());
+  return i < 0 ? '' : `${m[2]}-${String(i + 1).padStart(2, '0')}`;
+}
+
+/** O que o calendário escolheu, no formato do documento. */
+function textoDaData(tipo, iso) {
+  if (!iso) return '';
+  const [a, m, d] = iso.split('-');
+  return tipo === 'month' ? `${MESES[Number(m) - 1]} de ${a}` : `${d}/${m}/${a}`;
 }
 
 /** Quantas linhas a tabelinha oferece de saída. Os formatos com série nomeada
@@ -782,8 +975,10 @@ function montar(modo) {
         // texto vira uma cápsula vazia. Guarda o pai para conferir depois de
         // tirar todos os campos — antes disso não dá para saber se o que
         // sobrou está vazio.
-        const item = span.closest('.pill, .tags > span, li, dd, dt, td, th, p');
-        if (item) esvaziados.add(item);
+        // A célula de tabela fica: tirá-la desalinharia a linha. Linha e
+        // coluna que ficaram inteiras em branco saem mais abaixo, juntas.
+        const item = span.closest('.pill, .tags > span, li, dd, dt, p');
+        if (item && !item.closest('td, th')) esvaziados.add(item);
         span.remove();
       }
       continue;
@@ -799,6 +994,29 @@ function montar(modo) {
       a.href = href;
       span.replaceWith(a);
       a.appendChild(span);
+    }
+  }
+
+  // Tabela: a linha do corpo que ficou toda em branco sai, e a coluna cujo
+  // cabeçalho e células ficaram em branco também. É o que deixa a tabela de
+  // cinco linhas do construtor servir para três, e a de movimentações do
+  // mensal servir para um mês com duas operações.
+  if (modo !== 'previa') {
+    const vazia = (cel) => !cel.textContent.trim() && !cel.querySelector('img, svg');
+    for (const tabela of doc.querySelectorAll('table')) {
+      const corpo = [...tabela.querySelectorAll('tbody > tr')];
+      for (const tr of corpo) {
+        if ([...tr.children].every(vazia)) tr.remove();
+      }
+      const cabecalho = tabela.querySelector('thead > tr');
+      if (!cabecalho) continue;
+      const linhas = [...tabela.querySelectorAll('tbody > tr, tfoot > tr')];
+      for (let i = cabecalho.children.length - 1; i >= 0; i--) {
+        const coluna = [cabecalho.children[i], ...linhas.map((tr) => tr.children[i])].filter(Boolean);
+        if (!vazia(cabecalho.children[i]) || !coluna.every(vazia)) continue;
+        coluna.forEach((cel) => cel.remove());
+        tabela.querySelectorAll('colgroup > col')[i]?.remove();
+      }
     }
   }
 
@@ -1369,12 +1587,60 @@ function ligar() {
       temporizador = setTimeout(() => { salvar(); atualizarContagens(); renderizar(); }, 250);
       return;
     }
-    const nome = e.target.dataset.campo;
+    if (!e.target.dataset.campo) return;
+    anotar(e.target, e.target.value);
+  });
+
+  // Ao sair do campo, o número ganha o formato do documento: `12400` vira
+  // `R$ 12.400,00`, `-1,2` vira `-1,2%`. Enquanto se digita nada muda.
+  form.addEventListener('change', (e) => {
+    const tipo = e.target.dataset.formato;
+    if (!tipo) return;
+    const f = formatar(tipo, e.target.value);
+    if (f === e.target.value) return;
+    e.target.value = f;
+    anotar(e.target, f);
+  });
+
+  // A soma de uma coluna, na linha de total. Soma o que é número nas linhas
+  // do corpo e escreve no formato do campo de total.
+  form.addEventListener('click', (e) => {
+    const nome = e.target.dataset.soma;
     if (!nome) return;
-    estado.valores[nome] = e.target.value;
-    e.target.dataset.preenchido = e.target.value.trim() ? '1' : '';
-    clearTimeout(temporizador);
-    temporizador = setTimeout(() => { salvar(); atualizarContagens(); renderizar(); }, 250);
+    const col = Number(e.target.dataset.coluna) + 1;
+    const tabela = e.target.closest('table');
+    const alvo = form.querySelector(`[data-campo="${CSS.escape(nome)}"]`);
+    if (!tabela || !alvo) return;
+    let total = 0, n = 0;
+    for (const el of tabela.querySelectorAll(`tbody tr > td:nth-child(${col}) [data-campo]`)) {
+      const v = numeroDe(el.value);
+      if (v !== null) { total += v; n += 1; }
+    }
+    if (!n) return;
+    const tipo = alvo.dataset.formato || 'numero';
+    const texto = formatar(tipo, String(total).replace('.', ','));
+    alvo.value = texto;
+    anotar(alvo, texto);
+  });
+
+  // O calendário ao lado do campo de data. Abre no dia que está escrito e, ao
+  // escolher, escreve no campo de texto — que é o que o documento lê.
+  form.addEventListener('click', (e) => {
+    const nome = e.target.dataset.seletor;
+    if (!nome) return;
+    const texto = form.querySelector(`[data-campo="${CSS.escape(nome)}"]`);
+    const sel = form.querySelector(`[data-seletor-de="${CSS.escape(nome)}"]`);
+    if (!texto || !sel) return;
+    sel.value = sel.type === 'month' ? mesIsoDe(texto.value) : isoDe(texto.value);
+    try { sel.showPicker(); } catch (err) { sel.focus(); sel.click(); }
+  });
+  form.addEventListener('change', (e) => {
+    const nome = e.target.dataset.seletorDe;
+    if (!nome) return;
+    const texto = form.querySelector(`[data-campo="${CSS.escape(nome)}"]`);
+    if (!texto) return;
+    texto.value = textoDaData(e.target.type, e.target.value);
+    anotar(texto, texto.value);
   });
 
   form.addEventListener('change', (e) => {
@@ -1468,7 +1734,7 @@ function ligar() {
     const q = e.target.value.trim().toLowerCase();
     $$('.secao', form).forEach((sec) => {
       let achou = 0;
-      $$('.campo, .imagem', sec).forEach((c) => {
+      $$('.campo, .imagem, .tabela', sec).forEach((c) => {
         const bate = !q || (c.textContent + ' ' + (c.dataset.nome || '')).toLowerCase().includes(q);
         c.hidden = !bate;
         if (bate) achou++;

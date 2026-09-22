@@ -381,11 +381,27 @@ label.btn input[type='file'] { display: none; }
 /* ---------- escolha de páginas ---------- */
 
 .secao.paginas > summary { background: var(--muted); }
-.secao.fora > summary { opacity: .5; text-decoration: line-through; }
+.secao.fora > summary .titulo-secao, .secao.fora > summary .pg { opacity: .45; text-decoration: line-through; }
+.secao.fora > summary .contagem { visibility: hidden; }
+.secao > summary .titulo-secao { flex: 1 1 auto; min-width: 0; }
 
-.pg-item { display: grid; grid-template-columns: auto 7mm 1fr; align-items: center; gap: 8px;
-  padding: 5px 0; font-size: 13px; cursor: pointer; }
-.pg-item input { margin: 0; accent-color: var(--primary); width: 15px; height: 15px; }
+/* A chave de página: entra ou fica de fora, dito por extenso. */
+.chave { display: inline-flex; align-items: center; gap: 6px; flex: 0 0 auto; cursor: pointer;
+  font-family: var(--font-ui); font-size: 10px; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted-foreground); user-select: none; }
+.chave .trilho { position: relative; width: 30px; height: 16px; border-radius: 999px;
+  background: hsl(120 8% 78%); transition: background .15s; }
+.chave .botao { position: absolute; top: 2px; left: 2px; width: 12px; height: 12px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.25); transition: left .15s; }
+.chave.ligada .trilho { background: var(--success); }
+.chave.ligada .botao { left: 16px; }
+.chave.ligada .estado { color: var(--success); }
+.chave:hover .trilho { filter: brightness(.95); }
+.secao > summary .chave { margin-left: 4px; }
+
+.pg-item { display: grid; grid-template-columns: auto 7mm 1fr; align-items: center; gap: 10px;
+  padding: 6px 0; font-size: 13px; border-bottom: 1px solid var(--border); }
+.pg-item:last-child { border-bottom: 0; }
 .pg-item .n { font-family: var(--font-ui); font-size: 10px; color: var(--muted-foreground); }
-.pg-item input:not(:checked) ~ span { opacity: .45; }
+.pg-item.fora .n, .pg-item.fora .nome { opacity: .45; text-decoration: line-through; }
 .campos > .dica { margin: 0 0 6px; font-size: 12px; color: var(--muted-foreground); }

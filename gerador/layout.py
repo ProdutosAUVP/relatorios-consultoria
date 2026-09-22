@@ -332,12 +332,18 @@ def table(headers, rows, foot=None, caption=None, nums=None, widths=None, sm=Fal
     return '<table class="tb%s">%s%s<thead><tr>%s</tr></thead><tbody>%s</tbody>%s</table>' % (cls, cap, cg, th, body, tf)
 
 
-def kpi(k, v, s="", n=4):
-    return '<div class="kpi"><div class="k">%s</div><div class="v">%s</div><div class="s">%s</div></div>' % (k, v, s)
+def kpi(k, v, s="", grande=False):
+    return '<div class="kpi%s"><div class="k">%s</div><div class="v">%s</div><div class="s">%s</div></div>' % (
+        " grande" if grande else "", k, v, s)
 
 
-def kpis(items, n=4):
-    return '<div class="kpis" style="--n:%d">%s</div>' % (n, "".join(kpi(*i) for i in items))
+def kpis(items, n=4, destaque=False, leve=False):
+    """`destaque` faz o primeiro número maior que os outros — ocupa duas colunas
+    das `n` — porque numa fileira de caixas iguais nada lidera. `leve` é a
+    fileira de apoio, sem moldura."""
+    cls = "kpis" + (" leve" if leve else "")
+    return '<div class="%s" style="--n:%d">%s</div>' % (cls, n, "".join(
+        kpi(*i, grande=(destaque and j == 0)) for j, i in enumerate(items)))
 
 
 def cards(items, n=3):

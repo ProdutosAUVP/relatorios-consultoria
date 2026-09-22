@@ -29,7 +29,7 @@ THEMES = {
         logo=LOGO_CAPITAL, logo_ratio=1044.44/274.67, marca="AUVP Capital",
         accent="#EFBF4F", ph="rgba(239,191,79,.24)", ph_dk="rgba(239,191,79,.26)",
         warn_bg="rgba(239,191,79,.18)", warn_fg="#8A6A12", warn_bd="rgba(239,191,79,.5)",
-        chart=['#023620', '#3E7A52', '#7FAE86', '#B9D3B6', '#EFBF4F', '#8C7A3E'],
+        chart=['#0F8A51', '#8C47D1', '#F6A823', '#0DA2E7', '#E23670', '#E64D19', '#669E2E', '#3E5074'],
         cadencia="trimestral",
     ),
     "alta-renda": dict(
@@ -38,7 +38,7 @@ THEMES = {
         logo=LOGO_CAPITAL, logo_ratio=1044.44/274.67, marca="AUVP Capital",
         accent="#EFBF4F", ph="rgba(239,191,79,.24)", ph_dk="rgba(239,191,79,.26)",
         warn_bg="rgba(239,191,79,.18)", warn_fg="#8A6A12", warn_bd="rgba(239,191,79,.5)",
-        chart=['#010F08', '#2E5C3F', '#6A9673', '#A8C4A6', '#EFBF4F', '#8C7A3E'],
+        chart=['#0F8A51', '#8C47D1', '#F6A823', '#0DA2E7', '#E23670', '#E64D19', '#669E2E', '#3E5074'],
         cadencia="trimestral",
     ),
     "private": dict(
@@ -49,7 +49,7 @@ THEMES = {
         # campos preenchíveis e o selo de atenção também saem do amarelo.
         accent="#8C939A", ph="rgba(140,147,154,.26)", ph_dk="rgba(255,255,255,.24)",
         warn_bg="rgba(90,97,104,.14)", warn_fg="#4A5257", warn_bd="rgba(90,97,104,.34)",
-        chart=['#3A3E42', '#5C6167', '#82888E', '#A8ADB2', '#CBCFD3', '#E2E5E7'],
+        chart=['#3E5074', '#0F8A51', '#0DA2E7', '#F6A823', '#8C47D1', '#E23670', '#E64D19', '#669E2E'],
         cadencia="mensal",
     ),
     "assessoria": dict(
@@ -58,12 +58,12 @@ THEMES = {
         logo=LOGO_CAPITAL, logo_ratio=1044.44/274.67, marca="AUVP Capital",
         accent="#EFBF4F", ph="rgba(239,191,79,.24)", ph_dk="rgba(239,191,79,.26)",
         warn_bg="rgba(239,191,79,.18)", warn_fg="#8A6A12", warn_bd="rgba(239,191,79,.5)",
-        chart=['#005F45', '#3E8F6C', '#7CBB99', '#B7DCC6', '#EFBF4F', '#8C7A3E'],
+        chart=['#0F8A51', '#8C47D1', '#F6A823', '#0DA2E7', '#E23670', '#E64D19', '#669E2E', '#3E5074'],
         cadencia="semestral",
     ),
 }
 
-CONFID = "DOCUMENTO CONFIDENCIAL · PROIBIDO O COMPARTILHAMENTO"
+CONFID = "DOCUMENTO CONFIDENCIAL. PROIBIDO O COMPARTILHAMENTO"
 
 def _b64(path):
     import base64
@@ -95,11 +95,13 @@ def tokens(t):
   %(chart_vars)s
   --ink:%(ink)s; --ink-2:%(ink2)s; --line:%(line)s; --soft:%(soft)s;
   --paper:#FFFFFF; --pos:#1F7A4C; --neg:#B3402F;
+  --g-pos:#047B4A; --g-neg:#DC2828; --g-neu:#F1EDE4;
+  --g-seq-1:#E2F3E9; --g-seq-2:#ABE3C7; --g-seq-3:#5CD69D; --g-seq-4:#19B370; --g-seq-5:#023620;
 }""" % dict(t, chart_vars=" ".join(
         "--c%d:%s;" % (i, c) for i, c in enumerate(t["chart"], start=1)))
 
 
-def com_rotulo(t, texto, sep=" &middot; "):
+def com_rotulo(t, texto, sep=", "):
     """Junta o rótulo do segmento a um texto, quando há rótulo. Onde a logo já
     diz o nome — o caso do Private Banking — não se repete o nome ao lado dela."""
     return texto + sep + t["rotulo"] if t["rotulo"] else texto
@@ -245,18 +247,18 @@ CSS_A4 = BASE + """
 /* ---------- cabeçalho / rodapé ---------- */
 .pg-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:8mm;
   padding-bottom:3mm;border-bottom:1px solid var(--line)}
-.pg-head .sec{font-size:7pt;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.pg-head .sec{font-size:7pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
 .pg-head .rt{display:flex;align-items:center;gap:5mm}
-.pg-head .dt{font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.pg-head .dt{font-size:7pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
 
 .pg-foot{flex:0 0 auto;margin-top:auto;padding-top:3mm;border-top:1px solid var(--line);
   display:flex;justify-content:space-between;align-items:baseline;
-  font-size:6.2pt;letter-spacing:.12em;text-transform:uppercase;color:#9BA29D}
+  font-size:6.2pt;letter-spacing:.08em;text-transform:uppercase;color:#9BA29D}
 .pg-foot .no{font-size:9pt;font-weight:800;letter-spacing:0;color:var(--brand)}
 .pg-body{flex:1 1 auto;min-height:0;padding-top:8mm;display:flex;flex-direction:column}
 
 /* ---------- tipografia ---------- */
-.eyebrow{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);margin:0 0 2mm}
+.eyebrow{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);margin:0 0 2mm}
 h1.t{font-size:19pt;font-weight:800;text-transform:uppercase;letter-spacing:-.012em;line-height:1.04;margin:0 0 3mm}
 .lead{font-size:10pt;color:var(--ink-2);margin:0 0 8mm;max-width:155mm}
 h2{font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:8mm 0 4mm;
@@ -276,7 +278,12 @@ h3{font-size:9pt;font-weight:700;margin:5mm 0 2mm}
 /* ---------- KPIs ---------- */
 .kpis{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:4mm}
 .kpi{min-width:0;border:1px solid var(--line);border-top:1.33px solid var(--brand);background:var(--soft);padding:4mm}
-.kpi .k{font-size:6.4pt;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);font-weight:600;line-height:1.3}
+/* Um número manda: o primeiro KPI ocupa duas colunas com o valor maior. A
+   segunda fileira, de apoio, sai sem moldura — só o fio à esquerda. */
+.kpi.grande{grid-column:span 2}
+.kpi.grande .v{font-size:22pt;margin-top:1.5mm}
+.kpis.leve .kpi{border:0;border-left:1px solid var(--line);background:none;padding:.5mm 0 .5mm 3mm}
+.kpi .k{font-size:6.4pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600;line-height:1.3}
 .kpi .v{font-size:13.5pt;font-weight:800;line-height:1.15;margin-top:2mm;letter-spacing:-.02em;overflow-wrap:anywhere}
 .kpi .s{font-size:7pt;color:var(--ink-2);margin-top:1mm}
 
@@ -291,7 +298,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .tb.fix{table-layout:fixed}
 .tb.sm thead th{padding:2mm 2mm;font-size:6.2pt;letter-spacing:.06em}
 .tb thead th{background:var(--brand);color:#fff;text-align:left;font-weight:600;
-  padding:2mm 2mm;font-size:6.6pt;letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
+  padding:2mm 2mm;font-size:6.6pt;letter-spacing:.08em;text-transform:uppercase;line-height:1.3}
 .tb td{padding:3mm;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
 .tb tbody tr:nth-child(even) td{background:var(--soft)}
 
@@ -321,7 +328,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .crono td.fase{background:var(--brand);padding:0;width:9mm;border-bottom:1px solid var(--paper)}
 .crono td.fase span{display:block;writing-mode:vertical-rl;transform:rotate(180deg);
   margin:0 auto;padding:4mm 0;color:var(--accent);font-size:6.8pt;font-weight:700;
-  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+  letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
 .tb .num,.tb th.num{text-align:right}
 .tb tfoot td{font-weight:700;border-top:1.33px solid var(--ink);background:#fff}
 .tb caption{caption-side:bottom;text-align:left;font-size:6.8pt;color:var(--ink-2);padding-top:2mm}
@@ -345,7 +352,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 /* ---------- placeholders de gráfico ---------- */
 .chart{max-height:100mm;border:1px dashed var(--brand);background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(0,0,0,.022) 5px 10px);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2mm;text-align:center;padding:5mm}
-.chart .cl{font-size:6.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.chart .cl{font-size:6.6pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
 .chart .cd{font-size:7.6pt;color:var(--ink-2);max-width:105mm;line-height:1.45}
 /* Com o gráfico desenhado dentro, a moldura deixa de ser um pedido de
    preenchimento: some o tracejado e a hachura, e fica só o desenho. */
@@ -364,9 +371,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 
 /* ---------- diversos ---------- */
 .dl{display:grid;grid-template-columns:auto 1fr;gap:1.5mm 5mm;font-size:8.4pt;align-items:baseline}
-.dl dt{color:var(--ink-2);text-transform:uppercase;font-size:6.6pt;letter-spacing:.1em;font-weight:600}
+.dl dt{color:var(--ink-2);text-transform:uppercase;font-size:6.6pt;letter-spacing:.08em;font-weight:600}
 .dl dd{margin:0;font-weight:600}
-.pill{display:inline-block;font-size:6.4pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+.pill{display:inline-block;font-size:6.4pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   padding:1mm 2mm;border-radius:8mm;background:var(--soft);color:var(--brand);border:1px solid var(--line)}
 .pill.ok{background:rgba(31,122,76,.1);color:var(--pos);border-color:rgba(31,122,76,.25)}
 .pill.at{background:var(--warn-bg);color:var(--warn-fg);border-color:var(--warn-bd)}
@@ -379,7 +386,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .sig{margin-top:6mm;display:grid;grid-template-columns:1fr 1fr;gap:8mm;font-size:8pt}
 .sig .ln{border-top:1px solid var(--ink);padding-top:1.5mm;color:var(--ink-2)}
 .qr{width:34mm;height:34mm;border:1px dashed var(--brand);display:flex;align-items:center;justify-content:center;
-  text-align:center;font-size:6.4pt;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:700}
+  text-align:center;font-size:6.4pt;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);font-weight:700}
 """
 
 
@@ -403,16 +410,16 @@ CSS_SLIDE = BASE + """
 
 .pg-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:10mm;
   padding-bottom:3mm;border-bottom:1px solid var(--line)}
-.pg-head .sec{font-size:8pt;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.pg-head .sec{font-size:8pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
 .pg-head .rt{display:flex;align-items:center;gap:6mm}
-.pg-head .dt{font-size:8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.pg-head .dt{font-size:8pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
 
 .pg-foot{flex:0 0 auto;margin-top:auto;padding-top:3mm;display:flex;justify-content:space-between;align-items:baseline;
-  font-size:6.8pt;letter-spacing:.12em;text-transform:uppercase;color:#9BA29D}
+  font-size:6.8pt;letter-spacing:.08em;text-transform:uppercase;color:#9BA29D}
 .pg-foot .no{font-size:11pt;font-weight:800;letter-spacing:0;color:var(--brand)}
 .pg-body{flex:1 1 auto;min-height:0;padding-top:8mm;display:flex;flex-direction:column}
 
-.eyebrow{display:block;font-size:7.5pt;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);margin:0 0 3mm}
+.eyebrow{display:block;font-size:7.5pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);margin:0 0 3mm}
 .slide.dark .eyebrow{color:#fff}
 h1.t{font-size:26pt;font-weight:800;text-transform:uppercase;letter-spacing:-.015em;line-height:1.03;margin:0 0 4mm}
 .lead{font-size:11pt;color:var(--ink-2);margin:0 0 6mm;max-width:210mm}
@@ -435,13 +442,16 @@ h3{font-size:10.5pt;font-weight:700;margin:4mm 0 1.5mm}
 
 .kpis{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:5mm}
 .kpi{min-width:0;border:1px solid var(--line);border-top:1.33px solid var(--brand);background:var(--soft);padding:5mm}
-.kpi .k{font-size:7.4pt;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.kpi.grande{grid-column:span 2}
+.kpi.grande .v{font-size:30pt;margin-top:2mm}
+.kpis.leve .kpi{border:0;border-left:1px solid var(--line);background:none;padding:1mm 0 1mm 4mm}
+.kpi .k{font-size:7.4pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
 .kpi .v{font-size:20pt;font-weight:800;line-height:1.1;margin-top:3mm;letter-spacing:-.025em;overflow-wrap:anywhere}
 .kpi .s{font-size:8.4pt;color:var(--ink-2);margin-top:1.5mm}
 
 table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .tb thead th{background:var(--brand);color:#fff;text-align:left;font-weight:600;
-  padding:3mm 3mm;font-size:7.6pt;letter-spacing:.1em;text-transform:uppercase}
+  padding:3mm 3mm;font-size:7.6pt;letter-spacing:.08em;text-transform:uppercase}
 /* mesmas variantes do A4: a classe tem de significar a mesma coisa nos dois formatos */
 .tb.sm{font-size:8.4pt}
 .tb.sm td{padding:2.5mm 3mm}
@@ -479,7 +489,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .crono td.fase{background:var(--brand);padding:0;width:9mm;border-bottom:1px solid var(--paper)}
 .crono td.fase span{display:block;writing-mode:vertical-rl;transform:rotate(180deg);
   margin:0 auto;padding:4mm 0;color:var(--accent);font-size:6.8pt;font-weight:700;
-  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+  letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
 .slide.dark .tb td{border-color:rgba(255,255,255,.16)}
 .slide.dark .tb tbody tr:nth-child(even) td{background:rgba(255,255,255,.05)}
 .tb .num,.tb th.num{text-align:right}
@@ -500,7 +510,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .chart{border:1px dashed currentColor;background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(0,0,0,.02) 6px 12px);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3mm;text-align:center;padding:6mm}
 .slide.dark .chart{background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.045) 6px 12px)}
-.chart .cl{font-size:7.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.chart .cl{font-size:7.6pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
 .chart.feito{border:0;background:none;padding:0;gap:2mm}
 .slide.dark .chart .cl{color:#fff}
 .chart .cd{font-size:9pt;color:var(--ink-2);max-width:150mm;line-height:1.45}
@@ -510,20 +520,20 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .sk-donut{width:32mm;height:32mm;border-radius:50%;opacity:.35;
   background:conic-gradient(var(--c1) 0 42%,var(--c2) 42% 63%,var(--c3) 63% 82%,var(--c4) 82% 100%);
   -webkit-mask:radial-gradient(circle,transparent 52%,#000 53%);mask:radial-gradient(circle,transparent 52%,#000 53%)}
-.pill{display:inline-block;font-size:7.4pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+.pill{display:inline-block;font-size:7.4pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   padding:1mm 3mm;border-radius:8mm;background:var(--soft);color:var(--brand);border:1px solid var(--line)}
 .slide.dark .pill{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.24)}
 .dl{display:grid;grid-template-columns:auto 1fr;gap:2mm 6mm;font-size:9.5pt;align-items:baseline}
-.dl dt{color:var(--ink-2);text-transform:uppercase;font-size:7.4pt;letter-spacing:.1em;font-weight:600}
+.dl dt{color:var(--ink-2);text-transform:uppercase;font-size:7.4pt;letter-spacing:.08em;font-weight:600}
 .slide.dark .dl dt{color:rgba(255,255,255,.7)}
 .dl dd{margin:0;font-weight:600}
 .qr{width:52mm;height:52mm;border:1px dashed currentColor;display:flex;align-items:center;justify-content:center;
-  text-align:center;font-size:7.6pt;letter-spacing:.12em;text-transform:uppercase;font-weight:700;opacity:.85}
+  text-align:center;font-size:7.6pt;letter-spacing:.08em;text-transform:uppercase;font-weight:700;opacity:.85}
 .imgbox{border:1px dashed currentColor;display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:2mm;text-align:center;padding:8mm;
   background:repeating-linear-gradient(135deg,transparent 0 7px,rgba(0,0,0,.022) 7px 14px)}
 .slide.dark .imgbox{background:repeating-linear-gradient(135deg,transparent 0 7px,rgba(255,255,255,.05) 7px 14px)}
-.imgbox .cl{font-size:7.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.imgbox .cl{font-size:7.6pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
 .slide.dark .imgbox .cl{color:#fff}
 .imgbox .cd{font-size:9pt;max-width:90mm;line-height:1.45;color:var(--ink-2)}
 
@@ -553,7 +563,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .cv-sub{margin-top:3mm;font-size:25.3pt;line-height:1.1;text-transform:uppercase;opacity:.92}
 .cv-foot{position:absolute;left:24.6mm;right:24.6mm;bottom:11mm;z-index:4;
   display:flex;align-items:flex-end;gap:12mm}
-.cv-foot .cf{font-size:7.6pt;letter-spacing:.14em;text-transform:uppercase;opacity:.55}
+.cv-foot .cf{font-size:7.6pt;letter-spacing:.08em;text-transform:uppercase;opacity:.55}
 .cv-foot .id{margin-left:auto;text-align:right;font-size:9.5pt;line-height:1.7;opacity:.9}
 .slide.cover .graf{z-index:2}
 .slide.divider .graf{z-index:2}
@@ -570,7 +580,7 @@ CSS_SLIDE += """
 .plan{border:1px solid var(--line);border-top:1.33px solid var(--line);display:flex;flex-direction:column;padding:5mm}
 .plan.hl{border-color:var(--line);border-top-color:var(--accent);background:var(--soft)}
 .plan .nm{font-size:11.5pt;font-weight:800;text-transform:uppercase;line-height:1.12;letter-spacing:-.01em}
-.plan .tag{font-size:7.4pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.plan .tag{font-size:7.4pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
 .plan .pr{margin:3mm 0;padding:3mm 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .plan .pr b{display:block;font-size:14pt;font-weight:800;color:var(--brand);letter-spacing:-.02em}
 .plan .pr span{font-size:8.4pt;color:var(--ink-2)}
@@ -612,7 +622,7 @@ CSS_A4 += """
   border:1px solid var(--brand);background:var(--paper);color:var(--brand);
   display:flex;align-items:center;justify-content:center;font-weight:800;font-size:8pt;letter-spacing:-.01em}
 .flow .node::before{counter-increment:fl;content:counter(fl,decimal-leading-zero)}
-.flow .tag{display:block;font-size:5.8pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+.flow .tag{display:block;font-size:5.8pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--ink-2);margin-bottom:1mm}
 .flow h4{font-size:9pt;font-weight:700;margin:0 0 1mm}
 .flow p{font-size:8pt;color:var(--ink-2);margin:0;line-height:1.45}
@@ -621,7 +631,12 @@ CSS_A4 += """
 /* ---------- gráfico desenhado a partir do dado ----------
    Entra no lugar da moldura vazia quando o consultor preenche a tabelinha na
    ferramenta. É SVG: sai vetor no PDF, na tipografia da casa e nas cores do
-   segmento — `--c1`..`--c6`, as mesmas da legenda. */
+   segmento — `--c1`..`--c8`, as mesmas da legenda: a paleta categórica do
+   design system (produtosauvp.github.io/central), em que a primeira cor é a da
+   marca e as demais foram escolhidas para máximo contraste de matiz. Variação
+   com sinal usa a divergente (`--g-pos`, `--g-neg`) e intensidade a sequencial
+   (`--g-seq-1`..`--g-seq-5`). São tokens só dos gráficos: o resto do documento
+   segue as cores do segmento. */
 .g-svg{width:100%;height:auto;max-height:100%;display:block;flex:1 1 0;min-height:0}
 /* O desenho não empurra a caixa: ele ocupa o que sobra dela. A moldura vazia e a
    preenchida medem o mesmo, e o gráfico nunca cresce por cima do que está ao lado. */
@@ -639,7 +654,8 @@ CSS_A4 += """
 .legend{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5mm 4mm;
   margin:3mm 0 0;padding:0;font-size:6.6pt;color:var(--ink-2)}
 .legend li{display:flex;align-items:center;gap:1.5mm}
-.legend i{width:4mm;height:1.33px;flex:0 0 auto}
+.legend i{width:2.4mm;height:2.4mm;border-radius:50%;flex:0 0 auto}
+.g-zero{stroke:var(--ink-2);stroke-width:1}
 
 """
 
@@ -654,7 +670,7 @@ CSS_SLIDE += """
   border:1px solid var(--brand);background:var(--paper);color:var(--brand);
   display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11pt;letter-spacing:-.01em}
 .flow .node::before{counter-increment:fl;content:counter(fl,decimal-leading-zero)}
-.flow .tag{display:block;font-size:7pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+.flow .tag{display:block;font-size:7pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--ink-2);margin-bottom:1mm}
 .flow h4{font-size:10.5pt;font-weight:700;margin:0 0 1mm}
 .flow p{font-size:9pt;color:var(--ink-2);margin:0;line-height:1.45}
@@ -663,7 +679,12 @@ CSS_SLIDE += """
 /* ---------- gráfico desenhado a partir do dado ----------
    Entra no lugar da moldura vazia quando o consultor preenche a tabelinha na
    ferramenta. É SVG: sai vetor no PDF, na tipografia da casa e nas cores do
-   segmento — `--c1`..`--c6`, as mesmas da legenda. */
+   segmento — `--c1`..`--c8`, as mesmas da legenda: a paleta categórica do
+   design system (produtosauvp.github.io/central), em que a primeira cor é a da
+   marca e as demais foram escolhidas para máximo contraste de matiz. Variação
+   com sinal usa a divergente (`--g-pos`, `--g-neg`) e intensidade a sequencial
+   (`--g-seq-1`..`--g-seq-5`). São tokens só dos gráficos: o resto do documento
+   segue as cores do segmento. */
 .g-svg{width:100%;height:auto;max-height:100%;display:block;flex:1 1 0;min-height:0}
 /* O desenho não empurra a caixa: ele ocupa o que sobra dela. A moldura vazia e a
    preenchida medem o mesmo, e o gráfico nunca cresce por cima do que está ao lado. */
@@ -712,7 +733,7 @@ CSS_A4 += """
 .lista li::before{content:"";position:absolute;left:0;top:8px;width:2.6mm;height:1.33px;background:var(--accent)}
 .lista.mut li{color:var(--ink-2)}
 .chips{display:flex;flex-wrap:wrap;gap:1.5mm;margin-bottom:1mm}
-.side h3{font-size:6.8pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+.side h3{font-size:6.8pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--ink-2);margin:5mm 0 2mm;padding-bottom:1mm;border-bottom:1px solid var(--line)}
 .side h3:first-child{margin-top:0}
 .side .lista{font-size:8pt;margin-bottom:0}
@@ -740,7 +761,7 @@ CSS_A4 += """
 .imgbox{border:1px dashed var(--line);display:flex;flex-direction:column;
   align-items:center;justify-content:center;gap:1.5mm;text-align:center;padding:5mm;
   background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(0,0,0,.022) 5px 10px)}
-.imgbox .cl{font-size:6.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+.imgbox .cl{font-size:6.6pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--brand)}
 .imgbox .cd{font-size:7.4pt;max-width:70mm;line-height:1.4;color:var(--ink-2)}
 
@@ -771,7 +792,7 @@ CSS_A4 += """
 .marcos li:last-child::before{display:none}
 .marcos li::after{content:"";position:absolute;left:0;top:1.2mm;width:2.4mm;height:2.4mm;
   border-radius:50%;border:1px solid var(--brand);background:var(--paper)}
-.marcos .q{display:block;font-size:6.6pt;font-weight:700;letter-spacing:.15em;
+.marcos .q{display:block;font-size:6.6pt;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:var(--brand);margin-bottom:1mm}
 .marcos p{margin:0;font-size:8.2pt;line-height:1.45;color:var(--ink-2)}
 
@@ -903,7 +924,7 @@ CSS_LONGA = """
   background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.05) 6px 12px)}
 .lg-id .rt-vaga .cl{color:rgba(255,255,255,.72)}
 .lg-id .rt-vaga .cd{color:rgba(255,255,255,.5)}
-.lg-plano{display:block;font-size:7.2pt;font-weight:700;letter-spacing:.2em;
+.lg-plano{display:block;font-size:7.2pt;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:3mm}
 .lg-id h1{margin:0;font-size:30pt;font-weight:800;text-transform:uppercase;
   line-height:1.02;letter-spacing:-.02em}
@@ -925,7 +946,7 @@ CSS_LONGA = """
 .lg-cred>div{min-width:0;padding:5mm 7mm;border-left:1px solid rgba(255,255,255,.22)}
 .lg-cred>div:first-child{padding-left:0;border-left:0}
 .lg-cred>div:last-child{padding-right:0}
-.lg-cred h3{margin:0 0 3mm;font-size:6.6pt;font-weight:700;letter-spacing:.16em;
+.lg-cred h3{margin:0 0 3mm;font-size:6.6pt;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:rgba(255,255,255,.62)}
 /* dois blocos empilhados na mesma coluna precisam de ar entre eles */
 .lg-cred h3:not(:first-child){margin-top:7mm}
@@ -985,6 +1006,6 @@ CSS_LONGA = """
 .lg-pe .legal{color:rgba(255,255,255,.5)}
 .lg-assina{margin-top:12mm;padding-top:6mm;border-top:1px solid rgba(255,255,255,.3);
   display:flex;align-items:center;justify-content:space-between;gap:10mm}
-.lg-assina .data{font-size:8pt;letter-spacing:.14em;text-transform:uppercase;
+.lg-assina .data{font-size:8pt;letter-spacing:.08em;text-transform:uppercase;
   color:rgba(255,255,255,.72)}
 """ % dict(h=ALTURA_LONGA)

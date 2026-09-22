@@ -423,8 +423,7 @@ elas é que busca o equilíbrio entre preservação, renda e crescimento.</p>
     # ainda não fechou, prometer faixa por classe é adiantar o que não foi
     # analisado. Quem manda decide na ferramenta, desmarcando a página — a
     # etiqueta ao lado do título é o lembrete de que isso é uma escolha.
-    S.append(slide(t, "Alocação", 9, """<span class="eyebrow">Prévia da implementação</span>
-<h1 class="t">As bandas da estrutura meta %(op)s</h1>
+    S.append(slide(t, "Alocação", 9, """<h1 class="t">As bandas da estrutura meta %(op)s</h1>
 <p class="lead">Cada classe trabalha dentro de uma banda, e não de um número fixo: é o que
 permite acomodar o momento de mercado sem sair da estratégia. As bandas abaixo são as do seu
 perfil %(perf)s.</p>

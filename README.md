@@ -177,8 +177,9 @@ endereço de nada continua sendo só texto. A tabela dos campos está em `LINKS`
 Quem vai emitir um documento não precisa mexer no repositório. A ferramenta em
 **[produtosauvp.github.io/relatorios-consultoria](https://produtosauvp.github.io/relatorios-consultoria/)**
 faz o caminho inteiro no navegador: escolher o produto, escolher o documento, preencher os
-campos com a prévia atualizando ao lado, enviar as fotos e os gráficos, e exportar em PDF
-ou HTML.
+campos com a prévia atualizando ao lado (ou escrever direto na prévia: clique num texto do
+documento e digite), enviar as fotos e os gráficos, e exportar em PDF ou HTML. Cada seção
+tem, na calha à direita, a chave que põe a página no documento ou tira dela.
 
 Dá também para escolher que páginas entram: desmarcar uma tira do arquivo exportado e
 renumera o resto. O que ela entrega é o mesmo modelo deste repositório com os valores no lugar — não existe
@@ -212,6 +213,12 @@ Para rodar localmente:
 npm run build && npm run site   # gera os modelos e o índice da ferramenta
 npm run servir                  # http://localhost:8099
 ```
+
+A interface segue os tokens do design system da Central de Produto
+(`produtosauvp.github.io/central`): fontes, cores, raios e o tema escuro, que entra pelo
+`prefers-color-scheme` do sistema. Os documentos mantêm as cores de cada segmento; só os
+gráficos seguem a paleta de dados do design system — categórica de oito cores para séries,
+divergente (verde/vermelho) para o que tem sinal.
 
 A publicação é automática: o workflow `.github/workflows/pages.yml` regera os modelos e o
 índice a cada push em `main` e publica `docs/`. Em **Settings › Pages**, a origem precisa

@@ -27,11 +27,10 @@ def build(t, seg):
 
     S.append(cover_slide(t, "Relatório", "Mensal",
                          com_rotulo(t, ph("mes_referencia")),
-                         [ph("nome_cliente"), papel + " &middot; " + ph("nome_responsavel"),
+                         [ph("nome_cliente"), papel + ": " + ph("nome_responsavel"),
                           "Posição em " + ph("data_posicao")]))
 
-    S.append(slide(t, "Agenda", 2, """<span class="eyebrow">Nossa conversa de hoje</span>
-<h1 class="t">Agenda</h1>
+    S.append(slide(t, "Agenda", 2, """<h1 class="t">Agenda</h1>
 <ol class="tl" style="grid-template-columns:1fr 1fr;flex:1 1 auto;align-content:start">
   <li><h4>Como fechou o mês</h4><p>Patrimônio, rentabilidade e comparação com as referências.</p></li>
   <li><h4>Alocação</h4><p>Onde a carteira está em relação ao alvo do seu perfil.</p></li>
@@ -39,11 +38,10 @@ def build(t, seg):
   <li><h4>%(ext)s</h4><p>%(exd)s</p></li>
   <li><h4>Cenário e próximos passos</h4><p>O que esperamos e o que vamos fazer a respeito.</p></li>
 </ol>
-<div class="note" style="margin-top:auto"><p><strong>Tempo previsto.</strong> %(tempo)s &middot; <strong>Dúvidas:</strong> pode interromper a qualquer momento.</p></div>""" % dict(
+<div class="note" style="margin-top:auto"><p><strong>Tempo previsto.</strong> %(tempo)s<br><strong>Dúvidas:</strong> pode interromper a qualquer momento.</p></div>""" % dict(
         ext=ex_t, exd=ex_d, tempo=ph("duracao_reuniao"))))
 
-    S.append(slide(t, "Resultado do mês", 3, """<span class="eyebrow">%(mes)s</span>
-<h1 class="t">Como fechou o mês</h1>
+    S.append(slide(t, "Resultado do mês", 3, """<h1 class="t">Como fechou o mês</h1>
 %(kpis)s
 <div class="gap"></div>
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch">
@@ -58,7 +56,8 @@ def build(t, seg):
         kpis=kpis([("Patrimônio total", ph("patrimonio_total"), "Em " + ph("data_posicao")),
                    ("No mês", ph("rent_mes"), "No ano: " + ph("rent_ano")),
                    ("Em 12 meses", ph("rent_12m"), "24 meses: " + ph("rent_24m")),
-                   ("Aportes líquidos", ph("aporte_liquido_mes"), "Resgates: " + ph("resgates_mes"))]),
+                   ("Aportes líquidos", ph("aporte_liquido_mes"), "Resgates: " + ph("resgates_mes"))],
+                  n=5, destaque=True),
         ch=chart("Patrimônio nos últimos 12 meses", "Evolução do patrimônio mês a mês.", "line",
                  "min-height:52mm", eixo="Patrimônio (R$)", pontos=MESES),
         frase=ph("resumo_do_mes"), aten=ph("ponto_de_atencao_mes")), dark=True))
@@ -110,8 +109,7 @@ def build(t, seg):
                    ("Proventos", ph("total_proventos"), "Líquido de IR"),
                    ("Custos", ph("total_custos"), ph("custo_perc_patrimonio") + " do patrimônio")]))))
 
-    S.append(slide(t, ex_t, 7, """<span class="eyebrow">%(nome)s</span>
-<h1 class="t">%(ext)s</h1>
+    S.append(slide(t, ex_t, 7, """<h1 class="t">%(ext)s</h1>
 <p class="lead">%(exd)s</p>
 <div class="cols2u" style="flex:1 1 auto;align-items:stretch">
   <div>%(tab)s</div>

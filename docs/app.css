@@ -1,7 +1,9 @@
 /* Ferramenta de preenchimento dos modelos AUVP Capital.
-   Os tokens vêm do design system (produtosauvp.github.io/central/design-system):
-   Anek Latin nos títulos, Roboto no texto, Sora na interface, verde #023620
-   como primária, raio de 5px nos botões e 0,75rem nos blocos. */
+   Os tokens são os do design system (produtosauvp.github.io/central/design-system,
+   `src/index.css`): Anek Latin nos títulos, Roboto no texto, Sora na interface,
+   verde 155 93% 11% como primária, raio de 5px nos botões e 0,75rem nos blocos.
+   O tema escuro é o da Central — fundo preto, base preto/branco/cinza, verde
+   #5A8770 só como acento — e entra pelo `prefers-color-scheme` do sistema. */
 
 :root {
   --font-display: 'Anek Latin', system-ui, sans-serif;
@@ -10,22 +12,81 @@
 
   --background: hsl(0 0% 100%);
   --foreground: hsl(110 78% 9%);
+  --card: hsl(0 0% 100%);
   --primary: hsl(155 93% 11%);
   --primary-foreground: hsl(0 0% 100%);
+  --primary-emphasis: hsl(155 93% 11%);
   --secondary: hsl(160 55% 18%);
   --muted: hsl(120 10% 95%);
   --muted-foreground: hsl(110 10% 40%);
+  --accent: hsl(155 93% 11%);
+  --accent-foreground: hsl(0 0% 100%);
   --border: hsl(120 10% 88%);
+  --input: hsl(120 10% 88%);
   --ring: hsl(155 93% 11%);
   --success: hsl(142 72% 29%);
   --warning: hsl(35 95% 42%);
+  --info: hsl(210 90% 42%);
   --destructive: hsl(0 84% 48%);
   --topo: hsl(0 0% 0%);
+  --fundo: hsl(120 14% 97%);
+
+  /* Paleta de dados do design system: categórica (8), sequencial (5) e
+     divergente. A ferramenta usa pouco — as amostras dos cartões e os ícones
+     da paleta de blocos —; o gráfico em si é desenhado dentro do documento,
+     com os mesmos tokens em `gerador/common.py`. */
+  --chart-1: hsl(152 80% 30%);
+  --chart-2: hsl(270 60% 55%);
+  --chart-3: hsl(38 92% 55%);
+  --chart-4: hsl(199 89% 48%);
+  --chart-5: hsl(340 75% 55%);
+  --chart-6: hsl(15 80% 50%);
+  --chart-7: hsl(90 55% 40%);
+  --chart-8: hsl(220 30% 35%);
+  --chart-div-neg: hsl(0 72% 51%);
+  --chart-div-pos: hsl(155 93% 25%);
 
   --radius: .75rem;
-  --radius-sm: .5rem;
+  --radius-md: calc(.75rem - 2px);
+  --radius-sm: calc(.75rem - 4px);
   --radius-btn: 5px;
   --sombra: 0 1px 2px hsl(110 20% 10% / .06), 0 8px 24px hsl(110 20% 10% / .06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: hsl(0 0% 6%);
+    --foreground: hsl(0 0% 98%);
+    --card: hsl(0 0% 6%);
+    --primary: hsl(0 0% 98%);
+    --primary-foreground: hsl(0 0% 8%);
+    --primary-emphasis: hsl(0 0% 98%);
+    --secondary: hsl(0 0% 12%);
+    --muted: hsl(0 0% 10%);
+    --muted-foreground: hsl(0 0% 70%);
+    --accent: hsl(145 20% 44%);
+    --accent-foreground: hsl(0 0% 5%);
+    --border: hsl(0 0% 16%);
+    --input: hsl(0 0% 14%);
+    --ring: hsl(145 20% 50%);
+    --success: hsl(142 60% 48%);
+    --warning: hsl(38 95% 60%);
+    --info: hsl(210 90% 65%);
+    --destructive: hsl(0 80% 63%);
+    --topo: hsl(0 0% 3%);
+    --fundo: hsl(0 0% 0%);
+    --chart-1: hsl(135 50% 55%);
+    --chart-2: hsl(270 65% 70%);
+    --chart-3: hsl(38 90% 65%);
+    --chart-4: hsl(199 85% 65%);
+    --chart-5: hsl(340 75% 70%);
+    --chart-6: hsl(15 80% 65%);
+    --chart-7: hsl(90 55% 60%);
+    --chart-8: hsl(220 30% 70%);
+    --chart-div-neg: hsl(0 70% 60%);
+    --chart-div-pos: hsl(135 50% 55%);
+    --sombra: 0 1px 2px hsl(0 0% 0% / .5), 0 8px 24px hsl(0 0% 0% / .5);
+  }
 }
 
 * { box-sizing: border-box; }
@@ -36,12 +97,12 @@ body {
   font-size: 15px;
   line-height: 1.5;
   color: var(--foreground);
-  background: hsl(120 14% 97%);
+  background: var(--fundo);
 }
 
 h1, h2, h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.01em; margin: 0; }
 
-a { color: var(--primary); }
+a { color: var(--primary-emphasis); }
 
 /* ---------- cabeçalho ---------- */
 
@@ -75,8 +136,8 @@ a { color: var(--primary); }
   width: 20px; height: 20px; border-radius: 50%; background: var(--muted);
   font-size: 10px; font-weight: 700; color: var(--muted-foreground); }
 .passo[aria-current='true'] { color: var(--primary); border-bottom-color: var(--primary); }
-.passo[aria-current='true'] .n { background: var(--primary); color: #fff; }
-.passo.feito .n { background: var(--success); color: #fff; }
+.passo[aria-current='true'] .n { background: var(--primary); color: var(--primary-foreground); }
+.passo.feito .n { background: var(--success); color: var(--accent-foreground); }
 .passo:disabled { opacity: .45; cursor: not-allowed; }
 
 /* ---------- estrutura ---------- */
@@ -87,7 +148,7 @@ main { padding: 28px 24px 64px; }
 
 .cabecalho-tela { margin-bottom: 22px; }
 .cabecalho-tela h2 { font-size: 26px; }
-.cabecalho-tela p { margin: 6px 0 0; color: var(--muted-foreground); max-width: 62ch; }
+.cabecalho-tela p { margin: 6px 0 0; color: var(--muted-foreground); }
 
 /* ---------- cartões de escolha ---------- */
 
@@ -118,12 +179,15 @@ main { padding: 28px 24px 64px; }
   border: 1px solid var(--primary); background: var(--primary); color: var(--primary-foreground);
   cursor: pointer; transition: all .2s; text-decoration: none;
 }
-.btn:hover { background: transparent; color: var(--primary); }
-.btn.fantasma { background: transparent; color: var(--primary); }
-.btn.fantasma:hover { background: var(--primary); color: #fff; }
-.btn.neutro { border-color: var(--border); background: var(--background); color: var(--foreground); }
-.btn.neutro:hover { border-color: var(--primary); color: var(--primary); background: var(--background); }
-.btn.pequeno { height: 32px; padding: 0 12px; font-size: 11px; }
+/* Como no design system: o botão cheio "vaza" no hover — fundo some e a borda
+   fica —, e o vazado (outline) ganha o fundo de acento. */
+.btn:hover { background: transparent; color: var(--primary-emphasis); border-color: var(--primary-emphasis); }
+.btn.fantasma { background: transparent; color: var(--primary-emphasis); }
+.btn.fantasma:hover { background: var(--primary); color: var(--primary-foreground); }
+.btn.neutro { border-color: var(--input); background: var(--background); color: var(--foreground); }
+.btn.neutro:hover { border-color: var(--accent); background: var(--accent); color: var(--accent-foreground); }
+.btn.pequeno { height: 36px; padding: 0 12px; font-size: 12px; }
+.btn:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
 .btn:disabled { opacity: .5; cursor: not-allowed; }
 /* O rótulo do botão não quebra em duas linhas: a altura é fechada, e o texto
    quebrado transbordava por cima da borda. */
@@ -144,10 +208,10 @@ main { padding: 28px 24px 64px; }
 .painel > header .dir { margin-left: auto; display: flex; gap: 8px; align-items: center; }
 
 .linha-busca { padding: 12px 16px; }
-.busca { display: block; width: 100%; height: 38px; padding: 0 12px;
+.busca { display: block; width: 100%; height: 40px; padding: 0 12px;
   border: 1px solid var(--border); border-radius: var(--radius-sm);
   font: inherit; font-size: 14px; background: var(--background); color: inherit; }
-.busca:focus { outline: 2px solid var(--ring); outline-offset: -1px; }
+.busca:focus { outline: 2px solid var(--ring); outline-offset: 2px; }
 
 .formulario { max-height: calc(100vh - 260px); overflow-y: auto; }
 
@@ -170,11 +234,12 @@ main { padding: 28px 24px 64px; }
 .campo label { display: block; font-family: var(--font-ui); font-size: 11px;
   letter-spacing: .04em; color: var(--muted-foreground); margin-bottom: 4px; }
 .campo input, .campo textarea {
-  width: 100%; padding: 8px 10px; font: inherit; font-size: 14px;
-  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  width: 100%; min-height: 40px; padding: 8px 12px; font: inherit; font-size: 14px;
+  border: 1px solid var(--input); border-radius: var(--radius-md);
   background: var(--background); color: inherit; resize: vertical;
 }
-.campo input:focus, .campo textarea:focus { outline: 2px solid var(--ring); outline-offset: -1px; }
+.campo input::placeholder, .campo textarea::placeholder { color: var(--muted-foreground); opacity: .8; }
+.campo input:focus, .campo textarea:focus { outline: 2px solid var(--ring); outline-offset: 2px; }
 .campo input[data-preenchido='1'], .campo textarea[data-preenchido='1'] { border-color: var(--success); }
 .campo .dica { margin: 4px 0 0; font-size: 12px; color: var(--muted-foreground); }
 .campo input[type='number'] { appearance: textfield; -moz-appearance: textfield; }
@@ -316,11 +381,11 @@ main { padding: 28px 24px 64px; }
 .chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px 5px 8px;
   font: inherit; font-size: 12px; color: var(--foreground); background: var(--background);
   border: 1px solid var(--border); border-radius: 999px; cursor: pointer; }
-.chip .ico { width: 15px; height: 15px; color: var(--success); }
-.chip:hover { border-color: var(--ring); background: var(--muted); }
+.chip .ico { width: 15px; height: 15px; color: var(--chart-1); }
+.chip:hover { border-color: var(--accent); background: var(--muted); }
 .chip:focus-visible { outline: 2px solid var(--ring); outline-offset: 1px; }
-.bloco .ico { width: 14px; height: 14px; color: var(--success); }
-.secao.montagem > summary .pg { background: var(--success); color: #fff; }
+.bloco .ico { width: 14px; height: 14px; color: var(--chart-1); }
+.secao.montagem > summary .pg { background: var(--success); color: var(--accent-foreground); }
 
 /* O aviso de página que não coube. Fica no alto do formulário, e não na tela de
    exportar: o problema se resolve tirando conteúdo, e é no formulário que se
@@ -341,7 +406,7 @@ label.btn input[type='file'] { display: none; }
 /* ---------- prévia ---------- */
 
 .previa { position: sticky; top: 92px; }
-.palco { background: hsl(120 10% 90%); padding: 18px; display: flex; justify-content: center;
+.palco { background: var(--muted); padding: 18px; display: flex; justify-content: center;
   align-items: flex-start; overflow: auto; }
 .moldura { background: #fff; box-shadow: 0 6px 30px hsl(110 20% 10% / .18); flex: 0 0 auto; }
 .previa iframe { border: 0; background: #fff; transform-origin: top left; display: block; }
@@ -389,15 +454,26 @@ label.btn input[type='file'] { display: none; }
 .chave { display: inline-flex; align-items: center; gap: 6px; flex: 0 0 auto; cursor: pointer;
   font-family: var(--font-ui); font-size: 10px; letter-spacing: .06em; text-transform: uppercase;
   color: var(--muted-foreground); user-select: none; }
-.chave .trilho { position: relative; width: 30px; height: 16px; border-radius: 999px;
-  background: hsl(120 8% 78%); transition: background .15s; }
-.chave .botao { position: absolute; top: 2px; left: 2px; width: 12px; height: 12px; border-radius: 50%;
-  background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.25); transition: left .15s; }
-.chave.ligada .trilho { background: var(--success); }
-.chave.ligada .botao { left: 16px; }
-.chave.ligada .estado { color: var(--success); }
+.chave .trilho { position: relative; width: 44px; height: 24px; border-radius: 999px;
+  background: var(--input); transition: background .15s; }
+.chave .botao { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--background); box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: left .15s; }
+.chave.ligada .trilho { background: var(--primary); }
+.chave.ligada .botao { left: 22px; }
+.chave.ligada .estado { color: var(--primary-emphasis); }
+.chave:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; border-radius: 999px; }
 .chave:hover .trilho { filter: brightness(.95); }
-.secao > summary .chave { margin-left: 4px; }
+/* A chave fica fora da seção, na calha à direita: é um controle do documento
+   (a página entra ou não), e não do formulário da seção. */
+.linha-secao { display: grid; grid-template-columns: 1fr 64px; align-items: center; }
+.linha-secao > .secao { min-width: 0; }
+.linha-secao > .chave { justify-content: center; padding: 0 8px; }
+.linha-secao > .chave .estado { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.chave .botao::before { content: ''; position: absolute; inset: 0; background-size: 12px; background-position: center;
+  background-repeat: no-repeat; }
+.chave.ligada .botao::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3 3 7-7' fill='none' stroke='%23023620' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.chave:not(.ligada) .botao::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='5.5' fill='none' stroke='%23666' stroke-width='1.8'/%3E%3Cpath d='M4.2 11.8l7.6-7.6' stroke='%23666' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E"); }
+.linha-secao.fora > .secao > summary .titulo-secao, .linha-secao.fora > .secao > summary .pg { opacity: .45; text-decoration: line-through; }
 
 .pg-item { display: grid; grid-template-columns: auto 7mm 1fr; align-items: center; gap: 10px;
   padding: 6px 0; font-size: 13px; border-bottom: 1px solid var(--border); }

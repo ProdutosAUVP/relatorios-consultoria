@@ -17,8 +17,7 @@ def build(t, seg):
                       [x for x in [t["rotulo"], "Elaborado por " + ph("nome_analista"),
                        ph("registro_analista"), ph("mes_referencia")] if x], grafismo=2))
 
-    P.append(page_a4(t, "Resumo executivo", 2, """<span class="eyebrow">%(mes)s em uma página</span>
-<h1 class="t">Resumo executivo</h1>
+    P.append(page_a4(t, "Resumo executivo", 2, """<h1 class="t">Resumo executivo</h1>
 <p class="lead">%(tese)s</p>
 <h2>Os cinco fatos do mês</h2>
 <ol class="tl">
@@ -55,8 +54,7 @@ def build(t, seg):
         res=ph("resumo_internacional"), eua=ph("analise_eua"),
         eur=ph("analise_europa"), chi=ph("analise_china"))))
 
-    P.append(page_a4(t, "Internacional", 4, """<span class="eyebrow">Global</span>
-<h1 class="t">Indicadores acompanhados</h1>
+    P.append(page_a4(t, "Internacional", 4, """<h1 class="t">Indicadores acompanhados</h1>
 <p class="lead">O que seguimos de perto lá fora, e como cada leitura se compara ao dado anterior e ao consenso.</p>
 %(tab)s
 <div class="gap"></div>
@@ -71,8 +69,7 @@ def build(t, seg):
         ch=chart("Juros longos e dólar", "Treasury de 10 anos e índice DXY nos últimos 12 meses.",
                  "line", "min-height:40mm", series=["Treasury 10 anos (%)", "DXY"], pontos=MESES))))
 
-    P.append(page_a4(t, "Brasil", 5, """<span class="eyebrow">Brasil</span>
-<h1 class="t">Atividade e inflação</h1>
+    P.append(page_a4(t, "Brasil", 5, """<h1 class="t">Atividade e inflação</h1>
 <p class="lead">%(res)s</p>
 <h2>Atividade</h2>
 <p class="small">%(ativ)s</p>
@@ -93,8 +90,7 @@ def build(t, seg):
         ch=chart("IPCA cheio e núcleos", "IPCA acumulado em 12 meses contra a média dos núcleos e o centro da meta.", "line", "min-height:38mm",
                  series=["IPCA cheio", "Média dos núcleos", "Centro da meta"], pontos=MESES))))
 
-    P.append(page_a4(t, "Brasil", 6, """<span class="eyebrow">Brasil</span>
-<h1 class="t">Juros, fiscal e câmbio</h1>
+    P.append(page_a4(t, "Brasil", 6, """<h1 class="t">Juros, fiscal e câmbio</h1>
 <h2>Política monetária</h2>
 <p class="small">%(cop)s</p>
 <div class="cols2">
@@ -168,8 +164,7 @@ def build(t, seg):
                                  ("PIB EUA (%)", "pibeua"), ("PIB China (%)", "pibchina")]], nums=[1, 2]),
         cards=cards([(ph("divergencia_%d_titulo" % i), ph("divergencia_%d_racional" % i)) for i in (1, 2, 3)]))))
 
-    P.append(page_a4(t, "Implicações", 9, """<span class="eyebrow">%(nome)s</span>
-<h1 class="t">Implicações para a carteira</h1>
+    P.append(page_a4(t, "Implicações", 9, """<h1 class="t">Implicações para a carteira</h1>
 <p class="lead">%(leitura)s</p>
 <h2>Posicionamento por classe</h2>
 %(tab)s
@@ -220,10 +215,10 @@ def build(t, seg):
 <p class="legal">Rentabilidade passada não representa garantia de rentabilidade futura. Antes de investir, avalie a adequação do produto ao seu perfil e leia os documentos oficiais de cada investimento. É proibida a reprodução, redistribuição ou compartilhamento total ou parcial deste documento sem autorização prévia e por escrito.</p>
 <h2>Contato</h2>
 <div class="dl">
-  <dt>Analista responsável</dt><dd>%(an)s &middot; %(reg)s</dd>
+  <dt>Analista responsável</dt><dd>%(an)s, %(reg)s</dd>
   <dt>E-mail</dt><dd>%(email)s</dd>
   <dt>Ouvidoria</dt><dd>%(ouv)s</dd>
-  <dt>Razão social</dt><dd>%(razao)s &middot; CNPJ %(cnpj)s</dd>
+  <dt>Razão social</dt><dd>%(razao)s, CNPJ %(cnpj)s</dd>
 </div>""" % dict(
         f1=ph("fonte_dados_mercado"), f2=ph("fonte_dados_macro"), f3=ph("fonte_consenso"),
         f4=ph("data_fechamento"), decl=ph("declaracao_analista", "Declaração exigida pela Resolução CVM 20"),

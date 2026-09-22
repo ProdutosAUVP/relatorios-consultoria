@@ -52,7 +52,7 @@
     return { W: LARGURA, H: Math.min(ALTURA_MAX, Math.max(ALTURA_MIN, alta)) };
   }
 
-  const CORES = 6;
+  const CORES = 8;
   const cor = (i) => `var(--c${(i % CORES) + 1})`;
 
   /** Um número a partir do que a pessoa digitou. Aceita "1.234,56", "1234.56",
@@ -112,16 +112,52 @@
     return `M ${x1} ${y1} A ${raio} ${raio} 0 ${ate - de > 0.5 ? 1 : 0} 1 ${x2} ${y2}`;
   }
 
+  /** Um ponto da circunferência; `t` em voltas, começando no topo. */
+  function polar(cx, cy, raio, t) {
+    const a = (t - 0.25) * 2 * Math.PI;
+    return [cx + raio * Math.cos(a), cy + raio * Math.sin(a)];
+  }
+
+  /** Um setor de coroa: arco de fora, lado, arco de dentro ao contrário. */
+  function setor(cx, cy, rFora, rDentro, de, ate) {
+    const grande = ate - de > 0.5 ? 1 : 0;
+    const [x1, y1] = polar(cx, cy, rFora, de);
+    const [x2, y2] = polar(cx, cy, rFora, ate);
+    const [x3, y3] = polar(cx, cy, rDentro, ate);
+    const [x4, y4] = polar(cx, cy, rDentro, de);
+    return `M ${x1} ${y1} A ${rFora} ${rFora} 0 ${grande} 1 ${x2} ${y2} L ${x3} ${y3}`
+         + ` A ${rDentro} ${rDentro} 0 ${grande} 0 ${x4} ${y4} Z`;
+  }
+
+  /** As fatias de uma rosca, no padrão do design system: separadas por um
+   *  pequeno vão (paddingAngle 3°) e com os cantos arredondados (cornerRadius
+   *  4). O canto redondo vem de um traço da mesma cor com junção redonda por
+   *  cima do preenchimento — o truque encolhe a geometria pelo raio do canto,
+   *  e o traço devolve o tamanho. A fatia fina demais para o vão sai inteira,
+   *  reta: sumir com ela seria mentir sobre o dado. Uma fatia só é o anel
+   *  inteiro, sem vão. */
   function rosca(valores, g, cx, cy, raio, largura) {
     const total = valores.reduce((a, b) => a + b, 0);
     if (total <= 0) return '';
+    const fatias = valores.filter((v) => v > 0).length;
+    const canto = Math.min(4, largura / 3);
+    const rFora = raio + largura / 2 - canto;
+    const rDentro = raio - largura / 2 + canto;
+    const vao = 3 / 360;
+    const recuo = vao / 2 + canto / (2 * Math.PI * rDentro);
     let t = 0;
     return valores.map((v, i) => {
       const de = t;
       t += v / total;
       if (v <= 0) return '';
-      return `<path d="${arco(cx, cy, raio, de, t)}" fill="none" stroke="${cor(i)}"`
-           + ` stroke-width="${largura}"/>`;
+      if (fatias === 1) {
+        return `<path d="${arco(cx, cy, raio, 0, 1)}" fill="none" stroke="${cor(i)}" stroke-width="${largura}"/>`;
+      }
+      if (t - de <= 2 * recuo + 0.003) {
+        return `<path d="${setor(cx, cy, raio + largura / 2, raio - largura / 2, de, t)}" fill="${cor(i)}"/>`;
+      }
+      return `<path d="${setor(cx, cy, rFora, rDentro, de + recuo, t - recuo)}" fill="${cor(i)}"`
+           + ` stroke="${cor(i)}" stroke-width="${canto * 2}" stroke-linejoin="round"/>`;
     }).join('');
   }
 
@@ -130,7 +166,7 @@
   function donut(l, duplo, g) {
     // A rosca é redonda: cresce com o lado menor da caixa, e fica no meio dela.
     const raio = Math.min(g.W, g.H) * 0.38;
-    const grossura = raio * 0.44;
+    const grossura = raio * 0.36;
     const cx = g.W / 2;
     const cy = g.H / 2;
     const fora = rosca(l.map((x) => numero(x.v[0])), g, cx, cy, raio, grossura);
@@ -162,14 +198,20 @@
     const n = quantas(l);
     const vals = l.map((x) => Array.from({ length: n }, (_, k) => numero(x.v[k])));
     const alvo = teto(Math.max(0, ...vals.flat()));
+    // Valor negativo puxa o eixo para baixo do zero: a barra desce, a linha
+    // cruza a linha do zero. Antes o negativo era cortado em zero.
+    const menor = Math.min(0, ...vals.flat());
+    const chao = menor < 0 ? -teto(-menor) : 0;
     const esq = 54;
     const base = g.H - 34;
     const alto = base - 16;
     const larg = g.W - esq - 14;
-    const guias = [0, 0.5, 1].map((f) => {
-      const y = base - f * alto;
-      return `<line x1="${esq}" y1="${y}" x2="${esq + larg}" y2="${y}" class="g-guia"/>`
-           + `<text x="${esq - 7}" y="${y + 4}" class="g-eixo" text-anchor="end">${curto(alvo * f)}</text>`;
+    const y = (v) => base - ((v - chao) / (alvo - chao || 1)) * alto;
+    const marcas = chao < 0 ? [chao, 0, alvo] : [0, alvo / 2, alvo];
+    const guias = marcas.map((v) => {
+      const py = y(v);
+      return `<line x1="${esq}" y1="${py}" x2="${esq + larg}" y2="${py}" class="${v === 0 && chao < 0 ? 'g-zero' : 'g-guia'}"/>`
+           + `<text x="${esq - 7}" y="${py + 4}" class="g-eixo" text-anchor="end">${curto(v)}</text>`;
     }).join('');
     // Com muitos pontos, um rótulo em cada vira uma tarja preta: mostra um a
     // cada dois, e sempre o primeiro e o último.
@@ -180,26 +222,31 @@
       return `<text x="${px}" y="${base + 16}" class="g-eixo" text-anchor="middle">${esc(x.r)}</text>`;
     }).join('');
     return {
-      svg: guias + desenho({ vals, n, alvo, esq, base, alto, larg }) + rotulos,
+      svg: guias + desenho({ vals, n, alvo, chao, y, esq, base, alto, larg }) + rotulos,
       // A legenda de quem tem eixo nomeia as séries, e não as linhas: o eixo
       // horizontal já diz o que é cada ponto.
       chaves: n > 1 ? Array.from({ length: n }, (_, k) => (series || [])[k] || `Série ${k + 1}`) : [],
     };
   }
 
-  const bars = (l, series, g) => comEixo(l, series, ({ vals, n, alvo, esq, base, alto, larg }) => {
+  const bars = (l, series, g) => comEixo(l, series, ({ vals, n, chao, y, esq, larg }) => {
     const passo = larg / vals.length;
     const w = Math.min(38, (passo * 0.62) / n);
+    const y0 = y(0);
+    // Série única com sinal é dado divergente: verde acima do zero, vermelho
+    // abaixo, como o design system pede para rentabilidade e variação.
+    const divergente = n === 1 && chao < 0;
     return vals.map((linha, i) => linha.map((v, k) => {
-      const h = alvo > 0 ? Math.max(0, (v / alvo) * alto) : 0;
+      const yv = y(v);
       const x = esq + passo * (i + 0.5) - (w * n) / 2 + w * k;
-      return `<rect x="${x}" y="${base - h}" width="${w}" height="${h}" fill="${cor(k)}" rx="1.5"/>`;
+      const fill = divergente ? (v < 0 ? 'var(--g-neg)' : 'var(--g-pos)') : cor(k);
+      return `<rect x="${x}" y="${Math.min(y0, yv)}" width="${w}" height="${Math.abs(y0 - yv)}" fill="${fill}" rx="1.5"/>`;
     }).join('')).join('');
   }, g);
 
-  const line = (l, series, g) => comEixo(l, series, ({ vals, n, alvo, esq, base, alto, larg }) => {
+  const line = (l, series, g) => comEixo(l, series, ({ vals, n, y, esq, larg }) => {
     const passo = larg / vals.length;
-    const ponto = (v, i) => [esq + passo * (i + 0.5), base - (alvo > 0 ? (v / alvo) * alto : 0)];
+    const ponto = (v, i) => [esq + passo * (i + 0.5), y(v)];
     let fora = '';
     for (let k = 0; k < n; k += 1) {
       const pts = vals.map((linha, i) => ponto(linha[k], i));
@@ -207,7 +254,8 @@
       // A área só embaixo da primeira série: com duas ou três sombreadas, uma
       // tapa a outra e o gráfico vira mancha.
       if (k === 0 && n === 1) {
-        fora += `<path d="${d} L ${pts[pts.length - 1][0]} ${base} L ${pts[0][0]} ${base} Z" class="g-area"/>`;
+        const y0 = y(0);
+        fora += `<path d="${d} L ${pts[pts.length - 1][0]} ${y0} L ${pts[0][0]} ${y0} Z" class="g-area"/>`;
       }
       fora += `<path d="${d}" class="g-linha" style="stroke:${cor(k)}"/>`;
       // Com muitos pontos e várias séries os marcadores viram ruído.

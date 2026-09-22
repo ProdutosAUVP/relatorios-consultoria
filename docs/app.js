@@ -677,18 +677,20 @@ function telaPreencher() {
   const secoes = [...porPagina.values()].sort((a, b) => a.pagina - b.pagina);
 
   $('#formulario').innerHTML = listasDeOpcoes() + listaDePaginas() + editorDePaginas() + (secoes.length ? secoes.map((s, i) => `
+    <div class="linha-secao${dentro(s.pagina) ? '' : ' fora'}">
     <details class="secao${dentro(s.pagina) ? '' : ' fora'}" data-pagina="${s.pagina}"${i === 0 && dentro(s.pagina) ? ' open' : ''}>
       <summary>
         <span class="pg">${String(s.pagina).padStart(2, '0')}</span>
         <span class="titulo-secao">${escapa(s.secao)}</span>
         <span class="contagem" data-contagem="${s.pagina}"></span>
-        ${chaveDePagina(s.pagina)}
       </summary>
       <div class="campos">
         ${s.imagens.map(campoImagem).join('')}
         ${camposDaPagina(s.campos, campos, s.pagina)}
       </div>
-    </details>`).join('')
+    </details>
+    ${chaveDePagina(s.pagina)}
+    </div>`).join('')
     : '<p class="solto">Este modelo não tem campos preenchíveis.</p>');
 
   atualizarContagens();
@@ -1064,6 +1066,12 @@ function montar(modo) {
     const nome = span.dataset.campo;
     if (!nome) continue;
     const v = estado.valores[nome];
+    // Na prévia, o campo se edita no lugar: clicar no texto e escrever. O que
+    // se escreve ali vai para o mesmo estado que o formulário lê.
+    if (modo === 'previa') {
+      span.setAttribute('contenteditable', 'true');
+      span.setAttribute('spellcheck', 'false');
+    }
     if (!v || !v.trim()) {
       // O campo que já vem preenchido não some quando o consultor não mexe
       // nele: o que está escrito ali é o texto padrão, e não uma lacuna.
@@ -1407,11 +1415,67 @@ function indiceDaMontada(id) {
   return [...doc.querySelectorAll('.page, .slide')].findIndex((p) => p.dataset.montada === id);
 }
 
+/* Editar na prévia.
+ *
+ *  O texto do documento é o próprio campo: clicar nele e escrever grava no
+ *  mesmo lugar que o formulário grava, e o formulário acompanha. Enquanto se
+ *  escreve a prévia não é redesenhada — redesenhar tiraria o cursor do lugar
+ *  —; ela se refaz ao sair do campo, quando o número ganha o formato do
+ *  documento e a lacuna que ficou vazia volta a se anunciar. */
+const ESTILO_PREVIA = `<style>
+.ph[contenteditable]{cursor:text;border-radius:2px;transition:outline-color .12s}
+.ph[contenteditable]:hover{outline:1px dashed rgba(2,54,32,.55);outline-offset:1px}
+.ph[contenteditable]:focus{outline:2px solid #0F8A51;outline-offset:1px;background:rgba(15,138,81,.08);text-decoration:none}
+.slide.dark .ph[contenteditable]:hover,.page.dark .ph[contenteditable]:hover{outline-color:rgba(255,255,255,.6)}
+</style>`;
+
+function ligarPrevia(doc) {
+  const campoDe = (el) => el.closest?.('.ph[data-campo][contenteditable]');
+  doc.addEventListener('focusin', (e) => {
+    const span = campoDe(e.target);
+    if (!span) return;
+    // A lacuna mostra {{campo}} para se anunciar; ao entrar nela, o nome sai
+    // para o que se digitar não se misturar com ele.
+    if (!span.classList.contains('feito') && !span.classList.contains('pronto')) span.textContent = '';
+  });
+  doc.addEventListener('input', (e) => {
+    const span = campoDe(e.target);
+    if (!span) return;
+    const nome = span.dataset.campo;
+    const valor = span.textContent;
+    estado.valores[nome] = valor;
+    for (const el of $$(`[data-campo="${CSS.escape(nome)}"]`)) {
+      if (el.value !== valor) el.value = valor;
+      el.dataset.preenchido = valor.trim() ? '1' : '';
+    }
+    clearTimeout(temporizador);
+    temporizador = setTimeout(() => { salvar(); atualizarContagens(); }, 250);
+  });
+  doc.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && campoDe(e.target)) { e.preventDefault(); e.target.blur(); }
+  });
+  doc.addEventListener('focusout', (e) => {
+    const span = campoDe(e.target);
+    if (!span) return;
+    const nome = span.dataset.campo;
+    const meta = estado.estrutura.campos[nome];
+    const tipo = meta && /^(dinheiro|percentual|pp|numero)$/.test(meta.tipo || '') ? meta.tipo : null;
+    const valor = tipo ? formatar(tipo, span.textContent) : span.textContent;
+    estado.valores[nome] = valor;
+    for (const el of $$(`[data-campo="${CSS.escape(nome)}"]`)) el.value = valor;
+    clearTimeout(temporizador);
+    salvar();
+    atualizarContagens();
+    renderizar();
+  });
+}
+
 function renderizar() {
   const doc = $('#quadro').contentDocument;
   doc.open();
-  doc.write(montar('previa'));
+  doc.write(montar('previa').replace('</head>', ESTILO_PREVIA + '</head>'));
   doc.close();
+  ligarPrevia(doc);
   // Na mesma ordem da exportação: primeiro reparte as páginas montadas que não
   // couberam, depois confere o que sobrou, e só então ajusta a vista. O ajuste
   // esconde todas as páginas menos a que está à frente, e página escondida não
@@ -1961,7 +2025,7 @@ function ligar() {
         c.hidden = !bate;
         if (bate) achou++;
       });
-      sec.hidden = !!q && !achou;
+      (sec.closest('.linha-secao') || sec).hidden = !!q && !achou;
       if (q && achou) sec.open = true;
     });
   };

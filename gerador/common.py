@@ -29,7 +29,7 @@ THEMES = {
         logo=LOGO_CAPITAL, logo_ratio=1044.44/274.67, marca="AUVP Capital",
         accent="#EFBF4F", ph="rgba(239,191,79,.24)", ph_dk="rgba(239,191,79,.26)",
         warn_bg="rgba(239,191,79,.18)", warn_fg="#8A6A12", warn_bd="rgba(239,191,79,.5)",
-        chart=['#023620', '#3E7A52', '#7FAE86', '#B9D3B6', '#EFBF4F', '#8C7A3E'],
+        chart=['#0F8A51', '#8C47D1', '#F6A823', '#0DA2E7', '#E23670', '#E64D19', '#669E2E', '#3E5074'],
         cadencia="trimestral",
     ),
     "alta-renda": dict(
@@ -38,7 +38,7 @@ THEMES = {
         logo=LOGO_CAPITAL, logo_ratio=1044.44/274.67, marca="AUVP Capital",
         accent="#EFBF4F", ph="rgba(239,191,79,.24)", ph_dk="rgba(239,191,79,.26)",
         warn_bg="rgba(239,191,79,.18)", warn_fg="#8A6A12", warn_bd="rgba(239,191,79,.5)",
-        chart=['#010F08', '#2E5C3F', '#6A9673', '#A8C4A6', '#EFBF4F', '#8C7A3E'],
+        chart=['#0F8A51', '#8C47D1', '#F6A823', '#0DA2E7', '#E23670', '#E64D19', '#669E2E', '#3E5074'],
         cadencia="trimestral",
     ),
     "private": dict(
@@ -49,7 +49,7 @@ THEMES = {
         # campos preenchíveis e o selo de atenção também saem do amarelo.
         accent="#8C939A", ph="rgba(140,147,154,.26)", ph_dk="rgba(255,255,255,.24)",
         warn_bg="rgba(90,97,104,.14)", warn_fg="#4A5257", warn_bd="rgba(90,97,104,.34)",
-        chart=['#3A3E42', '#5C6167', '#82888E', '#A8ADB2', '#CBCFD3', '#E2E5E7'],
+        chart=['#3E5074', '#0F8A51', '#0DA2E7', '#F6A823', '#8C47D1', '#E23670', '#E64D19', '#669E2E'],
         cadencia="mensal",
     ),
     "assessoria": dict(
@@ -58,7 +58,7 @@ THEMES = {
         logo=LOGO_CAPITAL, logo_ratio=1044.44/274.67, marca="AUVP Capital",
         accent="#EFBF4F", ph="rgba(239,191,79,.24)", ph_dk="rgba(239,191,79,.26)",
         warn_bg="rgba(239,191,79,.18)", warn_fg="#8A6A12", warn_bd="rgba(239,191,79,.5)",
-        chart=['#005F45', '#3E8F6C', '#7CBB99', '#B7DCC6', '#EFBF4F', '#8C7A3E'],
+        chart=['#0F8A51', '#8C47D1', '#F6A823', '#0DA2E7', '#E23670', '#E64D19', '#669E2E', '#3E5074'],
         cadencia="semestral",
     ),
 }
@@ -95,6 +95,8 @@ def tokens(t):
   %(chart_vars)s
   --ink:%(ink)s; --ink-2:%(ink2)s; --line:%(line)s; --soft:%(soft)s;
   --paper:#FFFFFF; --pos:#1F7A4C; --neg:#B3402F;
+  --g-pos:#047B4A; --g-neg:#DC2828; --g-neu:#F1EDE4;
+  --g-seq-1:#E2F3E9; --g-seq-2:#ABE3C7; --g-seq-3:#5CD69D; --g-seq-4:#19B370; --g-seq-5:#023620;
 }""" % dict(t, chart_vars=" ".join(
         "--c%d:%s;" % (i, c) for i, c in enumerate(t["chart"], start=1)))
 
@@ -621,7 +623,12 @@ CSS_A4 += """
 /* ---------- gráfico desenhado a partir do dado ----------
    Entra no lugar da moldura vazia quando o consultor preenche a tabelinha na
    ferramenta. É SVG: sai vetor no PDF, na tipografia da casa e nas cores do
-   segmento — `--c1`..`--c6`, as mesmas da legenda. */
+   segmento — `--c1`..`--c8`, as mesmas da legenda: a paleta categórica do
+   design system (produtosauvp.github.io/central), em que a primeira cor é a da
+   marca e as demais foram escolhidas para máximo contraste de matiz. Variação
+   com sinal usa a divergente (`--g-pos`, `--g-neg`) e intensidade a sequencial
+   (`--g-seq-1`..`--g-seq-5`). São tokens só dos gráficos: o resto do documento
+   segue as cores do segmento. */
 .g-svg{width:100%;height:auto;max-height:100%;display:block;flex:1 1 0;min-height:0}
 /* O desenho não empurra a caixa: ele ocupa o que sobra dela. A moldura vazia e a
    preenchida medem o mesmo, e o gráfico nunca cresce por cima do que está ao lado. */
@@ -639,7 +646,8 @@ CSS_A4 += """
 .legend{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5mm 4mm;
   margin:3mm 0 0;padding:0;font-size:6.6pt;color:var(--ink-2)}
 .legend li{display:flex;align-items:center;gap:1.5mm}
-.legend i{width:4mm;height:1.33px;flex:0 0 auto}
+.legend i{width:2.4mm;height:2.4mm;border-radius:50%;flex:0 0 auto}
+.g-zero{stroke:var(--ink-2);stroke-width:1}
 
 """
 
@@ -663,7 +671,12 @@ CSS_SLIDE += """
 /* ---------- gráfico desenhado a partir do dado ----------
    Entra no lugar da moldura vazia quando o consultor preenche a tabelinha na
    ferramenta. É SVG: sai vetor no PDF, na tipografia da casa e nas cores do
-   segmento — `--c1`..`--c6`, as mesmas da legenda. */
+   segmento — `--c1`..`--c8`, as mesmas da legenda: a paleta categórica do
+   design system (produtosauvp.github.io/central), em que a primeira cor é a da
+   marca e as demais foram escolhidas para máximo contraste de matiz. Variação
+   com sinal usa a divergente (`--g-pos`, `--g-neg`) e intensidade a sequencial
+   (`--g-seq-1`..`--g-seq-5`). São tokens só dos gráficos: o resto do documento
+   segue as cores do segmento. */
 .g-svg{width:100%;height:auto;max-height:100%;display:block;flex:1 1 0;min-height:0}
 /* O desenho não empurra a caixa: ele ocupa o que sobra dela. A moldura vazia e a
    preenchida medem o mesmo, e o gráfico nunca cresce por cima do que está ao lado. */

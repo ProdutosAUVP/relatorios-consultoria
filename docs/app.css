@@ -2,10 +2,11 @@
    Os tokens são os do design system (produtosauvp.github.io/central/design-system,
    `src/index.css`): Anek Latin nos títulos, Roboto no texto, Sora na interface,
    verde 155 93% 11% como primária, raio de 5px nos botões e 0,75rem nos blocos.
-   O tema escuro é o da Central — fundo preto, base preto/branco/cinza, verde
-   #5A8770 só como acento — e entra pelo `prefers-color-scheme` do sistema. */
+   Só o tema claro: a ferramenta mostra o documento, que é impresso em papel
+   branco, e a prévia ao lado de um fundo escuro engana sobre o que vai sair. */
 
 :root {
+  color-scheme: light;   /* calendário, select e barras de rolagem nativos ficam claros */
   --font-display: 'Anek Latin', system-ui, sans-serif;
   --font-body: 'Roboto', system-ui, sans-serif;
   --font-ui: 'Sora', system-ui, sans-serif;
@@ -51,42 +52,6 @@
   --radius-sm: calc(.75rem - 4px);
   --radius-btn: 5px;
   --sombra: 0 1px 2px hsl(110 20% 10% / .06), 0 8px 24px hsl(110 20% 10% / .06);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: hsl(0 0% 6%);
-    --foreground: hsl(0 0% 98%);
-    --card: hsl(0 0% 6%);
-    --primary: hsl(0 0% 98%);
-    --primary-foreground: hsl(0 0% 8%);
-    --primary-emphasis: hsl(0 0% 98%);
-    --secondary: hsl(0 0% 12%);
-    --muted: hsl(0 0% 10%);
-    --muted-foreground: hsl(0 0% 70%);
-    --accent: hsl(145 20% 44%);
-    --accent-foreground: hsl(0 0% 5%);
-    --border: hsl(0 0% 16%);
-    --input: hsl(0 0% 14%);
-    --ring: hsl(145 20% 50%);
-    --success: hsl(142 60% 48%);
-    --warning: hsl(38 95% 60%);
-    --info: hsl(210 90% 65%);
-    --destructive: hsl(0 80% 63%);
-    --topo: hsl(0 0% 3%);
-    --fundo: hsl(0 0% 0%);
-    --chart-1: hsl(135 50% 55%);
-    --chart-2: hsl(270 65% 70%);
-    --chart-3: hsl(38 90% 65%);
-    --chart-4: hsl(199 85% 65%);
-    --chart-5: hsl(340 75% 70%);
-    --chart-6: hsl(15 80% 65%);
-    --chart-7: hsl(90 55% 60%);
-    --chart-8: hsl(220 30% 70%);
-    --chart-div-neg: hsl(0 70% 60%);
-    --chart-div-pos: hsl(135 50% 55%);
-    --sombra: 0 1px 2px hsl(0 0% 0% / .5), 0 8px 24px hsl(0 0% 0% / .5);
-  }
 }
 
 * { box-sizing: border-box; }

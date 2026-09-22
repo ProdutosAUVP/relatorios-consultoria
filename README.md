@@ -215,8 +215,8 @@ npm run servir                  # http://localhost:8099
 ```
 
 A interface segue os tokens do design system da Central de Produto
-(`produtosauvp.github.io/central`): fontes, cores, raios e o tema escuro, que entra pelo
-`prefers-color-scheme` do sistema. Os documentos mantêm as cores de cada segmento; só os
+(`produtosauvp.github.io/central`): fontes, cores e raios, só no tema claro — a prévia
+mostra um documento que sai em papel branco. Os documentos mantêm as cores de cada segmento; só os
 gráficos seguem a paleta de dados do design system — categórica de oito cores para séries,
 divergente (verde/vermelho) para o que tem sinal.
 

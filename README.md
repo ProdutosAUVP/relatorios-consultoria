@@ -182,8 +182,13 @@ ou HTML.
 
 Dá também para escolher que páginas entram: desmarcar uma tira do arquivo exportado e
 renumera o resto. O que ela entrega é o mesmo modelo deste repositório com os valores no lugar — não existe
-um segundo desenho para manter em dia. Cada campo mostra um exemplo do formato esperado, e
-o que você digita e as imagens que envia ficam guardados no próprio navegador: o texto no
+um segundo desenho para manter em dia. Cada campo mostra um exemplo do formato esperado e
+se apresenta conforme o que recebe: data e mês têm um calendário ao lado, dinheiro e
+percentual ganham teclado numérico e saem formatados ao deixar o campo (`12400` vira
+`R$ 12.400,00`, `-1,2` vira `-1,2%`), e rating, classe, operação e afins oferecem a lista
+do que costuma ir ali sem impedir outro texto. O tipo sai de `scripts/tipos.mjs`, pelo
+cabeçalho da coluna quando o campo está numa tabela e pelo nome quando não está. O que
+você digita e as imagens que envia ficam guardados no próprio navegador: o texto no
 `localStorage`, as imagens no IndexedDB, porque uma foto sozinha estouraria a cota do
 primeiro. O botão de rascunho baixa um JSON para retomar em outro computador ou
 reaproveitar no mês seguinte.

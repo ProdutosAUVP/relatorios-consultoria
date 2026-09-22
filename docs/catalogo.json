@@ -368,5 +368,118 @@
     }
    ]
   }
- ]
+ ],
+ "opcoes": {
+  "banda": [
+   "Dentro da banda",
+   "Acima da banda",
+   "Abaixo da banda"
+  ],
+  "visao": [
+   "Positiva",
+   "Neutra",
+   "Negativa"
+  ],
+  "vies": [
+   "De alta",
+   "Neutro",
+   "De baixa"
+  ],
+  "grau": [
+   "Alta",
+   "Média",
+   "Baixa"
+  ],
+  "simnao": [
+   "Sim",
+   "Não",
+   "Parcial"
+  ],
+  "rating": [
+   "AAA",
+   "AA+",
+   "AA",
+   "AA-",
+   "A+",
+   "A",
+   "A-",
+   "BBB+",
+   "BBB",
+   "BBB-",
+   "BB+",
+   "BB",
+   "BB-",
+   "B+",
+   "B",
+   "B-",
+   "Sem rating"
+  ],
+  "classe": [
+   "Renda fixa pós-fixada",
+   "Renda fixa prefixada",
+   "Renda fixa inflação",
+   "Renda fixa internacional",
+   "Multimercado",
+   "Ações",
+   "Fundos imobiliários",
+   "Renda variável internacional",
+   "Criptomoedas",
+   "Alternativos",
+   "Caixa"
+  ],
+  "operacao": [
+   "Compra",
+   "Venda",
+   "Aplicação",
+   "Resgate",
+   "Subscrição",
+   "Amortização",
+   "Vencimento",
+   "Rebalanceamento"
+  ],
+  "provento": [
+   "Dividendos",
+   "JCP",
+   "Rendimento de FII",
+   "Cupom",
+   "Juros",
+   "Amortização",
+   "Aluguel de ações"
+  ],
+  "liquidez": [
+   "D+0",
+   "D+1",
+   "D+2",
+   "D+30",
+   "Diária",
+   "No vencimento"
+  ],
+  "pais": [
+   "Brasil",
+   "Estados Unidos",
+   "Zona do Euro",
+   "China",
+   "Japão",
+   "Reino Unido",
+   "Global"
+  ],
+  "perfil": [
+   "Conservador",
+   "Moderado",
+   "Arrojado"
+  ],
+  "horizonte": [
+   "Curto prazo (até 2 anos)",
+   "Médio prazo (2 a 5 anos)",
+   "Longo prazo (acima de 5 anos)"
+  ],
+  "cadencia": [
+   "Mensal",
+   "Bimestral",
+   "Trimestral",
+   "Semestral",
+   "Anual",
+   "Sob demanda"
+  ]
+ }
 }

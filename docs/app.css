@@ -177,6 +177,18 @@ main { padding: 28px 24px 64px; }
 .campo input:focus, .campo textarea:focus { outline: 2px solid var(--ring); outline-offset: -1px; }
 .campo input[data-preenchido='1'], .campo textarea[data-preenchido='1'] { border-color: var(--success); }
 .campo .dica { margin: 4px 0 0; font-size: 12px; color: var(--muted-foreground); }
+.campo input[type='number'] { appearance: textfield; -moz-appearance: textfield; }
+.com-seletor { position: relative; display: flex; gap: 6px; }
+.com-seletor input[type='text'] { flex: 1 1 auto; min-width: 0; }
+.seletor { flex: 0 0 auto; width: 38px; padding: 0; font-size: 16px; line-height: 1;
+  border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--background);
+  cursor: pointer; }
+.seletor:hover { background: var(--muted); }
+.seletor:focus-visible { outline: 2px solid var(--ring); outline-offset: -1px; }
+/* O calendário nativo precisa existir na página para abrir, mas não precisa
+   aparecer: fica de um pixel, invisível, atrás do botão. */
+.com-seletor .oculto { position: absolute; right: 0; bottom: 0; width: 1px; height: 1px;
+  opacity: 0; pointer-events: none; border: 0; padding: 0; }
 
 .solto { padding: 16px; color: var(--muted-foreground); font-size: 14px; }
 

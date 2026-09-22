@@ -15,7 +15,8 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 
 import { PRODUTOS, classifica, rotuloVariante, ordemVariante } from './documentos.mjs';
-import { exemplo } from './exemplos.mjs';
+import { exemplo, nomeado } from './exemplos.mjs';
+import { tipoDoCampo, exemploDoTipo, OPCOES } from './tipos.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const srcDir = join(root, 'modelos');
@@ -47,11 +48,33 @@ function paginas(html) {
   });
 }
 
+/** Em que coluna de tabela cada campo está: o cabeçalho dela e se a célula é
+ *  numérica. É o que diz o tipo do campo com mais segurança do que o nome —
+ *  `alvo_rf_pos` é percentual porque a coluna se chama Meta. */
+function colunas(html) {
+  const limpa = (x) => x.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim();
+  const onde = {};
+  for (const tb of html.matchAll(/<table class="tb[^"]*">([\s\S]*?)<\/table>/g)) {
+    const cabs = [...tb[1].matchAll(/<th[^>]*>([\s\S]*?)<\/th>/g)].map((m) => limpa(m[1]));
+    for (const tr of tb[1].matchAll(/<tr>([\s\S]*?)<\/tr>/g)) {
+      const tds = [...tr[1].matchAll(/<td([^>]*)>([\s\S]*?)<\/td>/g)];
+      if (tds.length !== cabs.length) continue;
+      tds.forEach((td, i) => {
+        for (const c of td[2].matchAll(/data-campo="([a-z0-9_]+)"/g)) {
+          if (!onde[c[1]]) onde[c[1]] = { cabecalho: cabs[i], num: /\bnum\b/.test(td[1]) };
+        }
+      });
+    }
+  }
+  return onde;
+}
+
 /** Campos e espaços de imagem de um modelo, na ordem do documento. */
 function estrutura(html) {
   const campos = {};
   const grupos = [];
   const imagens = [];
+  const emTabela = colunas(html);
   for (const pag of paginas(html)) {
     const nomes = [];
     // Os atributos vêm em número e ordem variáveis — `title` quando há dica,
@@ -66,7 +89,14 @@ function estrutura(html) {
       const [, pronto, nome, attrs, conteudo] = m;
       const dica = attrs.match(/ title="([^"]*)"/)?.[1];
       if (!campos[nome]) {
-        campos[nome] = { rotulo: rotuloCampo(nome), pagina: pag.numero, exemplo: exemplo(nome) };
+        const col = emTabela[nome];
+        const t = tipoDoCampo(nome, col?.cabecalho, col?.num);
+        // O exemplo pelo tipo só entra onde o pelo nome é chute: o que está
+        // escrito à mão em `exemplos.mjs` continua valendo.
+        const ex = (!nomeado(nome) && (exemploDoTipo(t.tipo) || (t.opcoes && OPCOES[t.opcoes][0])))
+          || exemplo(nome);
+        campos[nome] = { rotulo: rotuloCampo(nome), pagina: pag.numero, exemplo: ex, ...t };
+        if (t.tipo === 'texto') delete campos[nome].tipo;
         if (dica) campos[nome].dica = dica;
         if (pronto) campos[nome].padrao = conteudo.replace(/&nbsp;/g, ' ').trim();
         nomes.push(nome);
@@ -171,7 +201,7 @@ function main() {
     });
   }
 
-  const catalogo = { produtos: PRODUTOS, documentos: [...porDoc.values()] };
+  const catalogo = { produtos: PRODUTOS, documentos: [...porDoc.values()], opcoes: OPCOES };
   writeFileSync(join(outDir, 'catalogo.json'), JSON.stringify(catalogo, null, 1));
 
   console.log(`docs/: ${arquivos.length} modelos, ${catalogo.documentos.length} documentos, `

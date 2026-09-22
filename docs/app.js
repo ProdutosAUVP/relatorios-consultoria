@@ -564,7 +564,7 @@ function telaPreencher() {
   }
   const secoes = [...porPagina.values()].sort((a, b) => a.pagina - b.pagina);
 
-  $('#formulario').innerHTML = listaDePaginas() + editorDePaginas() + (secoes.length ? secoes.map((s, i) => `
+  $('#formulario').innerHTML = listasDeOpcoes() + listaDePaginas() + editorDePaginas() + (secoes.length ? secoes.map((s, i) => `
     <details class="secao${dentro(s.pagina) ? '' : ' fora'}" data-pagina="${s.pagina}"${i === 0 && dentro(s.pagina) ? ' open' : ''}>
       <summary>
         <span class="pg">${String(s.pagina).padStart(2, '0')}</span>
@@ -582,6 +582,24 @@ function telaPreencher() {
   renderizar();
 }
 
+/* O campo pelo tipo.
+ *
+ *  O catálogo diz o que cada campo recebe — dinheiro, percentual, data, uma
+ *  escolha entre poucas —, e o campo se apresenta de acordo: teclado numérico
+ *  onde vai número, calendário onde vai data, lista onde há opções. O que sai
+ *  para o documento continua sendo texto, no formato que o modelo espera; o
+ *  tipo só encurta o caminho até ele. */
+const ENTRADA = {
+  dinheiro: ' inputmode="decimal" data-formato="dinheiro"',
+  percentual: ' inputmode="decimal" data-formato="percentual"',
+  pp: ' inputmode="decimal" data-formato="pp"',
+  numero: ' inputmode="decimal" data-formato="numero"',
+  ano: ' type="number" inputmode="numeric" min="1990" max="2100" step="1"',
+  email: ' type="email" autocomplete="off"',
+  telefone: ' type="tel" inputmode="tel"',
+  data: ' inputmode="numeric"',
+};
+
 function campoTexto(nome, meta) {
   const v = escapa(estado.valores[nome] || '');
   const cheio = (estado.valores[nome] || '').trim() ? ' data-preenchido="1"' : '';
@@ -589,11 +607,100 @@ function campoTexto(nome, meta) {
   // O exemplo é `placeholder`: mostra o formato esperado, some ao digitar e
   // nunca entra no documento.
   const ex = meta.exemplo ? ` placeholder="${escapa(meta.exemplo)}"` : '';
-  const entrada = multilinha(nome)
-    ? `<textarea id="c-${nome}" rows="3" data-campo="${nome}"${ex}${cheio}>${v}</textarea>`
-    : `<input id="c-${nome}" type="text" data-campo="${nome}" value="${v}"${ex}${cheio}>`;
+  const tipo = meta.tipo || (multilinha(nome) ? 'longo' : 'texto');
+  let entrada;
+  if (tipo === 'longo') {
+    entrada = `<textarea id="c-${nome}" rows="3" data-campo="${nome}"${ex}${cheio}>${v}</textarea>`;
+  } else {
+    const extra = (ENTRADA[tipo] || '') + (tipo === 'opcoes' ? ` list="op-${meta.opcoes}"` : '');
+    const type = /type="/.test(extra) ? '' : ' type="text"';
+    entrada = `<input id="c-${nome}"${type} data-campo="${nome}" value="${v}"${ex}${cheio}${extra}>`;
+    // Data e mês ganham o calendário do navegador ao lado. O campo continua
+    // sendo de texto — "2º semestre" ainda cabe ali —, e o calendário só
+    // escreve nele, no formato que o documento usa.
+    if (tipo === 'data' || tipo === 'mes') {
+      entrada = `<div class="com-seletor">${entrada}
+        <button type="button" class="seletor" data-seletor="${nome}" title="Escolher no calendário">📅</button>
+        <input type="${tipo === 'mes' ? 'month' : 'date'}" class="oculto" data-seletor-de="${nome}" tabindex="-1" aria-hidden="true"></div>`;
+    }
+  }
   return `<div class="campo" data-nome="${nome}">
     <label for="c-${nome}">${escapa(meta.rotulo)}</label>${entrada}${dica}</div>`;
+}
+
+/** As listas dos campos de escolha, uma vez por formulário. */
+function listasDeOpcoes() {
+  return Object.entries(estado.catalogo.opcoes || {}).map(([k, itens]) =>
+    `<datalist id="op-${k}">${itens.map((o) => `<option value="${escapa(o)}">`).join('')}</datalist>`).join('');
+}
+
+/** Guarda o que foi digitado num campo e agenda salvar e redesenhar. */
+function anotar(el, valor) {
+  estado.valores[el.dataset.campo] = valor;
+  el.dataset.preenchido = valor.trim() ? '1' : '';
+  clearTimeout(temporizador);
+  temporizador = setTimeout(() => { salvar(); atualizarContagens(); renderizar(); }, 250);
+}
+
+/* ---------------------------------------------------------------- formatos */
+
+/** O número dentro de um texto como `R$ 12.400,00`, `-1,2%` ou `12400`.
+ *  Devolve `null` quando o texto tem mais do que número e unidade — "CDI +
+ *  2,10%" ou "isento" ficam como estão. */
+function numeroDe(texto) {
+  const s = texto.trim().replace(/^(R\$|US\$|EUR|€)\s*/i, '').replace(/\s*(%|p\.p\.)$/i, '').trim();
+  if (!/^[+-]?\d[\d.,]*$/.test(s)) return null;
+  let n = s;
+  if (s.includes(',')) n = s.replace(/\./g, '').replace(',', '.');
+  else if (/^[+-]?\d{1,3}(\.\d{3})+$/.test(s)) n = s.replace(/\./g, '');   // 1.284.000 é milhar
+  const v = Number(n);
+  return Number.isFinite(v) ? v : null;
+}
+
+/** Quantas casas decimais o texto tem. É o que preserva "12%" e "12,4%" em
+ *  vez de forçar tudo a duas casas. */
+function casasDe(texto) {
+  const m = texto.match(/[.,](\d+)\s*(%|p\.p\.)?$/);
+  return m && !/^\d{3}$/.test(m[1]) ? Math.min(m[1].length, 2) : 0;
+}
+
+/** O texto no formato do documento. Só mexe no que é número puro. */
+function formatar(tipo, texto) {
+  const n = numeroDe(texto);
+  if (n === null) return texto;
+  const sinal = /^\s*\+/.test(texto) && n >= 0 ? '+' : '';
+  const fixo = (d) => n.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+  switch (tipo) {
+    case 'dinheiro': {
+      const moeda = /^\s*US\$/i.test(texto) ? 'US$' : /^\s*(EUR|€)/i.test(texto) ? 'EUR' : 'R$';
+      return `${moeda} ${fixo(2)}`;
+    }
+    case 'percentual': return `${sinal}${fixo(casasDe(texto))}%`;
+    case 'pp': return `${sinal}${fixo(casasDe(texto))} p.p.`;
+    case 'numero': return `${sinal}${n.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}`;
+    default: return texto;
+  }
+}
+
+/** `31/08/2026` -> `2026-08-31`, para abrir o calendário no dia certo. */
+function isoDe(texto) {
+  const m = texto.match(/^\s*(\d{1,2})\/(\d{1,2})\/(\d{4})\s*$/);
+  return m ? `${m[3]}-${m[2].padStart(2, '0')}-${m[1].padStart(2, '0')}` : '';
+}
+
+/** `Setembro de 2026` -> `2026-09`. */
+function mesIsoDe(texto) {
+  const m = texto.match(/^\s*([A-Za-zçÇ]+)\s+de\s+(\d{4})\s*$/);
+  if (!m) return '';
+  const i = MESES.findIndex((x) => x.toLowerCase() === m[1].toLowerCase());
+  return i < 0 ? '' : `${m[2]}-${String(i + 1).padStart(2, '0')}`;
+}
+
+/** O que o calendário escolheu, no formato do documento. */
+function textoDaData(tipo, iso) {
+  if (!iso) return '';
+  const [a, m, d] = iso.split('-');
+  return tipo === 'month' ? `${MESES[Number(m) - 1]} de ${a}` : `${d}/${m}/${a}`;
 }
 
 /** Quantas linhas a tabelinha oferece de saída. Os formatos com série nomeada
@@ -1369,12 +1476,39 @@ function ligar() {
       temporizador = setTimeout(() => { salvar(); atualizarContagens(); renderizar(); }, 250);
       return;
     }
-    const nome = e.target.dataset.campo;
+    if (!e.target.dataset.campo) return;
+    anotar(e.target, e.target.value);
+  });
+
+  // Ao sair do campo, o número ganha o formato do documento: `12400` vira
+  // `R$ 12.400,00`, `-1,2` vira `-1,2%`. Enquanto se digita nada muda.
+  form.addEventListener('change', (e) => {
+    const tipo = e.target.dataset.formato;
+    if (!tipo) return;
+    const f = formatar(tipo, e.target.value);
+    if (f === e.target.value) return;
+    e.target.value = f;
+    anotar(e.target, f);
+  });
+
+  // O calendário ao lado do campo de data. Abre no dia que está escrito e, ao
+  // escolher, escreve no campo de texto — que é o que o documento lê.
+  form.addEventListener('click', (e) => {
+    const nome = e.target.dataset.seletor;
     if (!nome) return;
-    estado.valores[nome] = e.target.value;
-    e.target.dataset.preenchido = e.target.value.trim() ? '1' : '';
-    clearTimeout(temporizador);
-    temporizador = setTimeout(() => { salvar(); atualizarContagens(); renderizar(); }, 250);
+    const texto = form.querySelector(`[data-campo="${CSS.escape(nome)}"]`);
+    const sel = form.querySelector(`[data-seletor-de="${CSS.escape(nome)}"]`);
+    if (!texto || !sel) return;
+    sel.value = sel.type === 'month' ? mesIsoDe(texto.value) : isoDe(texto.value);
+    try { sel.showPicker(); } catch (err) { sel.focus(); sel.click(); }
+  });
+  form.addEventListener('change', (e) => {
+    const nome = e.target.dataset.seletorDe;
+    if (!nome) return;
+    const texto = form.querySelector(`[data-campo="${CSS.escape(nome)}"]`);
+    if (!texto) return;
+    texto.value = textoDaData(e.target.type, e.target.value);
+    anotar(texto, texto.value);
   });
 
   form.addEventListener('change', (e) => {

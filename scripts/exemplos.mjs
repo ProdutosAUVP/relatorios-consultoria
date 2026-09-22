@@ -208,6 +208,10 @@ const POR_COMECO = {
  *  ferramenta, que usa o mesmo para decidir entre `input` e `textarea`. */
 const CORRIDO = /(texto|analise|comentario|resumo|nota|observacao|descricao|leitura|contexto|justificativa|recomendacao|conclusao|mensagem|sintese|racional|motivo|detalhe|proposito|frase|bio)$/;
 
+/** Se o campo tem exemplo escrito à mão. É o que não deve ceder ao exemplo
+ *  pelo tipo: `data_posicao` já diz o formato, `taxa_anual` é frase. */
+export const nomeado = (nome) => Boolean(POR_NOME[nome]);
+
 export function exemplo(nome) {
   if (POR_NOME[nome]) return POR_NOME[nome];
   const semNumero = nome.replace(/_\d+$/, '');

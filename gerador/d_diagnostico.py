@@ -24,12 +24,11 @@ def build(t, seg):
 
     P.append(cover_a4(t, "Diagnóstico", "de Carteira", "Sua", "Situação Atual",
                       [com_rotulo(t, ph("nome_cliente")),
-                       "Patrimônio analisado &middot; " + ph("patrimonio_analisado"),
-                       papel + " &middot; " + ph("nome_responsavel"),
+                       "Patrimônio analisado: " + ph("patrimonio_analisado"),
+                       papel + ": " + ph("nome_responsavel"),
                        ph("data_diagnostico")], grafismo=2))
 
-    P.append(page_a4(t, "Abertura", 2, """<span class="eyebrow">Como lemos a sua carteira</span>
-<h1 class="t">Escopo e método</h1>
+    P.append(page_a4(t, "Abertura", 2, """<h1 class="t">Escopo e método</h1>
 <p class="lead">Este diagnóstico compara a sua carteira atual com a carteira que faria sentido para os seus objetivos, o seu horizonte e a sua tolerância a risco &mdash; sem julgamento sobre decisões passadas.</p>
 <h2>O que foi analisado</h2>
 %(fluxo)s
@@ -62,8 +61,7 @@ def build(t, seg):
                         ("Custos e eficiência tributária", 7), ("Carteira proposta", 8),
                         ("Plano de transição", 9), ("Notas e avisos", 10)], start=1)))))
 
-    P.append(page_a4(t, "Perfil e objetivos", 3, """<span class="eyebrow">Ponto de partida</span>
-<h1 class="t">Perfil, objetivos e restrições</h1>
+    P.append(page_a4(t, "Perfil e objetivos", 3, """<h1 class="t">Perfil, objetivos e restrições</h1>
 <p class="lead">Tudo o que vem depois neste documento se apoia nas informações abaixo. Se alguma delas estiver errada, a proposta muda.</p>
 <div class="cols2">
   <div>
@@ -228,7 +226,7 @@ def build(t, seg):
 <h2>Restrições de saída</h2>
 %(cards)s
 <div class="sig">
-  <div class="ln">%(resp)s<br><span class="mut">%(papel)s &middot; %(cert)s</span></div>
+  <div class="ln">%(resp)s<br><span class="mut">%(papel)s, %(cert)s</span></div>
   <div class="ln">%(data)s<br><span class="mut">%(marca)s</span></div>
 </div>""" % dict(
         fluxo=flow([(ph("transicao_%d_quando" % i), ph("transicao_%d_titulo" % i),
@@ -260,11 +258,11 @@ def build(t, seg):
 <p class="legal">Este material é destinado exclusivamente a %(cli)s e foi elaborado com base nas informações prestadas pelo próprio cliente e nos extratos fornecidos. Informações incompletas ou incorretas alteram as conclusões. É proibida a reprodução ou o compartilhamento total ou parcial sem autorização prévia e por escrito.</p>
 <h2>Contato</h2>
 <div class="dl">
-  <dt>Responsável</dt><dd>%(resp)s &middot; %(cert)s</dd>
+  <dt>Responsável</dt><dd>%(resp)s, %(cert)s</dd>
   <dt>Atendimento</dt><dd>%(canal)s</dd>
   <dt>E-mail</dt><dd>%(email)s</dd>
   <dt>Ouvidoria</dt><dd>%(ouv)s</dd>
-  <dt>Razão social</dt><dd>%(razao)s &middot; CNPJ %(cnpj)s</dd>
+  <dt>Razão social</dt><dd>%(razao)s, CNPJ %(cnpj)s</dd>
 </div>""" % dict(
         prem1=ph("premissa_retornos"), prem2=ph("premissa_risco"), prem3=ph("premissa_macro"),
         prem4=ph("premissa_tributacao"), prem5=ph("premissa_custos"), lim=ph("limitacoes_diagnostico"),

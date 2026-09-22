@@ -91,18 +91,18 @@ strong{font-weight:700}
 /* ---------- cabeçalho / rodapé ---------- */
 .pg-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:8mm;
   padding-bottom:3mm;border-bottom:1px solid var(--line)}
-.pg-head .sec{font-size:7pt;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.pg-head .sec{font-size:7pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
 .pg-head .rt{display:flex;align-items:center;gap:5mm}
-.pg-head .dt{font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.pg-head .dt{font-size:7pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
 
 .pg-foot{flex:0 0 auto;margin-top:auto;padding-top:3mm;border-top:1px solid var(--line);
   display:flex;justify-content:space-between;align-items:baseline;
-  font-size:6.2pt;letter-spacing:.12em;text-transform:uppercase;color:#9BA29D}
+  font-size:6.2pt;letter-spacing:.08em;text-transform:uppercase;color:#9BA29D}
 .pg-foot .no{font-size:9pt;font-weight:800;letter-spacing:0;color:var(--brand)}
 .pg-body{flex:1 1 auto;min-height:0;padding-top:8mm;display:flex;flex-direction:column}
 
 /* ---------- tipografia ---------- */
-.eyebrow{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);margin:0 0 2mm}
+.eyebrow{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);margin:0 0 2mm}
 h1.t{font-size:19pt;font-weight:800;text-transform:uppercase;letter-spacing:-.012em;line-height:1.04;margin:0 0 3mm}
 .lead{font-size:10pt;color:var(--ink-2);margin:0 0 8mm;max-width:155mm}
 h2{font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:8mm 0 4mm;
@@ -122,7 +122,12 @@ h3{font-size:9pt;font-weight:700;margin:5mm 0 2mm}
 /* ---------- KPIs ---------- */
 .kpis{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:4mm}
 .kpi{min-width:0;border:1px solid var(--line);border-top:1.33px solid var(--brand);background:var(--soft);padding:4mm}
-.kpi .k{font-size:6.4pt;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);font-weight:600;line-height:1.3}
+/* Um número manda: o primeiro KPI ocupa duas colunas com o valor maior. A
+   segunda fileira, de apoio, sai sem moldura — só o fio à esquerda. */
+.kpi.grande{grid-column:span 2}
+.kpi.grande .v{font-size:22pt;margin-top:1.5mm}
+.kpis.leve .kpi{border:0;border-left:1px solid var(--line);background:none;padding:.5mm 0 .5mm 3mm}
+.kpi .k{font-size:6.4pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600;line-height:1.3}
 .kpi .v{font-size:13.5pt;font-weight:800;line-height:1.15;margin-top:2mm;letter-spacing:-.02em;overflow-wrap:anywhere}
 .kpi .s{font-size:7pt;color:var(--ink-2);margin-top:1mm}
 
@@ -137,7 +142,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .tb.fix{table-layout:fixed}
 .tb.sm thead th{padding:2mm 2mm;font-size:6.2pt;letter-spacing:.06em}
 .tb thead th{background:var(--brand);color:#fff;text-align:left;font-weight:600;
-  padding:2mm 2mm;font-size:6.6pt;letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
+  padding:2mm 2mm;font-size:6.6pt;letter-spacing:.08em;text-transform:uppercase;line-height:1.3}
 .tb td{padding:3mm;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
 .tb tbody tr:nth-child(even) td{background:var(--soft)}
 
@@ -167,7 +172,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .crono td.fase{background:var(--brand);padding:0;width:9mm;border-bottom:1px solid var(--paper)}
 .crono td.fase span{display:block;writing-mode:vertical-rl;transform:rotate(180deg);
   margin:0 auto;padding:4mm 0;color:var(--accent);font-size:6.8pt;font-weight:700;
-  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+  letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
 .tb .num,.tb th.num{text-align:right}
 .tb tfoot td{font-weight:700;border-top:1.33px solid var(--ink);background:#fff}
 .tb caption{caption-side:bottom;text-align:left;font-size:6.8pt;color:var(--ink-2);padding-top:2mm}
@@ -191,7 +196,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 /* ---------- placeholders de gráfico ---------- */
 .chart{max-height:100mm;border:1px dashed var(--brand);background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(0,0,0,.022) 5px 10px);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2mm;text-align:center;padding:5mm}
-.chart .cl{font-size:6.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.chart .cl{font-size:6.6pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
 .chart .cd{font-size:7.6pt;color:var(--ink-2);max-width:105mm;line-height:1.45}
 /* Com o gráfico desenhado dentro, a moldura deixa de ser um pedido de
    preenchimento: some o tracejado e a hachura, e fica só o desenho. */
@@ -210,9 +215,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 
 /* ---------- diversos ---------- */
 .dl{display:grid;grid-template-columns:auto 1fr;gap:1.5mm 5mm;font-size:8.4pt;align-items:baseline}
-.dl dt{color:var(--ink-2);text-transform:uppercase;font-size:6.6pt;letter-spacing:.1em;font-weight:600}
+.dl dt{color:var(--ink-2);text-transform:uppercase;font-size:6.6pt;letter-spacing:.08em;font-weight:600}
 .dl dd{margin:0;font-weight:600}
-.pill{display:inline-block;font-size:6.4pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+.pill{display:inline-block;font-size:6.4pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   padding:1mm 2mm;border-radius:8mm;background:var(--soft);color:var(--brand);border:1px solid var(--line)}
 .pill.ok{background:rgba(31,122,76,.1);color:var(--pos);border-color:rgba(31,122,76,.25)}
 .pill.at{background:var(--warn-bg);color:var(--warn-fg);border-color:var(--warn-bd)}
@@ -225,7 +230,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .sig{margin-top:6mm;display:grid;grid-template-columns:1fr 1fr;gap:8mm;font-size:8pt}
 .sig .ln{border-top:1px solid var(--ink);padding-top:1.5mm;color:var(--ink-2)}
 .qr{width:34mm;height:34mm;border:1px dashed var(--brand);display:flex;align-items:center;justify-content:center;
-  text-align:center;font-size:6.4pt;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:700}
+  text-align:center;font-size:6.4pt;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);font-weight:700}
 
 .steps{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:5mm;counter-reset:st;list-style:none;padding:0;margin:0}
 .steps>li{min-width:0;position:relative;padding-top:8mm}
@@ -246,7 +251,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   border:1px solid var(--brand);background:var(--paper);color:var(--brand);
   display:flex;align-items:center;justify-content:center;font-weight:800;font-size:8pt;letter-spacing:-.01em}
 .flow .node::before{counter-increment:fl;content:counter(fl,decimal-leading-zero)}
-.flow .tag{display:block;font-size:5.8pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+.flow .tag{display:block;font-size:5.8pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--ink-2);margin-bottom:1mm}
 .flow h4{font-size:9pt;font-weight:700;margin:0 0 1mm}
 .flow p{font-size:8pt;color:var(--ink-2);margin:0;line-height:1.45}
@@ -289,7 +294,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .lista li::before{content:"";position:absolute;left:0;top:8px;width:2.6mm;height:1.33px;background:var(--accent)}
 .lista.mut li{color:var(--ink-2)}
 .chips{display:flex;flex-wrap:wrap;gap:1.5mm;margin-bottom:1mm}
-.side h3{font-size:6.8pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+.side h3{font-size:6.8pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--ink-2);margin:5mm 0 2mm;padding-bottom:1mm;border-bottom:1px solid var(--line)}
 .side h3:first-child{margin-top:0}
 .side .lista{font-size:8pt;margin-bottom:0}
@@ -313,7 +318,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .imgbox{border:1px dashed var(--line);display:flex;flex-direction:column;
   align-items:center;justify-content:center;gap:1.5mm;text-align:center;padding:5mm;
   background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(0,0,0,.022) 5px 10px)}
-.imgbox .cl{font-size:6.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+.imgbox .cl{font-size:6.6pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--brand)}
 .imgbox .cd{font-size:7.4pt;max-width:70mm;line-height:1.4;color:var(--ink-2)}
 
@@ -344,7 +349,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .marcos li:last-child::before{display:none}
 .marcos li::after{content:"";position:absolute;left:0;top:1.2mm;width:2.4mm;height:2.4mm;
   border-radius:50%;border:1px solid var(--brand);background:var(--paper)}
-.marcos .q{display:block;font-size:6.6pt;font-weight:700;letter-spacing:.15em;
+.marcos .q{display:block;font-size:6.6pt;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:var(--brand);margin-bottom:1mm}
 .marcos p{margin:0;font-size:8.2pt;line-height:1.45;color:var(--ink-2)}
 
@@ -576,11 +581,11 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   <path class="lg-1" d="M390.68,213.59h313.06v11.2h-301.86c-6.03,0-11.2-4.88-11.2-11.2Z"/>
 </svg></div>
   <h1 class="cv-t"><span class="lt">Relatório</span><span class="bd">Mensal</span></h1>
-  <div class="cv-conf">DOCUMENTO CONFIDENCIAL<br>PROIBIDO O&nbsp;COMPARTILHAMENTO</div>
+  <div class="cv-conf">DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</div>
   <div class="rule r1"></div>
   <div class="rule r2"></div>
   <div class="cv-b-t"><span style="font-weight:300">Sua </span><span style="font-weight:800">Carteira</span></div>
-  <div class="cv-id"><div><span class="ph" data-campo="nome_cliente">{{nome_cliente}}</span> &middot; Alta&nbsp;Renda</div><div>Perfil de investidor &middot; <span class="ph" data-campo="perfil_investidor">{{perfil_investidor}}</span></div><div>Consultor(a) &middot; <span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span></div><div><span class="ph" data-campo="mes_referencia">{{mes_referencia}}</span></div></div>
+  <div class="cv-id"><div><span class="ph" data-campo="nome_cliente">{{nome_cliente}}</span>, Alta&nbsp;Renda</div><div>Perfil de investidor: <span class="ph" data-campo="perfil_investidor">{{perfil_investidor}}</span></div><div>Consultor(a): <span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span></div><div><span class="ph" data-campo="mes_referencia">{{mes_referencia}}</span></div></div>
 </section>
 <section class="page">
   
@@ -632,13 +637,13 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <p><span class="ph" data-campo="carta_paragrafo_2" title="O que foi feito na carteira e por quê">{{carta_paragrafo_2}}</span></p>
 <p><span class="ph" data-campo="carta_paragrafo_3" title="O que esperar do próximo período">{{carta_paragrafo_3}}</span></p>
 <div class="sig">
-  <div class="ln"><span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span><br><span class="mut">Consultor(a) &middot; <span class="ph" data-campo="registro_cvm_ou_ancord">{{registro_cvm_ou_ancord}}</span></span></div>
+  <div class="ln"><span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span><br><span class="mut">Consultor(a), <span class="ph" data-campo="registro_cvm_ou_ancord">{{registro_cvm_ou_ancord}}</span></span></div>
   <div class="ln"><span class="ph" data-campo="telefone_contato" data-link="tel">{{telefone_contato}}</span><br><span class="mut"><span class="ph" data-campo="email_contato" data-link="mailto">{{email_contato}}</span></span></div>
 </div>
 <h2>Neste&nbsp;relatório</h2>
 <ol class="toc"><li><span class="n">01</span><span>Resumo da&nbsp;carteira</span><span class="d"></span><span class="p">03</span></li><li><span class="n">02</span><span>Carteira&nbsp;consolidada</span><span class="d"></span><span class="p">04</span></li><li><span class="n">03</span><span>Alocação por&nbsp;estratégia</span><span class="d"></span><span class="p">05</span></li><li><span class="n">04</span><span>Movimentações e&nbsp;proventos</span><span class="d"></span><span class="p">06</span></li><li><span class="n">05</span><span>Renda fixa: liquidez&nbsp;projetada</span><span class="d"></span><span class="p">07</span></li><li><span class="n">06</span><span>Renda fixa:&nbsp;emissores</span><span class="d"></span><span class="p">08</span></li><li><span class="n">07</span><span>Ações e fundos&nbsp;imobiliários</span><span class="d"></span><span class="p">09</span></li><li><span class="n">08</span><span>Internacional</span><span class="d"></span><span class="p">10</span></li><li><span class="n">09</span><span>Avisos e&nbsp;contato</span><span class="d"></span><span class="p">11</span></li></ol>
   </div>
-  <footer class="pg-foot"><span class="no">01</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">01</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -685,15 +690,15 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   <div class="pg-body">
 <h1 class="t">Resumo da&nbsp;carteira</h1>
 <p class="lead">Posição consolidada em <span class="ph" data-campo="data_posicao">{{data_posicao}}</span>, considerando todas as contas e instituições sob&nbsp;acompanhamento.</p>
-<div class="kpis" style="--n:4"><div class="kpi"><div class="k">Patrimônio&nbsp;total</div><div class="v"><span class="ph" data-campo="patrimonio_total">{{patrimonio_total}}</span></div><div class="s">Em <span class="ph" data-campo="data_posicao">{{data_posicao}}</span></div></div><div class="kpi"><div class="k">Rentabilidade no&nbsp;mês</div><div class="v"><span class="ph" data-campo="rent_mes">{{rent_mes}}</span></div><div class="s">No ano: <span class="ph" data-campo="rent_ano">{{rent_ano}}</span></div></div><div class="kpi"><div class="k">Rentabilidade em 12&nbsp;meses</div><div class="v"><span class="ph" data-campo="rent_12m">{{rent_12m}}</span></div><div class="s">Desde o início: <span class="ph" data-campo="rent_inicio">{{rent_inicio}}</span></div></div><div class="kpi"><div class="k">Ganho no&nbsp;mês</div><div class="v"><span class="ph" data-campo="ganho_mes_reais">{{ganho_mes_reais}}</span></div><div class="s">No ano: <span class="ph" data-campo="ganho_ano_reais">{{ganho_ano_reais}}</span></div></div></div>
+<div class="kpis" style="--n:5"><div class="kpi grande"><div class="k">Patrimônio&nbsp;total</div><div class="v"><span class="ph" data-campo="patrimonio_total">{{patrimonio_total}}</span></div><div class="s">Em <span class="ph" data-campo="data_posicao">{{data_posicao}}</span></div></div><div class="kpi"><div class="k">Rentabilidade no&nbsp;mês</div><div class="v"><span class="ph" data-campo="rent_mes">{{rent_mes}}</span></div><div class="s">No ano: <span class="ph" data-campo="rent_ano">{{rent_ano}}</span></div></div><div class="kpi"><div class="k">Rentabilidade em 12&nbsp;meses</div><div class="v"><span class="ph" data-campo="rent_12m">{{rent_12m}}</span></div><div class="s">Desde o início: <span class="ph" data-campo="rent_inicio">{{rent_inicio}}</span></div></div><div class="kpi"><div class="k">Ganho no&nbsp;mês</div><div class="v"><span class="ph" data-campo="ganho_mes_reais">{{ganho_mes_reais}}</span></div><div class="s">No ano: <span class="ph" data-campo="ganho_ano_reais">{{ganho_ano_reais}}</span></div></div></div>
 <div class="gap"></div>
-<div class="kpis" style="--n:4"><div class="kpi"><div class="k">Aplicações no&nbsp;mês</div><div class="v"><span class="ph" data-campo="aplicacoes_mes">{{aplicacoes_mes}}</span></div><div class="s">Bruto</div></div><div class="kpi"><div class="k">Resgates no&nbsp;mês</div><div class="v"><span class="ph" data-campo="resgates_mes">{{resgates_mes}}</span></div><div class="s">Bruto</div></div><div class="kpi"><div class="k">Aporte&nbsp;líquido</div><div class="v"><span class="ph" data-campo="aporte_liquido_mes">{{aporte_liquido_mes}}</span></div><div class="s">Aplicações menos&nbsp;resgates</div></div><div class="kpi"><div class="k">Proventos&nbsp;recebidos</div><div class="v"><span class="ph" data-campo="total_proventos">{{total_proventos}}</span></div><div class="s">Líquido de&nbsp;IR</div></div></div>
+<div class="kpis leve" style="--n:4"><div class="kpi"><div class="k">Aplicações no&nbsp;mês</div><div class="v"><span class="ph" data-campo="aplicacoes_mes">{{aplicacoes_mes}}</span></div><div class="s">Bruto</div></div><div class="kpi"><div class="k">Resgates no&nbsp;mês</div><div class="v"><span class="ph" data-campo="resgates_mes">{{resgates_mes}}</span></div><div class="s">Bruto</div></div><div class="kpi"><div class="k">Aporte&nbsp;líquido</div><div class="v"><span class="ph" data-campo="aporte_liquido_mes">{{aporte_liquido_mes}}</span></div><div class="s">Aplicações menos&nbsp;resgates</div></div><div class="kpi"><div class="k">Proventos&nbsp;recebidos</div><div class="v"><span class="ph" data-campo="total_proventos">{{total_proventos}}</span></div><div class="s">Líquido de&nbsp;IR</div></div></div>
 <h2>Rentabilidade x&nbsp;referências</h2>
 <table class="tb"><caption>Rentabilidades líquidas de custos e brutas de impostos, salvo indicação em contrário. Rentabilidade passada não é garantia de rentabilidade futura.</caption><thead><tr><th>Indicador</th><th class="num">No&nbsp;mês</th><th class="num">No&nbsp;ano</th><th class="num">12&nbsp;meses</th><th class="num">24&nbsp;meses</th><th class="num">Desde o&nbsp;início</th></tr></thead><tbody><tr><td><strong>Sua&nbsp;carteira</strong></td><td class="num"><span class="ph" data-campo="rent_mes">{{rent_mes}}</span></td><td class="num"><span class="ph" data-campo="rent_ano">{{rent_ano}}</span></td><td class="num"><span class="ph" data-campo="rent_12m">{{rent_12m}}</span></td><td class="num"><span class="ph" data-campo="rent_24m">{{rent_24m}}</span></td><td class="num"><span class="ph" data-campo="rent_inicio">{{rent_inicio}}</span></td></tr><tr><td>IPCA + 5%&nbsp;a.a.</td><td class="num"><span class="ph" data-campo="ipca5_mes">{{ipca5_mes}}</span></td><td class="num"><span class="ph" data-campo="ipca5_ano">{{ipca5_ano}}</span></td><td class="num"><span class="ph" data-campo="ipca5_12m">{{ipca5_12m}}</span></td><td class="num"><span class="ph" data-campo="ipca5_24m">{{ipca5_24m}}</span></td><td class="num"><span class="ph" data-campo="ipca5_inicio">{{ipca5_inicio}}</span></td></tr><tr><td>Ibovespa</td><td class="num"><span class="ph" data-campo="ibov_mes">{{ibov_mes}}</span></td><td class="num"><span class="ph" data-campo="ibov_ano">{{ibov_ano}}</span></td><td class="num"><span class="ph" data-campo="ibov_12m">{{ibov_12m}}</span></td><td class="num"><span class="ph" data-campo="ibov_24m">{{ibov_24m}}</span></td><td class="num"><span class="ph" data-campo="ibov_inicio">{{ibov_inicio}}</span></td></tr></tbody></table>
 <h2>Evolução do&nbsp;patrimônio</h2>
 <div class="chart" data-img="1" data-grafico="line" data-eixo="Patrimônio (R$)" data-pontos="Jan|Fev|Mar|Abr|Mai|Jun|Jul|Ago|Set|Out|Nov|Dez" style="flex:1 1 auto;min-height:46mm"><div class="sk-line"></div><div class="cl">Evolução do&nbsp;patrimônio</div><div class="cd">Linha do patrimônio mês a mês, ao longo dos últimos doze&nbsp;meses.</div></div>
   </div>
-  <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -746,7 +751,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <h2>Por instituição&nbsp;custodiante</h2>
 <table class="tb sm fix"><colgroup><col style="width:26%"><col style="width:20%"><col style="width:16%"><col style="width:38%"></colgroup><thead><tr><th>Instituição</th><th class="num">Posição</th><th class="num">% da&nbsp;carteira</th><th>Classes&nbsp;custodiadas</th></tr></thead><tbody><tr><td><span class="ph" data-campo="cust_1_nome">{{cust_1_nome}}</span></td><td class="num"><span class="ph" data-campo="cust_1_valor">{{cust_1_valor}}</span></td><td class="num"><span class="ph" data-campo="cust_1_perc">{{cust_1_perc}}</span></td><td><span class="ph" data-campo="cust_1_classes">{{cust_1_classes}}</span></td></tr><tr><td><span class="ph" data-campo="cust_2_nome">{{cust_2_nome}}</span></td><td class="num"><span class="ph" data-campo="cust_2_valor">{{cust_2_valor}}</span></td><td class="num"><span class="ph" data-campo="cust_2_perc">{{cust_2_perc}}</span></td><td><span class="ph" data-campo="cust_2_classes">{{cust_2_classes}}</span></td></tr><tr><td><span class="ph" data-campo="cust_3_nome">{{cust_3_nome}}</span></td><td class="num"><span class="ph" data-campo="cust_3_valor">{{cust_3_valor}}</span></td><td class="num"><span class="ph" data-campo="cust_3_perc">{{cust_3_perc}}</span></td><td><span class="ph" data-campo="cust_3_classes">{{cust_3_classes}}</span></td></tr><tr><td><span class="ph" data-campo="cust_4_nome">{{cust_4_nome}}</span></td><td class="num"><span class="ph" data-campo="cust_4_valor">{{cust_4_valor}}</span></td><td class="num"><span class="ph" data-campo="cust_4_perc">{{cust_4_perc}}</span></td><td><span class="ph" data-campo="cust_4_classes">{{cust_4_classes}}</span></td></tr></tbody><tfoot><tr><td><strong>Total</strong></td><td class="num"><span class="ph" data-campo="patrimonio_total">{{patrimonio_total}}</span></td><td class="num">100,0%</td><td></td></tr></tfoot></table>
   </div>
-  <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -797,7 +802,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <div class="gap"></div>
 <div class="chart" data-img="2" data-grafico="anel" data-series="Renda fixa|Multimercado|Renda variável BR|Internacional|FIIs|Alternativos" style="flex:1 1 auto;flex:1 1 auto;min-height:52mm"><div class="sk-donut"></div><div class="cl">Carteira atual x&nbsp;meta</div><div class="cd">Duas roscas concêntricas: a interna com a meta, a externa com a posição&nbsp;atual.</div><ul class="legend"><li><i style="background:var(--c1)"></i>Renda&nbsp;fixa</li><li><i style="background:var(--c2)"></i>Multimercado</li><li><i style="background:var(--c3)"></i>Renda variável&nbsp;BR</li><li><i style="background:var(--c4)"></i>Internacional</li><li><i style="background:var(--c5)"></i>FIIs</li><li><i style="background:var(--c6)"></i>Alternativos</li></ul></div>
   </div>
-  <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -851,7 +856,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <div class="gap"></div>
 <div class="chart" data-img="3" data-grafico="bars" data-eixo="Proventos (R$)" data-pontos="Jan|Fev|Mar|Abr|Mai|Jun|Jul|Ago|Set|Out|Nov|Dez" style="flex:1 1 auto;min-height:38mm"><div class="sk-bars"><i style="height:42%"></i><i style="height:68%"></i><i style="height:55%"></i><i style="height:88%"></i><i style="height:72%"></i><i style="height:96%"></i></div><div class="cl">Proventos por&nbsp;mês</div><div class="cd">Barras com os proventos recebidos nos últimos 12&nbsp;meses.</div></div>
   </div>
-  <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -900,7 +905,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <p class="lead">Quando a renda fixa vira caixa, faixa a&nbsp;faixa.</p>
 <table class="tb xs"><caption>Liquidez projetada considera carência, vencimento e liquidez de mercado do papel.</caption><thead><tr><th>Faixa</th><th class="num">Valor</th><th class="num">% da&nbsp;RF</th><th class="num">% do&nbsp;patrimônio</th><th class="num">Acumulado</th><th>Observação</th></tr></thead><tbody><tr><td>D+0</td><td class="num"><span class="ph" data-campo="liq_d0_valor">{{liq_d0_valor}}</span></td><td class="num"><span class="ph" data-campo="liq_d0_perc_rf">{{liq_d0_perc_rf}}</span></td><td class="num"><span class="ph" data-campo="liq_d0_perc_pat">{{liq_d0_perc_pat}}</span></td><td class="num"><span class="ph" data-campo="liq_d0_acum">{{liq_d0_acum}}</span></td><td><span class="ph" data-campo="liq_d0_obs">{{liq_d0_obs}}</span></td></tr><tr><td>D+30</td><td class="num"><span class="ph" data-campo="liq_d30_valor">{{liq_d30_valor}}</span></td><td class="num"><span class="ph" data-campo="liq_d30_perc_rf">{{liq_d30_perc_rf}}</span></td><td class="num"><span class="ph" data-campo="liq_d30_perc_pat">{{liq_d30_perc_pat}}</span></td><td class="num"><span class="ph" data-campo="liq_d30_acum">{{liq_d30_acum}}</span></td><td><span class="ph" data-campo="liq_d30_obs">{{liq_d30_obs}}</span></td></tr><tr><td>D+60</td><td class="num"><span class="ph" data-campo="liq_d60_valor">{{liq_d60_valor}}</span></td><td class="num"><span class="ph" data-campo="liq_d60_perc_rf">{{liq_d60_perc_rf}}</span></td><td class="num"><span class="ph" data-campo="liq_d60_perc_pat">{{liq_d60_perc_pat}}</span></td><td class="num"><span class="ph" data-campo="liq_d60_acum">{{liq_d60_acum}}</span></td><td><span class="ph" data-campo="liq_d60_obs">{{liq_d60_obs}}</span></td></tr><tr><td>D+90</td><td class="num"><span class="ph" data-campo="liq_d90_valor">{{liq_d90_valor}}</span></td><td class="num"><span class="ph" data-campo="liq_d90_perc_rf">{{liq_d90_perc_rf}}</span></td><td class="num"><span class="ph" data-campo="liq_d90_perc_pat">{{liq_d90_perc_pat}}</span></td><td class="num"><span class="ph" data-campo="liq_d90_acum">{{liq_d90_acum}}</span></td><td><span class="ph" data-campo="liq_d90_obs">{{liq_d90_obs}}</span></td></tr><tr><td>D+180</td><td class="num"><span class="ph" data-campo="liq_d180_valor">{{liq_d180_valor}}</span></td><td class="num"><span class="ph" data-campo="liq_d180_perc_rf">{{liq_d180_perc_rf}}</span></td><td class="num"><span class="ph" data-campo="liq_d180_perc_pat">{{liq_d180_perc_pat}}</span></td><td class="num"><span class="ph" data-campo="liq_d180_acum">{{liq_d180_acum}}</span></td><td><span class="ph" data-campo="liq_d180_obs">{{liq_d180_obs}}</span></td></tr><tr><td>1&nbsp;ano</td><td class="num"><span class="ph" data-campo="liq_a1_valor">{{liq_a1_valor}}</span></td><td class="num"><span class="ph" data-campo="liq_a1_perc_rf">{{liq_a1_perc_rf}}</span></td><td class="num"><span class="ph" data-campo="liq_a1_perc_pat">{{liq_a1_perc_pat}}</span></td><td class="num"><span class="ph" data-campo="liq_a1_acum">{{liq_a1_acum}}</span></td><td><span class="ph" data-campo="liq_a1_obs">{{liq_a1_obs}}</span></td></tr><tr><td>2&nbsp;anos</td><td class="num"><span class="ph" data-campo="liq_a2_valor">{{liq_a2_valor}}</span></td><td class="num"><span class="ph" data-campo="liq_a2_perc_rf">{{liq_a2_perc_rf}}</span></td><td class="num"><span class="ph" data-campo="liq_a2_perc_pat">{{liq_a2_perc_pat}}</span></td><td class="num"><span class="ph" data-campo="liq_a2_acum">{{liq_a2_acum}}</span></td><td><span class="ph" data-campo="liq_a2_obs">{{liq_a2_obs}}</span></td></tr><tr><td>3&nbsp;anos</td><td class="num"><span class="ph" data-campo="liq_a3_valor">{{liq_a3_valor}}</span></td><td class="num"><span class="ph" data-campo="liq_a3_perc_rf">{{liq_a3_perc_rf}}</span></td><td class="num"><span class="ph" data-campo="liq_a3_perc_pat">{{liq_a3_perc_pat}}</span></td><td class="num"><span class="ph" data-campo="liq_a3_acum">{{liq_a3_acum}}</span></td><td><span class="ph" data-campo="liq_a3_obs">{{liq_a3_obs}}</span></td></tr><tr><td>4&nbsp;anos</td><td class="num"><span class="ph" data-campo="liq_a4_valor">{{liq_a4_valor}}</span></td><td class="num"><span class="ph" data-campo="liq_a4_perc_rf">{{liq_a4_perc_rf}}</span></td><td class="num"><span class="ph" data-campo="liq_a4_perc_pat">{{liq_a4_perc_pat}}</span></td><td class="num"><span class="ph" data-campo="liq_a4_acum">{{liq_a4_acum}}</span></td><td><span class="ph" data-campo="liq_a4_obs">{{liq_a4_obs}}</span></td></tr><tr><td>5&nbsp;anos</td><td class="num"><span class="ph" data-campo="liq_a5_valor">{{liq_a5_valor}}</span></td><td class="num"><span class="ph" data-campo="liq_a5_perc_rf">{{liq_a5_perc_rf}}</span></td><td class="num"><span class="ph" data-campo="liq_a5_perc_pat">{{liq_a5_perc_pat}}</span></td><td class="num"><span class="ph" data-campo="liq_a5_acum">{{liq_a5_acum}}</span></td><td><span class="ph" data-campo="liq_a5_obs">{{liq_a5_obs}}</span></td></tr><tr><td>Acima de 5&nbsp;anos</td><td class="num"><span class="ph" data-campo="liq_a5mais_valor">{{liq_a5mais_valor}}</span></td><td class="num"><span class="ph" data-campo="liq_a5mais_perc_rf">{{liq_a5mais_perc_rf}}</span></td><td class="num"><span class="ph" data-campo="liq_a5mais_perc_pat">{{liq_a5mais_perc_pat}}</span></td><td class="num"><span class="ph" data-campo="liq_a5mais_acum">{{liq_a5mais_acum}}</span></td><td><span class="ph" data-campo="liq_a5mais_obs">{{liq_a5mais_obs}}</span></td></tr></tbody></table>
   </div>
-  <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -955,7 +960,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <div class="gap"></div>
 <div class="note"><p><strong>Limite interno por&nbsp;emissor.</strong> <span class="ph" data-campo="texto_limite_emissor">{{texto_limite_emissor}}</span></p></div>
   </div>
-  <footer class="pg-foot"><span class="no">07</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">07</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -1010,7 +1015,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <h2>Por setor e por&nbsp;segmento</h2>
 <table class="tb sm fix"><colgroup><col style="width:13%"><col style="width:27%"><col style="width:16%"><col style="width:14%"><col style="width:15%"><col style="width:15%"></colgroup><thead><tr><th>Bloco</th><th>Recorte</th><th class="num">Posição</th><th class="num">% da&nbsp;bolsa</th><th class="num">% da&nbsp;carteira</th><th class="num">Resultado no&nbsp;mês</th></tr></thead><tbody><tr><td>Ações</td><td><span class="ph" data-campo="bolsa_1_recorte">{{bolsa_1_recorte}}</span></td><td class="num"><span class="ph" data-campo="bolsa_1_valor">{{bolsa_1_valor}}</span></td><td class="num"><span class="ph" data-campo="bolsa_1_perc_bolsa">{{bolsa_1_perc_bolsa}}</span></td><td class="num"><span class="ph" data-campo="bolsa_1_perc_carteira">{{bolsa_1_perc_carteira}}</span></td><td class="num"><span class="ph" data-campo="bolsa_1_resultado">{{bolsa_1_resultado}}</span></td></tr><tr><td>Ações</td><td><span class="ph" data-campo="bolsa_2_recorte">{{bolsa_2_recorte}}</span></td><td class="num"><span class="ph" data-campo="bolsa_2_valor">{{bolsa_2_valor}}</span></td><td class="num"><span class="ph" data-campo="bolsa_2_perc_bolsa">{{bolsa_2_perc_bolsa}}</span></td><td class="num"><span class="ph" data-campo="bolsa_2_perc_carteira">{{bolsa_2_perc_carteira}}</span></td><td class="num"><span class="ph" data-campo="bolsa_2_resultado">{{bolsa_2_resultado}}</span></td></tr><tr><td>Ações</td><td><span class="ph" data-campo="bolsa_3_recorte">{{bolsa_3_recorte}}</span></td><td class="num"><span class="ph" data-campo="bolsa_3_valor">{{bolsa_3_valor}}</span></td><td class="num"><span class="ph" data-campo="bolsa_3_perc_bolsa">{{bolsa_3_perc_bolsa}}</span></td><td class="num"><span class="ph" data-campo="bolsa_3_perc_carteira">{{bolsa_3_perc_carteira}}</span></td><td class="num"><span class="ph" data-campo="bolsa_3_resultado">{{bolsa_3_resultado}}</span></td></tr><tr><td>FIIs</td><td><span class="ph" data-campo="bolsa_4_recorte">{{bolsa_4_recorte}}</span></td><td class="num"><span class="ph" data-campo="bolsa_4_valor">{{bolsa_4_valor}}</span></td><td class="num"><span class="ph" data-campo="bolsa_4_perc_bolsa">{{bolsa_4_perc_bolsa}}</span></td><td class="num"><span class="ph" data-campo="bolsa_4_perc_carteira">{{bolsa_4_perc_carteira}}</span></td><td class="num"><span class="ph" data-campo="bolsa_4_resultado">{{bolsa_4_resultado}}</span></td></tr><tr><td>FIIs</td><td><span class="ph" data-campo="bolsa_5_recorte">{{bolsa_5_recorte}}</span></td><td class="num"><span class="ph" data-campo="bolsa_5_valor">{{bolsa_5_valor}}</span></td><td class="num"><span class="ph" data-campo="bolsa_5_perc_bolsa">{{bolsa_5_perc_bolsa}}</span></td><td class="num"><span class="ph" data-campo="bolsa_5_perc_carteira">{{bolsa_5_perc_carteira}}</span></td><td class="num"><span class="ph" data-campo="bolsa_5_resultado">{{bolsa_5_resultado}}</span></td></tr></tbody><tfoot><tr><td><strong>Total</strong></td><td></td><td class="num"><span class="ph" data-campo="bolsa_total_valor">{{bolsa_total_valor}}</span></td><td class="num">100,0%</td><td class="num"><span class="ph" data-campo="bolsa_total_perc_carteira">{{bolsa_total_perc_carteira}}</span></td><td class="num"><span class="ph" data-campo="bolsa_total_resultado">{{bolsa_total_resultado}}</span></td></tr></tfoot></table>
   </div>
-  <footer class="pg-foot"><span class="no">08</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">08</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -1062,7 +1067,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <h2>Por classe, no&nbsp;exterior</h2>
 <table class="tb sm fix"><colgroup><col style="width:32%"><col style="width:18%"><col style="width:18%"><col style="width:16%"><col style="width:16%"></colgroup><thead><tr><th>Classe</th><th class="num">Posição&nbsp;(US$)</th><th class="num">Posição&nbsp;(R$)</th><th class="num">% do&nbsp;exterior</th><th class="num">% da&nbsp;carteira</th></tr></thead><tbody><tr><td>Renda fixa&nbsp;internacional</td><td class="num"><span class="ph" data-campo="intl_rf_usd">{{intl_rf_usd}}</span></td><td class="num"><span class="ph" data-campo="intl_rf_brl">{{intl_rf_brl}}</span></td><td class="num"><span class="ph" data-campo="intl_rf_perc_ext">{{intl_rf_perc_ext}}</span></td><td class="num"><span class="ph" data-campo="intl_rf_perc_cart">{{intl_rf_perc_cart}}</span></td></tr><tr><td>Ações e&nbsp;ETFs</td><td class="num"><span class="ph" data-campo="intl_acoes_usd">{{intl_acoes_usd}}</span></td><td class="num"><span class="ph" data-campo="intl_acoes_brl">{{intl_acoes_brl}}</span></td><td class="num"><span class="ph" data-campo="intl_acoes_perc_ext">{{intl_acoes_perc_ext}}</span></td><td class="num"><span class="ph" data-campo="intl_acoes_perc_cart">{{intl_acoes_perc_cart}}</span></td></tr><tr><td>REITs e&nbsp;imobiliário</td><td class="num"><span class="ph" data-campo="intl_reits_usd">{{intl_reits_usd}}</span></td><td class="num"><span class="ph" data-campo="intl_reits_brl">{{intl_reits_brl}}</span></td><td class="num"><span class="ph" data-campo="intl_reits_perc_ext">{{intl_reits_perc_ext}}</span></td><td class="num"><span class="ph" data-campo="intl_reits_perc_cart">{{intl_reits_perc_cart}}</span></td></tr><tr><td>Caixa em moeda&nbsp;estrangeira</td><td class="num"><span class="ph" data-campo="intl_caixa_usd">{{intl_caixa_usd}}</span></td><td class="num"><span class="ph" data-campo="intl_caixa_brl">{{intl_caixa_brl}}</span></td><td class="num"><span class="ph" data-campo="intl_caixa_perc_ext">{{intl_caixa_perc_ext}}</span></td><td class="num"><span class="ph" data-campo="intl_caixa_perc_cart">{{intl_caixa_perc_cart}}</span></td></tr></tbody><tfoot><tr><td><strong>Total</strong></td><td class="num"><span class="ph" data-campo="intl_total_usd">{{intl_total_usd}}</span></td><td class="num"><span class="ph" data-campo="intl_total_brl">{{intl_total_brl}}</span></td><td class="num">100,0%</td><td class="num"><span class="ph" data-campo="intl_perc_patrimonio">{{intl_perc_patrimonio}}</span></td></tr></tfoot></table>
   </div>
-  <footer class="pg-foot"><span class="no">09</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">09</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -1114,14 +1119,14 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <p class="legal">Este material é destinado exclusivamente a <span class="ph" data-campo="nome_cliente">{{nome_cliente}}</span>, tem caráter informativo e não constitui oferta, recomendação pública, proposta de investimento ou solicitação de compra ou venda de qualquer ativo. É proibida a reprodução, redistribuição ou compartilhamento total ou parcial deste documento sem autorização prévia e por&nbsp;escrito.</p>
 <h2>Contato e&nbsp;ouvidoria</h2>
 <div class="dl">
-  <dt>Responsável</dt><dd><span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span> &middot; <span class="ph" data-campo="registro_cvm_ou_ancord">{{registro_cvm_ou_ancord}}</span></dd>
+  <dt>Responsável</dt><dd><span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span>, <span class="ph" data-campo="registro_cvm_ou_ancord">{{registro_cvm_ou_ancord}}</span></dd>
   <dt>Atendimento</dt><dd><span class="ph" data-campo="canal_atendimento">{{canal_atendimento}}</span></dd>
   <dt>E-mail</dt><dd><span class="ph" data-campo="email_contato" data-link="mailto">{{email_contato}}</span></dd>
   <dt>Ouvidoria</dt><dd><span class="ph" data-campo="canal_ouvidoria" data-link="auto">{{canal_ouvidoria}}</span></dd>
-  <dt>Razão&nbsp;social</dt><dd><span class="ph" data-campo="razao_social">{{razao_social}}</span> &middot; CNPJ <span class="ph" data-campo="cnpj">{{cnpj}}</span></dd>
+  <dt>Razão&nbsp;social</dt><dd><span class="ph" data-campo="razao_social">{{razao_social}}</span>, CNPJ <span class="ph" data-campo="cnpj">{{cnpj}}</span></dd>
 </div>
   </div>
-  <footer class="pg-foot"><span class="no">10</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">10</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 </body>
 </html>

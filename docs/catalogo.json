@@ -33,7 +33,7 @@
      "rotulo": "Alta Renda",
      "arquivo": "apresentacao-consultor-alta-renda.html",
      "paginas": 1,
-     "campos": 69,
+     "campos": 63,
      "imagens": 1
     },
     {
@@ -41,7 +41,7 @@
      "rotulo": "Alta Renda, sem data",
      "arquivo": "apresentacao-consultor-alta-renda-sem-data.html",
      "paginas": 1,
-     "campos": 68,
+     "campos": 62,
      "imagens": 1
     },
     {
@@ -49,7 +49,7 @@
      "rotulo": "Private Banking",
      "arquivo": "apresentacao-consultor-private.html",
      "paginas": 1,
-     "campos": 69,
+     "campos": 63,
      "imagens": 1
     },
     {
@@ -57,7 +57,7 @@
      "rotulo": "Private Banking, sem data",
      "arquivo": "apresentacao-consultor-private-sem-data.html",
      "paginas": 1,
-     "campos": 68,
+     "campos": 62,
      "imagens": 1
     },
     {
@@ -65,7 +65,7 @@
      "rotulo": "Assessoria",
      "arquivo": "apresentacao-consultor-assessoria.html",
      "paginas": 1,
-     "campos": 69,
+     "campos": 63,
      "imagens": 1
     },
     {
@@ -73,7 +73,7 @@
      "rotulo": "Assessoria, sem data",
      "arquivo": "apresentacao-consultor-assessoria-sem-data.html",
      "paginas": 1,
-     "campos": 68,
+     "campos": 62,
      "imagens": 1
     },
     {
@@ -81,7 +81,7 @@
      "rotulo": "Me Diz o Que Fazer (básico)",
      "arquivo": "apresentacao-consultor-me-diz-o-que-fazer.html",
      "paginas": 1,
-     "campos": 45,
+     "campos": 39,
      "imagens": 1
     }
    ]

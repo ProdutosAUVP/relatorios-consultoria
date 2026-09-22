@@ -91,18 +91,18 @@ strong{font-weight:700}
 /* ---------- cabeçalho / rodapé ---------- */
 .pg-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:8mm;
   padding-bottom:3mm;border-bottom:1px solid var(--line)}
-.pg-head .sec{font-size:7pt;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.pg-head .sec{font-size:7pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
 .pg-head .rt{display:flex;align-items:center;gap:5mm}
-.pg-head .dt{font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.pg-head .dt{font-size:7pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
 
 .pg-foot{flex:0 0 auto;margin-top:auto;padding-top:3mm;border-top:1px solid var(--line);
   display:flex;justify-content:space-between;align-items:baseline;
-  font-size:6.2pt;letter-spacing:.12em;text-transform:uppercase;color:#9BA29D}
+  font-size:6.2pt;letter-spacing:.08em;text-transform:uppercase;color:#9BA29D}
 .pg-foot .no{font-size:9pt;font-weight:800;letter-spacing:0;color:var(--brand)}
 .pg-body{flex:1 1 auto;min-height:0;padding-top:8mm;display:flex;flex-direction:column}
 
 /* ---------- tipografia ---------- */
-.eyebrow{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);margin:0 0 2mm}
+.eyebrow{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);margin:0 0 2mm}
 h1.t{font-size:19pt;font-weight:800;text-transform:uppercase;letter-spacing:-.012em;line-height:1.04;margin:0 0 3mm}
 .lead{font-size:10pt;color:var(--ink-2);margin:0 0 8mm;max-width:155mm}
 h2{font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:8mm 0 4mm;
@@ -122,7 +122,12 @@ h3{font-size:9pt;font-weight:700;margin:5mm 0 2mm}
 /* ---------- KPIs ---------- */
 .kpis{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:4mm}
 .kpi{min-width:0;border:1px solid var(--line);border-top:1.33px solid var(--brand);background:var(--soft);padding:4mm}
-.kpi .k{font-size:6.4pt;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);font-weight:600;line-height:1.3}
+/* Um número manda: o primeiro KPI ocupa duas colunas com o valor maior. A
+   segunda fileira, de apoio, sai sem moldura — só o fio à esquerda. */
+.kpi.grande{grid-column:span 2}
+.kpi.grande .v{font-size:22pt;margin-top:1.5mm}
+.kpis.leve .kpi{border:0;border-left:1px solid var(--line);background:none;padding:.5mm 0 .5mm 3mm}
+.kpi .k{font-size:6.4pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600;line-height:1.3}
 .kpi .v{font-size:13.5pt;font-weight:800;line-height:1.15;margin-top:2mm;letter-spacing:-.02em;overflow-wrap:anywhere}
 .kpi .s{font-size:7pt;color:var(--ink-2);margin-top:1mm}
 
@@ -137,7 +142,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .tb.fix{table-layout:fixed}
 .tb.sm thead th{padding:2mm 2mm;font-size:6.2pt;letter-spacing:.06em}
 .tb thead th{background:var(--brand);color:#fff;text-align:left;font-weight:600;
-  padding:2mm 2mm;font-size:6.6pt;letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
+  padding:2mm 2mm;font-size:6.6pt;letter-spacing:.08em;text-transform:uppercase;line-height:1.3}
 .tb td{padding:3mm;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
 .tb tbody tr:nth-child(even) td{background:var(--soft)}
 
@@ -167,7 +172,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .crono td.fase{background:var(--brand);padding:0;width:9mm;border-bottom:1px solid var(--paper)}
 .crono td.fase span{display:block;writing-mode:vertical-rl;transform:rotate(180deg);
   margin:0 auto;padding:4mm 0;color:var(--accent);font-size:6.8pt;font-weight:700;
-  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+  letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
 .tb .num,.tb th.num{text-align:right}
 .tb tfoot td{font-weight:700;border-top:1.33px solid var(--ink);background:#fff}
 .tb caption{caption-side:bottom;text-align:left;font-size:6.8pt;color:var(--ink-2);padding-top:2mm}
@@ -191,7 +196,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 /* ---------- placeholders de gráfico ---------- */
 .chart{max-height:100mm;border:1px dashed var(--brand);background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(0,0,0,.022) 5px 10px);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2mm;text-align:center;padding:5mm}
-.chart .cl{font-size:6.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.chart .cl{font-size:6.6pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
 .chart .cd{font-size:7.6pt;color:var(--ink-2);max-width:105mm;line-height:1.45}
 /* Com o gráfico desenhado dentro, a moldura deixa de ser um pedido de
    preenchimento: some o tracejado e a hachura, e fica só o desenho. */
@@ -210,9 +215,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 
 /* ---------- diversos ---------- */
 .dl{display:grid;grid-template-columns:auto 1fr;gap:1.5mm 5mm;font-size:8.4pt;align-items:baseline}
-.dl dt{color:var(--ink-2);text-transform:uppercase;font-size:6.6pt;letter-spacing:.1em;font-weight:600}
+.dl dt{color:var(--ink-2);text-transform:uppercase;font-size:6.6pt;letter-spacing:.08em;font-weight:600}
 .dl dd{margin:0;font-weight:600}
-.pill{display:inline-block;font-size:6.4pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+.pill{display:inline-block;font-size:6.4pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   padding:1mm 2mm;border-radius:8mm;background:var(--soft);color:var(--brand);border:1px solid var(--line)}
 .pill.ok{background:rgba(31,122,76,.1);color:var(--pos);border-color:rgba(31,122,76,.25)}
 .pill.at{background:var(--warn-bg);color:var(--warn-fg);border-color:var(--warn-bd)}
@@ -225,7 +230,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .sig{margin-top:6mm;display:grid;grid-template-columns:1fr 1fr;gap:8mm;font-size:8pt}
 .sig .ln{border-top:1px solid var(--ink);padding-top:1.5mm;color:var(--ink-2)}
 .qr{width:34mm;height:34mm;border:1px dashed var(--brand);display:flex;align-items:center;justify-content:center;
-  text-align:center;font-size:6.4pt;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:700}
+  text-align:center;font-size:6.4pt;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);font-weight:700}
 
 .steps{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:5mm;counter-reset:st;list-style:none;padding:0;margin:0}
 .steps>li{min-width:0;position:relative;padding-top:8mm}
@@ -246,7 +251,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   border:1px solid var(--brand);background:var(--paper);color:var(--brand);
   display:flex;align-items:center;justify-content:center;font-weight:800;font-size:8pt;letter-spacing:-.01em}
 .flow .node::before{counter-increment:fl;content:counter(fl,decimal-leading-zero)}
-.flow .tag{display:block;font-size:5.8pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+.flow .tag{display:block;font-size:5.8pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--ink-2);margin-bottom:1mm}
 .flow h4{font-size:9pt;font-weight:700;margin:0 0 1mm}
 .flow p{font-size:8pt;color:var(--ink-2);margin:0;line-height:1.45}
@@ -289,7 +294,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .lista li::before{content:"";position:absolute;left:0;top:8px;width:2.6mm;height:1.33px;background:var(--accent)}
 .lista.mut li{color:var(--ink-2)}
 .chips{display:flex;flex-wrap:wrap;gap:1.5mm;margin-bottom:1mm}
-.side h3{font-size:6.8pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+.side h3{font-size:6.8pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--ink-2);margin:5mm 0 2mm;padding-bottom:1mm;border-bottom:1px solid var(--line)}
 .side h3:first-child{margin-top:0}
 .side .lista{font-size:8pt;margin-bottom:0}
@@ -313,7 +318,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .imgbox{border:1px dashed var(--line);display:flex;flex-direction:column;
   align-items:center;justify-content:center;gap:1.5mm;text-align:center;padding:5mm;
   background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(0,0,0,.022) 5px 10px)}
-.imgbox .cl{font-size:6.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+.imgbox .cl{font-size:6.6pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--brand)}
 .imgbox .cd{font-size:7.4pt;max-width:70mm;line-height:1.4;color:var(--ink-2)}
 
@@ -344,7 +349,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .marcos li:last-child::before{display:none}
 .marcos li::after{content:"";position:absolute;left:0;top:1.2mm;width:2.4mm;height:2.4mm;
   border-radius:50%;border:1px solid var(--brand);background:var(--paper)}
-.marcos .q{display:block;font-size:6.6pt;font-weight:700;letter-spacing:.15em;
+.marcos .q{display:block;font-size:6.6pt;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:var(--brand);margin-bottom:1mm}
 .marcos p{margin:0;font-size:8.2pt;line-height:1.45;color:var(--ink-2)}
 
@@ -432,8 +437,8 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 
 
 /* altura da folha — os dois números saem de `npm run altura -- --ajustar` */
-@page{size:210mm 1350mm;margin:0}
-.page.longa{height:1350mm;padding:0;font-size:10pt}
+@page{size:210mm 1345mm;margin:0}
+.page.longa{height:1345mm;padding:0;font-size:10pt}
 @media print{.page.longa{break-after:auto}}
 
 /* as faixas: a folha alterna fundo para marcar onde uma parte acaba e outra
@@ -458,7 +463,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.05) 6px 12px)}
 .lg-id .rt-vaga .cl{color:rgba(255,255,255,.72)}
 .lg-id .rt-vaga .cd{color:rgba(255,255,255,.5)}
-.lg-plano{display:block;font-size:7.2pt;font-weight:700;letter-spacing:.2em;
+.lg-plano{display:block;font-size:7.2pt;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:3mm}
 .lg-id h1{margin:0;font-size:30pt;font-weight:800;text-transform:uppercase;
   line-height:1.02;letter-spacing:-.02em}
@@ -480,7 +485,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .lg-cred>div{min-width:0;padding:5mm 7mm;border-left:1px solid rgba(255,255,255,.22)}
 .lg-cred>div:first-child{padding-left:0;border-left:0}
 .lg-cred>div:last-child{padding-right:0}
-.lg-cred h3{margin:0 0 3mm;font-size:6.6pt;font-weight:700;letter-spacing:.16em;
+.lg-cred h3{margin:0 0 3mm;font-size:6.6pt;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:rgba(255,255,255,.62)}
 /* dois blocos empilhados na mesma coluna precisam de ar entre eles */
 .lg-cred h3:not(:first-child){margin-top:7mm}
@@ -540,7 +545,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .lg-pe .legal{color:rgba(255,255,255,.5)}
 .lg-assina{margin-top:12mm;padding-top:6mm;border-top:1px solid rgba(255,255,255,.3);
   display:flex;align-items:center;justify-content:space-between;gap:10mm}
-.lg-assina .data{font-size:8pt;letter-spacing:.14em;text-transform:uppercase;
+.lg-assina .data{font-size:8pt;letter-spacing:.08em;text-transform:uppercase;
   color:rgba(255,255,255,.72)}
 
 </style>
@@ -587,7 +592,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
     <div class="lg-sec">
       <h2>Além dos&nbsp;investimentos</h2>
       <div class="corrido"><p>Sempre fui muito curioso e valorizo demais viver novas experiências e conhecer outras culturas, o que me fez viajar bastante, algo que me marcou foi meu intercâmbio em Cambridge. Mesmo sempre tendo sido apaixonado pelo mercado financeiro e investido por conta própria desde novo, antes de fazer disso a minha profissão, passei quase 10 anos empreendendo. Ter vivido isso na prática me deu uma verdadeira &ldquo;visão de dono&rdquo;, sei exatamente quais são as dores e os desafios de se tocar um negócio no&nbsp;Brasil.</p><p>Também tenho um lado mais observador e criativo. Trabalhei como fotógrafo profissional por alguns anos, uma experiência que me ensinou a olhar com mais cuidado para os detalhes. No meu tempo livre, a música é a minha grande válvula de escape. Para equilibrar o profissional com a qualidade de vida, gosto de ir na academia e andar de&nbsp;bicicleta.</p></div>
-      <div style="margin-top:7mm"><div class="tags"><span>Viagens</span><span>Intercâmbio em&nbsp;Cambridge</span><span>Empreendedorismo</span><span>Fotografia</span><span>Música</span><span>Academia</span><span>Ciclismo</span></div></div>
+      <div style="margin-top:7mm"></div>
     </div>
   </div>
 

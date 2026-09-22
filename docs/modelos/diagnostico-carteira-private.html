@@ -91,18 +91,18 @@ strong{font-weight:700}
 /* ---------- cabeçalho / rodapé ---------- */
 .pg-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:8mm;
   padding-bottom:3mm;border-bottom:1px solid var(--line)}
-.pg-head .sec{font-size:7pt;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.pg-head .sec{font-size:7pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
 .pg-head .rt{display:flex;align-items:center;gap:5mm}
-.pg-head .dt{font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.pg-head .dt{font-size:7pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
 
 .pg-foot{flex:0 0 auto;margin-top:auto;padding-top:3mm;border-top:1px solid var(--line);
   display:flex;justify-content:space-between;align-items:baseline;
-  font-size:6.2pt;letter-spacing:.12em;text-transform:uppercase;color:#9BA29D}
+  font-size:6.2pt;letter-spacing:.08em;text-transform:uppercase;color:#9BA29D}
 .pg-foot .no{font-size:9pt;font-weight:800;letter-spacing:0;color:var(--brand)}
 .pg-body{flex:1 1 auto;min-height:0;padding-top:8mm;display:flex;flex-direction:column}
 
 /* ---------- tipografia ---------- */
-.eyebrow{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);margin:0 0 2mm}
+.eyebrow{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);margin:0 0 2mm}
 h1.t{font-size:19pt;font-weight:800;text-transform:uppercase;letter-spacing:-.012em;line-height:1.04;margin:0 0 3mm}
 .lead{font-size:10pt;color:var(--ink-2);margin:0 0 8mm;max-width:155mm}
 h2{font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:8mm 0 4mm;
@@ -122,7 +122,12 @@ h3{font-size:9pt;font-weight:700;margin:5mm 0 2mm}
 /* ---------- KPIs ---------- */
 .kpis{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:4mm}
 .kpi{min-width:0;border:1px solid var(--line);border-top:1.33px solid var(--brand);background:var(--soft);padding:4mm}
-.kpi .k{font-size:6.4pt;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);font-weight:600;line-height:1.3}
+/* Um número manda: o primeiro KPI ocupa duas colunas com o valor maior. A
+   segunda fileira, de apoio, sai sem moldura — só o fio à esquerda. */
+.kpi.grande{grid-column:span 2}
+.kpi.grande .v{font-size:22pt;margin-top:1.5mm}
+.kpis.leve .kpi{border:0;border-left:1px solid var(--line);background:none;padding:.5mm 0 .5mm 3mm}
+.kpi .k{font-size:6.4pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600;line-height:1.3}
 .kpi .v{font-size:13.5pt;font-weight:800;line-height:1.15;margin-top:2mm;letter-spacing:-.02em;overflow-wrap:anywhere}
 .kpi .s{font-size:7pt;color:var(--ink-2);margin-top:1mm}
 
@@ -137,7 +142,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .tb.fix{table-layout:fixed}
 .tb.sm thead th{padding:2mm 2mm;font-size:6.2pt;letter-spacing:.06em}
 .tb thead th{background:var(--brand);color:#fff;text-align:left;font-weight:600;
-  padding:2mm 2mm;font-size:6.6pt;letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
+  padding:2mm 2mm;font-size:6.6pt;letter-spacing:.08em;text-transform:uppercase;line-height:1.3}
 .tb td{padding:3mm;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
 .tb tbody tr:nth-child(even) td{background:var(--soft)}
 
@@ -167,7 +172,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .crono td.fase{background:var(--brand);padding:0;width:9mm;border-bottom:1px solid var(--paper)}
 .crono td.fase span{display:block;writing-mode:vertical-rl;transform:rotate(180deg);
   margin:0 auto;padding:4mm 0;color:var(--accent);font-size:6.8pt;font-weight:700;
-  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+  letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
 .tb .num,.tb th.num{text-align:right}
 .tb tfoot td{font-weight:700;border-top:1.33px solid var(--ink);background:#fff}
 .tb caption{caption-side:bottom;text-align:left;font-size:6.8pt;color:var(--ink-2);padding-top:2mm}
@@ -191,7 +196,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 /* ---------- placeholders de gráfico ---------- */
 .chart{max-height:100mm;border:1px dashed var(--brand);background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(0,0,0,.022) 5px 10px);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2mm;text-align:center;padding:5mm}
-.chart .cl{font-size:6.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.chart .cl{font-size:6.6pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
 .chart .cd{font-size:7.6pt;color:var(--ink-2);max-width:105mm;line-height:1.45}
 /* Com o gráfico desenhado dentro, a moldura deixa de ser um pedido de
    preenchimento: some o tracejado e a hachura, e fica só o desenho. */
@@ -210,9 +215,9 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 
 /* ---------- diversos ---------- */
 .dl{display:grid;grid-template-columns:auto 1fr;gap:1.5mm 5mm;font-size:8.4pt;align-items:baseline}
-.dl dt{color:var(--ink-2);text-transform:uppercase;font-size:6.6pt;letter-spacing:.1em;font-weight:600}
+.dl dt{color:var(--ink-2);text-transform:uppercase;font-size:6.6pt;letter-spacing:.08em;font-weight:600}
 .dl dd{margin:0;font-weight:600}
-.pill{display:inline-block;font-size:6.4pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+.pill{display:inline-block;font-size:6.4pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   padding:1mm 2mm;border-radius:8mm;background:var(--soft);color:var(--brand);border:1px solid var(--line)}
 .pill.ok{background:rgba(31,122,76,.1);color:var(--pos);border-color:rgba(31,122,76,.25)}
 .pill.at{background:var(--warn-bg);color:var(--warn-fg);border-color:var(--warn-bd)}
@@ -225,7 +230,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .sig{margin-top:6mm;display:grid;grid-template-columns:1fr 1fr;gap:8mm;font-size:8pt}
 .sig .ln{border-top:1px solid var(--ink);padding-top:1.5mm;color:var(--ink-2)}
 .qr{width:34mm;height:34mm;border:1px dashed var(--brand);display:flex;align-items:center;justify-content:center;
-  text-align:center;font-size:6.4pt;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:700}
+  text-align:center;font-size:6.4pt;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);font-weight:700}
 
 .steps{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:5mm;counter-reset:st;list-style:none;padding:0;margin:0}
 .steps>li{min-width:0;position:relative;padding-top:8mm}
@@ -246,7 +251,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   border:1px solid var(--brand);background:var(--paper);color:var(--brand);
   display:flex;align-items:center;justify-content:center;font-weight:800;font-size:8pt;letter-spacing:-.01em}
 .flow .node::before{counter-increment:fl;content:counter(fl,decimal-leading-zero)}
-.flow .tag{display:block;font-size:5.8pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+.flow .tag{display:block;font-size:5.8pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--ink-2);margin-bottom:1mm}
 .flow h4{font-size:9pt;font-weight:700;margin:0 0 1mm}
 .flow p{font-size:8pt;color:var(--ink-2);margin:0;line-height:1.45}
@@ -289,7 +294,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .lista li::before{content:"";position:absolute;left:0;top:8px;width:2.6mm;height:1.33px;background:var(--accent)}
 .lista.mut li{color:var(--ink-2)}
 .chips{display:flex;flex-wrap:wrap;gap:1.5mm;margin-bottom:1mm}
-.side h3{font-size:6.8pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+.side h3{font-size:6.8pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--ink-2);margin:5mm 0 2mm;padding-bottom:1mm;border-bottom:1px solid var(--line)}
 .side h3:first-child{margin-top:0}
 .side .lista{font-size:8pt;margin-bottom:0}
@@ -313,7 +318,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .imgbox{border:1px dashed var(--line);display:flex;flex-direction:column;
   align-items:center;justify-content:center;gap:1.5mm;text-align:center;padding:5mm;
   background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(0,0,0,.022) 5px 10px)}
-.imgbox .cl{font-size:6.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+.imgbox .cl{font-size:6.6pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--brand)}
 .imgbox .cd{font-size:7.4pt;max-width:70mm;line-height:1.4;color:var(--ink-2)}
 
@@ -344,7 +349,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .marcos li:last-child::before{display:none}
 .marcos li::after{content:"";position:absolute;left:0;top:1.2mm;width:2.4mm;height:2.4mm;
   border-radius:50%;border:1px solid var(--brand);background:var(--paper)}
-.marcos .q{display:block;font-size:6.6pt;font-weight:700;letter-spacing:.15em;
+.marcos .q{display:block;font-size:6.6pt;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:var(--brand);margin-bottom:1mm}
 .marcos p{margin:0;font-size:8.2pt;line-height:1.45;color:var(--ink-2)}
 
@@ -512,11 +517,11 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   <path class="lg-1" d="M1090.08,109.29c1.37,0,2.58.16,3.62.48,1.05.32,1.85.6,2.4.84.24.13.44-.18.61-.93.17-.75.25-1.46.25-2.1,0-.49-.04-.94-.13-1.37s-.21-.64-.37-.64c-2.12,0-4.07.36-5.82,1.06-1.25.5-2.52,1.12-3.82,1.85-.47-.38-.98-.74-1.54-1.06-1.97-1.16-4.56-1.73-7.74-1.73-2.83,0-5.33.51-7.49,1.54-2.16,1.03-3.85,2.41-5.06,4.16-1.21,1.74-1.81,3.73-1.81,5.96,0,2.06.55,4,1.63,5.79,1.1,1.78,2.65,3.22,4.68,4.29.08.04.17.07.26.11-1.91,1.51-3.45,2.93-4.56,4.24-1.29,1.52-1.94,3.35-1.94,5.36s.67,3.46,1.99,4.38c1.27.88,2.96,1.44,5.05,1.68-2.3,1.62-4.21,3.25-5.71,4.9-2.39,2.61-3.57,5.4-3.57,8.23s1.16,5.18,3.48,7.06c2.33,1.88,5.57,2.83,9.76,2.83h.01c2.86-.01,5.64-.49,8.33-1.44,2.68-.95,5.07-2.27,7.17-3.95,2.1-1.68,3.76-3.61,4.99-5.8,1.22-2.18,1.84-4.62,1.84-7s-.55-4.21-1.62-5.49c-1.09-1.26-2.46-2.16-4.12-2.66-1.67-.5-3.4-.79-5.18-.87-1.77-.08-3.4-.12-4.86-.12-3.23-.01-5.8-.16-7.72-.45-1.92-.29-3.29-.8-4.13-1.52-.84-.72-1.25-1.73-1.25-3.02,0-1.11.3-2.15.89-3.11.51-.82,1.34-1.72,2.46-2.67,1.68.62,3.62.93,5.79.93h0c2.9,0,5.4-.55,7.53-1.66,2.11-1.11,3.75-2.56,4.9-4.37,1.16-1.79,1.74-3.73,1.74-5.82,0-1.83-.47-3.61-1.38-5.39-.44-.86-1.01-1.64-1.7-2.35,0,0,.01,0,.02,0,.67-.11,1.38-.17,2.15-.17ZM1085.21,144c2.14.27,3.81.95,5.02,2.04,1.22,1.09,1.82,2.89,1.82,5.39,0,3.72-1.32,6.67-3.97,8.83-2.65,2.16-6.02,3.23-10.12,3.23-2.54,0-4.69-.42-6.45-1.24-1.77-.82-3.1-2-4.02-3.53-.92-1.53-1.38-3.28-1.38-5.4s.44-3.89,1.31-5.31c.87-1.42,2.03-2.64,3.48-3.66.46-.33.97-.63,1.46-.95,1.68.12,3.47.2,5.37.2,2.85,0,5.33.13,7.47.41ZM1085.15,112.44h0s0,0,0,0h0ZM1083.41,125.75c-1.29,1.32-2.9,1.98-4.82,1.98h0c-1.55.01-3.08-.44-4.58-1.34-1.5-.91-2.76-2.28-3.77-4.14-1.01-1.86-1.52-4.08-1.52-7.01s.62-5.02,1.85-6.3c1.22-1.28,2.82-1.91,4.78-1.91,1.81,0,3.48.48,4.99,1.44,1.5.97,2.71,2.35,3.63,4.14.92,1.79,1.38,3.97,1.38,6.54,0,3.08-.64,5.27-1.94,6.6Z"/>
 </svg></div>
   <h1 class="cv-t"><span class="lt">Diagnóstico</span><span class="bd">de&nbsp;Carteira</span></h1>
-  <div class="cv-conf">DOCUMENTO CONFIDENCIAL<br>PROIBIDO O&nbsp;COMPARTILHAMENTO</div>
+  <div class="cv-conf">DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</div>
   <div class="rule r1"></div>
   <div class="rule r2"></div>
   <div class="cv-b-t"><span style="font-weight:300">Sua </span><span style="font-weight:800">Situação&nbsp;Atual</span></div>
-  <div class="cv-id"><div><span class="ph" data-campo="nome_cliente">{{nome_cliente}}</span></div><div>Patrimônio analisado &middot; <span class="ph" data-campo="patrimonio_analisado">{{patrimonio_analisado}}</span></div><div>Banker &middot; <span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span></div><div><span class="ph" data-campo="data_diagnostico">{{data_diagnostico}}</span></div></div>
+  <div class="cv-id"><div><span class="ph" data-campo="nome_cliente">{{nome_cliente}}</span></div><div>Patrimônio analisado: <span class="ph" data-campo="patrimonio_analisado">{{patrimonio_analisado}}</span></div><div>Banker: <span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span></div><div><span class="ph" data-campo="data_diagnostico">{{data_diagnostico}}</span></div></div>
 </section>
 <section class="page">
   
@@ -555,7 +560,6 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 </svg></div></div>
   </header>
   <div class="pg-body">
-<span class="eyebrow">Como lemos a sua&nbsp;carteira</span>
 <h1 class="t">Escopo e&nbsp;método</h1>
 <p class="lead">Este diagnóstico compara a sua carteira atual com a carteira que faria sentido para os seus objetivos, o seu horizonte e a sua tolerância a risco &mdash; sem julgamento sobre decisões&nbsp;passadas.</p>
 <h2>O que foi&nbsp;analisado</h2>
@@ -578,7 +582,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   </div>
 </div>
   </div>
-  <footer class="pg-foot"><span class="no">01</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">01</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -617,7 +621,6 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 </svg></div></div>
   </header>
   <div class="pg-body">
-<span class="eyebrow">Ponto de&nbsp;partida</span>
 <h1 class="t">Perfil, objetivos e&nbsp;restrições</h1>
 <p class="lead">Tudo o que vem depois neste documento se apoia nas informações abaixo. Se alguma delas estiver errada, a proposta&nbsp;muda.</p>
 <div class="cols2">
@@ -647,7 +650,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <h2>Objetivos&nbsp;priorizados</h2>
 <table class="tb"><thead><tr><th>#</th><th>Objetivo</th><th class="num">Valor-alvo</th><th>Prazo</th><th>Prioridade</th><th>Situação&nbsp;hoje</th></tr></thead><tbody><tr><td>1</td><td><span class="ph" data-campo="obj_1_descricao">{{obj_1_descricao}}</span></td><td class="num"><span class="ph" data-campo="obj_1_valor">{{obj_1_valor}}</span></td><td><span class="ph" data-campo="obj_1_prazo">{{obj_1_prazo}}</span></td><td><span class="pill"><span class="ph" data-campo="obj_1_prioridade">{{obj_1_prioridade}}</span></span></td><td><span class="ph" data-campo="obj_1_situacao">{{obj_1_situacao}}</span></td></tr><tr><td>2</td><td><span class="ph" data-campo="obj_2_descricao">{{obj_2_descricao}}</span></td><td class="num"><span class="ph" data-campo="obj_2_valor">{{obj_2_valor}}</span></td><td><span class="ph" data-campo="obj_2_prazo">{{obj_2_prazo}}</span></td><td><span class="pill"><span class="ph" data-campo="obj_2_prioridade">{{obj_2_prioridade}}</span></span></td><td><span class="ph" data-campo="obj_2_situacao">{{obj_2_situacao}}</span></td></tr><tr><td>3</td><td><span class="ph" data-campo="obj_3_descricao">{{obj_3_descricao}}</span></td><td class="num"><span class="ph" data-campo="obj_3_valor">{{obj_3_valor}}</span></td><td><span class="ph" data-campo="obj_3_prazo">{{obj_3_prazo}}</span></td><td><span class="pill"><span class="ph" data-campo="obj_3_prioridade">{{obj_3_prioridade}}</span></span></td><td><span class="ph" data-campo="obj_3_situacao">{{obj_3_situacao}}</span></td></tr><tr><td>4</td><td><span class="ph" data-campo="obj_4_descricao">{{obj_4_descricao}}</span></td><td class="num"><span class="ph" data-campo="obj_4_valor">{{obj_4_valor}}</span></td><td><span class="ph" data-campo="obj_4_prazo">{{obj_4_prazo}}</span></td><td><span class="pill"><span class="ph" data-campo="obj_4_prioridade">{{obj_4_prioridade}}</span></span></td><td><span class="ph" data-campo="obj_4_situacao">{{obj_4_situacao}}</span></td></tr></tbody></table>
   </div>
-  <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -697,7 +700,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   <div class="chart" data-img="2" data-grafico="bars" data-eixo="% do patrimônio" data-pontos="D+0|Até 30 dias|Até 90 dias|Até 1 ano|1 a 3 anos|Acima de 3 anos" style="flex:1 1 auto;min-height:44mm"><div class="sk-bars"><i style="height:42%"></i><i style="height:68%"></i><i style="height:55%"></i><i style="height:88%"></i><i style="height:72%"></i><i style="height:96%"></i></div><div class="cl">Liquidez da&nbsp;carteira</div><div class="cd">Quanto do patrimônio está disponível em cada faixa de&nbsp;prazo.</div></div>
 </div>
   </div>
-  <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -745,7 +748,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <div class="gap"></div>
 <div class="note"><p><strong>Resumo em uma&nbsp;frase.</strong> <span class="ph" data-campo="resumo_diagnostico">{{resumo_diagnostico}}</span></p></div>
   </div>
-  <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -796,7 +799,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <div class="gap"></div>
 <div class="note"><p><strong>Cobertura do&nbsp;FGC.</strong> <span class="ph" data-campo="texto_cobertura_fgc">{{texto_cobertura_fgc}}</span></p></div>
   </div>
-  <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -844,7 +847,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <div class="gap"></div>
 <div class="kpis" style="--n:4"><div class="kpi"><div class="k">Custo&nbsp;atual</div><div class="v"><span class="ph" data-campo="custo_total_anual">{{custo_total_anual}}</span></div><div class="s"><span class="ph" data-campo="custo_total_perc">{{custo_total_perc}}</span>&nbsp;a.a.</div></div><div class="kpi"><div class="k">Custo na&nbsp;proposta</div><div class="v"><span class="ph" data-campo="custo_proposto_anual">{{custo_proposto_anual}}</span></div><div class="s"><span class="ph" data-campo="custo_proposto_perc">{{custo_proposto_perc}}</span>&nbsp;a.a.</div></div><div class="kpi"><div class="k">Economia&nbsp;estimada</div><div class="v"><span class="ph" data-campo="economia_estimada_ano">{{economia_estimada_ano}}</span></div><div class="s">Por&nbsp;ano</div></div><div class="kpi"><div class="k">Em 10&nbsp;anos</div><div class="v"><span class="ph" data-campo="economia_estimada_10a">{{economia_estimada_10a}}</span></div><div class="s">Com&nbsp;reinvestimento</div></div></div>
   </div>
-  <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -896,7 +899,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
   </div>
 </div>
   </div>
-  <footer class="pg-foot"><span class="no">07</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">07</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -944,11 +947,11 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <h2>Restrições de&nbsp;saída</h2>
 <div class="cards" style="--n:3"><div class="card"><h4>Carências e&nbsp;vencimentos</h4><p><span class="ph" data-campo="restricao_carencia">{{restricao_carencia}}</span></p></div><div class="card"><h4>Imposto na&nbsp;saída</h4><p><span class="ph" data-campo="restricao_imposto">{{restricao_imposto}}</span></p></div><div class="card"><h4>Marcação a&nbsp;mercado</h4><p><span class="ph" data-campo="restricao_marcacao">{{restricao_marcacao}}</span></p></div></div>
 <div class="sig">
-  <div class="ln"><span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span><br><span class="mut">Banker &middot; <span class="ph" data-campo="registro_cvm_ou_ancord">{{registro_cvm_ou_ancord}}</span></span></div>
+  <div class="ln"><span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span><br><span class="mut">Banker, <span class="ph" data-campo="registro_cvm_ou_ancord">{{registro_cvm_ou_ancord}}</span></span></div>
   <div class="ln"><span class="ph" data-campo="data_diagnostico">{{data_diagnostico}}</span><br><span class="mut">AUVP Private&nbsp;Banking</span></div>
 </div>
   </div>
-  <footer class="pg-foot"><span class="no">08</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">08</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 <section class="page">
   
@@ -1004,14 +1007,14 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 <p class="legal">Este material é destinado exclusivamente a <span class="ph" data-campo="nome_cliente">{{nome_cliente}}</span> e foi elaborado com base nas informações prestadas pelo próprio cliente e nos extratos fornecidos. Informações incompletas ou incorretas alteram as conclusões. É proibida a reprodução ou o compartilhamento total ou parcial sem autorização prévia e por&nbsp;escrito.</p>
 <h2>Contato</h2>
 <div class="dl">
-  <dt>Responsável</dt><dd><span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span> &middot; <span class="ph" data-campo="registro_cvm_ou_ancord">{{registro_cvm_ou_ancord}}</span></dd>
+  <dt>Responsável</dt><dd><span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span>, <span class="ph" data-campo="registro_cvm_ou_ancord">{{registro_cvm_ou_ancord}}</span></dd>
   <dt>Atendimento</dt><dd><span class="ph" data-campo="canal_atendimento">{{canal_atendimento}}</span></dd>
   <dt>E-mail</dt><dd><span class="ph" data-campo="email_contato" data-link="mailto">{{email_contato}}</span></dd>
   <dt>Ouvidoria</dt><dd><span class="ph" data-campo="canal_ouvidoria" data-link="auto">{{canal_ouvidoria}}</span></dd>
-  <dt>Razão&nbsp;social</dt><dd><span class="ph" data-campo="razao_social">{{razao_social}}</span> &middot; CNPJ <span class="ph" data-campo="cnpj">{{cnpj}}</span></dd>
+  <dt>Razão&nbsp;social</dt><dd><span class="ph" data-campo="razao_social">{{razao_social}}</span>, CNPJ <span class="ph" data-campo="cnpj">{{cnpj}}</span></dd>
 </div>
   </div>
-  <footer class="pg-foot"><span class="no">09</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  <footer class="pg-foot"><span class="no">09</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
 </section>
 </body>
 </html>

@@ -79,16 +79,16 @@ strong{font-weight:700}
 
 .pg-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:10mm;
   padding-bottom:3mm;border-bottom:1px solid var(--line)}
-.pg-head .sec{font-size:8pt;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.pg-head .sec{font-size:8pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
 .pg-head .rt{display:flex;align-items:center;gap:6mm}
-.pg-head .dt{font-size:8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.pg-head .dt{font-size:8pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
 
 .pg-foot{flex:0 0 auto;margin-top:auto;padding-top:3mm;display:flex;justify-content:space-between;align-items:baseline;
-  font-size:6.8pt;letter-spacing:.12em;text-transform:uppercase;color:#9BA29D}
+  font-size:6.8pt;letter-spacing:.08em;text-transform:uppercase;color:#9BA29D}
 .pg-foot .no{font-size:11pt;font-weight:800;letter-spacing:0;color:var(--brand)}
 .pg-body{flex:1 1 auto;min-height:0;padding-top:8mm;display:flex;flex-direction:column}
 
-.eyebrow{display:block;font-size:7.5pt;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);margin:0 0 3mm}
+.eyebrow{display:block;font-size:7.5pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);margin:0 0 3mm}
 .slide.dark .eyebrow{color:#fff}
 h1.t{font-size:26pt;font-weight:800;text-transform:uppercase;letter-spacing:-.015em;line-height:1.03;margin:0 0 4mm}
 .lead{font-size:11pt;color:var(--ink-2);margin:0 0 6mm;max-width:210mm}
@@ -111,13 +111,16 @@ h3{font-size:10.5pt;font-weight:700;margin:4mm 0 1.5mm}
 
 .kpis{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:5mm}
 .kpi{min-width:0;border:1px solid var(--line);border-top:1.33px solid var(--brand);background:var(--soft);padding:5mm}
-.kpi .k{font-size:7.4pt;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.kpi.grande{grid-column:span 2}
+.kpi.grande .v{font-size:30pt;margin-top:2mm}
+.kpis.leve .kpi{border:0;border-left:1px solid var(--line);background:none;padding:1mm 0 1mm 4mm}
+.kpi .k{font-size:7.4pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
 .kpi .v{font-size:20pt;font-weight:800;line-height:1.1;margin-top:3mm;letter-spacing:-.025em;overflow-wrap:anywhere}
 .kpi .s{font-size:8.4pt;color:var(--ink-2);margin-top:1.5mm}
 
 table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .tb thead th{background:var(--brand);color:#fff;text-align:left;font-weight:600;
-  padding:3mm 3mm;font-size:7.6pt;letter-spacing:.1em;text-transform:uppercase}
+  padding:3mm 3mm;font-size:7.6pt;letter-spacing:.08em;text-transform:uppercase}
 /* mesmas variantes do A4: a classe tem de significar a mesma coisa nos dois formatos */
 .tb.sm{font-size:8.4pt}
 .tb.sm td{padding:2.5mm 3mm}
@@ -155,7 +158,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .crono td.fase{background:var(--brand);padding:0;width:9mm;border-bottom:1px solid var(--paper)}
 .crono td.fase span{display:block;writing-mode:vertical-rl;transform:rotate(180deg);
   margin:0 auto;padding:4mm 0;color:var(--accent);font-size:6.8pt;font-weight:700;
-  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+  letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
 .slide.dark .tb td{border-color:rgba(255,255,255,.16)}
 .slide.dark .tb tbody tr:nth-child(even) td{background:rgba(255,255,255,.05)}
 .tb .num,.tb th.num{text-align:right}
@@ -176,7 +179,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .chart{border:1px dashed currentColor;background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(0,0,0,.02) 6px 12px);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3mm;text-align:center;padding:6mm}
 .slide.dark .chart{background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.045) 6px 12px)}
-.chart .cl{font-size:7.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.chart .cl{font-size:7.6pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
 .chart.feito{border:0;background:none;padding:0;gap:2mm}
 .slide.dark .chart .cl{color:#fff}
 .chart .cd{font-size:9pt;color:var(--ink-2);max-width:150mm;line-height:1.45}
@@ -186,20 +189,20 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .sk-donut{width:32mm;height:32mm;border-radius:50%;opacity:.35;
   background:conic-gradient(var(--c1) 0 42%,var(--c2) 42% 63%,var(--c3) 63% 82%,var(--c4) 82% 100%);
   -webkit-mask:radial-gradient(circle,transparent 52%,#000 53%);mask:radial-gradient(circle,transparent 52%,#000 53%)}
-.pill{display:inline-block;font-size:7.4pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+.pill{display:inline-block;font-size:7.4pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   padding:1mm 3mm;border-radius:8mm;background:var(--soft);color:var(--brand);border:1px solid var(--line)}
 .slide.dark .pill{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.24)}
 .dl{display:grid;grid-template-columns:auto 1fr;gap:2mm 6mm;font-size:9.5pt;align-items:baseline}
-.dl dt{color:var(--ink-2);text-transform:uppercase;font-size:7.4pt;letter-spacing:.1em;font-weight:600}
+.dl dt{color:var(--ink-2);text-transform:uppercase;font-size:7.4pt;letter-spacing:.08em;font-weight:600}
 .slide.dark .dl dt{color:rgba(255,255,255,.7)}
 .dl dd{margin:0;font-weight:600}
 .qr{width:52mm;height:52mm;border:1px dashed currentColor;display:flex;align-items:center;justify-content:center;
-  text-align:center;font-size:7.6pt;letter-spacing:.12em;text-transform:uppercase;font-weight:700;opacity:.85}
+  text-align:center;font-size:7.6pt;letter-spacing:.08em;text-transform:uppercase;font-weight:700;opacity:.85}
 .imgbox{border:1px dashed currentColor;display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:2mm;text-align:center;padding:8mm;
   background:repeating-linear-gradient(135deg,transparent 0 7px,rgba(0,0,0,.022) 7px 14px)}
 .slide.dark .imgbox{background:repeating-linear-gradient(135deg,transparent 0 7px,rgba(255,255,255,.05) 7px 14px)}
-.imgbox .cl{font-size:7.6pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.imgbox .cl{font-size:7.6pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
 .slide.dark .imgbox .cl{color:#fff}
 .imgbox .cd{font-size:9pt;max-width:90mm;line-height:1.45;color:var(--ink-2)}
 
@@ -229,7 +232,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .cv-sub{margin-top:3mm;font-size:25.3pt;line-height:1.1;text-transform:uppercase;opacity:.92}
 .cv-foot{position:absolute;left:24.6mm;right:24.6mm;bottom:11mm;z-index:4;
   display:flex;align-items:flex-end;gap:12mm}
-.cv-foot .cf{font-size:7.6pt;letter-spacing:.14em;text-transform:uppercase;opacity:.55}
+.cv-foot .cf{font-size:7.6pt;letter-spacing:.08em;text-transform:uppercase;opacity:.55}
 .cv-foot .id{margin-left:auto;text-align:right;font-size:9.5pt;line-height:1.7;opacity:.9}
 .slide.cover .graf{z-index:2}
 .slide.divider .graf{z-index:2}
@@ -244,7 +247,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .plan{border:1px solid var(--line);border-top:1.33px solid var(--line);display:flex;flex-direction:column;padding:5mm}
 .plan.hl{border-color:var(--line);border-top-color:var(--accent);background:var(--soft)}
 .plan .nm{font-size:11.5pt;font-weight:800;text-transform:uppercase;line-height:1.12;letter-spacing:-.01em}
-.plan .tag{font-size:7.4pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.plan .tag{font-size:7.4pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
 .plan .pr{margin:3mm 0;padding:3mm 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .plan .pr b{display:block;font-size:14pt;font-weight:800;color:var(--brand);letter-spacing:-.02em}
 .plan .pr span{font-size:8.4pt;color:var(--ink-2)}
@@ -273,7 +276,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   border:1px solid var(--brand);background:var(--paper);color:var(--brand);
   display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11pt;letter-spacing:-.01em}
 .flow .node::before{counter-increment:fl;content:counter(fl,decimal-leading-zero)}
-.flow .tag{display:block;font-size:7pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+.flow .tag{display:block;font-size:7pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--ink-2);margin-bottom:1mm}
 .flow h4{font-size:10.5pt;font-weight:700;margin:0 0 1mm}
 .flow p{font-size:9pt;color:var(--ink-2);margin:0;line-height:1.45}
@@ -510,7 +513,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
     <h1 class="cv-t"><span class="lt">AUVP </span>Private&nbsp;Banking</h1>
     <div class="cv-sub"><span class="ph" data-campo="subtitulo_apresentacao" title="Ex.: proposta de atendimento">{{subtitulo_apresentacao}}</span></div>
   </div>
-  <div class="cv-foot"><div class="cf">DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</div><div class="id"><div><span class="ph" data-campo="nome_cliente">{{nome_cliente}}</span></div><div><span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span></div><div><span class="ph" data-campo="data_apresentacao">{{data_apresentacao}}</span></div></div></div>
+  <div class="cv-foot"><div class="cf">DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</div><div class="id"><div><span class="ph" data-campo="nome_cliente">{{nome_cliente}}</span></div><div><span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span></div><div><span class="ph" data-campo="data_apresentacao">{{data_apresentacao}}</span></div></div></div>
 </section>
 <section class="slide dark divider">
   <div class="grain"></div>
@@ -662,7 +665,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
       <div class="dv-t">Quem&nbsp;somos</div>
       <div class="dv-sub">A casa, o time e o modelo de&nbsp;remuneração</div>
     </div>
-    <div style="font-size:7.6pt;letter-spacing:.14em;text-transform:uppercase;opacity:.5">DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</div>
+    <div style="font-size:7.6pt;letter-spacing:.14em;text-transform:uppercase;opacity:.5">DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</div>
   </div>
 </section>
 <section class="slide">
@@ -703,7 +706,6 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 </svg></div></div>
     </header>
     <div class="pg-body">
-<span class="eyebrow">A&nbsp;casa</span>
 <h1 class="t">Private&nbsp;Banking</h1>
 <div class="cols2u" style="flex:1 1 auto">
   <div>
@@ -716,7 +718,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   </div>
 </div>
     </div>
-    <footer class="pg-foot"><span class="no">01</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">01</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide dark divider">
@@ -869,7 +871,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
       <div class="dv-t">Como&nbsp;trabalhamos</div>
       <div class="dv-sub">Método, entregas e&nbsp;cadência</div>
     </div>
-    <div style="font-size:7.6pt;letter-spacing:.14em;text-transform:uppercase;opacity:.5">DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</div>
+    <div style="font-size:7.6pt;letter-spacing:.14em;text-transform:uppercase;opacity:.5">DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</div>
   </div>
 </section>
 <section class="slide">
@@ -910,12 +912,11 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 </svg></div></div>
     </header>
     <div class="pg-body">
-<span class="eyebrow">Método</span>
 <h1 class="t">Do primeiro papo à carteira&nbsp;rodando</h1>
 <div class="center"><ol class="flow" style="--n:5"><li><span class="node"></span><span class="tag"><span class="ph" data-campo="metodo_1_prazo">{{metodo_1_prazo}}</span></span><h4>Dia&nbsp;1</h4><p><span class="ph" data-campo="metodo_1_detalhe">{{metodo_1_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph" data-campo="metodo_2_prazo">{{metodo_2_prazo}}</span></span><h4>1º mês&nbsp;(recorrente)</h4><p><span class="ph" data-campo="metodo_2_detalhe">{{metodo_2_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph" data-campo="metodo_3_prazo">{{metodo_3_prazo}}</span></span><h4>Até 10&nbsp;dias</h4><p><span class="ph" data-campo="metodo_3_detalhe">{{metodo_3_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph" data-campo="metodo_4_prazo">{{metodo_4_prazo}}</span></span><h4>1º mês&nbsp;(mensal)</h4><p><span class="ph" data-campo="metodo_4_detalhe">{{metodo_4_detalhe}}</span></p></li><li><span class="node"></span><span class="tag"><span class="ph" data-campo="metodo_5_prazo">{{metodo_5_prazo}}</span></span><h4>2º&nbsp;mês</h4><p><span class="ph" data-campo="metodo_5_detalhe">{{metodo_5_detalhe}}</span></p></li></ol></div>
 <div class="note"><p><strong>Prazo típico do ciclo&nbsp;completo.</strong> <span class="ph" data-campo="prazo_implantacao">{{prazo_implantacao}}</span></p></div>
     </div>
-    <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">02</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -956,12 +957,11 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 </svg></div></div>
     </header>
     <div class="pg-body">
-<span class="eyebrow">AUVP Private&nbsp;Banking</span>
 <h1 class="t">Cronograma de&nbsp;reuniões</h1>
 <table class="crono"><thead><tr><th>Etapa</th><th>Prazo</th><th>Objetivo&nbsp;estratégico</th></tr></thead><tbody><tr><td class="qual">KYC/Suitability e&nbsp;Diagnóstico</td><td class="pauta">Dia&nbsp;1</td><td class="prazo">Coleta de informações objetivas e subjetivas: perfil de risco, objetivos de vida, horizonte de investimento, liquidez necessária, estrutura familiar e histórico&nbsp;patrimonial.</td></tr><tr><td class="qual">Seguros e Proteção&nbsp;Patrimonial</td><td class="pauta">1º mês&nbsp;(recorrente)</td><td class="prazo">Avaliação de necessidades de proteção: seguro de vida, seguro sucessório, responsabilidade civil e coberturas relevantes ao patrimônio&nbsp;familiar.</td></tr><tr><td class="qual">Entrega da Proposta&nbsp;Estratégica</td><td class="pauta">Até 10&nbsp;dias</td><td class="prazo">Apresentação do diagnóstico e proposta inicial de alocação, com avaliação técnica, contemplando o racional completo da carteira, projeções e próximos&nbsp;passos.</td></tr><tr><td class="qual">Alinhamento&nbsp;Operacional</td><td class="pauta">1º mês&nbsp;(mensal)</td><td class="prazo">Revisão dos primeiros movimentos da carteira, cronograma de execução e validação da alocação prática frente à proposta&nbsp;aprovada.</td></tr><tr><td class="qual">Wealth Planning / Tributário e&nbsp;Sucessório</td><td class="pauta">2º&nbsp;mês</td><td class="prazo">Reunião com advogado tributarista para mapear estruturas: holding, doação, testamento, previdência, governança familiar e eficiência&nbsp;tributária.</td></tr><tr><td class="qual">Revisão de Carteira e aderência à&nbsp;estratégia</td><td class="pauta">Mensal +&nbsp;trimestral</td><td class="prazo">Acompanhamento da carteira implementada, avaliando aderência à estratégia e eventuais&nbsp;ajustes.</td></tr><tr><td class="qual">Crédito, Liquidez e Eficiência de&nbsp;Caixa</td><td class="pauta">3º&nbsp;mês</td><td class="prazo">Avaliação de linhas de crédito, financiamento patrimonial, gestão de caixa e uso eficiente do balanço&nbsp;pessoal/familiar.</td></tr><tr><td class="qual">Governança Familiar e Consolidação&nbsp;Patrimonial</td><td class="pauta">4º&nbsp;mês</td><td class="prazo">Visão integrada do patrimônio: bancos, empresas, imóveis, sucessores, responsabilidades familiares e processo&nbsp;decisório.</td></tr><tr><td class="qual">Revisão Anual e Planejamento do Próximo&nbsp;Ciclo</td><td class="pauta">12º&nbsp;mês</td><td class="prazo">Fechamento do ciclo: performance anual, revisão de metas, planejamento tributário de fim de ano e agenda estratégica do próximo&nbsp;período.</td></tr></tbody></table>
 <p class="legal" style="margin-top:4mm">Plano do primeiro ciclo. Os prazos correm a partir do início da consultoria e as datas de cada encontro se combinam conforme a sua&nbsp;agenda.</p>
     </div>
-    <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">03</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -1007,7 +1007,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 <h2>O que você recebe todo&nbsp;mês</h2>
 <table class="tb sm"><thead><tr><th>Entrega</th><th>Frequência</th><th>Como&nbsp;chega</th><th>Para&nbsp;quê</th></tr></thead><tbody><tr><td>Relatório mensal da&nbsp;carteira</td><td>Mensal</td><td>E-mail e&nbsp;WhatsApp</td><td>Onde o patrimônio está, o que rendeu e o que mudou no&nbsp;mês.</td></tr><tr><td>Relatório&nbsp;macroeconômico</td><td>Mensal</td><td>E-mail e&nbsp;WhatsApp</td><td>O cenário do período e o que ele muda — ou não — na sua&nbsp;estratégia.</td></tr><tr><td>Carteiras&nbsp;recomendadas</td><td>Quando houver&nbsp;revisão</td><td>Portal e&nbsp;WhatsApp</td><td>A alocação sugerida para cada perfil, com o racional de cada&nbsp;classe.</td></tr><tr><td>Recomendações de renda&nbsp;fixa</td><td>Semanal</td><td>WhatsApp</td><td>O que passou pelo filtro de emissor, prazo e taxa na&nbsp;semana.</td></tr><tr><td>Acesso ao seu&nbsp;consultor</td><td>Quando&nbsp;precisar</td><td>WhatsApp</td><td>Dúvida de mercado, aporte que entrou, decisão para&nbsp;tomar.</td></tr></tbody></table><div class="note" style="margin-top:4mm"><p><strong>Para o seu&nbsp;caso.</strong> <span class="ph" data-campo="entregas_detalhe" title="O que este cliente recebe além do padrão">{{entregas_detalhe}}</span></p></div>
     </div>
-    <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">04</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide dark divider">
@@ -1160,7 +1160,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
       <div class="dv-t">Condições</div>
       <div class="dv-sub">Planos, taxas e o que está&nbsp;incluído</div>
     </div>
-    <div style="font-size:7.6pt;letter-spacing:.14em;text-transform:uppercase;opacity:.5">DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</div>
+    <div style="font-size:7.6pt;letter-spacing:.14em;text-transform:uppercase;opacity:.5">DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</div>
   </div>
 </section>
 <section class="slide">
@@ -1201,7 +1201,6 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 </svg></div></div>
     </header>
     <div class="pg-body">
-<span class="eyebrow">Time</span>
 <h1 class="t">Quem cuida da sua&nbsp;conta</h1>
 <div class="cols3" style="flex:1 1 auto">
   <div style="display:flex;flex-direction:column;gap:4mm">
@@ -1228,7 +1227,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   </div>
 </div>
     </div>
-    <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">05</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -1275,7 +1274,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 <div><h2 style="margin-top:0">O que precisamos de&nbsp;você</h2>
 <div class="cols3"><div class="card"><h4>Documentos e&nbsp;cadastro</h4><p><span class="ph" data-campo="requisito_cadastro">{{requisito_cadastro}}</span></p></div><div class="card"><h4>Extratos das suas&nbsp;contas</h4><p><span class="ph" data-campo="requisito_extratos">{{requisito_extratos}}</span></p></div><div class="card"><h4>Extrato&nbsp;internacional</h4><p><span class="ph" data-campo="requisito_extrato_intl">{{requisito_extrato_intl}}</span></p></div><div class="card"><h4>Apólices de&nbsp;seguro</h4><p><span class="ph" data-campo="requisito_apolices">{{requisito_apolices}}</span></p></div><div class="card"><h4>Dívidas e&nbsp;compromissos</h4><p><span class="ph" data-campo="requisito_compromissos">{{requisito_compromissos}}</span></p></div><div class="card"><h4>Objetivos e&nbsp;prazos</h4><p><span class="ph" data-campo="requisito_objetivos">{{requisito_objetivos}}</span></p></div></div></div></div>
     </div>
-    <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">06</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide dark">
@@ -1334,7 +1333,7 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   </div>
 </div>
     </div>
-    <footer class="pg-foot"><span class="no">07</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">07</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 <section class="slide">
@@ -1383,11 +1382,11 @@ table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
   </div>
   <div>
     <p class="legal">Rentabilidade passada não representa garantia de rentabilidade futura. Investimentos envolvem risco de perda, inclusive do capital principal, e podem não contar com garantia do Fundo Garantidor de Créditos (FGC). Antes de investir, avalie a adequação do produto ao seu perfil e leia os documentos oficiais de cada&nbsp;investimento.</p>
-    <p class="legal"><span class="ph" data-campo="razao_social">{{razao_social}}</span> &middot; CNPJ <span class="ph" data-campo="cnpj">{{cnpj}}</span> &middot; <span class="ph" data-campo="registro_cvm_empresa">{{registro_cvm_empresa}}</span>. Ouvidoria: <span class="ph" data-campo="canal_ouvidoria" data-link="auto">{{canal_ouvidoria}}</span>. É proibida a reprodução ou o compartilhamento total ou parcial deste material sem autorização prévia e por&nbsp;escrito.</p>
+    <p class="legal"><span class="ph" data-campo="razao_social">{{razao_social}}</span>, CNPJ <span class="ph" data-campo="cnpj">{{cnpj}}</span>, <span class="ph" data-campo="registro_cvm_empresa">{{registro_cvm_empresa}}</span>. Ouvidoria: <span class="ph" data-campo="canal_ouvidoria" data-link="auto">{{canal_ouvidoria}}</span>. É proibida a reprodução ou o compartilhamento total ou parcial deste material sem autorização prévia e por&nbsp;escrito.</p>
   </div>
 </div></div>
     </div>
-    <footer class="pg-foot"><span class="no">08</span><span>DOCUMENTO CONFIDENCIAL · PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+    <footer class="pg-foot"><span class="no">08</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
   </div>
 </section>
 </body>

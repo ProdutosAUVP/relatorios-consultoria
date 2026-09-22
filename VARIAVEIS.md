@@ -44,9 +44,9 @@ Estes se repetem na maior parte dos modelos. Vale manter um arquivo único com e
 
 Arquivos: `modelos/apresentacao-consultor-alta-renda-sem-data.html`, `modelos/apresentacao-consultor-alta-renda.html`, `modelos/apresentacao-consultor-assessoria-sem-data.html`, `modelos/apresentacao-consultor-assessoria.html`, `modelos/apresentacao-consultor-me-diz-o-que-fazer.html`, `modelos/apresentacao-consultor-private-sem-data.html`, `modelos/apresentacao-consultor-private.html`, `modelos/apresentacao-consultor-simples-alta-renda.html`, `modelos/apresentacao-consultor-simples-assessoria.html`, `modelos/apresentacao-consultor-simples-consultoria.html`, `modelos/apresentacao-consultor-simples-private.html`
 
-Variantes: alta-renda-sem-data, alta-renda, assessoria-sem-data, assessoria, me-diz-o-que-fazer, private-sem-data, private, simples-alta-renda, simples-assessoria, simples-consultoria, simples-private &middot; 68 variáveis
+Variantes: alta-renda-sem-data, alta-renda, assessoria-sem-data, assessoria, me-diz-o-que-fazer, private-sem-data, private, simples-alta-renda, simples-assessoria, simples-consultoria, simples-private &middot; 62 variáveis
 
-<details><summary>Ver as 68 variáveis específicas deste documento</summary>
+<details><summary>Ver as 62 variáveis específicas deste documento</summary>
 
 ```
 nome_consultor                    papel_consultor                   frase_consultor
@@ -61,8 +61,6 @@ trajetoria_1                      trajetoria_2                      trajetoria_3
 marco_1_quando                    marco_1_texto                     marco_2_quando
 marco_2_texto                     marco_3_quando                    marco_3_texto
 fora_do_escritorio_1              fora_do_escritorio_2              fora_do_escritorio_3
-interesse_1                       interesse_2                       interesse_3
-interesse_4                       interesse_5                       interesse_6
 nome_plano                        plano_resumo                      funciona_1
 funciona_2                        funciona_3                        pode_pedir_1
 pode_pedir_2                      pode_pedir_3                      pode_pedir_4

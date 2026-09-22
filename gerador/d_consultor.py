@@ -76,6 +76,10 @@ def _marcos(itens):
 
 
 def _tags(itens):
+    # As etiquetas saíram: eram o parágrafo acima repetido em palavras soltas,
+    # numa fileira de cápsulas. A lista `interesses` continua nos dados.
+    return ""
+    # (o que segue ficou para referência do desenho antigo)
     """As etiquetas de interesse, quando há interesse a etiquetar.
 
     Sem itens não sai nada — nem a caixa. A lista é um resumo em palavras soltas

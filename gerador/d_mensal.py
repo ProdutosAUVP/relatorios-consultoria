@@ -76,8 +76,8 @@ def build(t, seg):
     P.append(cover_a4(
         t, "Relatório", "Mensal", "Sua", "Carteira",
         [com_rotulo(t, ph("nome_cliente")),
-         "Perfil de investidor &middot; " + ph("perfil_investidor"),
-         papel + " &middot; " + ph("nome_responsavel"),
+         "Perfil de investidor: " + ph("perfil_investidor"),
+         papel + ": " + ph("nome_responsavel"),
          ph("mes_referencia")]))
 
     # o sumário precisa dos números de página reais, então as seções são
@@ -101,11 +101,12 @@ def build(t, seg):
         kpis=kpis([("Patrimônio total", ph("patrimonio_total"), "Em " + ph("data_posicao")),
                    ("Rentabilidade no mês", ph("rent_mes"), "No ano: " + ph("rent_ano")),
                    ("Rentabilidade em 12 meses", ph("rent_12m"), "Desde o início: " + ph("rent_inicio")),
-                   ("Ganho no mês", ph("ganho_mes_reais"), "No ano: " + ph("ganho_ano_reais"))]),
+                   ("Ganho no mês", ph("ganho_mes_reais"), "No ano: " + ph("ganho_ano_reais"))],
+                  n=5, destaque=True),
         kpis2=kpis([("Aplicações no mês", ph("aplicacoes_mes"), "Bruto"),
                     ("Resgates no mês", ph("resgates_mes"), "Bruto"),
                     ("Aporte líquido", ph("aporte_liquido_mes"), "Aplicações menos resgates"),
-                    ("Proventos recebidos", ph("total_proventos"), "Líquido de IR")]),
+                    ("Proventos recebidos", ph("total_proventos"), "Líquido de IR")], leve=True),
         tab=table(["Indicador", "No mês", "No ano", "12 meses", "24 meses", "Desde o início"],
                   [["<strong>Sua carteira</strong>", ph("rent_mes"), ph("rent_ano"), ph("rent_12m"), ph("rent_24m"), ph("rent_inicio")],
                    ["IPCA + 5% a.a.", ph("ipca5_mes"), ph("ipca5_ano"), ph("ipca5_12m"), ph("ipca5_24m"), ph("ipca5_inicio")],
@@ -300,11 +301,11 @@ def build(t, seg):
 <p class="legal">Este material é destinado exclusivamente a %(cli)s, tem caráter informativo e não constitui oferta, recomendação pública, proposta de investimento ou solicitação de compra ou venda de qualquer ativo. É proibida a reprodução, redistribuição ou compartilhamento total ou parcial deste documento sem autorização prévia e por escrito.</p>
 <h2>Contato e ouvidoria</h2>
 <div class="dl">
-  <dt>Responsável</dt><dd>%(resp)s &middot; %(cert)s</dd>
+  <dt>Responsável</dt><dd>%(resp)s, %(cert)s</dd>
   <dt>Atendimento</dt><dd>%(canal)s</dd>
   <dt>E-mail</dt><dd>%(email)s</dd>
   <dt>Ouvidoria</dt><dd>%(ouv)s</dd>
-  <dt>Razão social</dt><dd>%(razao)s &middot; CNPJ %(cnpj)s</dd>
+  <dt>Razão social</dt><dd>%(razao)s, CNPJ %(cnpj)s</dd>
 </div>""" % dict(
         disc=ph("disclaimer_regulatorio", "Texto aprovado pelo compliance para este segmento"),
         cli=ph("nome_cliente"), resp=ph("nome_responsavel"), cert=ph("registro_cvm_ou_ancord"),
@@ -322,7 +323,7 @@ def build(t, seg):
 <p>%(p2)s</p>
 <p>%(p3)s</p>
 <div class="sig">
-  <div class="ln">%(resp)s<br><span class="mut">%(papel)s &middot; %(cert)s</span></div>
+  <div class="ln">%(resp)s<br><span class="mut">%(papel)s, %(cert)s</span></div>
   <div class="ln">%(contato)s<br><span class="mut">%(email)s</span></div>
 </div>
 <h2>Neste relatório</h2>

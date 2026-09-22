@@ -164,8 +164,7 @@ def build(t, seg):
 
     S.append(divider_slide(t, 1, "Quem somos", "A casa, o time e o modelo de remuneração"))
 
-    S.append(slide(t, "Quem somos", 3, """<span class="eyebrow">A casa</span>
-<h1 class="t">%(tit)s</h1>
+    S.append(slide(t, "Quem somos", 3, """<h1 class="t">%(tit)s</h1>
 <div class="cols2u" style="flex:1 1 auto">
   <div>
     <p class="lead" style="margin-bottom:5mm">%(sub)s</p>
@@ -183,8 +182,7 @@ def build(t, seg):
 
     S.append(divider_slide(t, 2, "Como trabalhamos", "Método, entregas e cadência"))
 
-    S.append(slide(t, "Como trabalhamos", 6, """<span class="eyebrow">Método</span>
-<h1 class="t">Do primeiro papo à carteira rodando</h1>
+    S.append(slide(t, "Como trabalhamos", 6, """<h1 class="t">Do primeiro papo à carteira rodando</h1>
 <div class="center">%(flow)s</div>
 <div class="note"><p><strong>Prazo típico do ciclo completo.</strong> %(prazo)s</p></div>""" % dict(
         # Os nomes vêm de ENCONTROS, e não de uma lista à parte: o método e o
@@ -203,8 +201,7 @@ def build(t, seg):
     # Pauta e prazo são o processo da casa e vêm escritos — não há por que pedir
     # ao consultor que digite "KYC / Suitability" toda vez. O que muda de cliente
     # para cliente é a data de cada encontro, e é só isso que fica como campo.
-    S.append(slide(t, "Como trabalhamos", 7, """<span class="eyebrow">%(seg)s</span>
-<h1 class="t">Cronograma de reuniões</h1>
+    S.append(slide(t, "Como trabalhamos", 7, """<h1 class="t">Cronograma de reuniões</h1>
 %(crono)s
 <p class="legal" style="margin-top:4mm">%(rodape)s</p>""" % dict(
         seg=t["nome_full"], rodape=plano["rodape"],
@@ -239,8 +236,7 @@ def build(t, seg):
     # negociada caso a caso, e três colunas iguais anunciavam uma escolha que o
     # cliente não tem.
     if seg == "consultoria":
-        S.append(slide(t, "Condições", 11, """<span class="eyebrow">Planos</span>
-    <h1 class="t">Quanto custa e o que entra</h1>
+        S.append(slide(t, "Condições", 11, """    <h1 class="t">Quanto custa e o que entra</h1>
     <div class="plans" style="--n:3">
       %(p1)s
       %(p2)s
@@ -259,8 +255,7 @@ def build(t, seg):
                        para=ph("plano_%d_para_quem" % i)) for i in (1, 2, 3)},
             nota=ph("nota_taxas", "Base de cálculo, cobrança, impostos e condições"))))
 
-    S.append(slide(t, "Condições", 12, """<span class="eyebrow">Time</span>
-<h1 class="t">Quem cuida da sua conta</h1>
+    S.append(slide(t, "Condições", 12, """<h1 class="t">Quem cuida da sua conta</h1>
 <div class="cols3" style="flex:1 1 auto">
   %(cards)s
 </div>""" % dict(
@@ -329,7 +324,7 @@ def build(t, seg):
   </div>
   <div>
     <p class="legal">Rentabilidade passada não representa garantia de rentabilidade futura. Investimentos envolvem risco de perda, inclusive do capital principal, e podem não contar com garantia do Fundo Garantidor de Créditos (FGC). Antes de investir, avalie a adequação do produto ao seu perfil e leia os documentos oficiais de cada investimento.</p>
-    <p class="legal">%(razao)s &middot; CNPJ %(cnpj)s &middot; %(reg)s. Ouvidoria: %(ouv)s. É proibida a reprodução ou o compartilhamento total ou parcial deste material sem autorização prévia e por escrito.</p>
+    <p class="legal">%(razao)s, CNPJ %(cnpj)s, %(reg)s. Ouvidoria: %(ouv)s. É proibida a reprodução ou o compartilhamento total ou parcial deste material sem autorização prévia e por escrito.</p>
   </div>
 </div></div>""" % dict(disc=ph("disclaimer_regulatorio", "Texto aprovado pelo compliance para este segmento"),
                  razao=ph("razao_social"), cnpj=ph("cnpj"), reg=ph("registro_cvm_empresa"),

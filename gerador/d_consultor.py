@@ -515,15 +515,11 @@ def variantes(temas, segmentos):
     um serviço página a página. O Me Diz o Que Fazer é a exceção porque é nele
     que o cliente precisa saber, escrito, o que pode pedir e o que não entra.
 
-    Os modelos em branco por segmento continuam: não são planos, são a folha
-    vazia para as outras marcas da casa preencherem com as condições delas. E
-    saem também sem data — é o documento que o consultor manda para um cliente
-    novo a qualquer momento, e uma data carimbada nele nasce vencida.
+    Esta folha é só do Me Diz o Que Fazer. Os outros segmentos usam a
+    apresentação de uma página (`d_consultor_simples`): a folha longa explica
+    um plano, e o plano é da consultoria.
     """
-    return ([("me-diz-o-que-fazer", PLANOS["me-diz-o-que-fazer"]["rotulo"], "consultoria")]
-            + [v for seg in segmentos if seg != "consultoria"
-               for v in ((seg, temas[seg]["nome_full"], seg),
-                         (seg + SEM_DATA, temas[seg]["nome_full"] + ", sem data", seg))])
+    return [("me-diz-o-que-fazer", PLANOS["me-diz-o-que-fazer"]["rotulo"], "consultoria")]
 
 
 def folha(t, variante, c=None, foto=None, primeiro=None, data=True):

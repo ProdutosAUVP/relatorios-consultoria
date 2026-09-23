@@ -23,30 +23,30 @@ Estes se repetem na maior parte dos modelos. Vale manter um arquivo único com e
 
 | Variável | O que é | Em quantos modelos |
 | --- | --- | --- |
-| `razao_social` | Razão social da empresa emissora | 20 de 35 |
-| `cnpj` | CNPJ da empresa emissora | 20 de 35 |
-| `registro_cvm_empresa` | Registro da empresa na CVM | 4 de 35 |
-| `canal_ouvidoria` | Telefone ou e-mail da ouvidoria | 20 de 35 |
-| `disclaimer_regulatorio` | Texto legal aprovado pelo compliance, específico do segmento | 20 de 35 |
-| `nome_cliente` | Nome do cliente destinatário | 20 de 35 |
-| `nome_responsavel` | Consultor, assessor ou banker responsável | 20 de 35 |
-| `registro_cvm_ou_ancord` | Registro do responsável (CVM 19 / Ancord) | 8 de 35 |
-| `email_contato` | E-mail de contato exibido no documento | 24 de 35 |
-| `whatsapp_contato` | WhatsApp direto do responsável | 12 de 35 |
-| `canal_atendimento` | Canal e horário de atendimento | 12 de 35 |
-| `link_agendamento` | URL de agendamento (a mesma do QR code) | 12 de 35 |
-| `mes_referencia` | Mês de referência, ex.: Agosto de 2026 | 12 de 35 |
-| `data_posicao` | Data da posição consolidada | 8 de 35 |
-| `perfil_investidor` | Perfil de suitability do cliente | 12 de 35 |
-| `patrimonio_total` | Patrimônio total sob acompanhamento | 8 de 35 |
+| `razao_social` | Razão social da empresa emissora | 28 de 37 |
+| `cnpj` | CNPJ da empresa emissora | 28 de 37 |
+| `registro_cvm_empresa` | Registro da empresa na CVM | 4 de 37 |
+| `canal_ouvidoria` | Telefone ou e-mail da ouvidoria | 28 de 37 |
+| `disclaimer_regulatorio` | Texto legal aprovado pelo compliance, específico do segmento | 28 de 37 |
+| `nome_cliente` | Nome do cliente destinatário | 28 de 37 |
+| `nome_responsavel` | Consultor, assessor ou banker responsável | 28 de 37 |
+| `registro_cvm_ou_ancord` | Registro do responsável (CVM 19 / Ancord) | 16 de 37 |
+| `email_contato` | E-mail de contato exibido no documento | 32 de 37 |
+| `whatsapp_contato` | WhatsApp direto do responsável | 12 de 37 |
+| `canal_atendimento` | Canal e horário de atendimento | 16 de 37 |
+| `link_agendamento` | URL de agendamento (a mesma do QR code) | 12 de 37 |
+| `mes_referencia` | Mês de referência, ex.: Agosto de 2026 | 12 de 37 |
+| `data_posicao` | Data da posição consolidada | 8 de 37 |
+| `perfil_investidor` | Perfil de suitability do cliente | 12 de 37 |
+| `patrimonio_total` | Patrimônio total sob acompanhamento | 8 de 37 |
 
 ## Apresentação do consultor — Me Diz o Que Fazer
 
-Arquivos: `modelos/apresentacao-consultor-alta-renda-sem-data.html`, `modelos/apresentacao-consultor-alta-renda.html`, `modelos/apresentacao-consultor-assessoria-sem-data.html`, `modelos/apresentacao-consultor-assessoria.html`, `modelos/apresentacao-consultor-me-diz-o-que-fazer.html`, `modelos/apresentacao-consultor-private-sem-data.html`, `modelos/apresentacao-consultor-private.html`, `modelos/apresentacao-consultor-simples-alta-renda.html`, `modelos/apresentacao-consultor-simples-assessoria.html`, `modelos/apresentacao-consultor-simples-consultoria.html`, `modelos/apresentacao-consultor-simples-private.html`
+Arquivos: `modelos/apresentacao-consultor-me-diz-o-que-fazer.html`, `modelos/apresentacao-consultor-simples-alta-renda.html`, `modelos/apresentacao-consultor-simples-assessoria.html`, `modelos/apresentacao-consultor-simples-consultoria.html`, `modelos/apresentacao-consultor-simples-private.html`
 
-Variantes: alta-renda-sem-data, alta-renda, assessoria-sem-data, assessoria, me-diz-o-que-fazer, private-sem-data, private, simples-alta-renda, simples-assessoria, simples-consultoria, simples-private &middot; 62 variáveis
+Variantes: me-diz-o-que-fazer, simples-alta-renda, simples-assessoria, simples-consultoria, simples-private &middot; 39 variáveis
 
-<details><summary>Ver as 62 variáveis específicas deste documento</summary>
+<details><summary>Ver as 39 variáveis específicas deste documento</summary>
 
 ```
 nome_consultor                    papel_consultor                   frase_consultor
@@ -61,41 +61,9 @@ trajetoria_1                      trajetoria_2                      trajetoria_3
 marco_1_quando                    marco_1_texto                     marco_2_quando
 marco_2_texto                     marco_3_quando                    marco_3_texto
 fora_do_escritorio_1              fora_do_escritorio_2              fora_do_escritorio_3
-nome_plano                        plano_resumo                      funciona_1
-funciona_2                        funciona_3                        pode_pedir_1
-pode_pedir_2                      pode_pedir_3                      pode_pedir_4
-pode_pedir_5                      pode_pedir_6                      incluido_1
-incluido_2                        incluido_3                        incluido_4
-incluido_5                        incluido_6                        incluido_7
-incluido_8                        nao_incluido_1                    nao_incluido_2
-nao_incluido_3                    nao_incluido_4                    notas_de_rodape
-whatsapp_consultor                email_consultor
+whatsapp_consultor                email_consultor                   data_apresentacao
 ```
 </details>
-
-Campos exclusivos da variante **alta-renda** (1):
-
-```
-data_apresentacao
-```
-
-Campos exclusivos da variante **assessoria** (1):
-
-```
-data_apresentacao
-```
-
-Campos exclusivos da variante **me-diz-o-que-fazer** (1):
-
-```
-data_apresentacao
-```
-
-Campos exclusivos da variante **private** (1):
-
-```
-data_apresentacao
-```
 
 Campos exclusivos da variante **simples-alta-renda** (1):
 
@@ -165,6 +133,58 @@ plano_3_item_4                    plano_3_item_5                    plano_3_item
 plano_3_nome                      plano_3_para_quem                 plano_3_tag
 plano_3_taxa
 ```
+
+## undefined
+
+Arquivos: `modelos/apresentacao-livre-alta-renda.html`
+
+Variantes: — &middot; 10 variáveis
+
+<details><summary>Ver as 2 variáveis específicas deste documento</summary>
+
+```
+capa_linha_livre                  data_documento
+```
+</details>
+
+## undefined
+
+Arquivos: `modelos/apresentacao-livre-assessoria.html`
+
+Variantes: — &middot; 10 variáveis
+
+<details><summary>Ver as 2 variáveis específicas deste documento</summary>
+
+```
+capa_linha_livre                  data_documento
+```
+</details>
+
+## undefined
+
+Arquivos: `modelos/apresentacao-livre-consultoria.html`
+
+Variantes: — &middot; 10 variáveis
+
+<details><summary>Ver as 2 variáveis específicas deste documento</summary>
+
+```
+capa_linha_livre                  data_documento
+```
+</details>
+
+## undefined
+
+Arquivos: `modelos/apresentacao-livre-private.html`
+
+Variantes: — &middot; 10 variáveis
+
+<details><summary>Ver as 2 variáveis específicas deste documento</summary>
+
+```
+capa_linha_livre                  data_documento
+```
+</details>
 
 ## undefined
 
@@ -341,6 +361,58 @@ tr_5_custo                        tr_5_destino                      restricao_ca
 restricao_imposto                 restricao_marcacao                premissa_retornos
 premissa_risco                    premissa_macro                    premissa_tributacao
 premissa_custos                   limitacoes_diagnostico
+```
+</details>
+
+## undefined
+
+Arquivos: `modelos/documento-livre-alta-renda.html`
+
+Variantes: — &middot; 11 variáveis
+
+<details><summary>Ver as 2 variáveis específicas deste documento</summary>
+
+```
+capa_linha_livre                  data_documento
+```
+</details>
+
+## undefined
+
+Arquivos: `modelos/documento-livre-assessoria.html`
+
+Variantes: — &middot; 11 variáveis
+
+<details><summary>Ver as 2 variáveis específicas deste documento</summary>
+
+```
+capa_linha_livre                  data_documento
+```
+</details>
+
+## undefined
+
+Arquivos: `modelos/documento-livre-consultoria.html`
+
+Variantes: — &middot; 11 variáveis
+
+<details><summary>Ver as 2 variáveis específicas deste documento</summary>
+
+```
+capa_linha_livre                  data_documento
+```
+</details>
+
+## undefined
+
+Arquivos: `modelos/documento-livre-private.html`
+
+Variantes: — &middot; 11 variáveis
+
+<details><summary>Ver as 2 variáveis específicas deste documento</summary>
+
+```
+capa_linha_livre                  data_documento
 ```
 </details>
 

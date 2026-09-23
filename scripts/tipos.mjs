@@ -49,6 +49,7 @@ const opcoes = (chave) => ({ tipo: 'opcoes', opcoes: chave });
 // 1. Pelo nome inteiro.
 const POR_NOME = {
   data_apresentacao: 'mes', data_carta: 'mes', mes_referencia: 'mes', mes_seguinte: 'mes',
+  data_documento: 'mes',
   ano_vigencia: 'ano', ano_corrente: 'ano', ano_seguinte: 'ano',
   perfil_investidor: opcoes('perfil'), horizonte_principal: opcoes('horizonte'),
   selic_atual: 'percentual', retorno_12m_pct_cdi: 'percentual',

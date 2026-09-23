@@ -33,9 +33,16 @@ export const DOCUMENTOS = [
   { chave: 'carta-apresentacao', nome: 'Carta de apresentação', formato: 'slide',
     descricao: 'Enviada depois da reunião de venda, para quem ainda não decidiu: o que entendemos, quanto custa e o que vem a seguir.' },
   { chave: 'apresentacao-consultor', nome: 'Apresentação do consultor', formato: 'a4',
-    descricao: 'Perfil do consultor, o plano e a AUVP Capital.' },
+    descricao: 'Perfil do consultor, o plano Me Diz o Que Fazer e a AUVP Capital. Só existe para esse plano.' },
   { chave: 'apresentacao-consultor-simples', nome: 'Apresentação do consultor (uma página)', formato: 'a4',
     descricao: 'Só a pessoa: retrato, trajetória, credenciais e contatos. Sem o plano e sem data.' },
+  // Os documentos em branco: capa e fecho prontos, e o meio se monta com os
+  // blocos. São dois porque o formato é a capa — a de relatório ou a de
+  // apresentação —, e o que está escrito na capa é campo.
+  { chave: 'documento-livre', nome: 'Documento em branco (A4)', formato: 'a4', blocos: true,
+    descricao: 'Capa de relatório e página de avisos; as páginas do meio você monta com os blocos.' },
+  { chave: 'apresentacao-livre', nome: 'Apresentação em branco (16:9)', formato: 'slide', blocos: true,
+    descricao: 'Capa de apresentação e slide de avisos; os slides do meio você monta com os blocos.' },
 ];
 
 // Ordem dos planos da consultoria na ferramenta, do autoatendimento à

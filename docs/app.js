@@ -121,7 +121,7 @@ const MESES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
                'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
 const HOJE = {
-  data_apresentacao: 'mes', data_carta: 'mes', mes_referencia: 'mes',
+  data_apresentacao: 'mes', data_carta: 'mes', mes_referencia: 'mes', data_documento: 'mes',
   mes_seguinte: 'mes+1',
   data_posicao: 'dia', data_corte: 'dia', data_ptax: 'dia',
   data_diagnostico: 'dia', data_emissao: 'dia', data_fechamento: 'dia',
@@ -1281,7 +1281,7 @@ function renumerar(doc) {
  *  sem ela, o laço passaria o bloco adiante para sempre.
  */
 function repaginar(doc) {
-  const fila = [...doc.querySelectorAll('.page.montada')];
+  const fila = [...doc.querySelectorAll('.montada')];
   let guarda = 0;
   while (fila.length && guarda < 60) {
     guarda += 1;
@@ -1297,8 +1297,8 @@ function repaginar(doc) {
     // páginas com o mesmo título no cabeçalho e precisa saber que é a mesma
     // seção, e não um assunto repetido.
     const sec = nova.querySelector('.pg-head .sec');
-    if (sec && !/ · continuação$/.test(sec.textContent)) {
-      sec.textContent = `${sec.textContent} · continuação`;
+    if (sec && !/, continuação$/.test(sec.textContent)) {
+      sec.textContent = `${sec.textContent}, continuação`;
     }
     while (corpo.children.length > 1 && corpo.scrollHeight - corpo.clientHeight > 1) {
       novoCorpo.prepend(corpo.lastElementChild);
@@ -1378,7 +1378,7 @@ function alturaDaFolha(doc) {
  *  no texto já pronto. */
 async function montarFinal(modo) {
   let html = montar(modo === 'imprimir' ? 'exportar' : modo);
-  const montadas = html.includes('page montada');
+  const montadas = html.includes(' montada');
   const longa = html.includes('page longa');
   const graficos = html.includes('chart feito');
   if (montadas || longa || graficos) {

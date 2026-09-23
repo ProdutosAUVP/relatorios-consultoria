@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Apresentação do consultor — AUVP Capital · Alta Renda, sem data</title>
+<title>Apresentação livre — AUVP Capital · Consultoria</title>
 <style>
 :root{
-  --brand:#010F08; --accent:#EFBF4F;
+  --brand:#023620; --accent:#EFBF4F;
   --ph:rgba(239,191,79,.24); --ph-dk:rgba(239,191,79,.26);
   --warn-bg:rgba(239,191,79,.18); --warn-fg:#8A6A12; --warn-bd:rgba(239,191,79,.5);
   --c1:#0F8A51; --c2:#8C47D1; --c3:#F6A823; --c4:#0DA2E7; --c5:#E23670; --c6:#E64D19; --c7:#669E2E; --c8:#3E5074;
-  --ink:#0E1411; --ink-2:#465049; --line:#E1E5E3; --soft:#F4F6F5;
+  --ink:#12160F; --ink-2:#4A5248; --line:#E3E6E1; --soft:#F5F7F4;
   --paper:#FFFFFF; --pos:#1F7A4C; --neg:#B3402F;
   --g-pos:#047B4A; --g-neg:#DC2828; --g-neu:#F1EDE4;
   --g-seq-1:#E2F3E9; --g-seq-2:#ABE3C7; --g-seq-3:#5CD69D; --g-seq-4:#19B370; --g-seq-5:#023620;
@@ -60,90 +60,76 @@ strong{font-weight:700}
 /* 1px = 0,75 pt em qualquer escala; sem isto o traço afina junto com o grafismo */
 .graf svg *{vector-effect:non-scaling-stroke;stroke-width:1px}
 
-@page{size:A4;margin:0}
-.page{position:relative;width:210mm;height:297mm;background:var(--paper);overflow:hidden;
-  display:flex;flex-direction:column;padding:15mm 15.3mm 13mm;margin:0 auto 6mm;
-  box-shadow:0 3px 22px rgba(0,0,0,.28);font-size:10pt;line-height:1.55}
-@media print{body{background:#fff}.page{margin:0;box-shadow:none;break-after:page}.page:last-child{break-after:auto}}
+@page{size:338.667mm 190.5mm;margin:0}
+.slide{position:relative;width:338.667mm;height:190.5mm;background:var(--paper);overflow:hidden;
+  display:flex;flex-direction:column;padding:12mm 16mm 10mm;margin:0 auto 8mm;
+  box-shadow:0 4px 26px rgba(0,0,0,.3);font-size:11pt;line-height:1.5}
+@media print{body{background:#fff}.slide{margin:0;box-shadow:none;break-after:page}.slide:last-child{break-after:auto}}
+.slide.dark{color:#fff;background:linear-gradient(225deg,var(--brand) 0%,#000 100%)}
+.slide.dark .pg-head,.slide.dark .pg-foot{border-color:rgba(255,255,255,.22)}
+.slide.dark .pg-head .sec,.slide.dark .pg-head .dt{color:rgba(255,255,255,.82)}
+.slide.dark .pg-foot{color:rgba(255,255,255,.5)}
+.slide.dark .pg-foot .no{color:#fff}
+.slide.dark h2{border-color:rgba(255,255,255,.22)}
+.slide.dark .lead,.slide.dark .mut,.slide.dark .card p{color:rgba(255,255,255,.8)}
+.slide.dark .kpi{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16);border-top-color:#fff}
+.slide.dark .kpi .k,.slide.dark .kpi .s{color:rgba(255,255,255,.72)}
+.slide.dark .note{background:rgba(255,255,255,.07);border-left-color:var(--accent)}
+.slide .in{position:relative;z-index:3;height:100%;display:flex;flex-direction:column}
 
-/* ---------- capa ----------
-   Medidas tiradas de "assets relatórios/SVG/ref consultoria.svg":
-   réguas em y 86,0 e 245,2 mm ocupando a largura útil; grafismo entre elas com
-   exatamente a mesma largura das réguas; título 43,89 pt com entrelinha de 48 pt
-   (linhas de base em 56,4 e 73,3 mm); assinatura inferior em 32,13 pt.        */
-.cover{padding:0;color:#fff;background:linear-gradient(225deg,var(--brand) 0%,#000 100%)}
-.cover>*{position:absolute;z-index:3}
-.cover .grain{z-index:1}
-.cover .graf{z-index:2}
-.cover .rule{left:15.3mm;right:15.3mm}
-.cover .r1{top:86mm}
-.cover .r2{top:245.2mm}
-.cv-logo{left:15.3mm;top:18mm}
-.cv-t{left:15.3mm;top:43.6mm;right:68mm;margin:0;font-size:43.89pt;line-height:1.093;
-  text-transform:uppercase;letter-spacing:-.015em}
-.cv-t .lt{font-weight:300;display:block}
-.cv-t .bd{font-weight:800;display:block}
-.cv-conf{right:15.3mm;top:67.5mm;width:52mm;text-align:right;font-size:8pt;font-weight:600;
-  letter-spacing:.07em;text-transform:uppercase;opacity:.8}
-.cv-b-t{left:15.3mm;bottom:21.5mm;font-size:32.13pt;line-height:1;text-transform:uppercase;letter-spacing:-.01em}
-.cv-id{right:15.3mm;bottom:22.5mm;text-align:right;font-size:9.5pt;line-height:1.75;opacity:.9}
-
-/* ---------- cabeçalho / rodapé ---------- */
-.pg-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:8mm;
+.pg-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:10mm;
   padding-bottom:3mm;border-bottom:1px solid var(--line)}
-.pg-head .sec{font-size:7pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
-.pg-head .rt{display:flex;align-items:center;gap:5mm}
-.pg-head .dt{font-size:7pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.pg-head .sec{font-size:8pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.pg-head .rt{display:flex;align-items:center;gap:6mm}
+.pg-head .dt{font-size:8pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
 
-.pg-foot{flex:0 0 auto;margin-top:auto;padding-top:3mm;border-top:1px solid var(--line);
-  display:flex;justify-content:space-between;align-items:baseline;
-  font-size:6.2pt;letter-spacing:.08em;text-transform:uppercase;color:#9BA29D}
-.pg-foot .no{font-size:9pt;font-weight:800;letter-spacing:0;color:var(--brand)}
+.pg-foot{flex:0 0 auto;margin-top:auto;padding-top:3mm;display:flex;justify-content:space-between;align-items:baseline;
+  font-size:6.8pt;letter-spacing:.08em;text-transform:uppercase;color:#9BA29D}
+.pg-foot .no{font-size:11pt;font-weight:800;letter-spacing:0;color:var(--brand)}
 .pg-body{flex:1 1 auto;min-height:0;padding-top:8mm;display:flex;flex-direction:column}
 
-/* ---------- tipografia ---------- */
-.eyebrow{display:block;font-size:6.8pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);margin:0 0 2mm}
-h1.t{font-size:19pt;font-weight:800;text-transform:uppercase;letter-spacing:-.012em;line-height:1.04;margin:0 0 3mm}
-.lead{font-size:10pt;color:var(--ink-2);margin:0 0 8mm;max-width:155mm}
-h2{font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:8mm 0 4mm;
+.eyebrow{display:block;font-size:7.5pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);margin:0 0 3mm}
+.slide.dark .eyebrow{color:#fff}
+h1.t{font-size:26pt;font-weight:800;text-transform:uppercase;letter-spacing:-.015em;line-height:1.03;margin:0 0 4mm}
+.lead{font-size:11pt;color:var(--ink-2);margin:0 0 6mm;max-width:210mm}
+h2{font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:8mm 0 4mm;
   padding-bottom:2mm;border-bottom:1px solid var(--line)}
 h2:first-child{margin-top:0}
-h3{font-size:9pt;font-weight:700;margin:5mm 0 2mm}
-.small{font-size:8pt}
-.legal{font-size:7.2pt;line-height:1.5;color:var(--ink-2)}
-
-/* ---------- grelhas ---------- */
+h3{font-size:10.5pt;font-weight:700;margin:4mm 0 1.5mm}
+.small{font-size:9pt}
+/* No slide o `.legal` não é rodapé: na página de avisos ele é o conteúdo,
+   quatro parágrafos em duas colunas. E o slide tem 1,6 vez a largura do A4,
+   então o mesmo corpo em pontos aparece proporcionalmente menor quando a
+   página é reduzida para caber na tela. */
+.legal{font-size:9.4pt;line-height:1.55;color:var(--ink-2)}
 .cols2{display:grid;grid-template-columns:1fr 1fr;gap:10mm}
+/* usa a sobra vertical do slide em vez de deixá-la toda no rodapé */
+.center{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:8mm;min-height:0}
 .cols2>*,.cols3>*,.cols2u>*,.cards>*,.kpis>*{min-width:0}
 .cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm}
-.cols2u{display:grid;grid-template-columns:1.5fr 1fr;gap:10mm}
-.gap{height:5mm}
+.cols2u{display:grid;grid-template-columns:1.3fr 1fr;gap:10mm}
 
-/* ---------- KPIs ---------- */
-.kpis{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:4mm}
-.kpi{min-width:0;border:1px solid var(--line);border-top:1.33px solid var(--brand);background:var(--soft);padding:4mm}
-/* Um número manda: o primeiro KPI ocupa duas colunas com o valor maior. A
-   segunda fileira, de apoio, sai sem moldura — só o fio à esquerda. */
+.kpis{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:5mm}
+.kpi{min-width:0;border:1px solid var(--line);border-top:1.33px solid var(--brand);background:var(--soft);padding:5mm}
 .kpi.grande{grid-column:span 2}
-.kpi.grande .v{font-size:22pt;margin-top:1.5mm}
-.kpis.leve .kpi{border:0;border-left:1px solid var(--line);background:none;padding:.5mm 0 .5mm 3mm}
-.kpi .k{font-size:6.4pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600;line-height:1.3}
-.kpi .v{font-size:13.5pt;font-weight:800;line-height:1.15;margin-top:2mm;letter-spacing:-.02em;overflow-wrap:anywhere}
-.kpi .s{font-size:7pt;color:var(--ink-2);margin-top:1mm}
+.kpi.grande .v{font-size:30pt;margin-top:2mm}
+.kpis.leve .kpi{border:0;border-left:1px solid var(--line);background:none;padding:1mm 0 1mm 4mm}
+.kpi .k{font-size:7.4pt;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.kpi .v{font-size:20pt;font-weight:800;line-height:1.1;margin-top:3mm;letter-spacing:-.025em;overflow-wrap:anywhere}
+.kpi .s{font-size:8.4pt;color:var(--ink-2);margin-top:1.5mm}
 
-/* ---------- tabelas ---------- */
-table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
-.tb.sm{font-size:7.4pt}
-.tb.sm td{padding:2mm 2.5mm}
-.tb.xs{font-size:6.6pt}
-.tb.xs td{padding:1.5mm 2mm}
-.tb.xs thead th{padding:1.5mm 1.5mm;font-size:5.8pt;letter-spacing:.04em}
-/* colunas declaradas só valem como limite com layout fixo */
-.tb.fix{table-layout:fixed}
-.tb.sm thead th{padding:2mm 2mm;font-size:6.2pt;letter-spacing:.06em}
+table.tb{width:100%;border-collapse:collapse;font-size:9.5pt}
 .tb thead th{background:var(--brand);color:#fff;text-align:left;font-weight:600;
-  padding:2mm 2mm;font-size:6.6pt;letter-spacing:.08em;text-transform:uppercase;line-height:1.3}
-.tb td{padding:3mm;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
+  padding:3mm 3mm;font-size:7.6pt;letter-spacing:.08em;text-transform:uppercase}
+/* mesmas variantes do A4: a classe tem de significar a mesma coisa nos dois formatos */
+.tb.sm{font-size:8.4pt}
+.tb.sm td{padding:2.5mm 3mm}
+.tb.sm thead th{padding:2.5mm 3mm;font-size:7pt}
+.tb.xs{font-size:7.6pt}
+.tb.xs td{padding:2mm 2.5mm}
+.tb.xs thead th{padding:2mm 2.5mm;font-size:6.4pt}
+.tb.fix{table-layout:fixed}
+.tb td{padding:3mm 3mm;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
 .tb tbody tr:nth-child(even) td{background:var(--soft)}
 
 /* ---------- cronograma de reuniões ----------
@@ -173,88 +159,127 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .crono td.fase span{display:block;writing-mode:vertical-rl;transform:rotate(180deg);
   margin:0 auto;padding:4mm 0;color:var(--accent);font-size:6.8pt;font-weight:700;
   letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.slide.dark .tb td{border-color:rgba(255,255,255,.16)}
+.slide.dark .tb tbody tr:nth-child(even) td{background:rgba(255,255,255,.05)}
 .tb .num,.tb th.num{text-align:right}
-.tb tfoot td{font-weight:700;border-top:1.33px solid var(--ink);background:#fff}
-.tb caption{caption-side:bottom;text-align:left;font-size:6.8pt;color:var(--ink-2);padding-top:2mm}
+.tb tfoot td{font-weight:700;border-top:1.33px solid currentColor}
 
-/* ---------- cards ---------- */
 .cards{display:grid;grid-template-columns:repeat(var(--n,3),1fr);gap:6mm}
-.card{border-left:1.33px solid var(--accent);padding-left:3mm}
-.card h4{font-size:9pt;font-weight:700;margin:0 0 1mm}
-.card p{font-size:8pt;color:var(--ink-2);margin:0;line-height:1.45}
-.note{background:var(--soft);border-left:1.33px solid var(--brand);padding:4mm 5mm;font-size:8.2pt}
+.card{border-left:1.33px solid var(--accent);padding-left:4mm}
+.card h4{font-size:11pt;font-weight:700;margin:0 0 1.5mm}
+.card p{font-size:9pt;color:var(--ink-2);margin:0;line-height:1.45}
+.note{background:var(--soft);border-left:1.33px solid var(--brand);padding:4mm 5mm;font-size:9.5pt}
 .note p:last-child{margin-bottom:0}
-
-/* ---------- linha do tempo ---------- */
-.tl{counter-reset:tl;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:4mm 8mm}
-.tl li{position:relative;padding-left:10mm;margin:0}
-.tl li::before{counter-increment:tl;content:counter(tl,decimal-leading-zero);position:absolute;left:0;top:-.5mm;
-  font-size:12pt;font-weight:800;color:var(--accent);letter-spacing:-.02em}
-.tl h4{font-size:9pt;font-weight:700;margin:0 0 1mm}
-.tl p{font-size:8pt;color:var(--ink-2);margin:0;line-height:1.45}
-
-/* ---------- placeholders de gráfico ---------- */
-.chart{max-height:100mm;border:1px dashed var(--brand);background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(0,0,0,.022) 5px 10px);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2mm;text-align:center;padding:5mm}
-.chart .cl{font-size:6.6pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
-.chart .cd{font-size:7.6pt;color:var(--ink-2);max-width:105mm;line-height:1.45}
-/* Com o gráfico desenhado dentro, a moldura deixa de ser um pedido de
-   preenchimento: some o tracejado e a hachura, e fica só o desenho. */
-.chart.feito{border:0;background:none;padding:0;gap:1.5mm}
-.sk-bars{display:flex;align-items:flex-end;gap:2mm;height:16mm;width:70%;opacity:.28}
-.sk-bars i{flex:1;background:var(--brand);border-radius:.4mm .4mm 0 0}
-.sk-donut{width:22mm;height:22mm;border-radius:50%;opacity:.5;
+.tl{counter-reset:tl;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6mm 12mm}
+.tl li{position:relative;padding-left:12mm;margin:0}
+.tl li::before{counter-increment:tl;content:counter(tl,decimal-leading-zero);position:absolute;left:0;top:-1mm;
+  font-size:16pt;font-weight:800;color:var(--accent);letter-spacing:-.02em}
+.tl h4{font-size:10.5pt;font-weight:700;margin:0 0 1mm}
+.tl p{font-size:9pt;color:var(--ink-2);margin:0;line-height:1.4}
+.chart{border:1px dashed currentColor;background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(0,0,0,.02) 6px 12px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3mm;text-align:center;padding:6mm}
+.slide.dark .chart{background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.045) 6px 12px)}
+.chart .cl{font-size:7.6pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
+.chart.feito{border:0;background:none;padding:0;gap:2mm}
+.slide.dark .chart .cl{color:#fff}
+.chart .cd{font-size:9pt;color:var(--ink-2);max-width:150mm;line-height:1.45}
+.slide.dark .chart .cd{color:rgba(255,255,255,.75)}
+.sk-bars{display:flex;align-items:flex-end;gap:4mm;height:26mm;width:60%;opacity:.3}
+.sk-bars i{flex:1;background:currentColor;border-radius:.6mm .6mm 0 0}
+.sk-donut{width:32mm;height:32mm;border-radius:50%;opacity:.35;
   background:conic-gradient(var(--c1) 0 42%,var(--c2) 42% 63%,var(--c3) 63% 82%,var(--c4) 82% 100%);
   -webkit-mask:radial-gradient(circle,transparent 52%,#000 53%);mask:radial-gradient(circle,transparent 52%,#000 53%)}
-.sk-line{width:75%;height:16mm;opacity:.42;
-  background:linear-gradient(transparent,transparent) no-repeat;
-  border-bottom:1px solid var(--ink-2);position:relative}
-.sk-line::after{content:'';position:absolute;inset:0;
-  clip-path:polygon(0 82%,14% 66%,28% 74%,42% 48%,56% 55%,70% 30%,85% 36%,100% 12%,100% 100%,0 100%);
-  background:linear-gradient(180deg,var(--brand),rgba(255,255,255,0) 92%)}
-
-/* ---------- diversos ---------- */
-.dl{display:grid;grid-template-columns:auto 1fr;gap:1.5mm 5mm;font-size:8.4pt;align-items:baseline}
-.dl dt{color:var(--ink-2);text-transform:uppercase;font-size:6.6pt;letter-spacing:.08em;font-weight:600}
+.pill{display:inline-block;font-size:7.4pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:1mm 3mm;border-radius:8mm;background:var(--soft);color:var(--brand);border:1px solid var(--line)}
+.slide.dark .pill{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.24)}
+.dl{display:grid;grid-template-columns:auto 1fr;gap:2mm 6mm;font-size:9.5pt;align-items:baseline}
+.dl dt{color:var(--ink-2);text-transform:uppercase;font-size:7.4pt;letter-spacing:.08em;font-weight:600}
+.slide.dark .dl dt{color:rgba(255,255,255,.7)}
 .dl dd{margin:0;font-weight:600}
-.pill{display:inline-block;font-size:6.4pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  padding:1mm 2mm;border-radius:8mm;background:var(--soft);color:var(--brand);border:1px solid var(--line)}
-.pill.ok{background:rgba(31,122,76,.1);color:var(--pos);border-color:rgba(31,122,76,.25)}
-.pill.at{background:var(--warn-bg);color:var(--warn-fg);border-color:var(--warn-bd)}
-.pill.rk{background:rgba(179,64,47,.09);color:var(--neg);border-color:rgba(179,64,47,.25)}
-.toc{list-style:none;margin:0;padding:0;font-size:9pt}
-.toc li{display:flex;align-items:baseline;gap:2mm;padding:2mm 0;border-bottom:1px solid var(--line)}
-.toc .n{font-weight:800;color:var(--accent);font-size:8pt;min-width:7mm}
-.toc .d{flex:1 1 auto;border-bottom:1px dotted var(--line);transform:translateY(-1mm)}
-.toc .p{font-weight:700;color:var(--brand)}
-.sig{margin-top:6mm;display:grid;grid-template-columns:1fr 1fr;gap:8mm;font-size:8pt}
-.sig .ln{border-top:1px solid var(--ink);padding-top:1.5mm;color:var(--ink-2)}
-.qr{width:34mm;height:34mm;border:1px dashed var(--brand);display:flex;align-items:center;justify-content:center;
-  text-align:center;font-size:6.4pt;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);font-weight:700}
+.qr{width:52mm;height:52mm;border:1px dashed currentColor;display:flex;align-items:center;justify-content:center;
+  text-align:center;font-size:7.6pt;letter-spacing:.08em;text-transform:uppercase;font-weight:700;opacity:.85}
+.imgbox{border:1px dashed currentColor;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2mm;text-align:center;padding:8mm;
+  background:repeating-linear-gradient(135deg,transparent 0 7px,rgba(0,0,0,.022) 7px 14px)}
+.slide.dark .imgbox{background:repeating-linear-gradient(135deg,transparent 0 7px,rgba(255,255,255,.05) 7px 14px)}
+.imgbox .cl{font-size:7.6pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
+.slide.dark .imgbox .cl{color:#fff}
+.imgbox .cd{font-size:9pt;max-width:90mm;line-height:1.45;color:var(--ink-2)}
 
-.steps{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:5mm;counter-reset:st;list-style:none;padding:0;margin:0}
-.steps>li{min-width:0;position:relative;padding-top:8mm}
+/* A foto institucional é parte do desenho, e não escolha de quem preenche. Vai
+   na proporção em que foi tirada: a sede é um prédio largo, e recortá-la para
+   caber num retrato 3:4 cortava metade da fachada. A largura é a da coluna e a
+   altura sai sozinha, que é o que `height:auto` faz — nenhuma caixa impõe
+   formato a ela. */
+.imgfixa{display:block;width:100%;height:auto;border-radius:1mm}
+.slide.dark .imgbox .cd{color:rgba(255,255,255,.75)}
+
+/* capa e divisórias ----------
+   Medidas tiradas de "MODELO SLIDES AUVP CAPITAL.pdf", página 1, reescaladas de
+   1440x810 pt para 338,667x190,5 mm: faixa branca de 0 a 26,3 mm, régua curta em
+   x 24,6..74,9 e y 68,4 mm, título 44,6 pt com base em 106,7 mm, subtítulo
+   25,3 pt com base em 120,2 mm. Arcos sangrando no canto inferior direito.   */
+.slide.cover,.slide.divider{padding:0}
+.cv-band{position:absolute;left:0;right:0;top:0;height:26.3mm;background:#fff;z-index:4;
+  display:flex;align-items:center;justify-content:space-between;padding:0 8.3mm}
+.cv-band .logo{margin-left:auto}
+.cv-band .nm{font-size:13.3pt;font-weight:600;color:var(--ink);letter-spacing:.01em}
+.cv-band .logo svg [class^=lg-]{fill:var(--brand)}
+.cv-block{position:absolute;left:24.6mm;right:24.6mm;top:68mm;z-index:4}
+.cv-block .rule{width:50.3mm;margin-bottom:26mm}
+.cv-t{margin:0;font-size:44.6pt;line-height:1;font-weight:800;text-transform:uppercase;letter-spacing:-.02em}
+.cv-t .lt{font-weight:300}
+.cv-sub{margin-top:3mm;font-size:25.3pt;line-height:1.1;text-transform:uppercase;opacity:.92}
+.cv-foot{position:absolute;left:24.6mm;right:24.6mm;bottom:11mm;z-index:4;
+  display:flex;align-items:flex-end;gap:12mm}
+.cv-foot .cf{font-size:7.6pt;letter-spacing:.08em;text-transform:uppercase;opacity:.55}
+.cv-foot .id{margin-left:auto;text-align:right;font-size:9.5pt;line-height:1.7;opacity:.9}
+.slide.cover .graf{z-index:2}
+.slide.divider .graf{z-index:2}
+.divider .in{padding:12mm 16mm;display:flex;flex-direction:column;justify-content:center}
+.dv-n{font-size:60pt;font-weight:800;line-height:1;color:#fff;opacity:.5;letter-spacing:-.03em}
+.dv-t{font-size:32pt;font-weight:800;text-transform:uppercase;line-height:1.05;margin-top:3mm;letter-spacing:-.015em}
+.dv-sub{font-size:12pt;letter-spacing:.02em;margin-top:3mm;opacity:.9;text-transform:uppercase}
+
+/* ---------- tela de planos ---------- */
+.plans{display:grid;grid-template-columns:repeat(var(--n,3),1fr);gap:6mm;flex:1 1 auto;min-height:0}
+.plans>*{min-width:0}
+.plan{border:1px solid var(--line);border-top:1.33px solid var(--line);display:flex;flex-direction:column;padding:5mm}
+.plan.hl{border-color:var(--line);border-top-color:var(--accent);background:var(--soft)}
+.plan .nm{font-size:11.5pt;font-weight:800;text-transform:uppercase;line-height:1.12;letter-spacing:-.01em}
+.plan .tag{font-size:7.4pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.plan .pr{margin:3mm 0;padding:3mm 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.plan .pr b{display:block;font-size:14pt;font-weight:800;color:var(--brand);letter-spacing:-.02em}
+.plan .pr span{font-size:8.4pt;color:var(--ink-2)}
+.plan ul{list-style:none;padding:0;margin:0;font-size:8.6pt;line-height:1.4}
+.plan li{position:relative;padding-left:4mm;margin-bottom:8px}
+.plan li::before{content:"";position:absolute;left:0;top:7px;width:2.4mm;height:1.33px;background:var(--accent)}
+.plan .ft{margin-top:auto;padding-top:4mm;font-size:8.2pt;color:var(--ink-2)}
+.steps{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:8mm;counter-reset:st;list-style:none;padding:0;margin:0}
+.steps>li{min-width:0;position:relative;padding-top:10mm}
 .steps>li::before{counter-increment:st;content:counter(st,decimal-leading-zero);position:absolute;left:0;top:0;
-  font-size:13pt;font-weight:800;color:var(--accent);letter-spacing:-.02em}
-.steps>li::after{content:"";position:absolute;left:0;top:6.5mm;width:100%;height:1px;background:var(--line)}
-.steps h4{font-size:9pt;font-weight:700;margin:0 0 1mm}
-.steps p{font-size:8pt;color:var(--ink-2);margin:0;line-height:1.4}
-.big{font-size:22pt;font-weight:800;line-height:1;letter-spacing:-.03em;color:var(--brand)}
+  font-size:18pt;font-weight:800;color:var(--accent);letter-spacing:-.02em}
+.steps>li::after{content:"";position:absolute;left:0;top:9mm;width:100%;height:1px;background:var(--line)}
+.steps h4{font-size:10.5pt;font-weight:700;margin:0 0 1.5mm}
+.steps p{font-size:9pt;color:var(--ink-2);margin:0;line-height:1.45}
+.slide.dark .steps>li::after{background:rgba(255,255,255,.25)}
+.big{font-size:34pt;font-weight:800;line-height:1;letter-spacing:-.03em;color:var(--brand)}
+.slide.dark .big{color:#fff}
 
 /* ---------- processo: nós numerados sobre um trilho contínuo ---------- */
 .flow{list-style:none;margin:0;padding:0;counter-reset:fl;
-  display:grid;grid-template-columns:repeat(var(--n,4),1fr);column-gap:5mm}
-.flow>li{position:relative;min-width:0;padding-top:10mm}
-.flow>li::after{content:"";position:absolute;left:0;right:calc(-1 * 5mm);top:4mm;height:1px;background:var(--line)}
+  display:grid;grid-template-columns:repeat(var(--n,4),1fr);column-gap:8mm}
+.flow>li{position:relative;min-width:0;padding-top:16mm}
+.flow>li::after{content:"";position:absolute;left:0;right:calc(-1 * 8mm);top:6mm;height:1px;background:var(--line)}
 .flow>li:last-child::after{right:0}
-.flow .node{position:absolute;left:0;top:0;z-index:2;width:8mm;height:8mm;border-radius:50%;
+.flow .node{position:absolute;left:0;top:0;z-index:2;width:12mm;height:12mm;border-radius:50%;
   border:1px solid var(--brand);background:var(--paper);color:var(--brand);
-  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:8pt;letter-spacing:-.01em}
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11pt;letter-spacing:-.01em}
 .flow .node::before{counter-increment:fl;content:counter(fl,decimal-leading-zero)}
-.flow .tag{display:block;font-size:5.8pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+.flow .tag{display:block;font-size:7pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--ink-2);margin-bottom:1mm}
-.flow h4{font-size:9pt;font-weight:700;margin:0 0 1mm}
-.flow p{font-size:8pt;color:var(--ink-2);margin:0;line-height:1.45}
+.flow h4{font-size:10.5pt;font-weight:700;margin:0 0 1mm}
+.flow p{font-size:9pt;color:var(--ink-2);margin:0;line-height:1.45}
 
 /* ---------- legenda de série, com a paleta do segmento ---------- */
 /* ---------- gráfico desenhado a partir do dado ----------
@@ -270,8 +295,8 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 /* O desenho não empurra a caixa: ele ocupa o que sobra dela. A moldura vazia e a
    preenchida medem o mesmo, e o gráfico nunca cresce por cima do que está ao lado. */
 .g-guia{stroke:var(--line);stroke-width:1}
-.g-eixo{fill:var(--ink-2);font-size:9px}
-.g-mini{fill:var(--ink-2);font-size:9px;text-anchor:middle;letter-spacing:.04em}
+.g-eixo{fill:var(--ink-2);font-size:10px}
+.g-mini{fill:var(--ink-2);font-size:10px;text-anchor:middle;letter-spacing:.04em}
 .g-linha{fill:none;stroke:var(--c1);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}
 .g-area{fill:var(--c1);opacity:.10}
 .g-ponto{fill:var(--paper);stroke:var(--c1);stroke-width:2}
@@ -280,388 +305,179 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
 .slide.dark .g-guia{stroke:rgba(255,255,255,.22)}
 
 
-.legend{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5mm 4mm;
-  margin:3mm 0 0;padding:0;font-size:6.6pt;color:var(--ink-2)}
+.legend{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5mm 6mm;
+  margin:4mm 0 0;padding:0;font-size:8pt;color:var(--ink-2)}
 .legend li{display:flex;align-items:center;gap:1.5mm}
-.legend i{width:2.4mm;height:2.4mm;border-radius:50%;flex:0 0 auto}
-.g-zero{stroke:var(--ink-2);stroke-width:1}
+.legend i{width:3mm;height:3mm;border-radius:50%;flex:0 0 auto}
 
+.slide.dark .flow>li::after{background:rgba(255,255,255,.25)}
+.slide.dark .flow .node{background:transparent;border-color:rgba(255,255,255,.55);color:#fff}
+.slide.dark .flow .tag,.slide.dark .flow p,.slide.dark .legend{color:rgba(255,255,255,.78)}
 
-/* ---------- lista com marcador em fio, e retrato ---------- */
-.lista{list-style:none;margin:0;padding:0;font-size:8.4pt;line-height:17px}
-.lista li{position:relative;padding-left:5mm;margin-bottom:9px}
-.lista li:last-child{margin-bottom:0}
-.lista li::before{content:"";position:absolute;left:0;top:8px;width:2.6mm;height:1.33px;background:var(--accent)}
-.lista.mut li{color:var(--ink-2)}
-.chips{display:flex;flex-wrap:wrap;gap:1.5mm;margin-bottom:1mm}
-.side h3{font-size:6.8pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--ink-2);margin:5mm 0 2mm;padding-bottom:1mm;border-bottom:1px solid var(--line)}
-.side h3:first-child{margin-top:0}
-.side .lista{font-size:8pt;margin-bottom:0}
-.side .dl{font-size:8pt}
-
-/* princípios em duas colunas: título embutido no parágrafo ocupa bem menos
-   altura que cinco cards estreitos */
-.principios{display:grid;grid-template-columns:1fr 1fr;gap:1.5mm 6mm}
-.principios p{font-size:7.7pt;line-height:1.4;margin:0}
-.principios strong{color:var(--brand)}
-
-/* ---------- retrato na coluna de apoio ---------- */
-/* O retrato escrito, quando existe pessoa: mesma caixa e mesmo canto da
-   moldura vazia, para a página não mudar de forma entre as duas. O corte sobe
-   um pouco o enquadramento, que é onde o rosto costuma estar. */
-.rt-img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;
-  object-position:50% 26%;border-radius:3mm 0 0 0}
-/* O espaço de imagem só existia nos slides, que são onde os `imgbox` estavam.
-   A moldura vazia do retrato o traz para o A4, com a mesma escala do resto da
-   página. */
-.imgbox{border:1px dashed var(--line);display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:1.5mm;text-align:center;padding:5mm;
-  background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(0,0,0,.022) 5px 10px)}
-.imgbox .cl{font-size:6.6pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--brand)}
-.imgbox .cd{font-size:7.4pt;max-width:70mm;line-height:1.4;color:var(--ink-2)}
-
-
-/* A moldura vazia do retrato ocupa a mesma caixa e tem o mesmo canto, para a
-   página não mudar de forma entre a versão escrita e a em branco. */
-.rt-vaga{width:100%;aspect-ratio:3/4;flex:none;align-self:end;
-  border-radius:3mm 0 0 0;padding:4mm 3mm}
-.rt-vaga .cd{font-size:6.6pt;line-height:1.35}
-
-/* ---------- respiro elástico entre faixas ----------
-   Em página de altura fechada sobra espaço que varia de um documento para
-   outro. Em vez de empurrar tudo para as bordas com um único vão enorme, o
-   excedente é dividido entre as faixas: cada respiro cresce na mesma medida,
-   entre um piso e um teto, e o que não couber fica na margem inferior. */
-.esp{flex:1 1 0;min-height:4mm;max-height:11mm}
-
-/* ---------- linha do tempo e etiquetas ----------
-   Dois blocos que a folha do consultor usa ao lado do texto corrido. Nos
-   marcos, o rótulo fica acima do texto e não numa coluna à esquerda: eles vão
-   de "2016" a "Pandemia" e a "Há três anos", e coluna fixa não comporta os
-   dois. */
-.marcos{list-style:none;margin:0;padding:0}
-.marcos li{position:relative;padding:0 0 10px 8mm}
-.marcos li:last-child{padding-bottom:0}
-.marcos li::before{content:"";position:absolute;left:1.15mm;top:4.2mm;bottom:-.4mm;
-  width:1px;background:var(--line)}
-.marcos li:last-child::before{display:none}
-.marcos li::after{content:"";position:absolute;left:0;top:1.2mm;width:2.4mm;height:2.4mm;
-  border-radius:50%;border:1px solid var(--brand);background:var(--paper)}
-.marcos .q{display:block;font-size:6.6pt;font-weight:700;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--brand);margin-bottom:1mm}
-.marcos p{margin:0;font-size:8.2pt;line-height:1.45;color:var(--ink-2)}
-
-.tags{display:flex;flex-wrap:wrap;gap:1.4mm;margin:0}
-.tags span{font-size:7.2pt;padding:.8mm 2.8mm;border:1px solid var(--line);
-  border-radius:8mm;color:var(--ink-2)}
-
-
-/* ---------- folha de uma página ----------
-   A apresentação de uma página tem chrome próprio, como as capas: sem
-   cabeçalho corrido e sem numeração, porque a página é uma só. As medidas vêm
-   das proporções do modelo de referência, reescritas para A4. */
-.page.folha{padding:0;display:block;position:relative}
-.page.folha .fl-aneis,.page.folha .fl-foto,.page.folha .fl-nome,
-.page.folha .fl-corpo,.page.folha .fl-pe{position:absolute}
-
-/* Os anéis sangram pela esquerda; o traço fica fino em qualquer escala. A
-   opacidade de cada um vem do gerador, que a calcula a partir do raio. */
-.fl-aneis{fill:none;stroke:#fff;stroke-width:.75pt;
-  vector-effect:non-scaling-stroke;overflow:visible}
-.fl-aneis circle{vector-effect:non-scaling-stroke}
-
-.fl-foto{border-radius:50%;overflow:hidden}
-.fl-foto img{width:100%;height:100%;object-fit:cover;object-position:50% 26%;display:block}
-/* A moldura vazia é o mesmo círculo, com a especificação dentro. */
-.fl-foto.imgbox{border-color:rgba(255,255,255,.35);padding:6mm;gap:2mm;
-  background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.04) 6px 12px)}
-.fl-foto.imgbox .cl{color:rgba(255,255,255,.72)}
-.fl-foto.imgbox .cd{font-size:6.6pt;line-height:1.35;color:rgba(255,255,255,.5)}
-
-/* O bloco do nome se centra pelo centro do círculo do retrato, não pelo topo
-   dele: é o eixo que os dois compartilham. */
-.fl-nome{left:93mm;right:24mm;top:58.5mm;transform:translateY(-50%)}
-.fl-nome h1{margin:0;font-size:32pt;font-weight:800;line-height:1.02;
-  letter-spacing:-.02em;color:#fff}
-.fl-nome p{margin:2mm 0 0;font-size:19pt;font-weight:300;line-height:1.15;
-  color:rgba(255,255,255,.88)}
-
-/* O texto corrido é justificado, como no original, e tem o corpo grande que
-   aquela página usa: 2,1% da largura da folha. */
-/* Texto e contatos ficam num bloco só, entre o retrato e o pé. O vão entre os
-   dois é elástico com teto, como o `.esp` do resto do sistema: um consultor de
-   texto curto não abre um buraco no meio da folha — a sobra vai para a margem
-   de baixo, onde se lê como margem. */
-.fl-corpo{left:24mm;right:24mm;top:112mm;bottom:34mm;
-  display:flex;flex-direction:column}
-.fl-bio{font-size:12.5pt;line-height:1.55;text-align:justify;color:rgba(255,255,255,.92)}
-.fl-bio p{margin:0 0 6mm}
-.fl-bio p:last-child{margin-bottom:0}
-.fl-vao{flex:1 1 0;min-height:12mm;max-height:30mm}
-
-.fl-contatos{display:grid;gap:7mm}
-.fl-ct{display:grid;grid-template-columns:11mm 1fr;align-items:center;
-  font-size:12.5pt;color:#fff}
-.fl-ct .ic svg{width:8.5mm;height:8.5mm;display:block;fill:none;
-  stroke:rgba(255,255,255,.85);stroke-width:1.3;
-  stroke-linecap:round;stroke-linejoin:round}
-
-.fl-pe{left:24mm;right:24mm;bottom:16mm;display:flex;align-items:center;gap:10mm}
-.fl-pe .rule{flex:1 1 auto;height:1px;background:rgba(255,255,255,.45)}
-.fl-pe .logo{flex:0 0 auto}
-
-/* ---------- página invertida ----------
-   A última página da apresentação do consultor roda no negativo. É o que a
-   fecha sem acrescentar ornamento: mesma grelha, mesma tipografia, mesmos
-   fios — só o fundo troca. */
-.page.dark{color:#fff;background:linear-gradient(225deg,var(--brand) 0%,#000 100%)}
-.page.dark .pg-head,.page.dark .pg-foot{border-color:rgba(255,255,255,.2)}
-.page.dark .pg-head .sec,.page.dark .pg-head .dt{color:rgba(255,255,255,.78)}
-.page.dark .pg-foot{color:rgba(255,255,255,.45)}
-.page.dark .pg-foot .no{color:#fff}
-.page.dark h2{border-color:rgba(255,255,255,.2)}
-.page.dark .eyebrow{color:#fff}
-.page.dark .lead,.page.dark .mut{color:rgba(255,255,255,.78)}
-.page.dark .lista.mut li{color:rgba(255,255,255,.78)}
-.page.dark .legal{color:rgba(255,255,255,.5)}
-.page.dark .dl dt{color:rgba(255,255,255,.62)}
-.page.dark .principios strong{color:#fff}
-.page.dark .lista li::before,.page.dark .plan li::before{background:rgba(255,255,255,.55)}
-.page.dark .card,.page.dark .plan.hl{border-color:rgba(255,255,255,.28)}
-.page.dark .card .n,.page.dark .toc .n,.page.dark .plan .n{color:#fff}
-.page.dark .ph{background:rgba(255,255,255,.16);color:#fff}
-.page.dark .pill{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.24)}
-.page.dark .note{background:rgba(255,255,255,.06);border-left-color:rgba(255,255,255,.4)}
-
-
-/* altura da folha — os dois números saem de `npm run altura -- --ajustar` */
-@page{size:210mm 1085mm;margin:0}
-.page.longa{height:1085mm;padding:0;font-size:10pt}
-@media print{.page.longa{break-after:auto}}
-
-/* as faixas: a folha alterna fundo para marcar onde uma parte acaba e outra
-   começa, que é o que a quebra de página fazia antes */
-.lg-topo,.lg-pe{color:#fff;background:linear-gradient(225deg,var(--brand) 0%,#000 100%);
-  position:relative;overflow:hidden;flex:0 0 auto}
-.lg-corpo,.lg-faixa,.lg-topo,.lg-pe{padding:16mm 15.3mm}
-.lg-faixa{background:var(--soft);flex:0 0 auto;display:flex;flex-direction:column}
-.lg-corpo{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
-
-/* o alto: retrato à esquerda, identificação à direita, declaração cruzando as
-   duas colunas sob um fio — a mesma composição da abertura que existia antes.
-   O plano, o nome e o cargo se centram pelo eixo do retrato, e não pelo pé
-   dele: são dois blocos de altura diferente lado a lado, e alinhar pela base
-   deixava o nome caído num canto da foto. */
-.lg-topo{padding-top:20mm;padding-bottom:18mm}
-.lg-topo .grain{position:absolute;inset:0;z-index:1}
-.lg-topo>*{position:relative;z-index:2}
-.lg-id{display:grid;grid-template-columns:44mm 1fr;gap:0 10mm;align-items:center}
-.lg-id .rt-img,.lg-id .rt-vaga{margin:0;border-radius:4mm 0 0 0}
-.lg-id .rt-vaga{border-color:rgba(255,255,255,.35);
-  background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.05) 6px 12px)}
-.lg-id .rt-vaga .cl{color:rgba(255,255,255,.72)}
-.lg-id .rt-vaga .cd{color:rgba(255,255,255,.5)}
-.lg-plano{display:block;font-size:7.2pt;font-weight:700;letter-spacing:.08em;
-  text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:3mm}
-.lg-id h1{margin:0;font-size:30pt;font-weight:800;text-transform:uppercase;
-  line-height:1.02;letter-spacing:-.02em}
-.lg-id .papel{margin:3mm 0 0;font-size:11pt;font-weight:300;color:rgba(255,255,255,.85)}
-/* a declaração fica na mesma coluna do nome, e não atravessando a folha: ela
-   é sobre a pessoa, e lida ao lado do retrato diz de quem é. Em corpo pequeno,
-   na escala das credenciais — é legenda do nome, não manchete. */
-/* Sem teto de medida: o fio que abre a declaração termina onde termina a
-   coluna, que é onde termina o fio da faixa de credenciais logo abaixo. Dois
-   fios empilhados que parassem em pontos diferentes leriam como desalinho. */
-.lg-frase{margin:5mm 0 0;padding-top:4mm;
-  border-top:1px solid rgba(255,255,255,.3);
-  font-size:9pt;line-height:1.6;font-weight:300;
-  color:rgba(255,255,255,.88)}
-
-/* a faixa de credenciais encosta no alto escuro, como legenda dele */
-.lg-cred{margin-top:9mm;display:grid;grid-template-columns:repeat(var(--n,3),1fr);
-  border-top:1px solid rgba(255,255,255,.3)}
-.lg-cred>div{min-width:0;padding:5mm 7mm;border-left:1px solid rgba(255,255,255,.22)}
-.lg-cred>div:first-child{padding-left:0;border-left:0}
-.lg-cred>div:last-child{padding-right:0}
-.lg-cred h3{margin:0 0 3mm;font-size:6.6pt;font-weight:700;letter-spacing:.08em;
-  text-transform:uppercase;color:rgba(255,255,255,.62)}
-/* dois blocos empilhados na mesma coluna precisam de ar entre eles */
-.lg-cred h3:not(:first-child){margin-top:7mm}
-.lg-cred .lista{font-size:8.4pt;margin:0;color:rgba(255,255,255,.9)}
-.lg-cred .lista li{margin-bottom:5px}
-.lg-cred .lista li::before{background:rgba(255,255,255,.55)}
-.lg-cred .pill{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.28)}
-
-/* cada assunto é uma seção com título; o corpo é o texto corrido do sistema */
-.lg-sec{flex:0 0 auto}
-.lg-sec h2{margin:0 0 5mm}
-.longa .corrido{font-size:11pt;line-height:1.75;max-width:152mm}
-.longa .corrido p{margin:0 0 5mm}
-.longa .corrido p:last-child{margin-bottom:0}
-.longa .cols2u .corrido,.longa .cols2 .corrido{max-width:none}
-.longa .lista{font-size:9.4pt;line-height:20px}
-.longa .lista li{padding-left:6mm;margin-bottom:14px}
-.longa .lista li::before{top:9px;width:3.2mm}
-.longa .principios{gap:7mm 12mm}
-.longa .principios p{font-size:9.2pt;line-height:1.62}
-.longa .lead{font-size:11.5pt;line-height:1.55;max-width:none;margin-bottom:0}
-
-/* a nota de posição: onde este plano fica entre os três, fechando a faixa sob
-   as duas colunas do que ele entrega. Caixa de papel sobre o fundo suave da
-   faixa, com o fio da marca à esquerda — é a mesma ideia do `.note` do resto do
-   sistema, que aqui não serve porque o fundo dele é justamente o da faixa.
-
-   Por dentro a caixa se divide, porque à largura inteira a linha passaria de
-   noventa caracteres: o parágrafo que situa o plano fica à esquerda, em corpo
-   maior, e o que desdobra desce à direita — a mesma grelha das duas colunas de
-   cima. Dividir por parágrafo, e não deixar o texto correr de uma coluna para a
-   outra: correndo, as alturas fecham iguais, mas a frase quebra no meio do
-   caminho e se lê pela metade antes de recomeçar do outro lado. */
-.lg-posicao{margin-top:10mm;padding:8mm 9mm;background:var(--paper);
-  border:1px solid var(--line);border-left:1.33px solid var(--brand);
-  display:grid;grid-template-columns:1fr 1fr;gap:0 12mm}
-.lg-posicao>*{min-width:0}
-.lg-posicao p{margin:0;font-size:8.8pt;line-height:1.66;color:var(--ink-2)}
-.lg-posicao p+p{margin-top:4mm}
-.lg-posicao .abre{font-size:10.2pt;line-height:1.55;color:var(--ink)}
-
-/* o respiro entre seções cresce com a sobra, entre um piso e um teto: é o que
-   acomoda a diferença de tamanho entre um consultor e outro sem abrir um
-   buraco único no meio da folha. O teto é alto porque a folha é alta: entre o
-   consultor que escreve pouco e o que escreve muito há uns 20 cm de diferença,
-   e é isso que se reparte aqui. */
-.longa .esp{flex:1 1 0;min-height:10mm;max-height:60mm}
-
-/* o pé: canais de um lado, contato do outro, régua e marca fechando */
-.lg-pe{padding-top:16mm;padding-bottom:14mm}
-.lg-pe .grain{position:absolute;inset:0;z-index:1}
-.lg-pe>*{position:relative;z-index:2}
-.lg-pe h2{margin:0 0 4mm;border-color:rgba(255,255,255,.3)}
-.lg-pe .dl{font-size:9.4pt;gap:3mm 6mm}
-.lg-pe .dl dt{color:rgba(255,255,255,.62)}
-.lg-pe .mut{color:rgba(255,255,255,.72)}
-.lg-pe .legal{color:rgba(255,255,255,.5)}
-.lg-assina{margin-top:12mm;padding-top:6mm;border-top:1px solid rgba(255,255,255,.3);
-  display:flex;align-items:center;justify-content:space-between;gap:10mm}
-.lg-assina .data{font-size:8pt;letter-spacing:.08em;text-transform:uppercase;
-  color:rgba(255,255,255,.72)}
+/* ---------- número de destaque com números de apoio ---------- */
+.hero{display:grid;grid-template-columns:auto 1fr;align-items:end;gap:0 8mm;
+  padding-bottom:6mm;border-bottom:1px solid var(--line)}
+.hero .n{font-size:64pt;font-weight:800;line-height:.9;letter-spacing:-.04em;color:var(--brand)}
+.slide.dark .hero .n{color:#fff}
+.hero .l{font-size:11pt;color:var(--ink-2);line-height:1.4;padding-bottom:2mm}
+.slide.dark .hero .l{color:rgba(255,255,255,.8)}
+.stats{display:grid;grid-template-columns:repeat(var(--n,5),1fr);margin-top:6mm}
+.stats>div{min-width:0;padding:0 5mm;border-left:1px solid var(--line)}
+.stats>div:first-child{padding-left:0;border-left:0}
+.slide.dark .stats>div{border-color:rgba(255,255,255,.22)}
+.stats .n{font-size:22pt;font-weight:800;line-height:1;letter-spacing:-.03em;color:var(--brand)}
+.slide.dark .stats .n{color:#fff}
+.stats .l{font-size:8.4pt;color:var(--ink-2);line-height:1.35;margin-top:2mm}
+.slide.dark .stats .l{color:rgba(255,255,255,.75)}
 
 </style>
 </head>
 <body>
-<section class="page longa" data-sec="Apresentação do consultor">
-  <header class="lg-topo">
-    <div class="grain"></div>
-    <!-- O nome do plano saía por cima do nome da pessoa. É a apresentação do
-         consultor: quem abre o documento quer saber quem é ele, e o plano se
-         explica sozinho nas faixas de baixo. Fora que a folha vai para cliente
-         que já contratou e para cliente que ainda não, e anunciar um plano no
-         alto do retrato dava ao documento cara de peça de venda. -->
-    <div class="lg-id">
-      <div class="imgbox rt-vaga" data-img="1"><div class="cl">Retrato</div><div class="cd">Foto vertical do consultor. Recorte 3:4, mínimo 900&nbsp;px de&nbsp;largura.</div></div>
-      <div>
-        <h1><span class="ph" data-campo="nome_consultor">{{nome_consultor}}</span></h1>
-        <p class="papel"><span class="ph" data-campo="papel_consultor" title="Consultor de investimentos, especialista, planejador…">{{papel_consultor}}</span> na AUVP&nbsp;Capital</p>
-        <p class="lg-frase"><span class="ph" data-campo="frase_consultor" title="Uma frase em primeira pessoa sobre como você trabalha.">{{frase_consultor}}</span></p>
-      </div>
-    </div>
-    <div class="lg-cred" style="--n:3"><div><h3>Formação</h3><ul class="lista"><li><span class="ph" data-campo="formacao_1">{{formacao_1}}</span></li><li><span class="ph" data-campo="formacao_2">{{formacao_2}}</span></li><li><span class="ph" data-campo="formacao_3">{{formacao_3}}</span></li><li><span class="ph" data-campo="formacao_4">{{formacao_4}}</span></li><li><span class="ph" data-campo="formacao_5">{{formacao_5}}</span></li></ul></div><div><h3>Especialização</h3><ul class="lista"><li><span class="ph" data-campo="especializacao_1">{{especializacao_1}}</span></li><li><span class="ph" data-campo="especializacao_2">{{especializacao_2}}</span></li><li><span class="ph" data-campo="especializacao_3">{{especializacao_3}}</span></li><li><span class="ph" data-campo="especializacao_4">{{especializacao_4}}</span></li><li><span class="ph" data-campo="especializacao_5">{{especializacao_5}}</span></li></ul></div><div><h3>Certificações</h3><div class="chips"><span class="pill"><span class="ph" data-campo="certificacao_1">{{certificacao_1}}</span></span><span class="pill"><span class="ph" data-campo="certificacao_2">{{certificacao_2}}</span></span><span class="pill"><span class="ph" data-campo="certificacao_3">{{certificacao_3}}</span></span><span class="pill"><span class="ph" data-campo="certificacao_4">{{certificacao_4}}</span></span><span class="pill"><span class="ph" data-campo="certificacao_5">{{certificacao_5}}</span></span></div></div></div>
-  </header>
-
-  <div class="lg-corpo">
-    <div class="lg-sec">
-      <h2>O meu&nbsp;propósito</h2>
-      <div class="corrido"><p><span class="ph" data-campo="proposito_1">{{proposito_1}}</span></p><p><span class="ph" data-campo="proposito_2">{{proposito_2}}</span></p><p><span class="ph" data-campo="proposito_3">{{proposito_3}}</span></p><p><span class="ph" data-campo="proposito_4">{{proposito_4}}</span></p></div>
-    </div>
-    <div class="esp"></div>
-    <div class="lg-sec">
-      <h2>Formação acadêmica e&nbsp;qualificações</h2>
-      <div class="corrido"><p><span class="ph" data-campo="qualificacoes_1">{{qualificacoes_1}}</span></p><p><span class="ph" data-campo="qualificacoes_2">{{qualificacoes_2}}</span></p></div>
-    </div>
-    <div class="esp"></div>
-    <div class="lg-sec">
-      <h2>A minha trajetória no mercado&nbsp;financeiro</h2>
-      <div class="cols2u" style="align-items:start">
-        <div class="corrido"><p><span class="ph" data-campo="trajetoria_1">{{trajetoria_1}}</span></p><p><span class="ph" data-campo="trajetoria_2">{{trajetoria_2}}</span></p><p><span class="ph" data-campo="trajetoria_3">{{trajetoria_3}}</span></p></div>
-        <div class="side"><h3 style="margin-top:0">Em&nbsp;marcos</h3><ol class="marcos"><li><span class="q"><span class="ph" data-campo="marco_1_quando" title="2016, Depois, Hoje…">{{marco_1_quando}}</span></span><p><span class="ph" data-campo="marco_1_texto">{{marco_1_texto}}</span></p></li><li><span class="q"><span class="ph" data-campo="marco_2_quando" title="2016, Depois, Hoje…">{{marco_2_quando}}</span></span><p><span class="ph" data-campo="marco_2_texto">{{marco_2_texto}}</span></p></li><li><span class="q"><span class="ph" data-campo="marco_3_quando" title="2016, Depois, Hoje…">{{marco_3_quando}}</span></span><p><span class="ph" data-campo="marco_3_texto">{{marco_3_texto}}</span></p></li></ol></div>
-      </div>
-    </div>
-    <div class="esp"></div>
-    <div class="lg-sec">
-      <h2>Além dos&nbsp;investimentos</h2>
-      <div class="corrido"><p><span class="ph" data-campo="fora_do_escritorio_1">{{fora_do_escritorio_1}}</span></p><p><span class="ph" data-campo="fora_do_escritorio_2">{{fora_do_escritorio_2}}</span></p><p><span class="ph" data-campo="fora_do_escritorio_3">{{fora_do_escritorio_3}}</span></p></div>
-      <div style="margin-top:7mm"></div>
-    </div>
-  </div>
-
-  <div class="lg-faixa">
-    <div class="lg-sec">
-      <h2><span class="ph" data-campo="nome_plano" title="O nome comercial do plano.">{{nome_plano}}</span></h2>
-      <p class="lead"><span class="ph" data-campo="plano_resumo" title="Duas ou três frases sobre o que o cliente contrata.">{{plano_resumo}}</span></p>
-    </div>
-    <div class="esp"></div>
-    <div class="lg-sec">
-      <h2>Como funciona no dia a&nbsp;dia</h2>
-      <div class="corrido"><p><span class="ph" data-campo="funciona_1" title="Um parágrafo sobre como o plano funciona.">{{funciona_1}}</span></p><p><span class="ph" data-campo="funciona_2" title="Um parágrafo sobre como o plano funciona.">{{funciona_2}}</span></p><p><span class="ph" data-campo="funciona_3" title="Um parágrafo sobre como o plano funciona.">{{funciona_3}}</span></p></div>
-    </div>
-    <div class="esp"></div>
-    <div class="lg-sec">
-      <h2>O que você pode pedir ao seu&nbsp;consultor</h2>
-      <ul class="lista"><li><span class="ph" data-campo="pode_pedir_1">{{pode_pedir_1}}</span></li><li><span class="ph" data-campo="pode_pedir_2">{{pode_pedir_2}}</span></li><li><span class="ph" data-campo="pode_pedir_3">{{pode_pedir_3}}</span></li><li><span class="ph" data-campo="pode_pedir_4">{{pode_pedir_4}}</span></li><li><span class="ph" data-campo="pode_pedir_5">{{pode_pedir_5}}</span></li><li><span class="ph" data-campo="pode_pedir_6">{{pode_pedir_6}}</span></li></ul>
-    </div>
-    <div class="esp"></div>
-    <div class="lg-sec">
-      <div class="cols2">
-        <div>
-          <h2>O que já vem&nbsp;incluído</h2>
-          <ul class="lista"><li><span class="ph" data-campo="incluido_1">{{incluido_1}}</span></li><li><span class="ph" data-campo="incluido_2">{{incluido_2}}</span></li><li><span class="ph" data-campo="incluido_3">{{incluido_3}}</span></li><li><span class="ph" data-campo="incluido_4">{{incluido_4}}</span></li><li><span class="ph" data-campo="incluido_5">{{incluido_5}}</span></li><li><span class="ph" data-campo="incluido_6">{{incluido_6}}</span></li><li><span class="ph" data-campo="incluido_7">{{incluido_7}}</span></li><li><span class="ph" data-campo="incluido_8">{{incluido_8}}</span></li></ul>
-        </div>
-        <div>
-          <h2>O que não faz parte deste&nbsp;plano</h2>
-          <p class="small mut">Algumas coisas não estão incluídas aqui, e é melhor deixar isso combinado desde o&nbsp;começo.</p>
-          <ul class="lista mut"><li><span class="ph" data-campo="nao_incluido_1">{{nao_incluido_1}}</span></li><li><span class="ph" data-campo="nao_incluido_2">{{nao_incluido_2}}</span></li><li><span class="ph" data-campo="nao_incluido_3">{{nao_incluido_3}}</span></li><li><span class="ph" data-campo="nao_incluido_4">{{nao_incluido_4}}</span></li></ul>
-        </div>
-      </div>
-      <p class="legal" style="margin-top:8mm"><span class="ph" data-campo="notas_de_rodape" title="As ressalvas numeradas que os itens acima referenciam.">{{notas_de_rodape}}</span></p>
-    </div>
-  </div>
-
-  <div class="lg-corpo">
-    <div class="lg-sec">
-      <h2>Como pensamos&nbsp;investimento</h2>
-      <p class="lead" style="margin-bottom:7mm">A AUVP Capital nasceu da metodologia da AUVP Escola. É ela que orienta cada recomendação que você recebe&nbsp;aqui.</p>
-      <div class="principios"><p><strong>Longo prazo e Buy and&nbsp;Hold.</strong> A gente investe para carregar. Compra bons ativos e fica com eles, deixando o tempo e os juros compostos fazerem o trabalho. Day trade e operação de curto prazo não entram nas nossas recomendações, e girar a carteira atrás de oportunidade rápida também&nbsp;não.</p><p><strong>Empresas&nbsp;perenes.</strong> Na renda variável, olhamos para empresas sólidas, com histórico e resultado consistente, que você consegue imaginar funcionando daqui a vinte anos. Negócio que depende de um momento específico do mercado para dar certo fica de&nbsp;fora.</p><p><strong>Renda fixa bem&nbsp;escolhida.</strong> Duas aplicações com a mesma taxa podem ser bem diferentes uma da outra. Antes de recomendar, a gente olha quem é o emissor, qual o prazo, qual o indexador e qual a garantia&nbsp;envolvida.</p><p><strong>Diversificação.</strong> Cada classe de ativo cumpre um papel na carteira. Umas protegem o patrimônio, outras geram renda, outras fazem ele crescer. Diversificar bem é distribuir o seu dinheiro entre esses papéis na proporção que faz sentido para o seu momento de&nbsp;vida.</p><p><strong>Explicar antes de&nbsp;recomendar.</strong> Toda recomendação vem com o motivo dela junto. A AUVP começou como escola de investimentos, e a gente continua achando que o cliente decide melhor quando entende o que está&nbsp;fazendo.</p></div>
-    </div>
-    <div class="esp"></div>
-    <div class="lg-sec">
-      <h2>Como somos&nbsp;remunerados</h2>
-      <div class="corrido"><p>A AUVP Capital trabalha no modelo <em>fee&nbsp;based</em>: a consultoria cobra uma taxa sobre o patrimônio orientado, combinada com você e escrita na&nbsp;proposta.</p><p>No modelo comissionado, que é o mais comum no mercado, quem indica o investimento é pago pelo produto que vende. Quanto maior a comissão daquele produto, maior o incentivo para oferecer justamente ele, e para sugerir troca na carteira com mais frequência do que seria necessário. O interesse de quem recomenda acaba ficando diferente do interesse de quem&nbsp;investe.</p><p>No <em>fee&nbsp;based</em> (modelo que praticamos) esse conflito não aparece. A nossa remuneração é a mesma seja qual for o investimento recomendado, então a escolha é feita só pelo que serve para você. A comissão que a indicação geraria volta para a sua conta em forma de&nbsp;cashback.</p><p>E como a taxa é um percentual do que você tem investido, a consultoria só ganha mais quando o seu patrimônio&nbsp;cresce.</p></div>
-    </div>
-  </div>
-
-  <footer class="lg-pe">
-    <div class="grain"></div>
-    <div class="cols2u" style="align-items:start">
-      <div>
-        <h2>Onde acompanhar a AUVP&nbsp;Capital</h2>
-        <p class="small mut" style="margin:0 0 4mm">A gente publica conteúdo aberto sobre mercado e investimentos nestes&nbsp;canais:</p>
-        <div class="dl">
-          <dt>Instagram</dt><dd><a href="https://instagram.com/auvpcapital">@auvpcapital</a></dd>
-          <dt>YouTube</dt><dd><a href="https://youtube.com/@AUVPCapital">@AUVPCapital</a></dd>
-          <dt>Spotify</dt><dd><a href="https://open.spotify.com/show/4FUAeRg9G0ntPVDuC8Zpjp">Podcast da AUVP Capital</a></dd>
-        </div>
-      </div>
-      <div>
-        <h2>Falar com o seu&nbsp;consultor</h2>
-        <div class="dl"><dt>WhatsApp</dt><dd><span class="ph" data-campo="whatsapp_consultor" data-link="whatsapp">{{whatsapp_consultor}}</span></dd><dt>E-mail</dt><dd><span class="ph" data-campo="email_consultor" data-link="mailto">{{email_consultor}}</span></dd></div>
-        <p class="small mut" style="margin:5mm 0 0">Sempre que precisar, é só mandar mensagem para o seu&nbsp;consultor.</p>
-      </div>
-    </div>
-    <div class="lg-assina">
-      <span></span>
-      <div class="logo" style="width:30.4mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+<section class="slide dark cover">
+  <div class="grain"></div>
+  <div class="graf" style="right:-22.33mm;bottom:-20.35mm;transform:scaleY(-1);width:190.00mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 593.78 581.33">
+  <defs>
+    <style>
+      .g3-1 {
+        opacity: .68;
+      }
+      .g3-1, .g3-2, .g3-3, .g3-4, .g3-5, .g3-6, .g3-7, .g3-8, .g3-9, .g3-10, .g3-11, .g3-12, .g3-13, .g3-14, .g3-15, .g3-16, .g3-17, .g3-18, .g3-19, .g3-20, .g3-21, .g3-22, .g3-23, .g3-24, .g3-25, .g3-26, .g3-27, .g3-28, .g3-29, .g3-30, .g3-31, .g3-32 {
+        fill: none;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width: .5px;
+      }
+      .g3-2 {
+        opacity: 0;
+      }
+      .g3-3 {
+        opacity: .45;
+      }
+      .g3-4 {
+        opacity: .9;
+      }
+      .g3-5 {
+        opacity: .71;
+      }
+      .g3-7 {
+        opacity: .52;
+      }
+      .g3-8 {
+        opacity: .13;
+      }
+      .g3-9 {
+        opacity: .03;
+      }
+      .g3-10 {
+        opacity: .94;
+      }
+      .g3-11 {
+        opacity: .35;
+      }
+      .g3-12 {
+        opacity: .1;
+      }
+      .g3-13 {
+        opacity: .87;
+      }
+      .g3-14 {
+        opacity: .39;
+      }
+      .g3-15 {
+        opacity: .97;
+      }
+      .g3-16 {
+        opacity: .74;
+      }
+      .g3-17 {
+        opacity: .61;
+      }
+      .g3-18 {
+        opacity: .58;
+      }
+      .g3-19 {
+        opacity: .29;
+      }
+      .g3-20 {
+        opacity: .55;
+      }
+      .g3-21 {
+        opacity: .23;
+      }
+      .g3-22 {
+        opacity: .81;
+      }
+      .g3-23 {
+        opacity: .16;
+      }
+      .g3-24 {
+        opacity: .48;
+      }
+      .g3-25 {
+        opacity: .19;
+      }
+      .g3-26 {
+        opacity: .06;
+      }
+      .g3-27 {
+        opacity: .32;
+      }
+      .g3-28 {
+        opacity: .84;
+      }
+      .g3-29 {
+        opacity: .42;
+      }
+      .g3-30 {
+        opacity: .77;
+      }
+      .g3-33 {
+        opacity: .5;
+      }
+      .g3-31 {
+        opacity: .26;
+      }
+      .g3-32 {
+        opacity: .65;
+      }
+    </style>
+  </defs>
+  <g class="g3-33">
+    <path class="g3-6" d="M548.54,39.02H45.24c0,133.43,53.06,261.53,147.41,355.88,94.35,94.35,222.45,147.41,355.88,147.41V39.02Z"/>
+    <path class="g3-15" d="M548.53,527.67V39.02H59.89c0,129.55,51.52,253.92,143.12,345.52,91.6,91.6,215.98,143.12,345.52,143.12Z"/>
+    <path class="g3-10" d="M548.53,513.02V39.03H74.54c0,125.66,49.97,246.31,138.83,335.16,88.86,88.86,209.5,138.83,335.16,138.83Z"/>
+    <path class="g3-4" d="M548.53,498.37V39.04H89.19c0,121.78,48.43,238.69,134.54,324.8s203.02,134.54,324.8,134.54Z"/>
+    <path class="g3-13" d="M548.53,483.73V39.04H103.84c0,117.89,46.88,231.08,130.25,314.44s196.55,130.25,314.44,130.25Z"/>
+    <path class="g3-28" d="M548.52,469.08V39.05H118.49c0,114.01,45.34,223.46,125.95,304.08,80.62,80.62,190.07,125.95,304.08,125.95Z"/>
+    <path class="g3-22" d="M548.52,454.43V39.05H133.14c0,110.12,43.79,215.85,121.66,293.72,77.87,77.87,183.59,121.66,293.72,121.66Z"/>
+    <path class="g3-30" d="M548.52,439.79V39.06H147.79c0,106.24,42.25,208.24,117.37,283.36,75.12,75.12,177.12,117.37,283.36,117.37Z"/>
+    <path class="g3-16" d="M548.51,425.14V39.06H162.44c0,102.35,40.7,200.62,113.08,273,72.38,72.38,170.64,113.08,273,113.08Z"/>
+    <path class="g3-5" d="M548.51,410.49V39.07H177.09c0,98.47,39.16,193.01,108.79,262.64,69.63,69.63,164.17,108.79,262.64,108.79Z"/>
+    <path class="g3-1" d="M548.51,395.84V39.08H191.74c0,94.58,37.61,185.39,104.5,252.27,66.88,66.88,157.69,104.5,252.27,104.5Z"/>
+    <path class="g3-32" d="M548.51,381.2V39.08H206.39c0,90.7,36.07,177.78,100.2,241.91s151.21,100.2,241.91,100.2Z"/>
+    <path class="g3-17" d="M548.5,366.55V39.09H221.04c0,86.82,34.52,170.16,95.91,231.55,61.39,61.39,144.74,95.91,231.55,95.91Z"/>
+    <path class="g3-18" d="M548.5,351.9V39.09H235.69c0,82.93,32.98,162.55,91.62,221.19,58.64,58.64,138.26,91.62,221.19,91.62Z"/>
+    <path class="g3-20" d="M548.5,337.26V39.1H250.34c0,79.05,31.43,154.94,87.33,210.83,55.89,55.89,131.78,87.33,210.83,87.33Z"/>
+    <path class="g3-7" d="M548.49,322.61V39.1h-283.51c0,75.16,29.89,147.32,83.04,200.47,53.15,53.15,125.31,83.04,200.47,83.04Z"/>
+    <path class="g3-24" d="M548.49,307.96V39.11h-268.85c0,71.28,28.34,139.71,78.75,190.11,50.4,50.4,118.83,78.75,190.11,78.75Z"/>
+    <path class="g3-3" d="M548.49,293.32V39.11h-254.2c0,67.39,26.8,132.09,74.45,179.75,47.65,47.65,112.35,74.45,179.75,74.45Z"/>
+    <path class="g3-29" d="M548.49,278.67V39.12h-239.55c0,63.51,25.26,124.48,70.16,169.39s105.88,70.16,169.39,70.16Z"/>
+    <path class="g3-14" d="M548.48,264.02V39.13h-224.9c0,59.62,23.71,116.87,65.87,159.03,42.16,42.16,99.4,65.87,159.03,65.87Z"/>
+    <path class="g3-11" d="M548.48,249.37V39.13h-210.24c0,55.74,22.17,109.25,61.58,148.66s92.93,61.58,148.66,61.58Z"/>
+    <path class="g3-27" d="M548.48,234.73V39.14h-195.59c0,51.85,20.62,101.64,57.29,138.3,36.67,36.67,86.45,57.29,138.3,57.29Z"/>
+    <path class="g3-19" d="M548.47,220.08V39.14h-180.94c0,47.97,19.08,94.02,53,127.94,33.92,33.92,79.97,53,127.94,53Z"/>
+    <path class="g3-31" d="M548.47,205.43V39.15h-166.28c0,44.08,17.53,86.41,48.7,117.58,31.17,31.17,73.5,48.7,117.58,48.7Z"/>
+    <path class="g3-21" d="M548.47,190.79V39.15h-151.63c0,40.2,15.99,78.79,44.41,107.22,28.43,28.43,67.02,44.41,107.22,44.41Z"/>
+    <path class="g3-25" d="M548.47,176.14V39.16h-136.98c0,36.32,14.44,71.18,40.12,96.86,25.68,25.68,60.54,40.12,96.86,40.12Z"/>
+    <path class="g3-23" d="M548.46,161.49V39.17h-122.33c0,32.43,12.9,63.57,35.83,86.5,22.93,22.93,54.07,35.83,86.5,35.83Z"/>
+    <path class="g3-8" d="M548.46,146.85V39.17h-107.67c0,28.55,11.35,55.95,31.54,76.14,20.19,20.19,47.59,31.54,76.14,31.54Z"/>
+    <path class="g3-12" d="M548.46,132.2V39.18h-93.02c0,24.66,9.81,48.34,27.25,65.78,17.44,17.44,41.11,27.25,65.78,27.25Z"/>
+    <path class="g3-26" d="M548.45,117.55V39.18h-78.37c0,20.78,8.26,40.72,22.95,55.42,14.69,14.69,34.64,22.95,55.42,22.95Z"/>
+    <path class="g3-9" d="M548.45,102.9v-63.72h-63.72c0,16.89,6.72,33.11,18.66,45.05,11.94,11.94,28.16,18.66,45.05,18.66Z"/>
+    <path class="g3-2" d="M548.45,39.19h-49.06c0,13.01,5.17,25.5,14.37,34.69,9.2,9.2,21.69,14.37,34.69,14.37v-49.06Z"/>
+  </g>
+</svg></div>
+  <div class="cv-band"><div class="nm">Consultoria</div><div class="logo logo-ink" style="width:26.6mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
   <defs>
     <style>
       .lg-1 {
@@ -697,9 +513,75 @@ table.tb{width:100%;border-collapse:collapse;font-size:8.2pt}
     <path class="lg-1" d="M919.15,119.67v-26.42h66.06c13.21,0,21.25-7.75,21.25-19.53s-7.75-19.53-21.25-19.53h-63.19v99.66h-27V26.9h90.19c30.16,0,47.68,17.81,47.68,45.95s-17.52,46.82-47.68,46.82h-66.06Z"/>
   </g>
   <path class="lg-1" d="M390.68,213.59h313.06v11.2h-301.86c-6.03,0-11.2-4.88-11.2-11.2Z"/>
-</svg></div>
+</svg></div></div>
+  <div class="cv-block">
+    <div class="rule"></div>
+    <h1 class="cv-t"><span class="lt"><span class="ph pronto" data-campo="capa_titulo_1" title="Primeira parte do título, em peso leve">Apresentação</span> </span><span class="ph pronto" data-campo="capa_titulo_2" title="Segunda parte do título, em negrito">Especial</span></h1>
+    <div class="cv-sub"><span class="ph pronto" data-campo="capa_subtitulo" title="Uma linha sob o título">O assunto desta&nbsp;apresentação</span></div>
+  </div>
+  <div class="cv-foot"><div class="cf">DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</div><div class="id"><div><span class="ph" data-campo="nome_cliente">{{nome_cliente}}</span>,&nbsp;Consultoria</div><div>Consultor(a): <span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span></div><div><span class="ph" data-campo="capa_linha_livre" title="Uma linha a mais na capa, se precisar; em branco, some">{{capa_linha_livre}}</span></div><div><span class="ph" data-campo="data_documento">{{data_documento}}</span></div></div></div>
+</section>
+<section class="slide">
+  
+  <div class="in">
+    <header class="pg-head">
+      <div class="sec">Avisos</div>
+      <div class="rt"><div class="dt"><span class="ph" data-campo="data_documento">{{data_documento}}</span></div><div class="logo logo-ink" style="width:24.0mm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1044.44 274.67">
+  <defs>
+    <style>
+      .lg-1 {
+        fill: #fff;
+      }
+      .lg-2 {
+        isolation: isolate;
+      }
+    </style>
+  </defs>
+  <g class="lg-2">
+    <g class="lg-2">
+      <path class="lg-1" d="M749.7,247.77c-7.18,0-12.64-2.01-16.08-6.03-3.45-4.02-5.46-9.77-5.46-17.23v-12.64c0-7.47,1.72-12.92,5.46-16.95,3.45-4.02,8.9-6.03,16.08-6.03s4.31,0,6.03.57c1.72.29,3.45.86,4.88,1.44s2.58,1.15,3.73,2.01l.57,8.04c-1.72-1.15-3.73-2.3-6.03-3.16s-4.88-1.44-8.04-1.44c-4.6,0-8.04,1.44-10.34,4.02-2.3,2.58-3.45,6.61-3.45,11.49v12.06c0,4.88,1.15,8.62,3.45,11.49,2.3,2.87,5.74,4.02,10.63,4.02s5.74-.57,8.04-1.44,4.31-2.01,6.32-3.16l-.57,8.33c-1.15.57-2.3,1.44-3.73,2.01s-3.16,1.15-5.17,1.44-4.02.57-6.32.57v.57h0Z"/>
+    </g>
+    <g class="lg-2">
+      <path class="lg-1" d="M772.1,246.62l17.23-56.58h13.79l17.23,56.58h-8.9l-14.65-50.55h-1.15l-14.65,50.55h-8.9,0ZM783.3,230.82v-7.47h25.56v7.47h-25.56Z"/>
+      <path class="lg-1" d="M830.4,246.62v-56.58h8.62v56.58h-8.62ZM836.15,228.52v-7.47h15.51c3.45,0,6.03-.86,7.75-2.58s2.3-4.31,2.3-7.18v-3.73c0-3.16-.86-5.74-2.3-7.47s-4.02-2.58-7.75-2.58h-15.8v-7.18h15.8c6.61,0,11.2,1.44,14.36,4.6,3.16,3.16,4.6,7.18,4.6,12.64v4.31c0,5.46-1.44,9.48-4.6,12.64s-7.75,4.6-14.36,4.6h-15.8l.29-.57Z"/>
+      <path class="lg-1" d="M891.29,246.62h-8.9v-56.58h8.9v56.58Z"/>
+    </g>
+    <g class="lg-2">
+      <path class="lg-1" d="M899.33,197.5v-7.47h42.22v7.47h-42.22ZM915.99,246.62v-54.86h8.9v54.86h-8.9Z"/>
+    </g>
+    <g class="lg-2">
+      <path class="lg-1" d="M939.83,246.62l17.23-56.58h13.79l17.23,56.58h-8.9l-14.65-50.55h-1.15l-14.65,50.55h-8.9,0ZM951.32,230.82v-7.47h25.56v7.47h-25.56Z"/>
+      <path class="lg-1" d="M1007.33,246.62h-8.9v-56.58h8.9v56.58ZM1003.31,239.15h29.58v7.47h-29.58v-7.47Z"/>
+    </g>
+  </g>
+  <path class="lg-1" d="M326.05,109.33C243.62,2.77,109.78,2.77,27.35,109.33l-15.8,20.39,15.8,20.39c82.43,106.56,216.27,106.56,298.7,0l15.8-20.39-15.8-20.39ZM239.03,128c.57,16.37-5.17,31.88-16.37,43.94-11.2,12.06-26.42,18.96-42.79,19.53h-2.3c-15.51,0-30.44-5.74-41.65-16.37-9.19-8.33-15.22-19.24-18.09-31.31-.29-1.44.57-2.87,2.01-3.16.57,0,1.44,0,2.01.29s1.15.86,1.15,1.72c2.58,10.91,8.04,20.97,16.37,28.72,10.91,10.05,25.27,15.51,40.21,14.94,14.94-.57,28.72-6.89,39.06-17.81,10.05-10.91,15.51-25.27,14.94-40.21-.57-14.94-6.89-28.72-17.81-38.77-10.91-10.05-24.99-15.51-40.21-14.94-14.94.57-28.72,6.89-39.06,17.81-2.58,2.58-4.6,5.46-6.61,8.62-.86,1.15-2.58,1.72-3.73.86-.57-.29-1.15-.86-1.15-1.72,0-.57,0-1.44.29-2.01,2.01-3.45,4.6-6.61,7.18-9.48,11.2-12.06,26.42-18.96,42.79-19.53,16.37-.57,31.88,5.17,43.94,16.37,12.06,11.2,18.96,26.42,19.53,42.79h0l.29-.29h0ZM192.21,124.84c3.45,0,6.32-1.72,7.75-4.6,1.44,3.16,2.3,6.32,2.3,10.05,0,13.21-10.63,23.84-23.84,23.84s-23.84-10.63-23.84-23.84,10.63-23.84,23.84-23.84,6.61.57,9.48,2.01c-2.58,1.44-4.31,4.31-4.31,7.75,0,4.88,4.02,8.9,8.9,8.62,0,0-.29,0-.29,0ZM194.22,109.9c.57,0,.86,0,1.44.57v2.3s-.57-.29-1.15-.57-1.15,0-1.72,0h-1.44c-.29,0,0,0,0,.29h0v.29l.57.29s.57,0,1.15.29c.57,0,1.15.57,1.72.57s.86.57,1.15.86.29.86.29,1.44h0c0,1.15-.29,2.01-.86,2.3-.29.29-1.15.57-1.72.57v1.44h-2.3v-1.44h-2.3v-2.58s.57.29,1.15.57h2.87c.19,0,.29-.19.29-.57h0v-.57l-.57-.29c-.57-.29-.57,0-.86-.29-.57,0-1.15-.57-1.72-.57s-.86-.57-1.15-.86-.29-.86-.29-1.44h0c0-1.15.29-1.72.86-2.3.57-.29.86-.57,1.72-.57v-1.44h2.3v1.44h.57s0,.29,0,.29ZM184.17,92.67c-10.05-1.15-20.1,1.72-27.86,7.75-8.04,6.32-12.92,15.22-14.07,25.27-1.15,10.05,1.72,20.1,8.04,27.86,6.32,7.75,15.22,12.92,25.27,14.07,7.75.86,15.51-.57,22.4-4.31,6.61-3.73,12.06-9.19,15.8-15.8.57-1.44,2.3-1.72,3.73-1.15.57.29,1.15.86,1.44,1.72s0,1.44,0,2.01c-4.02,7.75-10.34,14.07-17.81,18.09-6.32,3.45-13.5,5.17-20.39,5.17s-3.45,0-5.17-.29c-11.49-1.44-21.83-7.18-29.01-16.37-7.18-9.19-10.34-20.39-9.19-31.88,1.44-11.49,7.18-21.83,16.37-29.01s20.39-10.34,31.88-8.9c16.08,2.01,29.87,12.64,35.61,27.86v2.01c0,.57-.86,1.15-1.44,1.44-1.44.57-2.87,0-3.45-1.72-5.17-13.5-16.95-22.69-31.02-24.41h0l-1.15.57h0ZM239.6,191.76c-16.37,16.37-38.2,25.27-61.46,25.27s-45.09-8.9-61.46-25.27-25.27-38.2-25.27-61.46,8.9-45.09,25.27-61.46c16.37-16.37,38.2-25.27,61.46-25.27s6.61,0,9.77.57c.57,0,1.44.57,1.72.86.57.57.57,1.44.57,2.01s-.57,1.44-.86,1.72-1.15.57-2.01.57c-3.16-.29-6.32-.57-9.19-.57-21.83,0-42.22,8.62-57.44,23.84-15.22,15.22-23.84,35.9-23.84,57.44s8.62,42.22,23.84,57.44c15.22,15.22,35.9,23.84,57.44,23.84s42.22-8.33,57.44-23.84c15.22-15.22,23.84-35.9,23.84-57.44s-5.46-34.47-16.08-48.54c-.57-.57-.57-1.44-.57-2.01s.57-1.44,1.15-1.72c.57-.57,1.15-.57,2.01-.57.57,0,1.44.57,1.72,1.15,11.2,14.94,17.23,33.03,17.23,51.99s-8.9,45.09-25.27,61.46h0Z"/>
+  <g>
+    <path class="lg-1" d="M531.99,153.85l-17.81-30.16h0l-12.35-21.25-23.26-39.06-53.13,90.19h-31.02l66.92-111.44c3.16-5.17,8.9-8.33,14.94-8.33h16.37l72.09,120.06h-32.74Z"/>
+    <path class="lg-1" d="M676.17,26.9h26.42v70.94c0,39.35-19.82,57.73-69.79,57.73s-69.79-18.38-69.79-57.73V26.9h28.15v70.94c0,22.4,9.77,31.02,42.51,31.02s42.22-8.62,42.22-31.02V26.9h.29,0Z"/>
+    <path class="lg-1" d="M712.65,26.9h33.03l53.13,90.76,52.85-90.76h31.31l-72.09,120.06h-26.14l-72.09-120.06h0Z"/>
+    <path class="lg-1" d="M919.15,119.67v-26.42h66.06c13.21,0,21.25-7.75,21.25-19.53s-7.75-19.53-21.25-19.53h-63.19v99.66h-27V26.9h90.19c30.16,0,47.68,17.81,47.68,45.95s-17.52,46.82-47.68,46.82h-66.06Z"/>
+  </g>
+  <path class="lg-1" d="M390.68,213.59h313.06v11.2h-301.86c-6.03,0-11.2-4.88-11.2-11.2Z"/>
+</svg></div></div>
+    </header>
+    <div class="pg-body">
+<h1 class="t">Notas e&nbsp;avisos</h1>
+<p class="legal"><span class="ph" data-campo="disclaimer_regulatorio" title="Texto aprovado pelo compliance para este segmento">{{disclaimer_regulatorio}}</span></p>
+<div class="cols2" style="margin-top:6mm">
+  <div>
+    <p class="legal">Rentabilidade passada não representa garantia de rentabilidade futura. Os investimentos apresentados podem não contar com garantia do Fundo Garantidor de Créditos (FGC). Antes de investir, leia os documentos oficiais de cada&nbsp;produto.</p>
+  </div>
+  <div>
+    <p class="legal">Material destinado exclusivamente a <span class="ph" data-campo="nome_cliente">{{nome_cliente}}</span>. Não constitui oferta, recomendação pública ou solicitação de compra ou venda de ativos. É proibida a reprodução ou o compartilhamento total ou parcial sem autorização prévia e por escrito. <span class="ph" data-campo="razao_social">{{razao_social}}</span>, CNPJ <span class="ph" data-campo="cnpj">{{cnpj}}</span>. Ouvidoria: <span class="ph" data-campo="canal_ouvidoria" data-link="auto">{{canal_ouvidoria}}</span>.</p>
+  </div>
+</div>
+<div class="dl" style="margin-top:6mm">
+  <dt>Responsável</dt><dd><span class="ph" data-campo="nome_responsavel">{{nome_responsavel}}</span>, <span class="ph" data-campo="registro_cvm_ou_ancord">{{registro_cvm_ou_ancord}}</span></dd>
+  <dt>E-mail</dt><dd><span class="ph" data-campo="email_contato" data-link="mailto">{{email_contato}}</span></dd>
+</div>
     </div>
-  </footer>
+    <footer class="pg-foot"><span class="no">01</span><span>DOCUMENTO CONFIDENCIAL. PROIBIDO O&nbsp;COMPARTILHAMENTO</span></footer>
+  </div>
 </section>
 </body>
 </html>

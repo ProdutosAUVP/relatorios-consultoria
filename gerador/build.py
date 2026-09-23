@@ -19,6 +19,7 @@ import d_carta_apresentacao
 import d_consultor
 import d_consultor_simples
 import d_diagnostico
+import d_livre
 import d_macro
 import d_mensal
 import d_mensal_apresentacao
@@ -57,6 +58,12 @@ DOCUMENTOS = [
     dict(chave="apresentacao-consultor-simples", formato="a4",
          titulo="Apresentação do consultor — %s", builder=d_consultor_simples.build,
          variantes=d_consultor_simples.variantes(THEMES, SEGMENTOS)),
+    # O documento em branco, para o construtor da ferramenta: capa e fecho, e o
+    # meio se monta com os blocos. Um por formato, porque o formato é a capa.
+    dict(chave="documento-livre", formato="a4",
+         titulo="Documento livre — %s", builder=d_livre.build),
+    dict(chave="apresentacao-livre", formato="slide",
+         titulo="Apresentação livre — %s", builder=d_livre.build_slide),
 ]
 
 

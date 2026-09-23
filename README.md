@@ -193,7 +193,12 @@ tabelas do modelo aparecem como grade — cabeçalho, uma linha por linha, o ró
 o modelo o tem — e não como lista de campos soltos; a linha de total tem um botão de soma
 por coluna numérica, a pedido e não automático, porque nem toda coluna se soma.
 
-O diagnóstico e o relatório macroeconômico aceitam **páginas montadas**: uma página em
+Há também dois **documentos em branco** — um A4, com a capa de relatório, e um 16:9, com a
+capa de apresentação. Cada um nasce só com a capa e a página de avisos, e tudo o que está
+escrito na capa é campo, já preenchido com um texto padrão que se troca à vontade; o meio
+se monta com os blocos. É o caminho para um documento que ainda não existe.
+
+O diagnóstico, o relatório macroeconômico e os documentos em branco aceitam **páginas montadas**: uma página em
 branco no desenho do documento, onde se empilham blocos prontos — título, subtítulo,
 parágrafo, texto em duas colunas, tópicos, destaque, números, linha do tempo, tabela (de
 quatro ou de seis colunas; linha e coluna em branco não saem), gráficos de rosca, rosca

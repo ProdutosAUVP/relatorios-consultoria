@@ -26,56 +26,8 @@
    "chave": "apresentacao-consultor",
    "nome": "Apresentação do consultor",
    "formato": "a4",
-   "descricao": "Perfil do consultor, o plano e a AUVP Capital.",
+   "descricao": "Perfil do consultor, o plano Me Diz o Que Fazer e a AUVP Capital. Só existe para esse plano.",
    "variantes": [
-    {
-     "sufixo": "alta-renda",
-     "rotulo": "Alta Renda",
-     "arquivo": "apresentacao-consultor-alta-renda.html",
-     "paginas": 1,
-     "campos": 63,
-     "imagens": 1
-    },
-    {
-     "sufixo": "alta-renda-sem-data",
-     "rotulo": "Alta Renda, sem data",
-     "arquivo": "apresentacao-consultor-alta-renda-sem-data.html",
-     "paginas": 1,
-     "campos": 62,
-     "imagens": 1
-    },
-    {
-     "sufixo": "private",
-     "rotulo": "Private Banking",
-     "arquivo": "apresentacao-consultor-private.html",
-     "paginas": 1,
-     "campos": 63,
-     "imagens": 1
-    },
-    {
-     "sufixo": "private-sem-data",
-     "rotulo": "Private Banking, sem data",
-     "arquivo": "apresentacao-consultor-private-sem-data.html",
-     "paginas": 1,
-     "campos": 62,
-     "imagens": 1
-    },
-    {
-     "sufixo": "assessoria",
-     "rotulo": "Assessoria",
-     "arquivo": "apresentacao-consultor-assessoria.html",
-     "paginas": 1,
-     "campos": 63,
-     "imagens": 1
-    },
-    {
-     "sufixo": "assessoria-sem-data",
-     "rotulo": "Assessoria, sem data",
-     "arquivo": "apresentacao-consultor-assessoria-sem-data.html",
-     "paginas": 1,
-     "campos": 62,
-     "imagens": 1
-    },
     {
      "sufixo": "me-diz-o-que-fazer",
      "rotulo": "Me Diz o Que Fazer (básico)",
@@ -167,6 +119,47 @@
    ]
   },
   {
+   "chave": "apresentacao-livre",
+   "nome": "Apresentação em branco (16:9)",
+   "formato": "slide",
+   "blocos": true,
+   "descricao": "Capa de apresentação e slide de avisos; os slides do meio você monta com os blocos.",
+   "variantes": [
+    {
+     "sufixo": "consultoria",
+     "rotulo": "Consultoria",
+     "arquivo": "apresentacao-livre-consultoria.html",
+     "paginas": 2,
+     "campos": 13,
+     "imagens": 0
+    },
+    {
+     "sufixo": "alta-renda",
+     "rotulo": "Alta Renda",
+     "arquivo": "apresentacao-livre-alta-renda.html",
+     "paginas": 2,
+     "campos": 13,
+     "imagens": 0
+    },
+    {
+     "sufixo": "private",
+     "rotulo": "Private Banking",
+     "arquivo": "apresentacao-livre-private.html",
+     "paginas": 2,
+     "campos": 13,
+     "imagens": 0
+    },
+    {
+     "sufixo": "assessoria",
+     "rotulo": "Assessoria",
+     "arquivo": "apresentacao-livre-assessoria.html",
+     "paginas": 2,
+     "campos": 13,
+     "imagens": 0
+    }
+   ]
+  },
+  {
    "chave": "carta-apresentacao",
    "nome": "Carta de apresentação",
    "formato": "slide",
@@ -244,6 +237,47 @@
      "paginas": 10,
      "campos": 327,
      "imagens": 3
+    }
+   ]
+  },
+  {
+   "chave": "documento-livre",
+   "nome": "Documento em branco (A4)",
+   "formato": "a4",
+   "blocos": true,
+   "descricao": "Capa de relatório e página de avisos; as páginas do meio você monta com os blocos.",
+   "variantes": [
+    {
+     "sufixo": "consultoria",
+     "rotulo": "Consultoria",
+     "arquivo": "documento-livre-consultoria.html",
+     "paginas": 2,
+     "campos": 15,
+     "imagens": 0
+    },
+    {
+     "sufixo": "alta-renda",
+     "rotulo": "Alta Renda",
+     "arquivo": "documento-livre-alta-renda.html",
+     "paginas": 2,
+     "campos": 15,
+     "imagens": 0
+    },
+    {
+     "sufixo": "private",
+     "rotulo": "Private Banking",
+     "arquivo": "documento-livre-private.html",
+     "paginas": 2,
+     "campos": 15,
+     "imagens": 0
+    },
+    {
+     "sufixo": "assessoria",
+     "rotulo": "Assessoria",
+     "arquivo": "documento-livre-assessoria.html",
+     "paginas": 2,
+     "campos": 15,
+     "imagens": 0
     }
    ]
   },

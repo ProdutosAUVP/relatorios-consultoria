@@ -272,6 +272,16 @@ main { padding: 28px 24px 64px; }
   border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--muted);
   color: var(--muted-foreground); cursor: pointer; }
 .tabela .soma:hover { color: var(--foreground); background: var(--background); }
+/* Tirar a linha: preso à direita, para continuar à vista quando a tabela rola. */
+/* `right` desconta o padding da `.rolagem`: o sticky se prende à caixa de
+   conteúdo, e com `right:0` sobrava uma faixa do campo à direita do botão. */
+.tabela .tira { position: sticky; right: -12px; z-index: 1; width: 30px; padding-right: 8px;
+  background: var(--background); box-shadow: -4px 0 0 var(--background); }
+.tabela td.tira button { width: 26px; height: 32px; padding: 0; font-size: 15px; line-height: 1;
+  border: 1px solid transparent; border-radius: var(--radius-sm); background: none;
+  color: var(--muted-foreground); cursor: pointer; }
+.tabela td.tira button:hover { color: var(--destructive); border-color: var(--border); background: var(--muted); }
+.tabela > .acoes { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
 
 /* A tabelinha de um gráfico. Substituiu o campo de imagem nos espaços de
    gráfico: o consultor digita rótulo e valor e o desenho sai no documento.

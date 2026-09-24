@@ -26,6 +26,7 @@ const estado = {
   paginas: [],       // páginas montadas por quem preenche: [{id, depois, secao, blocos}]
   proximoBloco: 1,   // numera as instâncias de bloco, para os campos não colidirem
   fora: new Set(),   // páginas tiradas do documento
+  linhas: {},        // linhas de tabela tiradas e acrescentadas: chave -> {fora: [i], extra: [n]}
   estouro: [],       // páginas cujo conteúdo não coube: [{no, secao, sobra}]
   pagina: 1,
   tela: 'produto',
@@ -217,7 +218,7 @@ function salvar() {
     // de números, não megabytes de foto, e perder a tabela de um gráfico é tão
     // ruim quanto perder um parágrafo.
     localStorage.setItem(chaveArmazem(), JSON.stringify({
-      valores: estado.valores, graficos: estado.graficos, fora: [...estado.fora],
+      valores: estado.valores, graficos: estado.graficos, fora: [...estado.fora], linhas: estado.linhas,
       paginas: estado.paginas, proximoBloco: estado.proximoBloco,
     }));
     lembrar();
@@ -240,6 +241,7 @@ async function carregar() {
     estado.paginas = (d && d.paginas) || [];
     estado.proximoBloco = (d && d.proximoBloco) || 1;
     estado.fora = new Set((d && d.fora) || []);
+    estado.linhas = (d && d.linhas) || {};
     // Rascunho salvo antes de as imagens irem para o IndexedDB.
     if (d && d.imagens) estado.imagens = d.imagens;
   } catch (e) { /* rascunho corrompido: começa vazio */ }
@@ -355,6 +357,7 @@ async function escolherVariante(v) {
     estado.paginas = [];
     estado.proximoBloco = 1;
     estado.fora = new Set();
+    estado.linhas = {};
     estado.pagina = 1;
     if (v.doc ? v.doc.blocos : estado.documento.blocos) await carregarBlocos();
     await carregar();
@@ -760,22 +763,214 @@ function campoTabela(tab, campos) {
   const cab = (t) => t.replace(/\{\{([a-z0-9_]+)\}\}/g, (_, n) => estado.valores[n] || n);
   const celula = (c, i, rodape) => {
     if (!c.c) return `<td class="rotulo">${escapa(c.t)}</td>`;
-    const meta = campos[c.c] || { rotulo: c.c };
+    const meta = campos[c.c] || metaDe(c.c);
     const tipo = tipoDe(c.c, meta);
     const soma = rodape && /^(dinheiro|percentual|pp|numero)$/.test(tipo)
       ? `<button type="button" class="soma" data-soma="${c.c}" data-coluna="${i}" title="Somar a coluna">Σ</button>` : '';
     const entrada = entradaDe(c.c, meta, true);
     return `<td class="t-${tipo}">${soma ? `<span class="com-soma">${entrada}${soma}</span>` : entrada}</td>`;
   };
-  const linha = (l, rodape) => `<tr>${l.map((c, i) => celula(c, i, rodape)).join('')}</tr>`;
+  // Só as tabelas do modelo mexem nas linhas; as dos blocos do construtor já
+  // perdem a linha em branco na exportação e não têm onde crescer.
+  const f = tab.forma;
+  const tira = (k) => (f ? `<td class="tira"><button type="button" data-linha-fora="${escapa(f.chave)}"
+    data-id="${tab.ids[k]}" title="Tirar esta linha do documento">×</button></td>` : '');
+  const linha = (l, rodape, k) => `<tr>${l.map((c, i) => celula(c, i, rodape)).join('')}${
+    f ? (rodape ? '<td class="tira"></td>' : tira(k)) : ''}</tr>`;
   const nomes = [...tab.linhas, ...tab.rodape].flat().filter((c) => c.c).map((c) => c.c);
-  return `<div class="tabela" data-nome="${nomes.join(' ')}">
+  const tiradas = f ? (estado.linhas[f.chave]?.fora || []).length : 0;
+  const acoes = f && (f.numerada || tiradas) ? `<div class="acoes">
+      ${f.numerada ? `<button type="button" class="btn neutro pequeno" data-linha-mais="${escapa(f.chave)}">Mais uma linha</button>` : ''}
+      ${tiradas ? `<button type="button" class="btn neutro pequeno" data-linhas-volta="${escapa(f.chave)}">`
+        + `Voltar ${tiradas === 1 ? 'a linha tirada' : `as ${tiradas} linhas tiradas`}</button>` : ''}
+    </div>` : '';
+  return `<div class="tabela" data-nome="${nomes.join(' ')}"${f ? ` data-tabela="${escapa(f.chave)}"` : ''}>
     <div class="nome">${escapa(tab.titulo || 'Tabela')}</div>
     <div class="rolagem"><table class="dados">
-      <thead><tr>${tab.cabecalhos.map((h) => `<th>${escapa(cab(h))}</th>`).join('')}</tr></thead>
-      <tbody>${tab.linhas.map((l) => linha(l, false)).join('')}</tbody>
+      <thead><tr>${tab.cabecalhos.map((h) => `<th>${escapa(cab(h))}</th>`).join('')}${f ? '<th class="tira"></th>' : ''}</tr></thead>
+      <tbody>${tab.linhas.map((l, k) => linha(l, false, k)).join('')}</tbody>
       ${tab.rodape.length ? `<tfoot>${tab.rodape.map((l) => linha(l, true)).join('')}</tfoot>` : ''}
-    </table></div></div>`;
+    </table></div>${acoes}</div>`;
+}
+
+/* Linhas de tabela: tirar e acrescentar.
+ *
+ *  O gerador fecha cada tabela num número de linhas — sete classes de ativo,
+ *  cinco emissores —, e a carteira do cliente raramente tem esse número. Toda
+ *  linha do corpo pode sair; e a tabela cujas linhas são numeradas
+ *  (`at_1_classe`, `at_2_classe`…) ganha linhas novas, com o número seguinte e
+ *  os mesmos tipos de campo. No documento, a linha nova é cópia da última do
+ *  modelo com os campos renumerados — nada aqui redesenha a tabela.
+ *
+ *  A tabela de rótulo fixo por linha — prazo, moeda, as classes da carteira
+ *  proposta — só perde linhas: uma "Moeda 5" não quer dizer nada.
+ *
+ *  A chave de uma tabela é o primeiro campo dela, que não se repete em outra. */
+const NUMERADO = /^([a-z][a-z0-9]*)_(\d+)_([a-z0-9_]+)$/;
+const FORMAS = new WeakMap();
+
+function forma(t) {
+  if (FORMAS.has(t)) return FORMAS.get(t);
+  const chave = t.linhas.flat().find((c) => c.c)?.c;
+  const partes = t.linhas.map((l) => l.map((c) => (c.c ? c.c.match(NUMERADO) : null)));
+  const ns = partes.map((l) => l.find(Boolean)?.[2]);
+  const prefixo = partes[0]?.find(Boolean)?.[1];
+  const colunas = (t.linhas[0] || []).map((_, k) => t.linhas.map((l) => l[k]));
+  // Coluna de texto fixo só é aceita se diz o mesmo em toda linha, ou se diz o
+  // número da linha — o "#" dos objetivos. "Ações, Ações, FIIs" não é nenhum
+  // dos dois, e a linha nova não teria como saber o que escrever ali.
+  const numero = colunas.map((col) => !col[0]?.c && col.every((c, i) => c.t === ns[i]));
+  const numerada = !!(t.linhas.length && prefixo && ns.every(Boolean) && new Set(ns).size === ns.length
+    && colunas.every((col, k) => (col[0]?.c
+      ? col.every((c, i) => partes[i][k] && partes[i][k][1] === prefixo && partes[i][k][2] === ns[i]
+                            && partes[i][k][3] === partes[0][k][3])
+      : numero[k] || col.every((c) => !c.c && c.t === col[0].t))));
+  const f = { chave, numerada, prefixo, numero, numeros: ns.map(Number) };
+  FORMAS.set(t, f);
+  return f;
+}
+
+/** A linha `n` de uma tabela numerada, que o modelo não tem. */
+function linhaNova(t, n) {
+  const f = forma(t);
+  const ultima = t.linhas[t.linhas.length - 1];
+  return ultima.map((c, k) => {
+    if (!c.c) return { t: f.numero[k] ? String(n) : c.t };
+    const m = c.c.match(NUMERADO);
+    return { c: `${m[1]}_${n}_${m[3]}` };
+  });
+}
+
+const camposDaLinha = (l) => l.filter((c) => c.c).map((c) => c.c);
+
+/** As linhas que a tabela tem agora, com o id de cada uma: `m3` é a quarta
+ *  linha do modelo, `n8` a linha acrescentada de número 8. */
+function tabelaEfetiva(t) {
+  const f = forma(t);
+  const e = estado.linhas[f.chave] || {};
+  const fora = new Set(e.fora || []);
+  const linhas = [];
+  const ids = [];
+  t.linhas.forEach((l, i) => { if (!fora.has(i)) { linhas.push(l); ids.push('m' + i); } });
+  if (f.numerada) for (const n of e.extra || []) { linhas.push(linhaNova(t, n)); ids.push('n' + n); }
+  return { ...t, linhas, ids, forma: f, todos: [...t.linhas.flat(), ...t.rodape.flat(), ...linhas.flat()] };
+}
+
+const tabelaPorChave = (chave) => (estado.estrutura.tabelas || []).find((t) => forma(t).chave === chave);
+
+/** Os campos de uma página que estão no documento: sem os das linhas tiradas,
+ *  com os das acrescentadas. É o que as contagens e o aviso de exportação
+ *  cobram — campo de linha que saiu não é lacuna. */
+function camposEfetivos(pagina, nomes) {
+  const tirar = new Set();
+  const mais = [];
+  for (const t of (estado.estrutura.tabelas || []).filter((x) => x.pagina === pagina)) {
+    const f = forma(t);
+    const e = estado.linhas[f.chave];
+    if (!e) continue;
+    for (const i of e.fora || []) if (t.linhas[i]) camposDaLinha(t.linhas[i]).forEach((n) => tirar.add(n));
+    if (f.numerada) for (const n of e.extra || []) mais.push(...camposDaLinha(linhaNova(t, n)));
+  }
+  return [...nomes.filter((n) => !tirar.has(n)), ...mais];
+}
+
+/** O que se sabe de um campo. O de linha acrescentada não está no catálogo, e
+ *  herda o tipo, o exemplo e as opções do mesmo campo na última linha do modelo. */
+function metaDe(nome) {
+  const { campos } = estado.estrutura;
+  if (campos[nome]) return campos[nome];
+  const m = nome.match(NUMERADO);
+  if (m) {
+    for (const t of estado.estrutura.tabelas || []) {
+      const f = forma(t);
+      if (!f.numerada || f.prefixo !== m[1]) continue;
+      const base = campos[`${m[1]}_${f.numeros[f.numeros.length - 1]}_${m[3]}`];
+      if (base) return { ...base, rotulo: base.rotulo.replace(/\b\d+\b/, m[2]) };
+    }
+  }
+  return { rotulo: nome };
+}
+
+/** Redesenha só a grade de uma tabela: redesenhar o formulário inteiro
+ *  fecharia a seção em que se está trabalhando. */
+function redesenharTabela(chave) {
+  const t = tabelaPorChave(chave);
+  const el = $(`.tabela[data-tabela="${CSS.escape(chave)}"]`);
+  if (t && el) el.outerHTML = campoTabela(tabelaEfetiva(t), estado.estrutura.campos);
+  else telaPreencher();
+  salvar();
+  atualizarContagens();
+  renderizar();
+}
+
+function tirarLinha(chave, id) {
+  const t = tabelaPorChave(chave);
+  if (!t) return;
+  const e = estado.linhas[chave] || (estado.linhas[chave] = { fora: [], extra: [] });
+  const nova = id[0] === 'n';
+  const k = Number(id.slice(1));
+  const linha = nova ? linhaNova(t, k) : t.linhas[k];
+  const nomes = camposDaLinha(linha);
+  if (nomes.some((n) => (estado.valores[n] || '').trim())
+      && !confirm('Tirar esta linha e o que você escreveu nela?')) return;
+  // O campo do modelo fica vazio, e não apagado: vazio quer dizer "tirei de
+  // propósito", e o texto padrão não volta a ele por conta própria.
+  for (const n of nomes) { if (nova) delete estado.valores[n]; else estado.valores[n] = ''; }
+  if (nova) e.extra = (e.extra || []).filter((n) => n !== k);
+  else e.fora = [...new Set([...(e.fora || []), k])].sort((a, b) => a - b);
+  redesenharTabela(chave);
+}
+
+function maisLinha(chave) {
+  const t = tabelaPorChave(chave);
+  if (!t) return;
+  const e = estado.linhas[chave] || (estado.linhas[chave] = { fora: [], extra: [] });
+  e.extra = e.extra || [];
+  const n = Math.max(...forma(t).numeros, ...e.extra) + 1;
+  e.extra.push(n);
+  redesenharTabela(chave);
+  // Quem pediu a linha quer escrever nela.
+  $(`[data-campo="${CSS.escape(camposDaLinha(linhaNova(t, n))[0])}"]`)?.focus();
+}
+
+function voltarLinhas(chave) {
+  const e = estado.linhas[chave];
+  if (e) e.fora = [];
+  redesenharTabela(chave);
+}
+
+/** Aplica ao documento as linhas tiradas e acrescentadas. A linha nova é a
+ *  última do modelo clonada, com o número trocado no nome de cada campo e na
+ *  coluna que mostra o número da linha. */
+function aplicarLinhas(doc) {
+  for (const t of estado.estrutura.tabelas || []) {
+    const f = forma(t);
+    const e = estado.linhas[f.chave];
+    if (!e || (!(e.fora || []).length && !(e.extra || []).length)) continue;
+    const ancora = [...doc.querySelectorAll(`[data-campo="${CSS.escape(f.chave)}"]`)]
+      .find((s) => s.closest('tbody'));
+    const corpo = ancora?.closest('tbody');
+    if (!corpo) continue;
+    const trs = [...corpo.children];
+    if (trs.length !== t.linhas.length) continue;   // o modelo não é o que o catálogo descreve
+    const molde = trs[trs.length - 1];
+    if (f.numerada) {
+      for (const n of e.extra || []) {
+        const tr = molde.cloneNode(true);
+        for (const span of tr.querySelectorAll('[data-campo]')) {
+          const m = span.dataset.campo.match(NUMERADO);
+          if (!m) continue;
+          const nome = `${m[1]}_${n}_${m[3]}`;
+          span.dataset.campo = nome;
+          span.textContent = `{{${nome}}}`;
+          span.classList.remove('pronto');
+        }
+        [...tr.children].forEach((td, k) => { if (f.numero[k]) td.textContent = String(n); });
+        corpo.appendChild(tr);
+      }
+    }
+    for (const i of e.fora || []) trs[i]?.remove();
+  }
 }
 
 /** Os campos de uma página, na ordem do documento, com cada tabela entrando
@@ -784,13 +979,15 @@ function camposDaPagina(nomes, campos, pagina) {
   // Só as tabelas desta página. Um campo pode aparecer em duas — o patrimônio
   // total é KPI na página 3 e linha de total na 5 — e a tabela entra onde
   // está, não onde o campo apareceu primeiro.
-  const tabelas = (estado.estrutura.tabelas || []).filter((t) => t.pagina === pagina);
+  const tabelas = (estado.estrutura.tabelas || []).filter((t) => t.pagina === pagina).map(tabelaEfetiva);
   return camposEmOrdem(nomes, campos, tabelas);
 }
 
 function camposEmOrdem(nomes, campos, tabelas) {
   const de = new Map();
-  for (const t of tabelas) for (const c of [...t.linhas, ...t.rodape].flat()) if (c.c) de.set(c.c, t);
+  // `todos` inclui as linhas tiradas: a tabela continua entrando no lugar dela
+  // mesmo quando todas as linhas do modelo saíram.
+  for (const t of tabelas) for (const c of t.todos || [...t.linhas, ...t.rodape].flat()) if (c.c) de.set(c.c, t);
   const feitas = new Set();
   const partes = [];
   for (const n of nomes) {
@@ -970,9 +1167,10 @@ function atualizarContagens() {
   const { grupos, imagens } = estado.estrutura;
   const conta = new Map();
   for (const g of grupos) {
+    const nomes = camposEfetivos(g.pagina, g.campos);
     conta.set(g.pagina, {
-      total: g.campos.length,
-      feitos: g.campos.filter((n) => (estado.valores[n] || '').trim()).length,
+      total: nomes.length,
+      feitos: nomes.filter((n) => (estado.valores[n] || '').trim()).length,
     });
   }
   for (const im of imagens) {
@@ -1053,6 +1251,8 @@ function montar(modo) {
   inserirMontadas(doc, paginas, modo);
   paginas.forEach((p, i) => { if (!dentro(i + 1)) p.remove(); });
   renumerar(doc);
+  // Antes de preencher: a linha acrescentada traz campos novos para preencher.
+  aplicarLinhas(doc);
 
   const esvaziados = new Set();
   for (const span of doc.querySelectorAll('span.ph')) {
@@ -1208,9 +1408,7 @@ function inserirMontadas(doc, originais, modo = 'previa') {
     .sort((a, b) => b.depois - a.depois);
   for (const pg of pedidos) {
     const nova = molde.cloneNode(true);
-    // A marca é o que permite repaginá-la depois. Só as páginas montadas se
-    // dividem: as do modelo são desenho fechado, e quebrar uma tabela ao meio
-    // para caber deixaria o cabeçalho órfão numa página e os números na outra.
+    // A marca diz que a página é montada, e é por ela que a prévia a encontra.
     nova.classList.add('montada');
     nova.dataset.montada = pg.id;
     delete nova.dataset.original;   // é cópia do molde, não a página dele
@@ -1263,7 +1461,7 @@ function renumerar(doc) {
   });
 }
 
-/** Quebra em duas a página montada que não coube, e repete até caber.
+/** Quebra em duas a página que não coube, e repete até caber.
  *
  *  Precisa de um documento já diagramado: a conta é `scrollHeight` contra
  *  `clientHeight`, e num documento solto na memória não há nem um nem outro.
@@ -1274,25 +1472,60 @@ function renumerar(doc) {
  *  passa para a página seguinte. Ler `scrollHeight` a cada passo força o
  *  navegador a recalcular, então a medida acompanha a mudança.
  *
- *  Um bloco sozinho que não cabe não tem como ser dividido — uma tabela de
- *  quinze linhas é uma coisa só. Esse fica, e quem avisa é `conferirEstouro()`.
+ *  Vale para as páginas montadas e para as A4 do modelo. A página do modelo
+ *  tinha altura fechada, e isso engessava justamente o que se pode mexer: a
+ *  carteira de doze ativos, a tabela com as linhas acrescentadas, o parágrafo
+ *  mais longo. Agora o que não cabe continua na página seguinte, com o
+ *  cabeçalho da seção dizendo que é continuação. Slide e folha longa ficam de
+ *  fora: o slide é uma tela, e a folha longa já cresce com o conteúdo.
  *
- *  A guarda de 60 voltas existe para o caso de uma página em que nada couber:
- *  sem ela, o laço passaria o bloco adiante para sempre.
+ *  A tabela que não cabe se parte entre as linhas, com o cabeçalho repetido na
+ *  continuação e ao menos duas linhas de cada lado. O título de seção que
+ *  ficaria sozinho no pé da página desce com o que ele anuncia.
+ *
+ *  O que ainda assim não cabe — um parágrafo de uma página e meia — fica, e
+ *  quem avisa é `conferirEstouro()`. A guarda de 60 voltas existe para o caso
+ *  de uma página em que nada couber: sem ela, o laço passaria o bloco adiante
+ *  para sempre.
  */
+const estoura = (corpo) => corpo.scrollHeight - corpo.clientHeight > 1;
+
 function repaginar(doc) {
-  const fila = [...doc.querySelectorAll('.montada')];
+  const fila = [...doc.querySelectorAll('.page')].filter((pg) => !pg.classList.contains('longa')
+    && pg.querySelector('.pg-head') && pg.querySelector('.pg-body'));
   let guarda = 0;
   while (fila.length && guarda < 60) {
     guarda += 1;
     const pg = fila.shift();
     const corpo = pg.querySelector('.pg-body');
-    if (!corpo || corpo.scrollHeight - corpo.clientHeight <= 1) continue;
-    if (corpo.children.length <= 1) continue;
+    if (!corpo || !estoura(corpo)) continue;
 
     const nova = pg.cloneNode(true);
     const novoCorpo = nova.querySelector('.pg-body');
     novoCorpo.innerHTML = '';
+    // A cópia não é a página original do modelo: sem isto, "ir para a página
+    // 4" poderia cair na continuação.
+    delete nova.dataset.original;
+    nova.classList.add('continua');
+    while (corpo.children.length > 1 && estoura(corpo)) {
+      novoCorpo.prepend(corpo.lastElementChild);
+    }
+    // A tabela que desceu inteira talvez caiba em parte: volta, e desce só o
+    // que não coube. A que ficou sozinha e ainda estoura só tem essa saída.
+    const desceu = novoCorpo.firstElementChild;
+    if (desceu?.tagName === 'TABLE') {
+      corpo.append(desceu);
+      if (!partirTabela(desceu, novoCorpo)) novoCorpo.prepend(desceu);
+    } else if (corpo.children.length === 1 && corpo.firstElementChild.tagName === 'TABLE' && estoura(corpo)) {
+      partirTabela(corpo.firstElementChild, novoCorpo);
+    }
+    while (corpo.children.length > 1 && novoCorpo.children.length
+           && /^H[2-4]$/.test(corpo.lastElementChild.tagName)) {
+      novoCorpo.prepend(corpo.lastElementChild);
+    }
+    if (!novoCorpo.children.length) continue;
+    // O espaçador que abriria a continuação só empurra o conteúdo para baixo.
+    while (novoCorpo.firstElementChild?.matches('.gap, .esp')) novoCorpo.firstElementChild.remove();
     // A continuação diz que é continuação: quem lê o documento impresso vê duas
     // páginas com o mesmo título no cabeçalho e precisa saber que é a mesma
     // seção, e não um assunto repetido.
@@ -1300,13 +1533,41 @@ function repaginar(doc) {
     if (sec && !/, continuação$/.test(sec.textContent)) {
       sec.textContent = `${sec.textContent}, continuação`;
     }
-    while (corpo.children.length > 1 && corpo.scrollHeight - corpo.clientHeight > 1) {
-      novoCorpo.prepend(corpo.lastElementChild);
-    }
     pg.after(nova);
     fila.unshift(nova);   // a continuação também pode não caber
   }
   renumerar(doc);
+}
+
+/** Parte uma tabela entre as linhas: as do fim vão para uma cópia no começo
+ *  de `destino`, com o mesmo cabeçalho, e o total e a legenda vão junto com a
+ *  última parte. Devolve `false`, e deixa a tabela como estava, quando não
+ *  há como ficar com duas linhas de cada lado. */
+function partirTabela(tabela, destino) {
+  const corpo = tabela.parentElement;
+  const linhas = tabela.tBodies[0];
+  if (!linhas || linhas.rows.length < 4) return false;
+  const copia = tabela.cloneNode(true);
+  copia.tBodies[0].innerHTML = '';
+  copia.tFoot?.remove();
+  copia.caption?.remove();
+  const pe = tabela.tFoot;
+  const legenda = tabela.caption;
+  if (pe) copia.appendChild(pe);
+  if (legenda) copia.prepend(legenda);
+  destino.prepend(copia);
+  while (linhas.rows.length > 2 && estoura(corpo)) copia.tBodies[0].prepend(linhas.lastElementChild);
+  if (estoura(corpo) || copia.tBodies[0].rows.length < 2) {
+    while (copia.tBodies[0].firstElementChild) linhas.appendChild(copia.tBodies[0].firstElementChild);
+    if (pe) tabela.appendChild(pe);
+    if (legenda) tabela.prepend(legenda);
+    copia.remove();
+    return false;
+  }
+  // O zebrado conta as linhas pela posição dentro do corpo. Uma linha oculta
+  // no começo da continuação mantém a alternância de onde ela parou.
+  if (linhas.rows.length % 2) copia.tBodies[0].prepend(Object.assign(tabela.ownerDocument.createElement('tr'), { hidden: true }));
+  return true;
 }
 
 const PX_MM = 96 / 25.4;
@@ -1378,12 +1639,14 @@ function alturaDaFolha(doc) {
  *  no texto já pronto. */
 async function montarFinal(modo) {
   let html = montar(modo === 'imprimir' ? 'exportar' : modo);
-  const montadas = html.includes(' montada');
+  // Qualquer página A4 pode ter passado da folha, então todo documento com
+  // página A4 passa pelo quadro.
+  const paginas = html.includes('class="page');
   const longa = html.includes('page longa');
   const graficos = html.includes('chart feito');
-  if (montadas || longa || graficos) {
+  if (paginas || longa || graficos) {
     html = await noQuadro(html, (doc) => {
-      if (montadas) repaginar(doc);
+      if (paginas) repaginar(doc);
       if (graficos) ajustarGraficos(doc);
       if (!longa) return;
       const alto = alturaDaFolha(doc);
@@ -1451,8 +1714,8 @@ function ligarPrevia(doc) {
     const span = campoDe(e.target);
     if (!span) return;
     const nome = span.dataset.campo;
-    const meta = estado.estrutura.campos[nome];
-    const tipo = meta && /^(dinheiro|percentual|pp|numero)$/.test(meta.tipo || '') ? meta.tipo : null;
+    const meta = metaDe(nome);
+    const tipo = meta &&/^(dinheiro|percentual|pp|numero)$/.test(meta.tipo || '') ? meta.tipo : null;
     const valor = tipo ? formatar(tipo, span.textContent) : span.textContent;
     estado.valores[nome] = valor;
     for (const el of $$(`[data-campo="${CSS.escape(nome)}"]`)) el.value = valor;
@@ -1462,6 +1725,8 @@ function ligarPrevia(doc) {
     renderizar();
   });
 }
+
+let rodada = 0;
 
 function renderizar() {
   const doc = $('#quadro').contentDocument;
@@ -1473,7 +1738,13 @@ function renderizar() {
   // couberam, depois confere o que sobrou, e só então ajusta a vista. O ajuste
   // esconde todas as páginas menos a que está à frente, e página escondida não
   // tem altura para medir nem para repaginar.
-  setTimeout(() => {
+  // E só depois da fonte: medida na fonte de reserva, uma página que cabe
+  // pareceria estourar e seria partida à toa. A rodada descarta a espera de um
+  // desenho que outro já substituiu.
+  const vez = ++rodada;
+  setTimeout(async () => {
+    if (doc.fonts) { try { await doc.fonts.ready; } catch (e) { /* sem a API */ } }
+    if (vez !== rodada) return;
     repaginar(doc);
     ajustarGraficos(doc);
     conferirEstouro();
@@ -1518,10 +1789,10 @@ function mostrarEstouro() {
   const n = estado.estouro.length;
   caixa.hidden = !n;
   if (n) {
-    // As páginas montadas já se repartiram sozinhas antes desta conferência. O
-    // que sobra aqui é o que não tem como repartir: uma página do modelo com
-    // texto demais, ou um bloco único — uma tabela de quinze linhas — que não
-    // cabe inteiro em folha nenhuma.
+    // As páginas A4 já se repartiram sozinhas antes desta conferência. O que
+    // sobra aqui é o que não tem como repartir: um slide com texto demais, ou
+    // um bloco único — um parágrafo de página e meia — que não cabe inteiro em
+    // folha nenhuma.
     caixa.innerHTML = `<strong>${n === 1 ? 'Uma página não coube' : `${n} páginas não couberam`}.</strong>
       O que passa da margem é cortado no arquivo exportado. ${estado.estouro.map((x) =>
         `<span class="pg-estourou">${String(x.no).padStart(2, '0')} ${escapa(x.secao)}</span>`).join(' ')}
@@ -1587,8 +1858,8 @@ function irIndice(i) {
 /* ----------------------------------------------------------- tela 5: exportar */
 
 function telaExportar() {
-  const { campos, imagens } = estado.estrutura;
-  const nomes = Object.keys(campos);
+  const { grupos, imagens } = estado.estrutura;
+  const nomes = grupos.flatMap((g) => camposEfetivos(g.pagina, g.campos));
   const feitos = nomes.filter((n) => (estado.valores[n] || '').trim()).length;
   const imgFeitas = imagens.filter((i) => estado.imagens[i.id]).length;
   const faltam = nomes.length - feitos;
@@ -1621,9 +1892,9 @@ function emBranco() {
   const achados = [];
   for (const g of [...grupos].sort((a, b) => a.pagina - b.pagina)) {
     if (!dentro(g.pagina)) continue;
-    for (const n of g.campos) {
+    for (const n of camposEfetivos(g.pagina, g.campos)) {
       if ((estado.valores[n] || '').trim()) continue;
-      achados.push({ nome: n, rotulo: (campos[n] || {}).rotulo || n, pagina: g.pagina, secao: g.secao });
+      achados.push({ nome: n, rotulo: (campos[n] || metaDe(n)).rotulo || n, pagina: g.pagina, secao: g.secao });
     }
   }
   // Os campos dos blocos não estão na estrutura do modelo — eles nascem quando
@@ -1711,6 +1982,7 @@ function carregarDados(arquivo) {
     estado.valores = d.valores || {};
     estado.graficos = d.graficos || {};
     estado.imagens = d.imagens || {};
+    estado.linhas = d.linhas || {};
     salvar();
     salvarImagens();
     telaPreencher();
@@ -1918,6 +2190,11 @@ function ligar() {
 
     if (e.target.id === 'todas-paginas') { estado.fora = new Set(); salvar(); telaPreencher(); return; }
 
+    const ds = e.target.dataset;
+    if (ds.linhaFora) { tirarLinha(ds.linhaFora, ds.id); return; }
+    if (ds.linhaMais) { maisLinha(ds.linhaMais); return; }
+    if (ds.linhasVolta) { voltarLinhas(ds.linhasVolta); return; }
+
     const chave = e.target.closest('.chave[data-pagina]');
     if (chave) {
       // Dentro do <summary>, o clique abriria ou fecharia a seção: não é isso.
@@ -2063,6 +2340,7 @@ function ligar() {
   $('#baixar-dados').onclick = () => baixar(JSON.stringify({
     documento: estado.documento.chave, variante: estado.variante.sufixo,
     valores: estado.valores, graficos: estado.graficos, imagens: estado.imagens,
+    linhas: estado.linhas,
   }, null, 1), nomeArquivo('json'), 'application/json');
   $('#carregar-dados').onclick = () => $('#arquivo-dados').click();
   $('#arquivo-dados').onchange = (e) => e.target.files[0] && carregarDados(e.target.files[0]);

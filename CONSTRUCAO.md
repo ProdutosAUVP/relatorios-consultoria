@@ -416,9 +416,32 @@ de `montar()` — que é síncrono e trabalha sobre um `Document` sem layout. Le
 `scrollHeight` a cada passo força o navegador a recalcular, então a medida
 acompanha a mudança.
 
-Só as páginas montadas se repartem. As do modelo são desenho fechado, e quebrar
-uma tabela ao meio para caber deixaria o cabeçalho órfão numa página e os
-números na outra.
+**As páginas do modelo também.** Antes só as montadas se repartiam, e a página
+do modelo tinha altura fechada. Isso engessava justamente o que se pode mexer: a
+carteira de doze ativos, a tabela com linhas acrescentadas, o parágrafo mais
+longo. Agora toda página A4 com cabeçalho corrido passa por `repaginar()`. Slide
+e folha longa ficam de fora: o slide é uma tela, e a folha longa já cresce com o
+conteúdo.
+
+Uma tabela que não cabe se parte entre as linhas (`partirTabela()`). O cabeçalho
+se repete na continuação, e o total e a legenda vão com a última parte. Cada lado
+fica com pelo menos duas linhas, e o zebrado continua de onde parou. O título de
+seção que ficaria sozinho no pé da página desce com o que ele anuncia.
+
+Os 37 modelos em branco continuam com o mesmo número de páginas. A repaginação
+só age quando alguém escreve ou acrescenta além do que o desenho previa.
+
+**Linhas de tabela se tiram e se acrescentam.** O gerador fecha cada tabela num
+número de linhas (sete classes de ativo, cinco emissores), e a carteira do
+cliente raramente tem esse número. Na grade da ferramenta, cada linha do corpo
+tem um × para sair do documento. A tabela cujas linhas são numeradas
+(`at_1_classe`, `at_2_classe`…) ganha também "Mais uma linha": a linha nova leva
+o número seguinte e herda do catálogo o tipo, o exemplo e as opções do mesmo
+campo na última linha. No documento, ela é essa última linha clonada, com os
+campos renumerados. A tabela de rótulo fixo por linha, como prazo, moeda ou as
+classes da carteira proposta, só perde linhas. O que foi tirado e acrescentado
+fica no rascunho, em `linhas`. Campo de linha tirada não conta como lacuna na
+contagem nem no aviso de exportação.
 
 **A ferramenta avisa quando a página não coube.** A página tem altura fechada e
 `overflow:hidden`: o que passa dela some do arquivo, e sumia calado. Quem
